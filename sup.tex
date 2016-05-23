@@ -1,0 +1,77 @@
+\section{Supplementary materials}
+
+\subsection{Class based derivation}
+
+\paragraph{Likelihood:}~\\
+
+We mention that  the $\phi$ and $\theta$ matrix can be reconstructed with $Z$. From the model, we have the following equalities:
+\begin{align}
+\pr(y_{ij} \mid \phi_c) &= \phi_c^{y_{ij}}(1-\phi_c)^{1-y_{ij}} \\
+\pr(\phi_c \mid \lambda) &= \frac{1}{B(\lambda_1, \lambda_0)} \phi_c^{\lambda_1-1}(1-\phi_c)^{\lambda_0 -1}
+\end{align}
+
+
+Derivation of equation (5.12) of the likelihood:
+\begin{align}
+&\pr(y_{ij} \mid Y^{-ij}, c) \propto \pr(y_{ij}, Y^{-ij}, c) \\
+&= \int_{\phi_c} \pr(y_{ij} \mid \phi_c) \pr(\phi_c \mid \lambda) \prod_{i'j' \neq ij}\pr(y_{i'j'} \mid \phi_c) d\phi_c \\
+&\propto \int_{\phi_c} \phi_c^{y_{ij} + C_{c1}^{-ji} + \lambda_1-1}(1-\phi_c)^{ 1-y_{ij} + C_{c0}^{-ji} + \lambda_0 -1} d\phi_c \\
+&\propto \frac{\Gamma(y_{ij} + C_{c1}^{-ji} + \lambda_1) \Gamma( 1-y_{ij} + C_{c0}^{-ji} + \lambda_0) }{\Gamma(  1+ C_{c\bm{.}}^{-ji} + \lambda_0 + \lambda_1)}
+\end{align}
+
+Considering the case where $y_{ij} =1$, we have :
+\begin{equation}
+\pr(y_{ij}=1 \mid \phi_c) = \frac{C_{c1}^{-ji} + \lambda_1}{C_{c\bm{.}}^{-ji} + \lambda_0 + \lambda_1}
+\end{equation}
+
+
+\paragraph{Class Assignment:}~\\
+
+We have from the model the following equalities:
+\begin{align}
+\pr(\theta_i \mid \alpha) &= \frac{\Gamma(\sum_l \alpha)}{\prod_l \Gamma(\alpha)} \prod_l \theta_{il}^{\alpha-1} \\
+\pr(z_{i\rightarrow j} &= k \mid \theta_i) = \theta_{ik}
+\end{align}
+
+Derivation of equation (5.14) of class assignment:
+\begin{align}
+&\pr(z_{i\rightarrow j}=k \mid Z^{-ij}) = \pr(z_{i\rightarrow j}=k \mid \{z_{i\rightarrow j_0}\}_{j_0\neq j},\{z_{i\leftarrow j_0}\}_{j_0= 1}^n )\\
+&\propto \pr(z_{i\rightarrow j}= k,\{z_{i\rightarrow j_0}\}_{j_0\neq j},\{z_{i\leftarrow j_0}\}_{j_0= 1}^n ) \\
+&= \int_{\theta_i} \pr(\theta_i \mid \alpha) \pr(z_{i\rightarrow j}=k \mid \theta_i) \prod_{j_0\neq j} \pr(z_{i\rightarrow j_0} \mid \theta_i) \prod_{j_0 =  1}^n  \pr(z_{i\leftarrow j_0} \mid \theta_i)  d\theta_i \\
+&=\int_{\theta_i} \frac{\Gamma(\sum_l \alpha)}{\prod_l \Gamma(\alpha)}\theta_{ik}^{N_{ik}^{-ji}+1} \prod_{l\neq k} \theta_{il}^{N_{il}^{-ij} +\alpha-1} d\theta_i \\
+&\propto \frac{\Gamma(\alpha + N_{ik}^{-ji}+1)\prod_{l\neq k} \Gamma(\alpha + N_{il}^{-ij})}{\Gamma(\sum_l( \alpha + N_{il}^{-ji}) +1)} \\
+&\propto \alpha + N_{ik}^{-ji}
+\end{align}
+
+Finally the equality is maintain by the marginalization constant:
+\begin{equation}
+\pr(z_{i\rightarrow j}=k \mid Z^{-ij}) =\frac{ N_{ik}^{-ji} + \alpha}{ N_{i\bm{.}}^{-ji} + K\alpha }
+\end{equation}
+
+\subsection{Burstiness for degrees Distribution}
+\label{burst_proof}
+
+From the definition of the burstiness, we have for a random variable $d$:
+\begin{equation}
+	\pr(d \geq n'+1 \mid d \geq n') > \pr(d \geq n+1 \mid d \geq n) \quad \{\forall (n,n') \mid  n' > n \}
+\end{equation}
+
+We now consider the degree $d_i$ for a node $i$ of a network. We can rewrite the burstiness in the discrete case:
+\begin{equation}
+\pr(d_i = n'+1 \mid d_i = n') > \pr(d_i = n+1 \mid d_i = n), \quad \{\forall (n,n') \mid  n' > n \}
+\end{equation}
+\hspace{0.35\textwidth} Q. is it equivalent to: $\pr(d_i)' > 0$ ?\\
+
+Let's suppose that the model $\mathcal{M} = \{\Theta, \Phi\}$ has converged to some local optima. Do new predictions will respect the burstiness property ? To answer this question we need to evaluate the predictive distribution and we assume that the model parameters for all data except for node $i$ is knows. Hence, we denote this knowledge as $\mathcal{M}^{-i}$ whose condition the degree distribution. We omit reference to it in the following. Additionally we write $\pr(d_i)$ accounting for $\pr(d_i=n)$:
+\begin{align}
+    \pr(d_i=n+1 \mid d_i) &= \sum_{\mathcal{M}_i} \pr(d_i=n+1 \mid d_i, \mathcal{M}_i) \pr(\mathcal{M}_i \mid d_i)
+\end{align}
+The likelihood of the degree can now be written using the conditional independence. Note that we omit reference to the model parameters $\mathcal{M}$:
+\begin{align}
+    \pr(d_i=n+1 \mid d_i) &= \sum_{j \notin \mathcal{V}(i)} \pr(y_{ij} = 1 \mid d_i) \prod_{j'\notin \mathcal{V}(i), j' \neq j} \pr(y_{ij'}=0 \mid d_i) \\
+    &=  \sum_{j \notin \mathcal{V}(i)} (1 - \pr(y_{ij} = 0 \mid d_i) ) \prod_{j'\notin \mathcal{V}(i), j' \neq j} \pr(y_{ij'}=0 \mid d_i) \\
+    &= ...
+\end{align}
+Where $\mathcal{V}(i)$ represent all vertex connected to $i$ and $| \mathcal{V}(i) | = d_i$.\\
+
+

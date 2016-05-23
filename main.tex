@@ -1,0 +1,81 @@
+%\documentclass[a4paper, 12pt]{article}
+%\documentclass[a4paper, 12pt, draft]{article} % don't include images, leave a border of same size...great
+\documentclass[journal]{IEEEtran}
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+%\usepackage[cmex10]{amsmath, mathtools}
+\usepackage{amsmath,amssymb,amsbsy,amsfonts,amsthm}
+\usepackage{multirow}
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{url}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{fancyvrb}
+\usepackage{yfonts}
+
+\usepackage{wrapfig}
+\usepackage{tikz}
+%\input{../tikz.conf}
+
+\usetikzlibrary{bayesnet}
+
+%%%%%%%%%%% Box 
+\usepackage{calc}%    For the \widthof macro
+\usepackage{xparse}%  For \NewDocumentCommand
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+
+
+%\input{./header.tex}
+%%%%%%%%%% Math
+\renewcommand{\text}{\textnormal}
+\newcommand{\pr}{\mathbf{p}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\divkk}{\mathbb{K}}
+\newcommand{\entropy}{\mathbb{H}}
+\newcommand{\gem}{\mathrm{GEM}}
+\newcommand{\Mult}{\mathrm{Mult}}
+\newcommand{\DP}{\mathrm{DP}}
+\newcommand{\IBP}{\mathrm{IBP}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\N}{\mathcal{N}}
+    
+%\author{Adrien Dulac}
+
+\title{Social Networks Analysis\\ with Bayesian Perspective}
+
+%\date{avril 2015}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{theorem}{Theorem}[section]
+
+\begin{document}
+	
+\maketitle
+\begin{abstract}
+Burstiness, preferential attachment, Assortativity, community detection, link prediction, dyadic relation, latent class model, latent feature model. Matrix Factorization, Bayesian, uncertanty, regularisation
+\end{abstract}
+
+\IEEEpeerreviewmaketitle
+
+
+
+\input{intro.tex}
+\input{motiv.tex}
+\input{related_work}
+\input{background.tex}
+\input{models.tex}
+\input{homophily.tex}
+\input{burstiness.tex}
+\input{expe.tex}
+\input{sup.tex}
+
+\bibliographystyle{unsrt}
+\bibliography{./a}
+
+\end{document}
+
+\grid

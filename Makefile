@@ -1,4 +1,4 @@
-SRC=net_prop
+SRC=main
 TEST=test
 CC=latex
 CONV=dvipdf

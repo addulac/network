@@ -1,0 +1,34 @@
+\section{Burstiness}
+\emph{The rich get richer and the poor get poorer} ~\\
+
+%\paragraph{Formal Definition}~\\
+
+The preferential attachment states that a node is more likely to create connections with nodes having a high degree. To take into account this behavior, in the BarabasiAlbert (BA) model, each node is connected to an existing node with a probability proportional to the number of links of the chosen node. This leads to scale-free networks, characterized by a degree distribution with a heavy tail which can be approximated by a power law distribution such that the fraction of nodes $\pr(d)$ having a degree $d$ follows $\pr(d) \sim d^{-\gamma}$ where $\gamma$ ranges typically between 2 and 3~\cite{barabasi1999emergence}. An equivalent notion is the burstiness, studied by~\cite{church1995poisson}, which conveys the same idea : rich get richer or the more you have, the more you will get. In~\cite{clinchant2008bnb}, a formalized definition has been proposed. According to the authors:
+
+\begin{definition}[Burstiness]
+	A discrete distribution $\pr$ is bursty if and only if for all integers $(n, n')$, $n \geq n'$ :
+	
+	\begin{equation}
+	\pr(d \geq n'+1 \mid d \geq n') > \pr(d \geq n+1 \mid d \geq n) 
+	\end{equation}
+	 A distribution which verifies this condition is said to be bursty.
+\end{definition}
+
+In~\cite{clinchant2010information}, this definition has been generalized to the continuous case but, in the sequel, we will retain this first definition since we focus on discrete distributions.~\\
+
+The burstiness can appear for different various variable in a model. In this paper we consider three different schemes at the node and feature level, that constitute some basic assumptions on networks:
+
+\begin{proposition}~\\
+for all $i,j \in V^2$ and $k \in \{1,.., K\}$, we have:
+\begin{itemize}
+	\item Preferential Attachment: the distribution of degree $d_i$ is bursty iff $f_i$ is a stricly increasing function of n with: $$f_i(n)=\pr(y_{ij}=1 \mid d_i=n)$$
+	\item Local Preferential Attachment: Given a class $c \in \{1,..,K\}$, and a degree restricted to nodes who belongs to this class $d_{ic}$, the distribution of degree $d_{ic}$ is bursty iff $f_{i,c}$ is a stricly increasing function of n with: $$f_{i,c}(n)=\pr(y_{ij}=1 \mid d_i=n, c)$$
+	\item Feature burstiness (block/class burstiness ?:s): the distribution over the number of membership of each class is bursty iff  $f_k$  is a stricly increasing function of n with: $$f_k(n) = \pr(\theta_{ik} \mid \theta_{\bm{.}k}^{-ik}=n)$$ 
+\end{itemize}
+\end{proposition}
+
+We justify this approach in the supplementary materials~\ref{burst_proof}. One can see that the approach makes the link with the classical definition of preferential attachment. Furthermore one can see that the similaraty between th functions we track $(f_i, f_{i,c}, f_k)$ and the typical Gibbs updates. The difference is that we want to assess the generative model given the data and parameters of the model (ie the model has converged). Hence we are looking if the topological property of burstiness can be handle by the model once it learned from the data.~\\
+
+
+%Considering the nodes projection on latent variables, the projections for the nodes we evaluate might be considered either known or not known ($\Theta$ or $\Theta^{-ij}$) depending on the case study of preferential attachment or local preferential attachment.~\\
+
