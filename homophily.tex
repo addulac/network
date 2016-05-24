@@ -6,12 +6,12 @@
 Homophily describes the fact that two nodes are more likely to be connected if they share common characteristics~\cite{mcpherson2001birds,lazarsfeld1954friendship}. So, the more similar the nodes, the more likely is it to be connected. In their research on dynamic attributed networks where the attributes are discrete (e.g. age, gender etc.).Some definition has been proposed~\cite{la2010randomization}, but they consider unimodal feature and lack of generality to use them in a Bayesian framework. We proposed a more general definition of homophily at the model level:
 
 \begin{definition}[Homophily]
-	Given  a model $\M=\{\Theta, \Phi, s\}$, defined by its parameters and a function. The parameters define respectively the latent features of nodes and a matrix of weight controlling the strength between the features. The function define a similarity measure $s(. ;\Theta, \Phi)$ on $V\times V$ and parametrized by the model parameters. We consider that the model exhibits homophily if:
+	Given  a model $\M_s=\{\Theta, \Phi, s\}$, defined by its parameters and a function. The parameters define respectively the latent features of nodes and a matrix of weight controlling the strength between the features. The function define a similarity measure $s(. ;\Theta, \Phi)$ on $V\times V$ and parametrized by the model parameters. We consider that the model exhibits homophily if:
 	\begin{align*}
 	&\text{if }  s(i,j) > s(i',j') \text{ then } \E_\Phi[\pr(y_{ij}=1 \mid \Theta)] > \E_\Phi[\pr(y_{i'j'}=1  \mid \Theta)] \\
 	&\forall (i,j,i',j') \in V^4 \nonumber 
 	\end{align*}
-In this case we way that the model is homophilic.
+ A model which verifies this condition is said to be homophilic.
 \end{definition}
 
 The similarity aims at measuring the closeness between two node, given the (latent) features. The homophily evaluate if the order is preserved between the similarity and the probability to create a link between two nodes when averaging on the weight matrix of the model.
@@ -22,18 +22,19 @@ s(i,j) = \theta_i \Phi \theta_j^\top
 \end{equation}
 
 \begin{proposition}[]
-Let's suppose a model $ \M=\{\Theta, \Phi, s\}$ with the similarity measure defined as $s(i,j) = \theta_i \Phi \theta_j^\top$, the ILFM and MMSB models are homophilic.
+Let's suppose a model $ \M_s=\{\Theta, \Phi, s\}$ with the similarity measure defined as $s(i,j) = \theta_i \Phi \theta_j^\top$, the ILFM and MMSB models are homophilic.
 \end{proposition}
-\paragraph{Proof} 
+
+\begin{IEEEproof}
 Suppose that for two couple of nodes $(i,j,i',j') \in V^4$ we have $s(i,j) > s(i',j')$ with $s(i,j) =\theta_i \Phi \theta_j^\top$, and $\sigma$ a either strictly increasing function or the identity function. We have:
 \begin{align}
-obj &=\E_\Phi[\pr(y_{ij}=1 \mid \Theta)] - \E_\Phi[\pr(y_{i'j'} = 1  \mid \Theta)] \\
+&\E_\Phi[\pr(y_{ij}=1 \mid \Theta)] - \E_\Phi[\pr(y_{i'j'} = 1  \mid \Theta)] \\
 &= \int_{\Phi} \pr(y_{ij}=1 \mid \Theta, \Phi ) \pr(\Phi) d\Phi - \int_{\Phi}\pr(y_{i'j'}=1 \mid \Theta, \Phi ) \pr(\Phi) d\Phi \\
 &= \int_\Phi ( \pr(y_{ij}=1 \mid \Theta, \Phi )  - \pr(y_{i'j'}=1 \mid \Theta, \Phi ) )\pr(\Phi) d\Phi \\
 &=  \int_\Phi ( \sigma(\theta_i \Phi  \theta_j^T) -\sigma(\theta_{i'} \Phi  \theta_{j'}^T) )\pr(\Phi) d\Phi
 \end{align}
 Since $\sigma$ are strictly increasing (or the identity), the left hand part and the right hand are strictly positive function we have $\E_\Phi[\pr(y_{ij}=1 \mid \Theta)] > \E_\Phi[\pr(y_{i'j'} = 1  \mid \Theta)]$.~\\
-
+\end{IEEEproof}
 
 In this case, the homophily effect holds in both models as it is the parameter of the Bernoulli. In other words, it is the probability to observe a link between $i$ and $j$. Thus the metric for the network topology and the node similarity are the same. Nevertheless it is not obvious to state the role that plays latent variables for the homophily because of the weak constraints applied on the interactions matrix $\Phi$. In other word we loose the intuition behind the similarity. ~\\
 
@@ -41,17 +42,18 @@ But It is important to note that the metric for the topology of the network and 
 
 A natural constraint for the \emph{similarity metric} is to use some cosinus based measure. Furthermore those measure only rely on the latent/real feature of nodes. It thus make them applicable to model and real networks. We will consider next the dot product as our similarity based measure; $s(i,j) = \theta_i \theta_j^\top$.~\\
 
-A natural constraint for the \emph{topology metric}, would be to stay consistent with the notion of communities in networks. In this case nodes belonging to the same community would be more likely to be linked. One way to encode this believe is to have strong values in the diagonal for the interaction matrix $\Phi$. Moreover by defining decreasing weights from the diagonal, we allow inter-communities links and define a hierarchies (ie an order) between the possible interactions between the communities. We develop this idea with two adapted prior for each models. A matrix normal prior for the ILFRM model and a matrix beta for the MMSB model.~\\
+A natural constraint for the \emph{topology metric}, would be to stay consistent with the notion of communities in networks. In this case nodes belonging to the same community would be more likely to be linked. One way to encode this believe is to have strong values in the diagonal for the interaction matrix $\Phi$. Moreover by defining decreasing weights from the diagonal, we allow inter-communities links and define a hierarchies (ie an order) between the possible interactions between the communities. We develop this idea with constraint prior for the weight interaction matrix.
+% A matrix normal prior for the ILFRM model and a matrix beta for the MMSB model.
 
 
 \begin{proposition}[] \label{prop:hom_mn}
-Let's suppose a model $ \M=\{\Theta, \Phi, s\}$ with the similarity measure defined as $s(i,j) = \theta_i \theta_j^\top$ and $\sigma$ a strictly increasing function or the identity. Let's suppose a $K\times K$ matrix normal prior over weight matrix such as $\Phi \sim \N_K(M, U, V)$ and the mean matrix $M$ be a diagonal matrix. Then homophily hold for $\M$ if $M=\Lambda I_K$ with $\Lambda > 0$.
+Let's suppose a model $ \M_s=\{\Theta, \Phi, s\}$ with the similarity measure defined as $s(i,j) = \theta_i \theta_j^\top$ and $\sigma$ a strictly increasing function or the identity. Let's suppose a $K\times K$ matrix normal prior over weight matrix such as $\Phi \sim \N_K(M, U, V)$ and the mean matrix $M$ be a diagonal matrix. Then homophily hold for $\M$ if $M=\Lambda I_K$ with $\Lambda > 0$.
 \end{proposition}
 \paragraph{Proof} 
 Suppose that for two couple of nodes $(i,j,i',j') \in V^4$ we have $s(i,j) > s(i',j')$, with $s(i,j) =\theta_i \theta_j^\top$. We first examine the difference of expectations:
-
 \begin{align}
-&\E_{\Phi}[\pr(y_{ij}=1\mid \Theta)] - \E_{\Phi}[\pr(y_{i'j'}=1\mid \Theta)] =  \E_{\Phi}[\sigma(\theta_i \Phi \theta_j)] -  \E_{\Phi}[\sigma(\theta_{i'} \Phi \theta_{j'})] \\
+&\E_{\Phi}[\pr(y_{ij}=1\mid \Theta)] - \E_{\Phi}[\pr(y_{i'j'}=1\mid \Theta)] \\
+&= \E_{\Phi}[\sigma(\theta_i \Phi \theta_j)] -  \E_{\Phi}[\sigma(\theta_{i'} \Phi \theta_{j'})] \\
 &= \E_{\Phi}[\sigma(\theta_i \Phi \theta_j) - \sigma(\theta_{i'} \Phi \theta_{j'})]
 \end{align}
 Because $\sigma$ is stricly increasing (or the identity), we have the following equivalence:
@@ -72,7 +74,9 @@ Homophily is satisfied for $\Lambda > 0$.
 
 ~\\
 
-Proposition \ref{prop:hom_mn} highlight a generalization of the MMSB model where the correlation between class are correlated to their proximity. This enable the interpretation of class as communities because node who belongs to the same class have a higher probability to binds. Note that this generalization conserve the conjugacy property of the model and therefore his efficient implementation.
+Proposition \ref{prop:hom_mn} highlight a generalization of the ILFM model where the correlation between feature depend on their proximity. This enable the interpretation of features as communities because node who belongs to the same membership have a higher probability to binds.
+
+% Note that this generalization conserve the conjugacy property of the model and therefore his efficient implementation.
 
 \subsection{Statistical Evaluation}
 To evaluate the homophily on a given networks (an instance), we propose a statistical test. We seek for both a qualitative as well a quantitative evaluation of the homophily.

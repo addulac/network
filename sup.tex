@@ -68,7 +68,7 @@ Let's suppose that the model $\mathcal{M} = \{\Theta, \Phi\}$ has converged to s
 \end{align}
 The likelihood of the degree can now be written using the conditional independence. Note that we omit reference to the model parameters $\mathcal{M}$:
 \begin{align}
-    \pr(d_i=n+1 \mid d_i) &= \sum_{j \notin \mathcal{V}(i)} \pr(y_{ij} = 1 \mid d_i) \prod_{j'\notin \mathcal{V}(i), j' \neq j} \pr(y_{ij'}=0 \mid d_i) \\
+    &\pr(d_i=n+1 \mid d_i) = \sum_{j \notin \mathcal{V}(i)} \pr(y_{ij} = 1 \mid d_i) \prod_{j'\notin \mathcal{V}(i), j' \neq j} \pr(y_{ij'}=0 \mid d_i) \\
     &=  \sum_{j \notin \mathcal{V}(i)} (1 - \pr(y_{ij} = 0 \mid d_i) ) \prod_{j'\notin \mathcal{V}(i), j' \neq j} \pr(y_{ij'}=0 \mid d_i) \\
     &= ...
 \end{align}

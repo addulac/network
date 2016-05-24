@@ -7,7 +7,6 @@ The preferential attachment states that a node is more likely to create connecti
 
 \begin{definition}[Burstiness]
 	A discrete distribution $\pr$ is bursty if and only if for all integers $(n, n')$, $n \geq n'$ :
-	
 	\begin{equation}
 	\pr(d \geq n'+1 \mid d \geq n') > \pr(d \geq n+1 \mid d \geq n) 
 	\end{equation}
@@ -22,7 +21,7 @@ The burstiness can appear for different various variable in a model. In this pap
 for all $i,j \in V^2$ and $k \in \{1,.., K\}$, we have:
 \begin{itemize}
 	\item Preferential Attachment: the distribution of degree $d_i$ is bursty iff $f_i$ is a stricly increasing function of n with: $$f_i(n)=\pr(y_{ij}=1 \mid d_i=n)$$
-	\item Local Preferential Attachment: Given a class $c \in \{1,..,K\}$, and a degree restricted to nodes who belongs to this class $d_{ic}$, the distribution of degree $d_{ic}$ is bursty iff $f_{i,c}$ is a stricly increasing function of n with: $$f_{i,c}(n)=\pr(y_{ij}=1 \mid d_i=n, c)$$
+	\item Local Preferential Attachment: Given a class couple $c= \{k, k'\} \in \{1,..,K\}^2$, and a degree restricted to nodes who belongs to this interaction couple $d_{ic}$, the distribution of degree $d_{ic}$ is bursty iff $f_{i,c}$ is a stricly increasing function of n with: $$f_{i,c}(n)=\pr(y_{ij}=1 \mid d_i=n, c)$$
 	\item Feature burstiness (block/class burstiness ?:s): the distribution over the number of membership of each class is bursty iff  $f_k$  is a stricly increasing function of n with: $$f_k(n) = \pr(\theta_{ik} \mid \theta_{\bm{.}k}^{-ik}=n)$$ 
 \end{itemize}
 \end{proposition}
@@ -31,4 +30,105 @@ We justify this approach in the supplementary materials~\ref{burst_proof}. One c
 
 
 %Considering the nodes projection on latent variables, the projections for the nodes we evaluate might be considered either known or not known ($\Theta$ or $\Theta^{-ij}$) depending on the case study of preferential attachment or local preferential attachment.~\\
+
+\subsection{Burstiness for ILFM}
+
+In this model, the weight interaction matrix $\Phi$ are not conjugate of the likelihood. Thus it can not be integrated out into a closed form expression. As a matter of simplicity we consider this parameter as known, and omit it the following conditional distributions.
+
+Let $F=\Theta$ and $W=\Phi$, each node $i$ has a fixed feature vector noted $F_i$ and a weighed interactions matrix $W$. In this case, the function $f_i$ is:
+\begin{align}
+&\pr(y_{ij}=1 \mid d_i, F^{-i\bm{.}}) = \sum_{F_i} \pr(y_{ij}=1 \mid d_i, F^{-i\bm{.}} F_i,) \pr(F_i \mid d_i, F^{-i\bm{.}}) \\
+&= \sum_{F_i} \sigma(F_iWF_j^T) \frac{\pr(d_i \mid F^{-i\bm{.}}, F_i) \pr(F_i\mid F^{-i\bm{.}}) }{\pr(d_i\mid F^{-i\bm{.}})}\\
+&\propto \sum_{F_i} \prod_{j' \in \V(i) \cup {j}} \sigma(F_iWF_{j'}^T)\prod_{j' \notin \V(i)} 1-\sigma(F_iWF_{j'}^T) \prod_k \frac{m_{ik}}{N}
+\end{align}
+
+The term $\prod_k \frac{m_{ik}}{N}$ latter equation comes from the conditional probability of a feature $f_{ik}$ for an IBP prior and applying a chain of product rule. The product is the only term that depend on $d_i$ and we refer to it as $f(d_i)$.
+Under the assumption that all observed links have higher probability than the observed non-links to bind, we can choose an index dictionary $g$ to reorder the terms such as:
+\begin{equation}
+\underbrace{\sigma(F_iWF_{g(1)}^T) \geq .. \geq\sigma(F_iWF_{g(p)}^T) }_\text{$g(.) \in \V(i) \cup {j}$ }\geq \underbrace{ .. \geq \sigma(F_iWF_{g(N)}^T)}_\text{$g(.) \notin \V(i)$}
+\end{equation}
+We then have with some regularity:
+
+\begin{align}
+&f(d_i)\geq \sigma(F_iWF_{g(p)}^T)^{d_i +1} (1 - sigma(F_iWF_{g(p+1)}^T))^{N - d_i} \\
+&log(f(d_i)) \geq d_i log(\frac{\sigma(F_iWF_{g(p)}^T)}{1-  \sigma(F_iWF_{g(p+1)}^T)}) + cst
+\end{align}
+
+
+Reste a valider 2 point:
+\begin{itemize}
+	\item Le passage à la proportion
+	\item Borner $log(f(d_i))$ entre deux fonction croissantes et montrer qu'on oscille pas à l'intérieur ?!
+\end{itemize}
+
+Then a sufficient condition for the burstiness is to have: $\sigma(F_iWF_{g(p)}^T) > 1- \sigma(F_iWF_{g(p+1)}^T)$. If $\sigma$ is the sigmoid this is equivalent ot have $F_iWF_{g(p)}^T > - F_iWF_{g(p+1)}^T$. 
+
+In other term to enable burstiness in the ILFM, the model need to ensure some deterministic behavior when regarding the realization of outcomes and there actual distribution.
+%The probability that a matrix $F$ is generated from the IBP is ~\cite{IBP}:
+%\begin{equation}
+%P(F \mid \alpha) = \frac{\alpha^{K_+}}{\prod_{i=1}^N K_1^{(i)} } \exp(-\alpha H_N) \prod_{k=1}^{K_+} \frac{(N - m_k)!(m_k - 1)!}{N!}
+%\end{equation}
+
+\subsection{Burstiness for MMSB}
+
+\label{burst_class}
+
+In the latent class models each  dyads has two underlying  class assignments for each node of the couple. We note $Z \in N\times N\times 2$ the matrix that represents those class assignments.
+We seek for the following form of the likelihood, that we marginalize over all the possible couples classes $c=(k, k')$:
+\begin{equation} \label{eq:q}
+\pr(y_{ij}=1 \mid Y^{-i\bm{.}}, Z^{-ij}, d_i ) = \sum_{c=(k, k')} \pr(y_{ij}=1 \mid Y^{-i\bm{.}}, d_i , c) \pr(c \mid  Z^{-ij} ) 
+\end{equation}
+Here note that within the sum, the left hand term is conditionally independent of $Z^{-ij}$. And the right hand term is independent of the adjacency terms $Y^{-i\bm{.}}$ since it do not belongs to the Markov blanket of $c$ random variable.
+
+The first term is the likelihood for the links between $(i,j)$ given the class of each node (k, k'). Due to the Beta-Bernoulli conjugacy of the model, $\phi$ and $\theta$ can be marginalized out, and it simplify to: 
+\begin{equation} \label{eq:qc}
+\pr(y_{ij}=1 \mid Y^{-i\bm{.}}, d_i , c) = \frac{C_{c1}^{-i.} + d_{ic} + \lambda_1}{C_{c\bm{.}}^{-ij} + \lambda_0+\lambda_1} 
+\end{equation}
+Where $C_{c1}$ denotes the count matrix for all interactions having value 1 (link present) with the classes couple being $c=(k, k')$. Thus $C_{c1} = \sum_{i,j} \bm{1}(z_{i\rightarrow j}=k, z_{i\leftarrow j}=k', y_{ij}=1)$ and $C_{c.} = \sum_{i,j} \bm{1}(z_{i\rightarrow j}=k, z_{i\leftarrow j}=k')$\\
+
+We recognize the likelihood form of the Gibbs update~\cite{HDP}, except that we isolate the term depending of the degree on $i$, $d_i$. Hence the term $d_{ic}$ is the element of the degree with a classes couple $c=(k,k')$ and $d_{ic} = \sum_{j' \neq j} \bm{1}(z_{i\rightarrow j'}=k, z_{i\leftarrow j'}=k', y_{ij'}=1) $.\\
+
+The second term of equation \eqref{eq:q}, can be rewrited by noting that the classes of the couple $c$ are independent and that the term $Y^{-j\bm{.}}$ can be dropped because it is not present in the Markov blanket of the class assignment: 
+\begin{equation} \label{eq:topic_assign}
+\pr(c \mid  Z^{-ij} ) =  \pr(z_{i\rightarrow j}=k \mid Z^{-ij}) \pr(z_{i\leftarrow j}=k' \mid Z^{-ij})
+\end{equation}
+
+Again, the two members of the right hand equation \eqref{eq:topic_assign} are the Gibbs updates for the topic assignments of nodes for the interaction $(i,j)$. Both members reduce to simple form due to the conjugacy between the Dirichlet and Multinomial~\cite{DM} or concurrently from the Chinese Restaurant Franchise~\cite{HDP}:
+\begin{align}
+\pr(z_{i\rightarrow j}=k \mid Z^{-ij}) = \frac{N_{ik}^{-ij} + \alpha_k}{ N_{i.}^{-ij} + \alpha_{\bm{.}} } \\
+\pr(z_{i\leftarrow j}=k' \mid Z^{-ij}) = \frac{N_{jk'}^{-ij} + \alpha_{k'}}{ N_{j\bm{.}}^{-ij} + \alpha_{\bm{.}} } 
+\end{align}
+
+Finally, one can see that the only term depending on the degree $d_i$ is isolated, and we can rewrite equation \eqref{eq:q}, with term depending only on $d_i$, $k$, $i$ and $j$:
+\begin{equation}
+\pr(y_{ij}=1 \mid Y^{-i\bm{.}}, Z^{-ij}, d_i ) = \sum_{c=(k, k')} A_c (B_c + d_{ic})
+\end{equation}
+Where $A_c$ and $B_c$ are two positive function of $c$.
+\begin{align}
+A_c &= \frac{N_{ik}^{-ij} + \alpha_k}{ N_{i.}^{-ij} + \alpha_{\bm{.}} } \frac{N_{jk'}^{-ij} + \alpha_{k'}}{ N_{j\bm{.}}^{-ij} + \alpha_{\bm{.}} } \frac{1}{C_{c\bm{.}}^{-ij} + \lambda_0+\lambda_1} \\
+B_c &= C_{c1}^{-i.} + \lambda_1
+\end{align}
+
+As we sum over all possible couple classes, the probability to have a link will augment with the degree with the classes couple corresponding to the element of the degree with the same couple. Hence the probability to observe a link for node $i$ is strictly crescent with his degree $d_i$. 
+
+\paragraph{Preferential Attachment}~\\
+
+The model is bursty hence it can handle the preferential attachment at the network level.
+
+\paragraph{Local Preferential Attachment}~\\
+
+The Local preferential attachment is similar to the notion of burstiness but inside a community/class of the network. Assuming that we know the class of $i$ $z_{i\rightarrow j}$ to be $k$, the probability to have a link becomes: 
+\begin{align}
+&\pr(y_{ij}=1 \mid Y^{-i\bm{.}}, d_i,z_{i\rightarrow j})  = \sum_{k'} \pr(y_{ij}=1 \mid Y^{-i\bm{.}}, Z^{-ij}, d_i , c=(k,k')) \pr(z_{i\leftarrow j}=k' \mid Z^{-ij} ) \\
+&= \sum_{k'} \frac{C_{c1}^{-i.} + d_{ic} + \lambda_1}{C_{c\bm{.}}^{-ij} + \lambda_0 + \lambda_1} \frac{N_{jk'}^{-ij} + \alpha_{k'}}{ N_{j\bm{.}}^{-ij} + \alpha_{\bm{.}} } \\
+&= \sum_{k'} A'_{k'} (B'_{k'} + d_{i(k,k')})
+\end{align}
+
+Here the probability increases with the degree independently of the interactions classes. This means that burstiness is possible inside but also between communities.
+
+\paragraph{Communities Distribution}~\\
+
+....Need to count the table for each classes in Chinese Restaurant Franchise (CRF), to evaluate the distribution according to the hyperprior of HDP...
+
+
 

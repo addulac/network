@@ -2,7 +2,7 @@
 \emph{Yet another view} ~\\
 \label{fig:bayes_net}
 
-Our two models use prior distributions that fall into the two major classes of discrete nonparametric priors. The Hierarchical Dirichlet Process (HDP) that generalizes the Latent Dirichlet Allocation (LDA) for infinite mixtures models. On the other hand, the Indian Buffet Process (IBP), which is the generalization of the Beta-Bernoulli compound distribution (ie Beta Process), which generates infinite binary matrices. The nonparametric models in their truncated version are equivalent to well-known models such as LDA, widely used for text analysis, and Mixed Membership Stochastic Blockmodel which is an adaptation for relational learning.~\\
+Our two chosen baseline use prior distributions that fall into the two major classes of discrete nonparametric priors. The Hierarchical Dirichlet Process (HDP) that generalizes the Latent Dirichlet Allocation (LDA) for infinite mixtures models. On the other hand, the Indian Buffet Process (IBP), which is the generalization of the Beta-Bernoulli compound distribution (ie Beta Process), which generates infinite binary matrices. The nonparametric models in their truncated version are equivalent to well-known models such as LDA, widely used for text analysis, and Mixed Membership Stochastic Blockmodel which is an adaptation of the latter for relational learning.~\\
 
 
 We adopt the following notation; if a matrix has a negative index superscripted, it indicates that the values corresponding to this index are excluded. A dot $\bm{.}$ in the index means that we marginalize over all possible values.
@@ -14,12 +14,12 @@ In the latent feature models, the features are distributed according to an India
 \Theta &\sim \IBP(\alpha)  \quad\text{ is a } N\times K \text{ matrix}\\
 \phi_{mn} &\sim N(0, \sigma_w) \quad\text{ for } m,n \in \{1, .., K\}^2
 \end{align}
-The observation level is defined by deterministically selecting the row of $\Theta$ that encodes the latent features for each nodes that interact. Hence for a node $i$, we note his feature vector by $F_i = \theta_i$ and for $i, j \in V$ we have:
+The observation level is defined by deterministically selecting the row of $\Theta$ which is distributed according an IBP prior. Hence for a node $i$, we note his feature vector by $F_i = \theta_i$ and for $i, j \in V$ we have:
 
 \begin{align}
 y_{ij} &\sim \mathrm{Bern}(\sigma(F_i \Phi F_j^\top))
 \end{align}
-Finally the function $\sigma(x)= \frac{1}{1 + e^{-x}}$ is the sigmoid function to map $[-\infty, +\infty]$ values to [0,1].
+Finally the function $\sigma(x)= \frac{1}{1 + e^{-x}}$ is the sigmoid function to map $[-\infty, +\infty]$ values to [0,1], a probability space.
 
 \begin{figure}[h]
 	\centering
@@ -62,25 +62,7 @@ The acceptance ratio of $\phi_{mn}^*$ is thus:
 r_{\phi_{mn}\rightarrow \phi_{mn}^*} = \frac{ P(Y \mid F, \Phi^*)P(\phi_{mn}^* \mid \sigma_w)J(\phi_{mn} \mid \phi_{mn}^*) }{ P(Y \mid F, \Phi)P(\phi_{mn} \mid \sigma_w)J(\phi_{mn}^* \mid \phi_{mn} )}
 \end{equation}
 
-\subsubsection{Properties}
 
-In this model, the weight interaction matrix $\Phi$ are not conjugate of the likelihood. Thus it can not be integrated out into a closed form expression. As a matter of simplicity we consider this parameter as known, and omit it the following conditional distribution .
-
-Let $F=\Theta$ and $W=\Phi$, each node $i$ has a fixed feature vector noted $F_i$ and a weighed interactions matrix $W$. In this case, the function $f_i$ is:
-\begin{align}
-\pr(y_{ij}=1 \mid d_i, F^{-i\bm{.}}) &= \sum_{F_i} \pr(y_{ij}=1 \mid d_i, F^{-i\bm{.}} F_i,) \pr(F_i \mid d_i, F^{-i\bm{.}}) \\
-&= \sum_{F_i} \sigma(F_iWF_j^T) \frac{\pr(d_i \mid F^{-i\bm{.}}, F_i) \pr(F_i\mid F^{-i\bm{.}}) }{\pr(d_i\mid F^{-i\bm{.}})}\\
-&\propto \sum_{F_i} \prod_{j' \in \V(i) \cup {j}} \sigma(F_iWF_{j'}^T)\prod_{j' \notin \V(i)} 1-\sigma(F_iWF_{j'}^T) \prod_k \frac{m_{ik}}{N}
-\end{align}
-
-The last term of equation (7.16) comes from the conditional probability of a feature $f_{ik}$ with an IBP prior and applying a chain of product rule. 
-
-(Reste a valider le passage à la proportion !).It turns out that the $f_i$ is increasing under the assumptions that the model is \emph{strictly} (to define) homophilic. it means that if the similarity between two nodes is greater than one, with a support in $[-1, 1]$, leads to a probability greater than $\frac{1}{2}$. This justify the use of the logistic kernel. 
-
-%The probability that a matrix $F$ is generated from the IBP is ~\cite{IBP}:
-%\begin{equation}
-%P(F \mid \alpha) = \frac{\alpha^{K_+}}{\prod_{i=1}^N K_1^{(i)} } \exp(-\alpha H_N) \prod_{k=1}^{K_+} \frac{(N - m_k)!(m_k - 1)!}{N!}
-%\end{equation}
 
 \subsection{Proportion Feature}
 
@@ -109,7 +91,7 @@ y_{ij} &\sim \mathrm{Bern}(\Phi_{z_{i\rightarrow j} , z_{i\leftarrow j}})
 
 In the (not printed here) corresponding graphical model, the arrow between $z_{\rightarrow}$ and $Z$ are dashed as for the IBP representation. Note that $Z \in \{1,.., K\}^{N\times N \times 2}$. ~\\
 
-@ERIC: This representation would justify to explain our interpretation for the Chinese Restaurant Franchise (CRF), because we clearly see it now...
+@ERIC: This representation would justify to explain our interpretation for the Chinese Restaurant Franchise (CRF), because we see it explicitly here...
 
 \subsubsection{MCMC Updates for Posterior Inference}~\\
 
@@ -138,67 +120,6 @@ Finally $\Theta$ and $\Phi$ can be reconstructed from the count matrices with th
 \end{align}
 
 $C$ and $N$ are counts matrices and are describes in section \ref{burst_class}. We refer to the supplementary material for detail of derivations for MCMC updates. 
-
-\subsubsection{Properties}
-
-\label{burst_class}
-
-In the latent class models each  dyads has two underlying  class assignments for each node of the couple. We note $Z \in N\times N\times 2$ the matrix that represents those class assignments.
-We seek for the following form of the likelihood, that we marginalize over all the possible couples classes $c=(k, k')$:
-\begin{equation} \label{eq:q}
-\pr(y_{ij}=1 \mid Y^{-i\bm{.}}, Z^{-ij}, d_i ) = \sum_{c=(k, k')} \pr(y_{ij}=1 \mid Y^{-i\bm{.}}, d_i , c) \pr(c \mid  Z^{-ij} ) 
-\end{equation}
-Here note that within the sum, the left hand term is conditionally independent of $Z^{-ij}$. And the right hand term is independent of the adjacency terms $Y^{-i\bm{.}}$ since it do not belongs to the Markov blanket of $c$ random variable.
-
-The first term is the likelihood for the links between $(i,j)$ given the class of each node (k, k'). Due to the Beta-Bernoulli conjugacy of the model, $\phi$ and $\theta$ can be marginalized out, and it simplify to: 
-\begin{equation} \label{eq:qc}
-\pr(y_{ij}=1 \mid Y^{-i\bm{.}}, d_i , c) = \frac{C_{c1}^{-i.} + d_{ic} + \lambda_1}{C_{c\bm{.}}^{-ij} + \lambda_0+\lambda_1} 
-\end{equation}
-Where $C_{c1}$ denotes the count matrix for all interactions having value 1 (link present) with the classes couple being $c=(k, k')$. Thus $C_{c1} = \sum_{i,j} \bm{1}(z_{i\rightarrow j}=k, z_{i\leftarrow j}=k', y_{ij}=1)$ and $C_{c.} = \sum_{i,j} \bm{1}(z_{i\rightarrow j}=k, z_{i\leftarrow j}=k')$\\
-
-We recognize the likelihood form of the Gibbs update~\cite{HDP}, except that we isolate the term depending of the degree on $i$, $d_i$. Hence the term $d_{ic}$ is the element of the degree with a classes couple $c=(k,k')$ and $d_{ic} = \sum_{j' \neq j} \bm{1}(z_{i\rightarrow j'}=k, z_{i\leftarrow j'}=k', y_{ij'}=1) $.\\
-
-The second term of equation \eqref{eq:q}, can be rewrited by noting that the classes of the couple $c$ are independent and that the term $Y^{-j\bm{.}}$ can be dropped because it is not present in the Markov blanket of the class assignment: 
-\begin{equation} \label{eq:topic_assign}
-\pr(c \mid  Z^{-ij} ) =  \pr(z_{i\rightarrow j}=k \mid Z^{-ij}) \pr(z_{i\leftarrow j}=k' \mid Z^{-ij})
-\end{equation}
-
-Again, the two members of the right hand equation \eqref{eq:topic_assign} are the Gibbs updates for the topic assignments of nodes for the interaction $(i,j)$. Both members reduce to simple form due to the conjugacy between the Dirichlet and Multinomial~\cite{DM} or concurrently from the Chinese Restaurant Franchise~\cite{HDP}:
-\begin{align}
-\pr(z_{i\rightarrow j}=k \mid Z^{-ij}) = \frac{N_{ik}^{-ij} + \alpha_k}{ N_{i.}^{-ij} + \alpha_{\bm{.}} } \\
-\pr(z_{i\leftarrow j}=k' \mid Z^{-ij}) = \frac{N_{jk'}^{-ij} + \alpha_{k'}}{ N_{j\bm{.}}^{-ij} + \alpha_{\bm{.}} } 
-\end{align}
-
-Finally, one can see that the only term depending on the degree $d_i$ is isolated, and we can rewrite equation \eqref{eq:q}, with term depending only on $d_i$, $k$, $i$ and $j$:
-\begin{equation}
-\pr(y_{ij}=1 \mid Y^{-i\bm{.}}, Z^{-ij}, d_i ) = \sum_{c=(k, k')} A_c (B_c + d_{ic})
-\end{equation}
-Where $A_c$ and $B_c$ are two positive function of $c$.
-\begin{align}
-A_c &= \frac{N_{ik}^{-ij} + \alpha_k}{ N_{i.}^{-ij} + \alpha_{\bm{.}} } \frac{N_{jk'}^{-ij} + \alpha_{k'}}{ N_{j\bm{.}}^{-ij} + \alpha_{\bm{.}} } \frac{1}{C_{c\bm{.}}^{-ij} + \lambda_0+\lambda_1} \\
-B_c &= C_{c1}^{-i.} + \lambda_1
-\end{align}
-
-As we sum over all possible couple classes, the probability to have a link will augment with the degree with the classes couple corresponding to the element of the degree with the same couple. Hence the probability to observe a link for node $i$ is strictly crescent with his degree $d_i$. 
-
-\paragraph{Preferential Attachment}~\\
-
-The model is bursty hence it can handle the preferential attachment at the network level.
-
-\paragraph{Local Preferential Attachment}~\\
-
-The Local preferential attachment is similar to the notion of burstiness but inside a community/class of the network. Assuming that we know the class of $i$ $z_{i\rightarrow j}$ to be $k$, the probability to have a link becomes: 
-\begin{align}
-\pr(y_{ij}=1 \mid Y^{-i\bm{.}}, d_i,z_{i\rightarrow j})  &= \sum_{k'} \pr(y_{ij}=1 \mid Y^{-i\bm{.}}, Z^{-ij}, d_i , c=(k,k')) \pr(z_{i\leftarrow j}=k' \mid Z^{-ij} ) \\
-&= \sum_{k'} \frac{C_{c1}^{-i.} + d_{ic} + \lambda_1}{C_{c\bm{.}}^{-ij} + \lambda_0 + \lambda_1} \frac{N_{jk'}^{-ij} + \alpha_{k'}}{ N_{j\bm{.}}^{-ij} + \alpha_{\bm{.}} } \\
-&= \sum_{k'} A'_{k'} (B'_{k'} + d_{i(k,k')})
-\end{align}
-
-Here the probability increases with the degree independently of the interactions classes. This means that burstiness is possible inside but also between communities.
-
-\paragraph{Communities Distribution}~\\
-
-....Need to count the table for each classes in Chinese Restaurant Franchise (CRF), to evaluate the distribution according to the hyperprior of HDP...
 
 
 \subsection{Comparison of models}
