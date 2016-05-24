@@ -22,7 +22,7 @@ s(i,j) = \theta_i \Phi \theta_j^\top
 \end{equation}
 
 \begin{proposition}[]
-Let's suppose a model $ \M_s=\{\Theta, \Phi, s\}$ with the similarity measure defined as $s(i,j) = \theta_i \Phi \theta_j^\top$, the ILFM and MMSB models are homophilic.
+Let's suppose a model $ \M_s=\{\Theta, \Phi, s\}$ with the similarity measure defined as $s(i,j) = \theta_i \Phi \theta_j^\top$, then the ILFM and MMSB models are homophilic.
 \end{proposition}
 
 \begin{IEEEproof}
@@ -47,9 +47,10 @@ A natural constraint for the \emph{topology metric}, would be to stay consistent
 
 
 \begin{proposition}[] \label{prop:hom_mn}
-Let's suppose a model $ \M_s=\{\Theta, \Phi, s\}$ with the similarity measure defined as $s(i,j) = \theta_i \theta_j^\top$ and $\sigma$ a strictly increasing function or the identity. Let's suppose a $K\times K$ matrix normal prior over weight matrix such as $\Phi \sim \N_K(M, U, V)$ and the mean matrix $M$ be a diagonal matrix. Then homophily hold for $\M$ if $M=\Lambda I_K$ with $\Lambda > 0$.
+Let's suppose a model $ \M_s=\{\Theta, \Phi, s\}$ with the similarity measure defined as $s(i,j) = \theta_i \theta_j^\top$ and $\sigma$ a strictly increasing function or the identity. Let's suppose a $K\times K$ matrix normal prior over weight matrix such as $\Phi \sim \N_K(M, U, V)$ and the mean matrix $M$ to be a diagonal matrix. Then homophily hold for $\M$ if $M=\Lambda I_K$ with $\Lambda > 0$.
 \end{proposition}
-\paragraph{Proof} 
+
+\begin{IEEEproof}
 Suppose that for two couple of nodes $(i,j,i',j') \in V^4$ we have $s(i,j) > s(i',j')$, with $s(i,j) =\theta_i \theta_j^\top$. We first examine the difference of expectations:
 \begin{align}
 &\E_{\Phi}[\pr(y_{ij}=1\mid \Theta)] - \E_{\Phi}[\pr(y_{i'j'}=1\mid \Theta)] \\
@@ -71,8 +72,7 @@ It follows that:
 \E_{\Phi}[\theta_i \Phi \theta_j] - \E_{\Phi}[\theta_{i'} \Phi \theta_{j'})] > \Lambda (\theta_i \theta_j - \theta_{i'} \theta_{j'} )
 \end{equation}
 Homophily is satisfied for $\Lambda > 0$.
-
-~\\
+\end{IEEEproof}~\\
 
 Proposition \ref{prop:hom_mn} highlight a generalization of the ILFM model where the correlation between feature depend on their proximity. This enable the interpretation of features as communities because node who belongs to the same membership have a higher probability to binds.
 

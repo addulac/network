@@ -71,7 +71,7 @@ In the latent class model, the rows of the feature matrix $\Theta$ are Dirichlet
 \theta_i &\sim \mathrm{Dirichlet}(\alpha_0) \quad\text{ for }  i \in \{1, .., N\} \\
 \phi_{mn} &\sim \mathrm{Beta}(\lambda) \quad\text{ for }  m,n \in \{1, .., K\}^2 
 \end{align}
-The observation level is defined by multinomial draws of class assignments for each nodes. The likelihood for a links depends only on the class assignments of the nodes  and for $i, j \in V$, we have:  
+The observation level is defined by multinomial draws to obtain class assignments for each nodes. The likelihood for a links depends only on the class assignments of the nodes  and for $i, j \in V$, we have:  
 \begin{align}
 z_{i\rightarrow j} &\sim \mathrm{Mult}(\theta_i) \\
 z_{i\leftarrow j} &\sim \mathrm{Mult}(\theta_j) \\

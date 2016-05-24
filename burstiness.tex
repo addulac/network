@@ -15,7 +15,7 @@ The preferential attachment states that a node is more likely to create connecti
 
 In~\cite{clinchant2010information}, this definition has been generalized to the continuous case but, in the sequel, we will retain this first definition since we focus on discrete distributions.~\\
 
-The burstiness can appear for different various variable in a model. In this paper we consider three different schemes at the node and feature level, that constitute some basic assumptions on networks:
+The burstiness can appear for different various variable in a model. In this paper we consider three different schemes at the node and feature level, that constitute some basic topology assumptions on networks:
 
 \begin{proposition}~\\
 for all $i,j \in V^2$ and $k \in \{1,.., K\}$, we have:
@@ -50,7 +50,7 @@ Under the assumption that all observed links have higher probability than the ob
 We then have with some regularity:
 
 \begin{align}
-&f(d_i)\geq \sigma(F_iWF_{g(p)}^T)^{d_i +1} (1 - sigma(F_iWF_{g(p+1)}^T))^{N - d_i} \\
+&f(d_i)\geq \sigma(F_iWF_{g(p)}^T)^{d_i +1} (1 - \sigma(F_iWF_{g(p+1)}^T))^{N - d_i} \\
 &log(f(d_i)) \geq d_i log(\frac{\sigma(F_iWF_{g(p)}^T)}{1-  \sigma(F_iWF_{g(p+1)}^T)}) + cst
 \end{align}
 
