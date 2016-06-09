@@ -22,7 +22,7 @@ for all $i,j \in V^2$ and $k \in \{1,.., K\}$, we have:
 \begin{itemize}
 	\item Preferential Attachment: the distribution of degree $d_i$ is bursty iff $f_i$ is a stricly increasing function of n with: $$f_i(n)=\pr(y_{ij}=1 \mid d_i=n)$$
 	\item Local Preferential Attachment: Given a class couple $c= \{k, k'\} \in \{1,..,K\}^2$, and a degree restricted to nodes who belongs to this interaction couple $d_{ic}$, the distribution of degree $d_{ic}$ is bursty iff $f_{i,c}$ is a stricly increasing function of n with: $$f_{i,c}(n)=\pr(y_{ij}=1 \mid d_i=n, c)$$
-	\item Feature burstiness (block/class burstiness ?:s): the distribution over the number of membership of each class is bursty iff  $f_k$  is a stricly increasing function of n with: $$f_k(n) = \pr(\theta_{ik} \mid \theta_{\bm{.}k}^{-ik}=n)$$ 
+	\item Feature burstiness (block/class burstiness ?:s): the distribution over the number of membership of each class $\theta_{\bm{.}k}^{-ik}$ is bursty iff  $f_k$  is a stricly increasing function of n with: $$f_k(n) = \pr(\theta_{ik} \mid \theta_{\bm{.}k}^{-ik}=n)$$ 
 \end{itemize}
 \end{proposition}
 
