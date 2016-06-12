@@ -4,6 +4,43 @@ To validate our theoretical results we fitted our models on synthetic networks a
 
 The synthetic network has 1000 nodes and 4 communities and a density of 0.05. [See the ref of the generator for the ground true on the preferential attachment effect...]
 
+\section{Homophily Indicator}
+
+We consider a social network defined as an attributed  graph G = (V,E), where $V$ is a set of $N$ nodes representing entities, $E \in V \times V$ is a set of $m$ edges  representing relationships between pairs of entities. Each node $i \in V$ is described by K features and s is a similarity function which allows to compare two vertices according to their features.  
+We consider that two vertices are similar, denoted s(x,y), if s(x,y) is lower than a threshold.
+
+
+Given a contingency table defined as follows:
+
+$a = Card\{(x,y)\in V\times (V-1) / (x,y) \in E \land s(x,y)\}$\\
+$b = Card\{(x,y)\in V\times (V-1) / (x,y) \in E \land \neg{s(x,y)}\}$\\
+$c = Card\{(x,y)\in V\times (V-1) / (x,y) \notin E \land s(x,y)\}$\\
+$d = Card\{(x,y)\in V\times (V-1) / (x,y) \notin E \land \neg{s(x,y)}\}$\\
+$\frac{N*(N-1)}{2}$ is the total count of the cells in the contingency table.\\
+
+The measure that we introduced to evaluate the homophily in the network is given by:\\
+
+$Hobs(G) = \frac{2[(a+d)-(c+b)]}{N*(N-1)}$\\
+This measure takes is value between $-1$ and $1$. It is equal to 1 when  all the pairs of similar vertices are linked and all the pairs of dissimilar verices are not linked.
+Otherwise, when all pairs of similar vertices are not linked and all pairs of dissimilar verices are linked, it is equal to -1.
+
+This measure of observed homophily in the network can be compared with an expected value computed on a network having the same number of vertices and edges but where the probability of having a link beteween two vertices is independant of their similarity and consequently of their features, which does not respect the homophily property according which  two vertices are more  likely to be connected if they share common characteristics.
+
+In order to compute the expected homophily indicator we estimate the probability for pairs of vertices of being linked and similar in the following way:\\
+$PR = \frac{2M}{N*(N-1)}$\\
+$PS = \frac{2*Card\{(x,y)\in V\times (V-1) / s(x,y)\}}{N*(N-1)}$\\
+with $PNR = 1 - PR$ and $PNS = 1 - PS$\\
+
+Then, with the following contingency table: \\
+$a' = \frac{PR*PS*N*(N-1)}{2}$\\
+$b' = \frac{PNR*PS*N*(N-1)}{2}$\\
+$c' = \frac{PR*PNS*N*(N-1)}{2}$\\
+$c' = \frac{PNR*PNS*N*(N-1)}{2}$\\
+we compute the expected homophily as follows:\\
+$Hexpect(G) = \frac{2[(a'+d')-(c'+b')]}{N*(N-1)}$\\
+
+A social network exhibits homophily if $Hobs(G)$ is higher than $Hexpect(G)$.
+
 %Our experiments evaluate the preferential attachment and the local preferential attachment on the learned communities trough respectively the distribution of degrees in the networks and inside the communities.
 %\begin{figure}[h]
 %	\centering

@@ -1,0 +1,12 @@
+\section{Sampling $beta$}
+
+According to~\cite{HDP}, $\beta$ is distributed as follows:
+
+\begin{align}
+\beta = (\beta_1,...,\beta_K, \beta_u) \sim Dir(m_{\bm{.}1},..., m_{\bm{.}K}, \gamma)
+\end{align}
+Where $m_{\bm{.}k}$ represent the number of tables serving the dish $k$ in all restaurants, in the chinese restaurant franchise. The sampling of the table configuration $\bm{m}$ can be done using the unsigned Stirling numbers of the first kind $s(n,m)$ ~\cite{antoniak1974mixtures}:
+\begin{equation}
+    \pr(m_{ik}=m \mid Z, \bm{m}^{-jk}, \beta ) = \frac{\Gamma(\alpha_0 \beta_k)}{\Gamma(\alpha_0 \beta_k + N_{jk})} s(n_{jk}, m) (\alpha_0 \beta_k)^m
+ \end{equation}
+

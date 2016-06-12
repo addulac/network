@@ -1,0 +1,23 @@
+
+\section{IMMSB}
+
+In the IMMSB the generative process has two DP levels. The first level of the DP represent the shared classes over the networks. It can be expressed using the stick breaking process while the class themselves are Beta distributed:
+
+\begin{align}
+    &\mathbf{\beta} \sim \gem(\gamma)  \\
+    \phi_{mn} &\sim \mathrm{Beta}(\lambda) \quad\text{ for }  m,n \in \{1, .., K\}^2
+\end{align}
+
+The second level of DP are drawn from the first level, and gives the proportion of classe per node.
+\begin{align}
+    \theta_i &\sim \DP(\alpha_0, \beta) \quad\text{ for }  i \in \{1, .., N\}
+\end{align}
+
+Then, for each observations $i, j \in V$, a single class is drawn, and the probability to draw a link is given by a Bernoulli kernel:
+
+\begin{align}
+    z_{i\rightarrow j} &\sim \Mult(\theta_i) \\
+    z_{i\leftarrow j} &\sim \Mult(\theta_j) \\
+    y_{ij} &\sim \mathrm{Bern}(z_{i\rightarrow j} \Phi z_{i\leftarrow j}^\top)
+\end{align}
+
