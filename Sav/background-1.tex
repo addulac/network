@@ -1,0 +1,44 @@
+\section{Background}
+
+\subsection{Relational Learning}
+Relational learning provides a framework for predictive task in graph based data. Even though we focus on  graphical models, we seek for a general representation in this framework. Indeed most of the models have a matrix factorization representation~\ref{MFDCA}. While bringing a bridge between classical matrix factorization approach, such as ICA and NMF, it represents a common frameworks for latent variables analysis to emphasize core structural similarities of observed variables. A formal introduction that review this bridge was done in~\cite{DCA}, and has been generalized to Mixed Membership Models~\cite{MMM}.
+
+\subsection{Bayesian Models}
+Our work rely on two concurrent models in this framework. They account for baselines in our analysis, although they are near state of the art approach~\cite{ILAM, EMMSB}.
+
+\subsubsection{Proportion feature -- MMSB}
+The first model we focus on falls down in the \emph{latent class} category. In this link prediction model, each node has a latent feature vector of class proportion. For each single interaction between two nodes, one class is drawn for each one. The probability to have a link is only conditioned on the classes assignment. This model has a natural interpretation in term of soft clustering, by predicting the link structure according to which class nodes belong to in an Latent Dirichlet Allocation like generative process. Our reference for the class based model is the Mixed Membership Stochastic Blockmodel (MMSB) ~\cite{MMSB} and its nonparametric version using a Hierarchical Dirichlet Process prior (HDP)~\cite{HDP}.~\\
+
+
+\subsubsection{Binary feature -- ILFM}
+The second model of interest is related to the \emph{latent feature} category. Here, each node has an associated feature vector and the model uses the features to predict the link structure. In this approach, and with binary features, ones's can see each active features (set to one) as a membership indicator for the corresponding node. Our reference for the feature based model is binary matrix factorization (BMF)~\cite{BMF} and its nonparametric version using a Indian Buffet Process (IBP)~\cite{IBP} known as the Infinite Latent Feature Model (ILFM)~\cite{ILFRM}. Note that we will avoid to refer to this model by the term \emph{latent feature} because both latent class/feature model carry the notion of latent features regarding nodes of a network, either as a proportion vector or as a binary vector.
+(-- Rename the latent feature model to the Mixed Membership Deterministic Blockmodel (MMDB) vs MMSB. (see graphical model).)~\\
+
+The difference between the two approaches can be expressed by the structure of the Bayesian network or Graphical Model (GM) behind the generative model, and the type of priors chosen for the random variables distributions \ref{fig:bayes_net}. Nevertheless the GM formalizes the regularization applied when fitting the model in a meaningful way, while both models can have a common interpretation in terms of matrix factorization. Thus, pursuing the approach in~\cite{DCA}, it allows us to highlight a structural similarity in the general field of relational learning.
+
+\subsection{Social Networks}
+Without loss of generality, we focus on social networks with binary relationships. Our object of interest is the topology of the network representing the presence or absence of links between nodes in the graph. The network can be either directed or not. For a network with $N$ nodes, we represent the topology by an adjacency matrix $Y \in \{0,1\}^{N\times N}$ associated to a graph $G = (V,E)$, where $V$ is a set of nodes representing entities, $E \in V \times V$ is a set of edges who represents relationships between pairs of entities. From a probabilistic point of view, the network topology is modeled using a kernel with a Bernoulli density. The parameters of the Bernoulli is the probability to observe a link between two nodes.
+
+We define a matrix of weight interactions $\Phi \in W^{K\times K}$ with $W$ the space of weights, where $K$ is the number of classes or features. Let $\Theta \in \mathcal{F}^{N\times K}$, be a matrix where each row $i$ represents the latent feature vector associated to the node $i$,  and $\cal{F}$ the latent feature space. Hence for the MMSB and ILFM, the latent feature vectors are respectively proportion vectors (who sum to one) and binary vectors. In this framework the network is generated with the following density:
+\begin{equation} \label{MFDCA}
+    Y \sim \mathrm{Bern}(\sigma(\Theta \Phi  \Theta^T))
+\end{equation}
+where $\sigma$ is a function that map values to a probability space. When $\sigma$ is the identity function, the expectation of the observation reduces to a matrix factorization (bilinear) expression, and is related to Discrete Component Analysis (DCA)~\cite{DCA}:
+\begin{equation}
+E_{y \sim p(y|\Theta, \Phi)}[Y] = \Theta \Phi  \Theta^T
+\end{equation}
+
+This matrix factorization approach of the Bayesian model is in due to the likelihood of the model when applying the sum rule over the latent variables. Indeed the probability to have a link for the interaction $(i,j)$ is:
+\begin{equation}
+\pr(y_{ij}=1 \mid \Theta, \Phi ) = \sum_{k, k'} \pr(y_{ij}=1\mid\phi_{k,k'}) \pr(k \mid\theta_i) \pr(k' \mid \theta_j)
+\end{equation}
+
+
+The questions that arise are:
+\begin{itemize}
+	\item What kind of properties the model can capture or learn on networks ?
+	\item Which constraint on the models can come with an consistent interpretation of latent variables along with the concepts of communities structure and homophily in social networks  ?
+\end{itemize} 
+
+In the next session we review the models of interest.
+

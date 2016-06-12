@@ -42,9 +42,9 @@
 \newcommand{\V}{\mathcal{V}}
 \newcommand{\N}{\mathcal{N}}
     
-%\author{Adrien Dulac}
+\newcommand{\mat}[1]{\mathbf{#1}}
 
-\title{Social Networks Topology\\ with Bayesian Perspectives}
+\title{Are latent feature/class models adapted for link prediction in social networks?}
 
 %\date{avril 2015}
 
@@ -56,7 +56,6 @@
 	
 \maketitle
 \begin{abstract}
-Burstiness, preferential attachment, Assortativity, community detection, link prediction, dyadic relation, latent class model, latent feature model. Matrix Factorization, Bayesian, uncertanty, regularisation
 \end{abstract}
 
 \IEEEpeerreviewmaketitle
@@ -64,17 +63,21 @@ Burstiness, preferential attachment, Assortativity, community detection, link pr
 
 
 \input{intro.tex}
-\input{motiv.tex}
-\input{related_work}
+%\input{motiv.tex}
 \input{background.tex}
 \input{models.tex}
 \input{homophily.tex}
 \input{burstiness.tex}
 \input{expe.tex}
-\input{sup.tex}
+\input{related_work.tex}
+\input{conclusion.tex}
+%\input{sup.tex}
 
 \bibliographystyle{unsrt}
 \bibliography{./a}
+
+\appendix
+\input{appendix}
 
 \end{document}
 
