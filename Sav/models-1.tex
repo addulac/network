@@ -1,0 +1,132 @@
+\section{Models}
+%\emph{Yet another view} ~\\
+\label{sec:models}
+
+As mentioned before, we focus in this study on two major representatives of the latent models used for link prediction in social networks, namely the latent feature model \cite{BMF} and the latent class model \cite{MMSB}. To be as general as possible, we consider non-parametric extensions of these models, respectively based on the Indian Buffet Process (IBP) and the Hierarchical Dirichlet Process (HDP). Such extensions have already been considered in the past, {\it e.g.} through the Infinite Latent Feature model \cite{ILFRM} and \textcolor{red}{To be completed - maybe second extension not considered yet}
+
+We now briefly describe the two models retained.
+%Our two chosen baseline use prior distributions that fall into the two major classes of discrete nonparametric priors. The Hierarchical Dirichlet Process (HDP) that generalizes the Latent Dirichlet Allocation (LDA) for infinite mixtures models. On the other hand, the Indian Buffet Process (IBP), which is the generalization of the Beta-Bernoulli compound distribution (ie Beta Process), which generates infinite binary matrices. The nonparametric models in their truncated version are equivalent to well-known models such as LDA, widely used for text analysis, and Mixed Membership Stochastic Blockmodel which is an adaptation of the latter for relational learning.~\\
+
+%We adopt the following notation; if a matrix has a negative index superscripted, it indicates that the values corresponding to this index are excluded. A dot $\bm{.}$ in the index means that we marginalize over all possible values.
+
+\subsection{Infinite Latent Feature Model}
+
+In the latent feature model, each node is represented by a vector of binary features. The probability of linking two nodes is then based on a weighted similarity between their feature vectors, the weight matrix being generated according to a normal distribution. In its non-parametric version, the feature vectors are now generated according to an IBP, leading feature vectors of infinite dimensions (even though only a finite number of dimensions are actually active). The following steps summarizes this process:
+%
+\begin{enumerate}
+\item Generate an feature matrix $\mat{F}_{N \times \infty}$ representing the feature vector of each node: $\mat{F} \sim \IBP(\alpha)$
+\item Generate a weight matrix for each latent feature:\\
+ $\mat{\phi}_{mn} \sim N(0, \sigma_w), \, m,n \in \mathbb{N}^{+*}$
+\item Generate or not a link between any node $i$ and any node $j$ according to: 	$y_{ij} \sim \mathrm{Bern}(\sigma(\mat{f}_{i.} \mat{\Phi} \mat{f}_{j.}^\top))$
+\end{enumerate}
+%
+where $\sigma()$ is the sigmoid function, mapping $[-\infty, +\infty]$ values to [0,1], and where $y_{ij}$ is a binary variable indicating that a link has been generated ($y_{ij}=1$) or not ($y_{ij}=0$). $\mat{f}_{i.}$ denotes the $i^{th}$ row of $\mat{F}$.
+
+This model makes use of two real hyper-parameters, one for the IBP process ($\alpha$), and one for the variance of the normal distribution underlying the weight matrix ($\sigma_w$). In the case of undirected networks, the matrix $\mat{\Phi}$ is considered symmetric and only its upper (or lower) diagonal part is generated according to step 2 above. Lastly, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. In practice however, one always deal with a finite number of latent features. A graphical representation of this model is given in Figure~\ref{fig:ilfrm}.
+
+\begin{figure}[t]
+	\centering
+	\minipage{0.25\textwidth}
+	\scalebox{0.88}{
+	\input{./img/ilfrm2.tex}}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\scalebox{0.88}{
+		\input{./img/mmsb2.tex}}
+	\endminipage
+	\caption{The two graphical representations of (left) the latent feature model and (right) the latent class model. The difference between the two models lies in the way representations are associated to nodes: a fixed representation is used in the case of the latent feature model, whereas the representation in the latent class model varies according to the link considered.}
+	\label{fig:ilfrm}
+\end{figure}
+
+Standard Gibbs sampling and Metropolis-Hasting algorithms can be used for inference in this model. The Gibbs update for the matrix $\mat{F}$ are given by (see \cite{IBP}):
+%
+\begin{align}
+& P(f_{ik} = 1 \mid \mat{F}^{-ik}) = \frac{m_k^{-i}}{N} \nonumber \\
+& P(f_{ik} = 0 \mid \mat{F}^{-ik}) = 1 - \frac{m_k^{-i}}{N} \nonumber
+\end{align}
+%
+where $m_k^{-i}$ represents the number of active features $k$ for all nodes excluding node $i$, hence $m_k^{-i} = \sum_{j=1, j\neq i}^N f_{jk}$. $\mat{F}^{-ik}$ represents the matrix $\mat{F}$ without its element on the $i^{th}$ row and $k^{th}$ column.
+
+The learning of the weight matrix $W$ is computed using a Metropolis-Hasting algorithm in which each weight is sequentially sampled according to (\cite{IBP}): 
+%
+\begin{equation}
+P(\phi_{mn} \mid \mat{Y}, \mat{F}, \mat{\Phi}^{-mn}, \sigma_w) \propto P(\mat{Y} \mid \mat{F}, \mat{\Phi}) P(\phi_{mn} \mid \sigma_w) \nonumber
+\end{equation}
+%
+where $\mat{Y}$ represents the $N \times N$ matrix\footnote{This matrix is symmetric if the network is undirected.} with elements $y_{ij}$. One can then choose a jumping distribution in the normal family (as for the prior), with a mean based on the previous sample:
+%
+\begin{equation} \label{eq:j_w}
+J(\phi_{mn}^* \mid \phi_{mn}) = \mathcal{N}(\phi_{mn}, \eta) \nonumber
+\end{equation}
+%
+where $\eta$ is a parameter controlling the acceptance ratio, $r_{\phi_{mn}\rightarrow \phi_{mn}^*}$, defined by:
+%
+\begin{equation} \label{eq:r_w}
+r_{\phi_{mn}\rightarrow \phi_{mn}^*} = \frac{ P(\mat{Y} \mid \mat{F}, \mat{\Phi}^*)P(\phi_{mn}^* \mid \sigma_w)J(\phi_{mn} \mid \phi_{mn}^*) }{ P(\mat{Y} \mid \mat{F}, \mat{\Phi})P(\phi_{mn} \mid \sigma_w)J(\phi_{mn}^* \mid \phi_{mn} )} \nonumber
+\end{equation}
+
+\subsection{Proportion Feature}
+
+In the latent class model, the rows of the feature matrix $\Theta$ are Dirichlet distributed, and the weights interaction are Beta distributed : 
+\begin{align}
+\theta_i &\sim \mathrm{Dirichlet}(\alpha_0) \quad\text{ for }  i \in \{1, .., N\} \\
+\phi_{mn} &\sim \mathrm{Beta}(\lambda) \quad\text{ for }  m,n \in \{1, .., K\}^2 
+\end{align}
+The observation level is defined by multinomial draws to obtain class assignments for each nodes. The likelihood for a links depends only on the class assignments of the nodes  and for $i, j \in V$, we have:  
+\begin{align}
+z_{i\rightarrow j} &\sim \mathrm{Mult}(\theta_i) \\
+z_{i\leftarrow j} &\sim \mathrm{Mult}(\theta_j) \\
+y_{ij} &\sim \mathrm{Bern}(z_{i\rightarrow j} \Phi z_{i\leftarrow j}^\top)
+\end{align}
+
+In this special case, the mapping function $\sigma$ is the identity.
+
+\paragraph{Altenartive Description ! (wich one we keep ?)}~\\
+
+An alternate view, maybe more consistent with the IBP representation is to say that:
+\begin{align}
+Z &\sim CRF(\alpha_0, \gamma) \\
+\phi_{mn} &\sim \mathrm{Beta}(\lambda) \quad\text{ for }  m,n \in \{1, .., K\}^2  \\
+y_{ij} &\sim \mathrm{Bern}(\Phi_{z_{i\rightarrow j} , z_{i\leftarrow j}})
+\end{align}
+
+In the (not printed here) corresponding graphical model, the arrow between $z_{\rightarrow}$ and $Z$ are dashed as for the IBP representation. Note that $Z \in \{1,.., K\}^{N\times N \times 2}$. ~\\
+
+@ERIC: This representation would justify to explain our interpretation for the Chinese Restaurant Franchise (CRF), because we see it explicitly here...
+
+\subsubsection{MCMC Updates for Posterior Inference}~\\
+
+In the latent class model, the collapsed gibbs sampling approach allow us to only sample the classes couple for each observations:
+
+\begin{equation}
+\pr(z_{ji}=k, z_{ij}=k' \mid .) \propto \pr(z_{ji}=k \mid .) \pr(z_{ij}=k' \mid .) f_{(k,k')}^{-ji}(y_{ji})
+\end{equation}
+
+
+The class assignment updates for the node couple are:
+\begin{align}
+\pr(z_{i\rightarrow j} =k \mid Z^{-ij}) &\propto N_{ik}^{-ij} + \alpha_0 \\
+\pr(z_{i\leftarrow j} =k \mid Z^{-ij}) &\propto N_{jk}^{-ij} + \alpha_0 
+\end{align}
+
+And the likelihood of a link given the couple $c=(k, k')$ is:
+\begin{equation} \label{eq:cgs_mmsb}
+f_{(k, k')}^{-ij}(y_{ij}=r) = \frac{C_{(k,k')r}^{-ij} + \lambda_r}{C_{(k,k')\bm{.}}^{-ij} + \sum_r\lambda_{r'}} 
+\end{equation}
+
+Finally $\Theta$ and $\Phi$ can be reconstructed from the count matrices with the following equations:
+\begin{align}
+\theta_{ik} &= \frac{N_{ik} + \alpha_0}{ N_{i\bm{.}} + K\alpha_0} \\
+\phi_{rc} &= \frac{C_{cr} + \lambda_r}{ C_{c.} + \lambda_{\bm{.}}}
+\end{align}
+
+$C$ and $N$ are counts matrices and are describes in section \ref{burst_class}. We refer to the supplementary material for detail of derivations for MCMC updates. 
+
+
+\subsection{Comparison of models}
+class proportion vs feature vector \\
+Class strength vs feature correlation/metric ? \\
+HDP vs IBP \\
+complextity $O((E^2K^2)$ vs $O(NK^3)$ \\
+property yes/no
+
