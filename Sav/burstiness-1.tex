@@ -12,55 +12,71 @@ Burstiness has been studied in different fields, in particular in computational 
 \begin{definition}[Burstiness]
 	A discrete distribution $\pr$ is bursty if and only if, for all integers $(n, n')$, $n \geq n'$ :
 	\begin{equation}
-	\pr(X \geq n'+1 \mid X \geq n') > \pr(X \geq n+1 \mid X \geq n) \nonumber
+	\pr(X \geq n'+1 \mid X \geq n') > \pr(X \geq n+1 \mid X \geq n) 
 	\end{equation}
-	where $X$ denotes a random variable.
-\label{def:burst}
+	where $X$ denotes a random varaible.
 \end{definition}
 %
-In the context of social networks, the notion of burstiness, or preferential attachement, appears at different levels: (a) a global preferential attachment level that characterizes the degree distribution of nodes in the network, (b) a local preferential attachment level that characterizes the degree distribution of nodes within communities, and (c) a class/feature burstiness level that characterizes the distributions of nodes among latent classes/features. We provide below a formal definition of these elements.
-%
-\begin{definition}[Burstiness in social networks]
-Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree. Furthermore, let $\mathcal{M}=\{\mat{F},\mat{\Phi}\}$ be a link prediction model as defined in Section~\ref{sec:models}.
-\begin{description}
-	\item (i) \emph{Global Preferential Attachment}: we say that $\mathcal{M}$ satisfies the global preferential attachement iff, for any node $j \in V$ not connected to $i$, $\pr(y_{ij}=1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$.
-	\item (ii) \emph{Local Preferential Attachment}: we say that $\mathcal{M}$ satisfies the local preferential attachement iff, for any node $j \in V$ not connected to $i$ and belonging to the same community as $i$, $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \mat{F}, \mat{\Phi})$ increases with $n$; $d_{i,c}$ denotes the degree of node $i$ in its community.
-	\item (iii) \emph{Class/Feature Burstiness}: we say that $\mathcal{M}$ satisfies the feature/class burstiness effect, iff, for any node $i$ and latent class/feature $k$, $\pr(f_{ik} \ge 1 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \mat{F}, \mat{\Phi})$ increases with $n$; where $\mat{f}_{\bm{.}k}^{-ik}$ denotes the number of nodes, other than node $i$, assigned to latent class/feature $k$ in the network.
-\end{description}
-\label{def:burst-soc-net}
-\end{definition}
-%
-There are two things to note here. The first one is that $f_{ik}$ in (iii) equals $1$ for ILFM (as it relies on binary features), and is greater than 1 in IMMSB. The second one is that the fact that the probability $\pr(y_{ij}=1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$ is equivalent to the fact that the probability $\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$. Indeed:
-%
-\begin{align}
-\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
-= 1 - \prod_{j \notin \mathcal{V}(i)} P(y_{ij} = 0 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
-= 1 - \prod_{j \notin \mathcal{V}(i)} (1 - P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi})) \nonumber
-\end{align}
-%
-Hence $T\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ and $P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ vary in the same direction. The same development holds for $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \mat{F}, \mat{\Phi})$. The above definitions, characterizing probabilistic link models according to burstiness in social networks, are thus directly related to the general definition of burstiness given in Definition~\ref{def:burst}.
 
-We now turn to the problem of assessing whether ILFM and IMMSB satisfy the above burstiness effects.
+The burstiness can appear for different various variable in a model. In this paper we consider three different schemes at the node and feature level, that constitute some basic topology assumptions on networks:
+
+\begin{proposition}~\\
+for all $i,j \in V^2$ and $k \in \{1,.., K\}$, we have:
+\begin{itemize}
+	\item Preferential Attachment: the distribution of degree $d_i$ is bursty iff $f_i$ is a stricly increasing function of n with: $$f_i(n)=\pr(y_{ij}=1 \mid d_i=n)$$
+	\item Local Preferential Attachment: Given a class couple $c= \{k, k'\} \in \{1,..,K\}^2$, and a degree restricted to nodes who belongs to this interaction couple $d_{ic}$, the distribution of degree $d_{ic}$ is bursty iff $f_{i,c}$ is a stricly increasing function of n with: $$f_{i,c}(n)=\pr(y_{ij}=1 \mid d_i=n, c)$$
+	\item Feature burstiness (block/class burstiness ?:s): the distribution over the number of membership of each class $\theta_{\bm{.}k}^{-ik}$ is bursty iff  $f_k$  is a stricly increasing function of n with: $$f_k(n) = \pr(\theta_{ik} \mid \theta_{\bm{.}k}^{-ik}=n)$$ 
+\end{itemize}
+\end{proposition}
+
+We justify this approach in the supplementary materials~\ref{burst_proof}. One can see that the approach makes the link with the classical definition of preferential attachment. Furthermore one can see that the similaraty between th functions we track $(f_i, f_{i,c}, f_k)$ and the typical Gibbs updates. The difference is that we want to assess the generative model given the data and parameters of the model (ie the model has converged). Hence we are looking if the topological property of burstiness can be handle by the model once it learned from the data.~\\
+
+
+%Considering the nodes projection on latent variables, the projections for the nodes we evaluate might be considered either known or not known ($\Theta$ or $\Theta^{-ij}$) depending on the case study of preferential attachment or local preferential attachment.~\\
 
 \subsection{Burstiness for ILFM}
 
-In this model, one has: $P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) = \sigma(\mat{f}_i \mat{\Phi} \mat{f}_j^\top)$, which does not depend on $n$. This model is thus neutral wrt to global preferential attachment. The same holds for the local preferential attachment. Regarding feature burstiness, the resampling of $\mat{F}$ in the Gibbs updates takes the form (see \cite{ILFRM}):
-%
-\[
-\pr(f_{ik} = 1 \mid \mat{F}^{-ik},\mat{\Phi}, \mat{Y}) \propto \mat{f}_{\bm{.}k}^{-ik} \pr(\mat{Y} \mid f_{ik} = 1,\mat{F}^{-ik},\mat{\Phi})
-\]
-%
-where $\mat{F}^{-ik}$ denotes matrix $\mat{F}$ minus its entry at the $i^{th}$ row, $k^{th}$ column. This shows that $\pr(f_{ik} \ge 1 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \mat{F}, \mat{\Phi})$ increases with $n$.
+In this model, the weight interaction matrix $\Phi$ are not conjugate of the likelihood. Thus it can not be integrated out into a closed form expression. As a matter of simplicity we consider this parameter as known, and omit it the following conditional distributions.
 
-We thus have the following property:
-\begin{proposition}
-ILFM is neutral with respect to global and local preferential attachment. It furthermore satisfies the feature burstiness effect.
-\end{proposition}
+Let $F=\Theta$ and $W=\Phi$, each node $i$ has a fixed feature vector noted $F_i$ and a weighed interactions matrix $W$. In this case, the function $f_i$ is:
+\begin{align}
+&\pr(y_{ij}=1 \mid d_i, F^{-i\bm{.}}) = \sum_{F_i} \pr(y_{ij}=1 \mid d_i, F^{-i\bm{.}} F_i,) \pr(F_i \mid d_i, F^{-i\bm{.}}) \\
+&= \sum_{F_i} \sigma(F_iWF_j^T) \frac{\pr(d_i \mid F^{-i\bm{.}}, F_i) \pr(F_i\mid F^{-i\bm{.}}) }{\pr(d_i\mid F^{-i\bm{.}})}\\
+&\propto \sum_{F_i} \prod_{j' \in \V(i) \cup {j}} \sigma(F_iWF_{j'}^T)\prod_{j' \notin \V(i)} 1-\sigma(F_iWF_{j'}^T) \prod_k \frac{m_{ik}}{N}
+\end{align}
 
-\subsection{Burstiness for IMMSB}
-\label{subsec:burst-immsb}
+The term $\prod_k \frac{m_{ik}}{N}$ latter equation comes from the conditional probability of a feature $f_{ik}$ for an IBP prior and applying a chain of product rule. The product is the only term that depend on $d_i$ and we refer to it as $f(d_i)$.
+Under the assumption that all observed links have higher probability than the observed non-links to bind, we can choose an index dictionary $g$ to reorder the terms such as:
+\begin{equation}
+\underbrace{\sigma(F_iWF_{g(1)}^T) \geq .. \geq\sigma(F_iWF_{g(p)}^T) }_\text{$g(.) \in \V(i) \cup {j}$ }\geq \underbrace{ .. \geq \sigma(F_iWF_{g(N)}^T)}_\text{$g(.) \notin \V(i)$}
+\end{equation}
+We then have with some regularity:
 
-In IMMSB (which a latent class model), each link has two underlying class assignments, one for each node of the link. We note $Z \in N\times N\times 2$ the matrix that represents those class assignments.
+\begin{align}
+&f(d_i)\geq \sigma(F_iWF_{g(p)}^T)^{d_i +1} (1 - \sigma(F_iWF_{g(p+1)}^T))^{N - d_i} \\
+&log(f(d_i)) \geq d_i log(\frac{\sigma(F_iWF_{g(p)}^T)}{1-  \sigma(F_iWF_{g(p+1)}^T)}) + cst
+\end{align}
+
+
+Reste a valider 2 point:
+\begin{itemize}
+	\item Le passage à la proportion
+	\item Borner $log(f(d_i))$ entre deux fonction croissantes et montrer qu'on oscille pas à l'intérieur ?!
+\end{itemize}
+
+Then a sufficient condition for the burstiness is to have: $\sigma(F_iWF_{g(p)}^T) > 1- \sigma(F_iWF_{g(p+1)}^T)$. If $\sigma$ is the sigmoid this is equivalent ot have $F_iWF_{g(p)}^T > - F_iWF_{g(p+1)}^T$. 
+
+In other term to enable burstiness in the ILFM, the model need to ensure some deterministic behavior when regarding the realization of outcomes and there actual distribution.
+%The probability that a matrix $F$ is generated from the IBP is ~\cite{IBP}:
+%\begin{equation}
+%P(F \mid \alpha) = \frac{\alpha^{K_+}}{\prod_{i=1}^N K_1^{(i)} } \exp(-\alpha H_N) \prod_{k=1}^{K_+} \frac{(N - m_k)!(m_k - 1)!}{N!}
+%\end{equation}
+
+\subsection{Burstiness for MMSB}
+
+\label{burst_class}
+
+In the latent class models each  dyads has two underlying  class assignments for each node of the couple. We note $Z \in N\times N\times 2$ the matrix that represents those class assignments.
 We seek for the following form of the likelihood, that we marginalize over all the possible couples classes $c=(k, k')$:
 \begin{equation} \label{eq:q}
 \pr(y_{ij}=1 \mid Y^{-i\bm{.}}, Z^{-ij}, d_i ) = \sum_{c=(k, k')} \pr(y_{ij}=1 \mid Y^{-i\bm{.}}, d_i , c) \pr(c \mid  Z^{-ij} ) 
