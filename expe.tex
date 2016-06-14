@@ -1,12 +1,19 @@
 \section{Experimental study}
 
-To illustrate our theoretical results, we evaluate the ability of the models to capture homophily and preferential attachment on artificial and real networks.  We fit the models on the datasets and then, we track how well the models can reproduce the properties on the generated networks. In this view, using the same indicators, we compare the values computed respectively on the original network and on the generated network.
+To illustrate our theoretical results, we evaluate the ability of the models to capture homophily and preferential attachment on artificial and real networks.  We fit the models on the datasets using MCMC updates as describe in \ref{models}, for posterior inference. For all our experiments, we separate our dataset into a training set representing 80 \% of the size of the network, and 20\% for a testing set, randomly chosen. Inference is then run over 200 iterations. Our evaluation rely then in two strategy:
+\begin{itemize}
+\item We performed a predictive analysis on the testing set and compared the performance prediction of each models with the property of networks. 
+\item We used the relational models as generative process and generate synthetic network. We then verify that the properties of interest are well satisfied on this synthetic network.
+\end{itemize}
+
+%We track how well the models can reproduce the properties on the generated networks. In this view, using the same indicators, we compare the values computed respectively on the original network and on the generated network.
+We describe in the rest of this section, the indicators and the datasets that we used for our experiments, before presenting our results.
 
 \subsection{Properties evaluation}
 
 \textit{Homophily Indicators}
 
-To evaluate homophily, we use the measures introduced by \cite{largeron2015}, adapted from the test proposed by \cite{Easley2010}.  This test compares an expected homophily measure corresponding to the probability for two vertices to be similar with an observed homophily measure defined as the probability that two linked vertices are similar. More precisely, given a contingency table defined as follows:
+To evaluate homophily in a given attributed network, we use the measures introduced by \cite{largeron2015}, adapted from the test proposed by \cite{Easley2010}.  This test compares an expected homophily measure corresponding to the probability for two vertices to be similar with an observed homophily measure defined as the probability that two linked vertices are similar. More precisely, given a contingency table defined as follows:
 
 $a = Card\{(i,j)\in V\times (V-1) / (i,j) \in E \land s(i,j)\}$\\
 $b = Card\{(i,j)\in V\times (V-1) / (i,j) \in E \land \neg{s(i,j)}\}$\\ 
@@ -23,7 +30,13 @@ If the expected measure is significantly less than the observed measure, then th
 
 \textit{Preferential attachment}
 
-Preferential attachment leads to networks characterized by a degree distribution with a heavy tail which can be approximated by a power law. To evaluate this property, we  plot the degree distributions in log log scale for the original network and the generated network.
+Preferential attachment leads to networks characterized by a degree distribution with a heavy tail which can be approximated by a power law. To evaluate this property, we  plot the degree distributions in log log scale for the original network and the generated network.\\
+
+
+\textit{Preditive performance}
+
+The predictive performance of models is calculated using a traditional precision and recall for the links predicted.\\
+Equation precision rappel ?
 
 \subsection{Datasets}
 To demonstrate the potential of the models to generate graphs verifying properties occurring in original networks, we consider four artificial networks and two real networks.\\
@@ -47,6 +60,44 @@ The first one \footnote{available at:} is built from an online community of 1899
 The second one \footnote{available at:} is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated to an employee and an oriented link represents like previously a sent email.
 
 Table 1 summarizes basic characteristics of these synthetic and real datasets \textbf{ Mettre nombre de sommets, de liens}.
+
+
+\subsection{Results}
+The table \ref{table:immsb} show the predictive performance in term of overall precision for immsb for different size of class learned. Firstly, it is interesting to see that immsb perform better in all cases when the networks are bursty. Secondly, it's worth to note that the models has a tendency to perform better when the homophily is not strongly present. This can be explain by the fact that immsb allows relation between classes, and because strong homophily will conduct to more dense community in a network.
+
+
+\begin{table} \label{table:immsb}
+\begin{tabular}{lrrrr}
+\hline                                                                             
+ immsb / mask all   &        5 &       10 &       15 &       20 \\                 
+\hline                                                                             
+ Graph7 b/h         & 0.989636 & 0.989939 & 0.990358 & 0.989873 \\                 
+ Graph12 b/-h       & 0.99179  & 0.991689 & 0.991997 & 0.992259 \\                 
+ Graph4 -b/h        & 0.886844 & 0.888035 & 0.908348 & 0.906659 \\                 
+ Graph10 -b/-h      & 0.979057 & 0.979144 & 0.979487 & 0.979366 \\                 
+\hline                                                                             
+\end{tabular}  
+    \caption{immb result on synthetic networks}
+\end{table}
+
+
+The table \ref{table:ibp} shows the precision and recall results, for each networks. Additionally we show the number of latent features to which ILFM converged. We can see that ILFM is significantly better than MMSB at predicting over homophilic network, with a small number of features. Besides, although ilfm can achieve good results, for bursty network, we see that the models learn more features for non-bursty networks compared to ilfm. 
+
+\begin{table} \label{table:ibp}
+\begin{tabular}{lrrrr}
+\hline
+ ibp / mask all   &     global &   precision &      rappel &   K-\ensuremath{>} \\
+\hline
+ Graph7 b/h       & nan        & nan         & nan         &   nan \\
+ Graph12 b/-h     &   0.992204 &   0.0532044 &   0.0537897 &    13 \\
+ Graph4 -b/h      &   0.939498 &   0.496967  &   0.490113  &    10 \\
+ Graph10 -b/-h    &   0.981577 &   0.0910384 &   0.09826   &    11 \\
+\hline
+\end{tabular}  
+    \caption{immb result on synthetic networks}
+\end{table}
+
+Our results confirm the theoretical analysis on nonparametric models, concerning their affinity to the preferential attachment effect and the homophily effect.
 %Our experiments evaluate the preferential attachment and the local preferential attachment on the learned communities trough respectively the distribution of degrees in the networks and inside the communities.
 %\begin{figure}[h]
 %	\centering
@@ -70,43 +121,5 @@ Table 1 summarizes basic characteristics of these synthetic and real datasets \t
 %	\label{fig:}
 %\end{figure}
 %
-%\begin{figure}[h]
-%	\centering
-%	
-%	\minipage{0.5\textwidth}
-%	\includegraphics[scale=0.4]{../figures/img/prop/gen3_global_deg_immsb_4}
-%	\endminipage
-%	\minipage{0.5\textwidth}
-%	\includegraphics[scale=0.4]{../figures/img/prop/gen3_global_deg_immsb_10}
-%	\endminipage
-%	
-%	\caption{\textbf{Distribution of degree for the class based model. The left figure correspond to number of class K=4, and the right figure correspond to K=10. It appears that the model is able to capture the power law.}}
-%	\label{fig:}
-%\end{figure}
-%
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[scale=0.9]{../figures/img/prop/gen3_local_deg_immsb_4}
-%	\caption{\textbf{Local degree distribution for 3 communities for a total of 4 classes.}}
-%	\label{fig:}
-%\end{figure}
-%
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[scale=0.9]{../figures/img/prop/gen3_local_deg_immsb_10}
-%	\caption{\textbf{Local degree distribution for 3 communities for a total of 10 classes.}}
-%	\label{fig:}
-%\end{figure}
-%
-%
-%%class based on 
-%%10 classes:
-%%Precision global 0.9900621488, local: 0.038679245283 , Rappel 0.0400390625
-%%4 classes:
-%%Precision global 0.98990976619, local: 0.0280898876404 , Rappel 0.0295275590551
-%
-%%IBP: K=46
-%%Precision global 0.990138852919, local: 0.0488721804511 , Rappel 0.0509803921569
-%
-%
+
 \clearpage
