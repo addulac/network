@@ -63,7 +63,7 @@ Table 1 summarizes basic characteristics of these synthetic and real datasets \t
 
 
 \subsection{Results}
-The table \ref{table:immsb} show the predictive performance in term of overall precision for immsb for different size of class learned. Firstly, it is interesting to see that immsb perform better in all cases when the networks are bursty. Secondly, it's worth to note that the models has a tendency to perform better when the homophily is not strongly present. This can be explain by the fact that immsb allows relation between classes, and because strong homophily will conduct to more dense community in a network.
+The table \ref{table:immsb} show the predictive performance in term of overall precision for IMMSB for different size of class learned. Firstly, it is interesting to see that IMMSB perform better in all cases when the networks are bursty. Secondly, it's worth to note that the models has a tendency to perform better when the homophily is not strongly present. This can be explain by the fact that IMMSB allows relation between classes, and because strong homophily will conduct to more dense community in a network.
 
 
 \begin{table} \label{table:immsb}
@@ -77,11 +77,11 @@ The table \ref{table:immsb} show the predictive performance in term of overall p
  Graph10 -b/-h      & 0.979057 & 0.979144 & 0.979487 & 0.979366 \\                 
 \hline                                                                             
 \end{tabular}  
-    \caption{immb result on synthetic networks}
+    \caption{IMMSB prediction performance result on synthetic networks, for different size of classes infered.}
 \end{table}
 
 
-The table \ref{table:ibp} shows the precision and recall results, for each networks. Additionally we show the number of latent features to which ILFM converged. We can see that ILFM is significantly better than MMSB at predicting over homophilic network, with a small number of features. Besides, although ilfm can achieve good results, for bursty network, we see that the models learn more features for non-bursty networks compared to ilfm. 
+The table \ref{table:ibp} shows the precision and recall results, for each networks. Additionally we show the number of latent features to which ILFM has converged. We can see that ILFM is significantly better than IMMSB at predicting over homophilic network, with a small number of features. Besides, although ILFM can achieve good results, for bursty network, we see that the models learn more features for non-bursty networks compared to IMMSB. 
 
 \begin{table} \label{table:ibp}
 \begin{tabular}{lrrrr}
@@ -94,7 +94,7 @@ The table \ref{table:ibp} shows the precision and recall results, for each netwo
  Graph10 -b/-h    &   0.981577 &   0.0910384 &   0.09826   &    11 \\
 \hline
 \end{tabular}  
-    \caption{immb result on synthetic networks}
+    \caption{immb predictive performance result on synthetic networks}
 \end{table}
 
 Our results confirm the theoretical analysis on nonparametric models, concerning their affinity to the preferential attachment effect and the homophily effect.
