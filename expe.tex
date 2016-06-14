@@ -1,46 +1,52 @@
 \section{Experimental study}
 
-To validate our theoretical results we fitted our models on synthetic networks and track how well we can reproduce the properties of interest on a generated network.
+To illustrate our theoretical results, we evaluate the ability of the models to capture homophily and preferential attachment on artificial and real networks.  We fit the models on the datasets and then, we track how well the models can reproduce the properties on the generated networks. In this view, using the same indicators, we compare the values computed respectively on the original network and on the generated network.
 
-The synthetic network has 1000 nodes and 4 communities and a density of 0.05. [See the ref of the generator for the ground true on the preferential attachment effect...]
+\subsection{Properties evaluation}
 
-\section{Homophily Indicator}
+\textit{Homophily Indicators}
 
-We consider a social network defined as an attributed  graph G = (V,E), where $V$ is a set of $N$ nodes representing entities, $E \in V \times V$ is a set of $m$ edges  representing relationships between pairs of entities. Each node $i \in V$ is described by K features and s is a similarity function which allows to compare two vertices according to their features.  
-We consider that two vertices are similar, denoted s(x,y), if s(x,y) is lower than a threshold.
+To evaluate homophily, we use the measures introduced by \cite{largeron2015}, adapted from the test proposed by \cite{Easley2010}.  This test compares an expected homophily measure corresponding to the probability for two vertices to be similar with an observed homophily measure defined as the probability that two linked vertices are similar. More precisely, given a contingency table defined as follows:
 
+$a = Card\{(i,j)\in V\times (V-1) / (i,j) \in E \land s(i,j)\}$\\
+$b = Card\{(i,j)\in V\times (V-1) / (i,j) \in E \land \neg{s(i,j)}\}$\\ 
+$c = Card\{(i,j)\in V\times (V-1) / (i,j) \notin E \land s(i,j)\}$\\
+$d = Card\{(i,j)\in V\times (V-1) / (i,j) \notin E \land \neg{s(i,j)}\}$\\
+%$\frac{N*(N-1)}{2}$ is the total count of  the cells in the contingency table.\\
 
-Given a contingency table defined as follows:
+where  s(i,j) indicates that i and j are considered as similar, observed homophily, denoted $H_{obs}$, is given by $\frac{a}{a+b}$.\\
+This measure  is equal to 1 when all the pairs of linked vertices are similar. Consequently, high values suggest an homophily effect.
 
-$a = Card\{(x,y)\in V\times (V-1) / (x,y) \in E \land s(x,y)\}$\\
-$b = Card\{(x,y)\in V\times (V-1) / (x,y) \in E \land \neg{s(x,y)}\}$\\
-$c = Card\{(x,y)\in V\times (V-1) / (x,y) \notin E \land s(x,y)\}$\\
-$d = Card\{(x,y)\in V\times (V-1) / (x,y) \notin E \land \neg{s(x,y)}\}$\\
-$\frac{N*(N-1)}{2}$ is the total count of the cells in the contingency table.\\
+Moreover, $H_{obs}$ can be compared with an expected measure, $H_{expec}$, defined by  $ \frac{a+c}{a+b+c+d}$.\\
 
-The measure that we introduced to evaluate the homophily in the network is given by:\\
+If the expected measure is significantly less than the observed measure, then there is evidence for homophily.\\
 
-$Hobs(G) = \frac{2[(a+d)-(c+b)]}{N*(N-1)}$\\
-This measure takes is value between $-1$ and $1$. It is equal to 1 when  all the pairs of similar vertices are linked and all the pairs of dissimilar verices are not linked.
-Otherwise, when all pairs of similar vertices are not linked and all pairs of dissimilar verices are linked, it is equal to -1.
+\textit{Preferential attachment}
 
-This measure of observed homophily in the network can be compared with an expected value computed on a network having the same number of vertices and edges but where the probability of having a link beteween two vertices is independant of their similarity and consequently of their features, which does not respect the homophily property according which  two vertices are more  likely to be connected if they share common characteristics.
+Preferential attachment leads to networks characterized by a degree distribution with a heavy tail which can be approximated by a power law. To evaluate this property, we  plot the degree distributions in log log scale for the original network and the generated network.
 
-In order to compute the expected homophily indicator we estimate the probability for pairs of vertices of being linked and similar in the following way:\\
-$PR = \frac{2M}{N*(N-1)}$\\
-$PS = \frac{2*Card\{(x,y)\in V\times (V-1) / s(x,y)\}}{N*(N-1)}$\\
-with $PNR = 1 - PR$ and $PNS = 1 - PS$\\
+\subsection{Datasets}
+To demonstrate the potential of the models to generate graphs verifying properties occurring in original networks, we consider four artificial networks and two real networks.\\
 
-Then, with the following contingency table: \\
-$a' = \frac{PR*PS*N*(N-1)}{2}$\\
-$b' = \frac{PNR*PS*N*(N-1)}{2}$\\
-$c' = \frac{PR*PNS*N*(N-1)}{2}$\\
-$c' = \frac{PNR*PNS*N*(N-1)}{2}$\\
-we compute the expected homophily as follows:\\
-$Hexpect(G) = \frac{2[(a'+d')-(c'+b')]}{N*(N-1)}$\\
+\textit{Artificial networks}
 
-A social network exhibits homophily if $Hobs(G)$ is higher than $Hexpect(G)$.
+The artificial networks have been generated with ANC-Generator \cite{largeron2015}. This generator has been chosen because it allows to build attributed graphs with community structure faithfully following the known properties of real-world networks such as preferential attachment and homophily. 
+\textbf{ ARV peut on faire le lien ici entre les facteurs latents et les attributs - communautés ? }.
+Moreover, by modifying the parameters, these properties can be weakened. Finally, ANC-Generator is available under the terms of the GNU Public Licence and the parameters can be shared for experiments reproducibility. 
 
+Four artificial networks have been generated, each one corresponding to a configuration  regarding the properties of interest.
+Both properties are verified in the first one ($Network1$) whereas none of them is checked in the $Network4$.  There is only an evidence for homophily in the network $Network2$ and  preferential attachment in the network  $Network3$. Table 1 summarizes these four configurations. \\ 
+
+\textbf{Ajouter parametrage}  
+
+% \textit{Real networks}
+\textit{Real networks}
+
+We evaluate also the models on two  real networks.
+The first one \footnote{available at:} is built from an online community of 1899 students from the University of California. Each node corresponds to a user and a directed edge represents a sent message. 
+The second one \footnote{available at:} is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated to an employee and an oriented link represents like previously a sent email.
+
+Table 1 summarizes basic characteristics of these synthetic and real datasets \textbf{ Mettre nombre de sommets, de liens}.
 %Our experiments evaluate the preferential attachment and the local preferential attachment on the learned communities trough respectively the distribution of degrees in the networks and inside the communities.
 %\begin{figure}[h]
 %	\centering
@@ -103,3 +109,4 @@ A social network exhibits homophily if $Hobs(G)$ is higher than $Hexpect(G)$.
 %%Precision global 0.990138852919, local: 0.0488721804511 , Rappel 0.0509803921569
 %
 %
+\clearpage
