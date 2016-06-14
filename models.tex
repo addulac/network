@@ -82,11 +82,11 @@ The non-parametric version parallels this development but considers, in lieu of 
 \begin{enumerate}
 \item Generate the class membership matrix $\mat{F}_{N \times \infty}$:
    \begin{align}
-    &\mathbf{\mat{\beta}} \sim \gem(\gamma) \nonumber \\
+    &\mat{\beta} \sim \gem(\gamma) \nonumber \\
     \mat{f}_i &\sim \DP(\alpha_0, \beta) \quad\text{ for }  i \in \{1, .., N\} \nonumber
    \end{align}
 \item Generate a weight matrix for each latent class:\\
-\[ \phi_{mn} \sim \mathrm{Beta}(\lambda,1), \, m,n \in \mathbb{N}^{+*} \]
+\[ \phi_{mn} \sim \mathrm{Beta}(\lambda_0,\lambda_1), \, m,n \in \mathbb{N}^{+*} \]
 \item For any node $i$ and any node $j$, choose a class from their class membership distribution and generate or not a link according to:
    \begin{align}
     z_{ij} &\sim \mbox{Cat}(\mat{f}_i) \nonumber \\
@@ -96,25 +96,23 @@ The non-parametric version parallels this development but considers, in lieu of 
    \end{align}
 \end{enumerate}
 %
-We have this time three real hyper-parameters, two for the hierarchical Dirichlet process ($\gamma$ and $\alpha_0$) and one for the weight matrix ($\lambda$).
-\textcolor{red}{Adrien, peux-tu v\'erifier la param\'etrisation de la loi Beta ?}
-As for the previous model, in the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated; as before again, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices
+We have this time four real hyper-parameters, two for the hierarchical Dirichlet process ($\gamma$ and $\alpha_0$) and two for the Beta distribution underlying the weight matrix ($\lambda_0$ and $\lambda_1$). As for the previous model, in the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated; as before again, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices
 
-The updates can also be obtained via Gibbs sampling and Metropolis-Hastings procedures. Such updates can be found in \cite{HDP} for the parameters $\mat{\beta}$ and $\mat{F}$, and in \cite{MMSB} for $\mat{\Phi}$. We provide below the update for $f_{ij}$, which we will use in the next sections and which is detailed in Appendix~\ref{sec:append}:
-%
-\begin{enumerate}
-\item If the class $k$ has already been observed:
-   \begin{align}
-    \pr(z_{ij} =k \mid \mat{F}^{-ij}) &\propto N_{ik}^{-ij} + \alpha_0 \beta_k
-%    \pr(f_{ji} =k \mid \mat{F}^{-ij}) &\propto N_{jk}^{-ij} + \alpha_0 \beta_k
-    \label{eq:update-immsb}
-   \end{align}
-\item In case of a new class $k_n$:
-   \begin{align}
-    \pr(z_{ij} =k_n \mid \mat{F}^{-ij}) &\propto \alpha_0 \beta_{k_n} \nonumber
-%    \pr(f_{ji} =k_n \mid \mat{F}^{-ij}) &\propto \alpha_0 \beta_{k_n} \nonumber
-   \end{align}
-\end{enumerate}
+The inference is this model can be performed via collapsed Gibbs sampling and Metropolis-Hastings updates. Most updates can be found in \cite{HDP} and \cite{diMMSB}. For completeness, we provide them in Appendix~\ref{sec:append}.
+%%
+%\begin{enumerate}
+%\item If the class $k$ has already been observed:
+%   \begin{align}
+%    \pr(z_{ij} =k \mid \mat{F}^{-ij}) &\propto N_{ik}^{-ij} + \alpha_0 \beta_k
+%%    \pr(f_{ji} =k \mid \mat{F}^{-ij}) &\propto N_{jk}^{-ij} + \alpha_0 \beta_k
+%    \label{eq:update-immsb}
+%   \end{align}
+%\item In case of a new class $k_n$:
+%   \begin{align}
+%    \pr(z_{ij} =k_n \mid \mat{F}^{-ij}) &\propto \alpha_0 \beta_{k_n} \nonumber
+%%    \pr(f_{ji} =k_n \mid \mat{F}^{-ij}) &\propto \alpha_0 \beta_{k_n} \nonumber
+%   \end{align}
+%\end{enumerate}
 
 \subsection{Model Comparison}
 
