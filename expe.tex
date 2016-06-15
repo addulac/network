@@ -2,6 +2,14 @@
 
 To illustrate our theoretical results, we evaluate the ability of the models to capture homophily and the preferential attachment effect on artificial and real networks. In this section, we beforehand present our measures for both properties. Afterwards, we describe the datasets that we have used, then we will explain our evaluation protocol. Finally we present our results and their relations to the theoretic framework.
 
+
+
+
+
+
+
+
+
 \subsection{Measures for the Properties}
 
 \textit{Homophily Indicators}
@@ -47,6 +55,72 @@ The first one \footnote{available at:} is built from an online community of 1899
 The second one \footnote{available at:} is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated to an employee and an oriented link represents like previously a sent email.
 
 Table 1 summarizes basic characteristics of these synthetic and real datasets \textbf{ Mettre nombre de sommets, de liens}.
+
+
+
+
+
+
+
+\begin{figure}[h]
+	\centering
+	
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/g1}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/g1_d}
+	\endminipage
+	\vspace{-0.4cm}
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/g2}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/g2_d}
+	\endminipage
+	\vspace{-0.4cm}
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/g3}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/g3_d}
+	\endminipage
+	\vspace{-0.4cm}
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/g4}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/g4_d}
+	\endminipage
+	
+	\caption{Synthetic Networks. (left) adjacency matrix. (right) degree distribution}
+	\label{fig:synt_graph}
+\end{figure}
+
+
+
+\begin{figure}[h]
+	\centering
+	
+
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/irvine}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/irvine_d}
+	\endminipage
+		\vspace{-0.4cm}
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/manufacturing}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/manufacturing_d}
+	\endminipage
+	\caption{Real Networks. (left) adjacency matrix. (right) degree distribution}
+	\label{fig:real_graph}
+\end{figure}
+
+
 
 \subsection{Evaluation Protocol}
 For each datasets described,  we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB concentration parameters of HDP were optimized following \cite{HDP} using vague gamma prior $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. Parameters for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameters were fixed to $\alpha=0.5$ weights hyper-parameters to $\sigma_w = 1$.
@@ -105,46 +179,8 @@ The table \ref{table:ibp} shows the precision and recall results, for each netwo
 Our results confirm the theoretical analysis on nonparametric models, concerning their affinity to the preferential attachment effect and the homophily effect.
 
 %Our experiments evaluate the preferential attachment and the local preferential attachment on the learned communities trough respectively the distribution of degrees in the networks and inside the communities.
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.25]{img/Graph7}
-	\caption{\textbf{Adjacency matrices re-ordered according to their communities.}}
-	\label{fig:}
-\end{figure}
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.25]{img/Graph12}
-	\caption{\textbf{Adjacency matrices re-ordered according to their communities.}}
-	\label{fig:}
-\end{figure}
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.25]{img/Graph4}
-	\caption{\textbf{Adjacency matrices re-ordered according to their communities.}}
-	\label{fig:}
-\end{figure}
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.25]{img/Graph10}
-	\caption{\textbf{Adjacency matrices re-ordered according to their communities.}}
-	\label{fig:}
-\end{figure}
-%
-%
-%\begin{figure}[h]
-%	\centering
-%	
-%		\minipage{0.5\textwidth}
-%			\includegraphics[scale=0.4]{../figures/img/prop/gen3_com_immsb_4}
-%		\endminipage
-%		\minipage{0.5\textwidth}
-%			\includegraphics[scale=0.4]{../figures/img/prop/gen3_com_immsb_10}
-%			\endminipage
-%
-%	\caption{\textbf{Distribution of communities size for the class based model. The left figure correspond to number of class K=4, and the right figure correspond to K=10. The power law do not appear strongly }}
-%	\label{fig:}
-%\end{figure}
-%
+
+
 
 
 \clearpage
