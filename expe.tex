@@ -1,15 +1,8 @@
-\section{Experimental study}
+\section{Experimental Framework}
 
-To illustrate our theoretical results, we evaluate the ability of the models to capture homophily and preferential attachment on artificial and real networks.  We fit the models on the datasets using MCMC updates as describe in \ref{models}, for posterior inference. For all our experiments, we separate our dataset into a training set representing 80 \% of the size of the network, and 20\% for a testing set, randomly chosen. Inference is then run over 200 iterations. Our evaluation rely then in two strategy:
-\begin{itemize}
-\item We performed a predictive analysis on the testing set and compared the performance prediction of each models with the property of networks. 
-\item We used the relational models as generative process and generate synthetic network. We then verify that the properties of interest are well satisfied on this synthetic network.
-\end{itemize}
+To illustrate our theoretical results, we evaluate the ability of the models to capture homophily and the preferential attachment effect on artificial and real networks. In this section, we beforehand present our measures for both properties. Afterwards, we describe the datasets that we have used, then we will explain our evaluation protocol. Finally we present our results and their relations to the theoretic framework.
 
-%We track how well the models can reproduce the properties on the generated networks. In this view, using the same indicators, we compare the values computed respectively on the original network and on the generated network.
-We describe in the rest of this section, the indicators and the datasets that we used for our experiments, before presenting our results.
-
-\subsection{Properties evaluation}
+\subsection{Measures for the Properties}
 
 \textit{Homophily Indicators}
 
@@ -30,13 +23,7 @@ If the expected measure is significantly less than the observed measure, then th
 
 \textit{Preferential attachment}
 
-Preferential attachment leads to networks characterized by a degree distribution with a heavy tail which can be approximated by a power law. To evaluate this property, we  plot the degree distributions in log log scale for the original network and the generated network.\\
-
-
-\textit{Preditive performance}
-
-The predictive performance of models is calculated using a traditional precision and recall for the links predicted.\\
-Equation precision rappel ?
+Preferential attachment leads to networks characterized by a degree distribution with heavy tail which can take the form of a power law. To evaluate this property, we  plot the degree distributions in log log scale for the original network and the generated network. Comparaison of the degree distribution with a straight line gives us a qualitative measure for the preferential attachment.\\
 
 \subsection{Datasets}
 To demonstrate the potential of the models to generate graphs verifying properties occurring in original networks, we consider four artificial networks and two real networks.\\
@@ -60,6 +47,24 @@ The first one \footnote{available at:} is built from an online community of 1899
 The second one \footnote{available at:} is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated to an employee and an oriented link represents like previously a sent email.
 
 Table 1 summarizes basic characteristics of these synthetic and real datasets \textbf{ Mettre nombre de sommets, de liens}.
+
+\subsection{Evaluation Protocol}
+For each datasets described,  we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB concentration parameters of HDP were optimized following \cite{HDP} using vague gamma prior $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. Parameters for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameters were fixed to $\alpha=0.5$ weights hyper-parameters to $\sigma_w = 1$.
+
+Our evaluation rely then in two strategy:
+
+%We track how well the models can reproduce the properties on the generated networks. In this view, using the same indicators, we compare the values computed respectively on the original network and on the generated network.
+
+
+\subsubsection{Predictive performance}
+For all our experiments, we separate our datasets into a training set representing 80 \% of the size of the network, and 20\% for a testing set, randomly chosen. Inference is then run over 200 iterations. 
+
+We performed a predictive analysis on the testing set and compared the performance prediction of each models with the property of networks. 
+The predictive performance of models is calculated using a traditional precision and recall for the links predicted.\\
+Equation precision rappel ?
+
+\subsubsection{Generative network}
+We used the relational models as generative process and generate a \emph{generative} network. We then verify that the properties of interest are well satisfied on this synthetic network.
 
 
 \subsection{Results}
