@@ -7,5 +7,61 @@ We provide here the derivation of the updates of the IMMSB model, described in S
 
 %From the definition of the model, one has: $\pr(z_{ij} = k \mid \mat{f}_i) = f_{ik}$.
 
-\textcolor{red}{Adrien, peux-tu donner la d\'erivation ? La forme actuelle n'est valable que pour MMSB.} 
+%\textcolor{red}{Adrien, peux-tu donner la d\'erivation ? La forme actuelle n'est valable que pour MMSB.} 
 
+%heeeere \alpha is \alpha_0
+
+Inference for the IMMSB model by using the Collapse Gibbs sampler gives updates for class assignment $Z \in N\times N \times 2$ for each interactions $Y \in N\times N$. Thus for all pair of interaction (i,j) we jointly sample the classes $(z_{ij}, z_{ji})$ who implicitly, take the values $(k,k')$ :
+\begin{align} \label{eq:cgs}
+&\pr(z_{ij}, z_{ji} \mid Z^-, Y,  \mat{\beta}, \alpha, \mat{\lambda} )  \\
+&\propto\pr(z_{ij}, z_{ji} \mid Z^-, \alpha,\mat{\beta}) \pr(y_{ij} \mid Y^{-ij},  Z^-,z_{ij}, z_{ji},  \mat{\lambda} ) \nonumber
+\end{align}
+The term $Z^-$ denote that both $z_{ij}$ and $z_{ji}$ are exclude from $Z$. We now treat the first term of equation \ref{eq:cgs}.  
+\begin{align}
+& \pr(z_{ij}, z_{ji} \mid Z^-, \alpha,\mat{\beta})\\
+&\propto \pr(z_{ij} \mid \mat{z}_i^{-j}, \mat{z}_j, \alpha,\mat{\beta})  \pr(z_{ji} \mid \mat{z}_j^{-i}, \mat{z}_i, \alpha,\mat{\beta}) \nonumber
+\end{align}
+Let's consider the density of $z_{ij}$:
+\begin{align}
+&\pr(z_{ij} \mid \mat{z}_i^{-j}, \mat{z}_j, \alpha,\mat{\beta}) \propto \pr(z_{ij},  \mat{z}_i^{-j}, \mat{z}_j, \alpha,\mat{\beta}) \\
+&= \int_{f_i} \pr(f_i \mid \mat{\beta}, \alpha) \pr(z_{ij} \mid f_i) \prod_{j_0\neq j} \pr(z_{ij_0} \mid f_i) \prod_{j_0 =  1}^N  \pr(z_{j_0 i} \mid f_i)  df_i \nonumber
+\end{align}
+
+
+Due to the an augmented representation of the Chinese Restaurant Franchise (CRF) with the Stick Breaking Process \cite{HDP}, the density of the features can be approximated by the following Dirichlet distribution;
+\begin{equation}
+f_i \mid \mat{\beta}, \alpha \sim Dir(\alpha \beta_1,..,\alpha\beta_K, \alpha\beta_{new})
+\end{equation}
+Where $\alpha\beta_{new}$ represent the contribution for sampling a new class. Since $\pr(z_{ij} \mid f_i)$ is drawn from a multinomial, the model is said to be conjugate and reduce to a simple closed form expression:
+\begin{enumerate}
+\item If the class $k$ has already been observed:
+   \begin{align}
+    \pr(z_{ij} =k \mid .) &\propto N_{ik}^{-ij} + \alpha_0 \beta_k
+    \label{eq:update-immsb}
+   \end{align}
+\item In case of a new class $k_{new}$:
+   \begin{align}
+    \pr(z_{ij} =k_{new} \mid.) &\propto \alpha_0 \beta_{new} \nonumber   
+   \end{align}
+\end{enumerate}
+ Where  $N_{ik}$ is the count for node $i$ being assigned to class $k$. As we show that the equations are symmetric, sampling for $z_{ji}$ is straightforward.
+
+~\\
+Again, referring the CRF, the sampling of the tables configuration $\mat{m}$ is given by: 
+\begin{equation}
+\pr(m_{ik} \mid Z, \bm{m}^{-ik}, \mat{\beta} ) = \frac{\Gamma(\alpha_0 \beta_k)}{\Gamma(\alpha_0 \beta_k + n_{j\bm{.   }k})} s(n_{j\bm{.}k}, m) (\alpha_0 \beta_k)^m
+\end{equation}
+And, finnaly  $\mat{\beta}$ is obtained by:
+\begin{equation}
+\mat{\beta} \sim Dir(m_1,.., m_K, \gamma)  
+\end{equation}
+Where $s(n,m)$ is the unsigned Stirling number of the first kind.
+
+
+
+\textcolor{red}{ELSEWHERE ?It appears that we only need to keep track of two count matrices to perform this task. The count for node $i$ being assigned to class $k$ is $N_{ik}$. And the count of for all couple of classes $c=(k,k')$ being associated to relation $r$ is $M_{cr}$. Note that in our case, the relation $r$ take values in (0,1) accounting for link or non-link between two node. Hence the feature matrix $\mat{(F)}$ and the weight matrix $\mat{Phi}$ can be restored by averaging the class assignments:
+\begin{align}
+&\pr(f_{ik}) =\frac{ N_{ik} + \alpha\beta_k}{ N_{i\bm{.}} + \sum_k\alpha_k }\\
+&\pr(\phi_c ) = \frac{M_{c1} + \lambda_1}{M_{c\bm{.}} + \lambda_0 + \lambda_1}
+\end{align}
+}
