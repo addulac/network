@@ -123,29 +123,61 @@ Table 1 summarizes basic characteristics of these synthetic and real datasets \t
 
 
 \subsection{Evaluation Protocol}
-For each datasets described,  we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB concentration parameters of HDP were optimized following \cite{HDP} using vague gamma prior $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. Parameters for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameters were fixed to $\alpha=0.5$ weights hyper-parameters to $\sigma_w = 1$.
+For each datasets described,  we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma prior $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. Parameters for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ weights hyper-parameters to $\sigma_w = 1$.
 
 Our evaluation rely then in two strategy:
 
-%We track how well the models can reproduce the properties on the generated networks. In this view, using the same indicators, we compare the values computed respectively on the original network and on the generated network.
-
 
 \subsubsection{Predictive performance}
-For all our experiments, we separate our datasets into a training set representing 80 \% of the size of the network, and 20\% for a testing set, randomly chosen. Inference is then run over 200 iterations. 
+We evaluate the performance prediction of the models using two different strategy for building our testing set:
+
+\paragraph{UnBalanced testing set}:
+We separate our datasets into a training set representing 80 \% of the size of the network, and 20\% for a testing set, randomly chosen. As the dataset have a small density of edges, this testing set ends up with very small amout of edges.
+
+\paragraph{Balanced testing set}:
+In order to create a balanced testing set, we pick randomly 20 \% of the edges of the network and the same amount of non-links. The testing ends up balanced but it represents a small proportion of the dataset.~\\
+
 
 We performed a predictive analysis on the testing set and compared the performance prediction of each models with the property of networks. 
 The predictive performance of models is calculated using a traditional precision and recall for the links predicted.\\
-Equation precision rappel ?
+Equation precision recall to complete...
+
+
+The table \ref{table:unbalanced} and table \ref{table:balanced} respectively shows the overall precision, edge precision and recall results respectively for unbalanced case and tha balance case for the testing set. Additionnally, table are produce with different initialization for the number of features $K$ for both model. The last colulmn show the number of latent features to which ILFM has converged.
 
 \subsubsection{Generative network}
-We used the relational models as generative process and generate a \emph{generative} network. We then verify that the properties of interest are well satisfied on this synthetic network.
+We used the relational models as generative process and generate a \emph{generative} network. We then verify that the properties of interest are well satisfied on this synthetic network. More explanation to come...
 
 
 \subsection{Results}
-The table \ref{table:immsb} show the predictive performance in term of overall precision for IMMSB for different size of class learned. Firstly, it is interesting to see that IMMSB perform better in all cases when the networks are bursty. Secondly, it's worth to note that the models has a tendency to perform better when the homophily is not strongly present. This can be explain by the fact that IMMSB allows relation between classes, and because strong homophily will conduct to more dense community in a network.
+
+\subsubsection{Unbanlanced data}
+
+\paragraph{Results for IMMSB}
+
+For all predictive measure, the overall precision, precision for edge and the recall for edge are better for bursty networks, exept for the Network 4. This is because the density of the latter is higher than the other who make the prediction on this network less inbanlance than the other
+
+On bursty networks, it appears that IMMSB has a tendancy to perform better on the networks where homophily is not strongly present. This can be explain by the fact that IMMSB allows relation between classes, and because strong homophily is correlated to more dense community in the synthetic network.
 
 
-\begin{table} \label{table:immsb}
+This observation confirm that IMMSB can capture burstiness and slighly better on slighly homophilic network.
+
+\paragraph{Results for ILFM}
+Resulst for ILFM show that the models converged to a hihger number of features for networks that are bursty. Even though the number of feature is smaller for the less bursty network, ILFM achive better  results on edge precision an recall.
+
+\subsubsection{Comparison of models}
+In most case, ILFM performs better than IMMSB but the difference is less significative on bursty networks.
+
+\subsubsection{Balanced data}
+\paragraph{Results for IMMSB}
+
+\paragraph{Results for ILFM}
+ILFM confirm his tendancy to learn more features on bursty networks. Nevertheless the overall precision and the recall remains significantly better whithin the non-bursty networks. Moreover the overall precision and the recall is significantly better for the strongly homophilic networks.
+
+\paragraph{Comparison of models}
+
+\begin{table} \label{table:real1}
+    \caption{IMMSB prediction performance results on real networks, for several feature size initialization.}
 \begin{tabular}{lrrrr}
 \hline                                                                             
  immsb / mask all   &        5 &       10 &       15 &       20 \\                 
@@ -156,16 +188,15 @@ The table \ref{table:immsb} show the predictive performance in term of overall p
  Graph10 -b/-h      & 0.979057 & 0.979144 & 0.979487 & 0.979366 \\                 
 \hline                                                                             
 \end{tabular}  
-    \caption{IMMSB prediction performance result on synthetic networks, for different size of classes infered.}
 \end{table}
 
+ 
 
-The table \ref{table:ibp} shows the precision and recall results, for each networks. Additionally we show the number of latent features to which ILFM has converged. We can see that ILFM is significantly better than IMMSB at predicting over homophilic network, with a small number of features. Besides, although ILFM can achieve good results, for bursty network, we see that the models learn more features for non-bursty networks compared to IMMSB. 
-
-\begin{table} \label{table:ibp}
+\begin{table} \label{table:real2}
+    \caption{ILFM predictive performance result on real networks}
 \begin{tabular}{lrrrr}
 \hline
- ibp / mask all   &     global &   precision &      rappel &   K-\ensuremath{>} \\
+ ibp / mask all   &     global &   precision &      recall &   K-\ensuremath{>} \\
 \hline
  Graph7 b/h       & nan        & nan         & nan         &   nan \\
  Graph12 b/-h     &   0.992204 &   0.0532044 &   0.0537897 &    13 \\
@@ -173,18 +204,11 @@ The table \ref{table:ibp} shows the precision and recall results, for each netwo
  Graph10 -b/-h    &   0.981577 &   0.0910384 &   0.09826   &    11 \\
 \hline
 \end{tabular}  
-    \caption{ILFM predictive performance result on synthetic networks}
 \end{table}
 
 Our results confirm the theoretical analysis on nonparametric models, concerning their affinity to the preferential attachment effect and the homophily effect.
 
 %Our experiments evaluate the preferential attachment and the local preferential attachment on the learned communities trough respectively the distribution of degrees in the networks and inside the communities.
 
+\input{table_results}
 
-
-
-\clearpage
-
-\input{rez_brute_force}
-
-\clearpage
