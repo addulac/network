@@ -57,11 +57,6 @@ The second one \footnote{available at:} is an internal email communication netwo
 Table 1 summarizes basic characteristics of these synthetic and real datasets \textbf{ Mettre nombre de sommets, de liens}.
 
 
-
-
-
-
-
 \begin{figure}[h]
 	\centering
 	
@@ -123,30 +118,44 @@ Table 1 summarizes basic characteristics of these synthetic and real datasets \t
 
 
 \subsection{Evaluation Protocol}
-For each datasets described,  we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma prior $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. Parameters for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ weights hyper-parameters to $\sigma_w = 1$.
+For each datasets described,  we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameter for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$.
 
 Our evaluation rely then in two strategy:
 
 
 \subsubsection{Predictive performance}
-We evaluate the performance prediction of the models using two different strategy for building our testing set:
+We evaluate the performance prediction of the models by building a training set and a testing set from the original datasets. Because the burstiness has a strong impact os the sparsity of the underlying graph, we face a very unbanlanced challenge. Considering this fact, we used two different strategy for building our testing set, in order to assess the impact of the sparsity:
 
-\paragraph{UnBalanced testing set}:
-We separate our datasets into a training set representing 80 \% of the size of the network, and 20\% for a testing set, randomly chosen. As the dataset have a small density of edges, this testing set ends up with very small amout of edges.
+\paragraph{Unbalanced testing set}:
+We separate our datasets into a training set representing 80 \% of the size of the network, and 20\% for a testing set, randomly chosen. As the dataset has a small density of edges, this testing set ends up with very small amout of edges.
 
 \paragraph{Balanced testing set}:
 In order to create a balanced testing set, we pick randomly 20 \% of the edges of the network and the same amount of non-links. The testing ends up balanced but it represents a small proportion of the dataset.~\\
 
 
-We performed a predictive analysis on the testing set and compared the performance prediction of each models with the property of networks. 
-The predictive performance of models is calculated using a traditional precision and recall for the links predicted.\\
-Equation precision recall to complete...
+We performed a predictive analysis on the testing set and compared the predictive performance of each models with regards to the properties of the network. 
+The predictive performance of models is calculated using a traditional precision and recall measures for the predicted links, that we calculated as follows:\\
+\begin{align}
+    \mathrm{precision}_{V} = Equation precision to complete... \\
+    \mathrm{recall}_{V} = Equation recall to complete...
+\end{align}
 
 
-The table \ref{table:unbalanced} and table \ref{table:balanced} respectively shows the overall precision, edge precision and recall results respectively for unbalanced case and tha balance case for the testing set. Additionnally, table are produce with different initialization for the number of features $K$ for both model. The last colulmn show the number of latent features to which ILFM has converged.
+The table \ref{table:unbalanced} and table \ref{table:balanced} respectively shows the overall precision, edge precision and recall results respectively for unbalanced case and tha balance case. Additionnally, the tables show results for several initialization for the number of features $K$ for both models. The last colulmn show the number of latent features to which latent models have converged.
 
 \subsubsection{Generative network}
-We used the relational models as generative process and generate a \emph{generative} network. We then verify that the properties of interest are well satisfied on this synthetic network. More explanation to come...
+We consider the generative ability of the models to build new \emph{synthetic} networks based on the information learned on the data. This can be expressed by the predictive likelihood given only the hyperparameters $h$ and the training data:
+\begin{equation}
+    \pr(Y_{new} |Y, h) = \int_{\M} \pr(Y_{new} |Y,\M, h)\pr(\M |, h)d\M
+\end{equation}
+
+The generative graph is the expectation of the predective likelihood on the model. The expectation of the generative graph is then given by the bilinear form, according to \ref{MFDCA}:
+\begin{equation}
+    \E_\M[Y_{new} | Y, \M] = F \Phi F^T
+\end{equation}
+
+
+We then study the properties of interest on the generated networks. More explanation to come...
 
 
 \subsection{Results}
