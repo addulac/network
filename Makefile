@@ -3,8 +3,7 @@ TEST=test
 CC=latex
 CONV=dvipdf
 
-all: 
-	pdflatex ${SRC}.tex
+all: pdf
 
 dvi: ${SRC}.tex
 	${CONV} ${SRC}.dvi
@@ -12,9 +11,6 @@ dvi: ${SRC}.tex
 
 bib: dvi
 	bibtex ${SRC}
-	${CC} ${SRC}.tex
-	${CC} ${SRC}.tex
-	${CONV} ${SRC}.dvi
 
 pdf:
 	pdflatex ${SRC}.tex
