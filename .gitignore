@@ -22,4 +22,5 @@
 *.mtc1
 *.out
 *.synctex.gz
-main.pdf
+main*.pdf
+table_results_old*.tex
