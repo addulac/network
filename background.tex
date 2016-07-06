@@ -1,5 +1,5 @@
 \section{Background}
-
+\label{sec:background}
 Without loss of generality, we focus on social networks with binary relationships. Our object of interest is the topology of the network representing the presence or absence of links between nodes in the graph. The network can be either directed or not. For a network with $N$ nodes, we represent the topology by an adjacency matrix $Y \in \{0,1\}^{N\times N}$ associated to a graph $G = (V,E)$, where $V$ is a set of nodes representing entities, $E \in V \times V$ is a set of edges who represents relationships between pairs of entities. From a probabilistic point of view, the network topology is modeled using a kernel with a Bernoulli density. The parameters of the Bernoulli is the probability to observe a link between two nodes.
 
 We define a matrix of weight interactions $\Phi \in W^{K\times K}$ with $W$ the space of weights, where $K$ is the number of classes or features. Let $\Theta \in \mathcal{F}^{N\times K}$, be a matrix where each row $i$ represents the latent feature vector associated to the node $i$,  and $\cal{F}$ the latent feature space. Hence for the MMSB and ILFM, the latent feature vectors are respectively proportion vectors (who sum to one) and binary vectors. In this framework the network is generated with the following density:
