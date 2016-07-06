@@ -1,8 +1,10 @@
 \section{Experimental Framework}
+\label{sec:experiments}
 
-To illustrate our theoretical results, we evaluate the ability of the models to capture homophily and the preferential attachment effect on artificial and real networks. In this section, we beforehand present our measures for both properties. Afterwards, we describe the datasets that we have used, then we will explain our evaluation protocol. Finally we present our results and their relations to the theoretic framework.
 
+To illustrate our theoretical results, we evaluate the predictive performance of the models as well as their ability  to capture homophily and preferential attachment on artificial and real networks.  
 
+In the sequel of this section, we describe the evaluation measures and the datasets that we used for our experiments, before presenting the results.
 
 
 
@@ -33,19 +35,52 @@ If the expected measure is significantly less than the observed measure, then th
 
 Preferential attachment leads to networks characterized by a degree distribution with heavy tail which can take the form of a power law. To evaluate this property, we  plot the degree distributions in log log scale for the original network and the generated network. Comparaison of the degree distribution with a straight line gives us a qualitative measure for the preferential attachment.\\
 
+\textit{Preditive performance}
+
+The predictive performance of models is evaluated according \textbf{Adrien ?}.\\
+
 \subsection{Datasets}
-To demonstrate the potential of the models to generate graphs verifying properties occurring in original networks, we consider four artificial networks and two real networks.\\
+In our experiments, we consider four artificial networks and two real networks.\\
 
 \textit{Artificial networks}
 
 The artificial networks have been generated with ANC-Generator \cite{largeron2015}. This generator has been chosen because it allows to build attributed graphs with community structure faithfully following the known properties of real-world networks such as preferential attachment and homophily. 
-\textbf{ ARV peut on faire le lien ici entre les facteurs latents et les attributs - communautés ? }.
 Moreover, by modifying the parameters, these properties can be weakened. Finally, ANC-Generator is available under the terms of the GNU Public Licence and the parameters can be shared for experiments reproducibility. 
 
 Four artificial networks have been generated, each one corresponding to a configuration  regarding the properties of interest.
-Both properties are verified in the first one ($Network1$) whereas none of them is checked in the $Network4$.  There is only an evidence for homophily in the network $Network2$ and  preferential attachment in the network  $Network3$. Table 1 summarizes these four configurations. \\ 
+Table \ref{table:artificial_networks} summarizes these four configurations while Table \ref{table:generatorparameter} gives the parameter setting used to built these artificial networks. Both properties are verified in the first network ($Network1 b/h$) whereas none of them is checked in the $Network3 -b/-h$.  There is only an evidence for homophily in the network $Network4 -b/h$ and  preferential attachment in the network  $Network2 b/-h$.\\ 
 
-\textbf{Ajouter parametrage}  
+\begin{table} \label{table:artificial_networks}
+    \caption{Artificial networks properties.}
+\begin{tabular}{lrrrr}
+\hline                                                                             
+ Networks   &  Preferential attachment    &  Homophily    \\                 
+\hline                                                                             
+$Network1~b/h$ & yes&yes  \\
+$Network2~b/-h$  & yes&no   \\
+$Network3~-b/-h$ &no &no   \\
+$Network4~-b/h$ &no &yes  \\
+\hline                                                                             
+\end{tabular}  
+\end{table}
+
+
+\begin{table} \label{table:generatorparameter}
+    \caption{Parameter setting.}
+\begin{tabular}{lrrrr}
+\hline                                                                             
+ Networks   &  Parameters and seed used to generate the network in Dancer    \\                 
+\hline                                                                             
+$Network1~b/h$ &    \\
+$Network2~b/-h$  &  \\
+$Network3~-b/-h$ &   \\
+$Network4~-b/h$ &  \\
+\hline                                                                             
+\end{tabular}  
+\end{table}
+
+ \textbf{retrouver parametrage}
+ \textbf{ajouter commentaire sur properties}
 
 % \textit{Real networks}
 \textit{Real networks}
