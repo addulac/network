@@ -153,7 +153,7 @@ Table 1 summarizes basic characteristics of these synthetic and real datasets \t
 
 
 \subsection{Evaluation Protocol}
-For each datasets described,  we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameter for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$.
+For each datasets described,  we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameter for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. Each experiences were repeated 10 times.
 
 Our evaluation rely then in two strategy:
 
@@ -282,7 +282,28 @@ Our results confirm the theoretical analysis on nonparametric models, concerning
 	\includegraphics[scale=0.4]{img/immsb_g4_d}
 	\endminipage
 	
-	\caption{Generated Networks with Latent Models}
+	\caption{Generated Networks with Latent Models learned from synthetic datasets}
+	\label{fig:gen_graph}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/ilfrm_irvine_d}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/immsb_irvine_d}
+	\endminipage
+	\vspace{-0.4cm}
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/ilfrm_manufacturing_d}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.4]{img/immsb_manufacturing_d}
+	\endminipage
+	
+	\caption{Generated Networks with Latent Models learned from synthetic datasets}
 	\label{fig:gen_graph}
 \end{figure}
 
