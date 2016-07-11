@@ -2,14 +2,11 @@
 \label{sec:experiments}
 
 
-To illustrate our theoretical results, we evaluate the predictive performance of the models as well as their ability  to capture homophily and preferential attachment on artificial and real networks.  
+To illustrate our theoretical results, we evaluate the predictive performance of the models as well as their ability to capture homophily and preferential attachment on artificial and real networks.  
 
-In the sequel of this section, we describe the evaluation measures and the datasets that we used for our experiments, before presenting the results.
+In the sequel of this section, we first describe the evaluation measures for the  properties of networks and the datasets that we used for our experiments. Whereafter, we describe our evaluation protocol consisting of two different approach; a i) predictive performance analysis and a ii) generative based analysis. The last section presents the results.
 
-
-
-
-
+ %To illustrate our theoretical results, we evaluate the ability of the models to capture homophily and the preferential attachment effect on artificial and real networks. In this section, we beforehand present our measures for both properties. Afterwards, we describe the datasets that we have used, then we will explain our evaluation protocol. Finally we present our results and their relations to the theoretic framework.
 
 
 \subsection{Measures for the Properties}
@@ -34,10 +31,6 @@ If the expected measure is significantly less than the observed measure, then th
 \textit{Preferential attachment}
 
 Preferential attachment leads to networks characterized by a degree distribution with heavy tail which can take the form of a power law. To evaluate this property, we  plot the degree distributions in log log scale for the original network and the generated network. Comparaison of the degree distribution with a straight line gives us a qualitative measure for the preferential attachment.\\
-
-\textit{Preditive performance}
-
-The predictive performance of models is evaluated according \textbf{Adrien ?}.\\
 
 \subsection{Datasets}
 In our experiments, we consider four artificial networks and two real networks.\\
@@ -82,14 +75,13 @@ $Network4~-b/h$ &  \\
  \textbf{retrouver parametrage}
  \textbf{ajouter commentaire sur properties}
 
-% \textit{Real networks}
 \textit{Real networks}
 
 We evaluate also the models on two  real networks.
 The first one \footnote{available at:} is built from an online community of 1899 students from the University of California. Each node corresponds to a user and a directed edge represents a sent message. 
 The second one \footnote{available at:} is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated to an employee and an oriented link represents like previously a sent email.
 
-Table 1 summarizes basic characteristics of these synthetic and real datasets \textbf{ Mettre nombre de sommets, de liens}.
+Table 1 summarizes basic characteristics of these artificial and real datasets \textbf{ Mettre nombre de sommets, de liens}.
 
 
 \begin{figure}[h]
@@ -123,7 +115,7 @@ Table 1 summarizes basic characteristics of these synthetic and real datasets \t
 	\includegraphics[scale=0.4]{img/g4_d}
 	\endminipage
 	
-	\caption{Synthetic Networks. (left) adjacency matrix. (right) degree distribution}
+	\caption{artificial Networks. (left) adjacency matrix. (right) degree distribution}
 	\label{fig:synt_graph}
 \end{figure}
 
@@ -153,7 +145,7 @@ Table 1 summarizes basic characteristics of these synthetic and real datasets \t
 
 
 \subsection{Evaluation Protocol}
-For each datasets described,  we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameter for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. Each experiences were repeated 10 times.
+For each datasets described,  we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameter for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. Each experiences were repeated 10 times, and results were found to be stable regarding on the random initialization and sotchastic optimization.
 
 Our evaluation rely then in two strategy:
 
@@ -179,7 +171,7 @@ The predictive performance of models is calculated using a traditional precision
 The table \ref{table:unbalanced} and table \ref{table:balanced} respectively shows the overall precision, edge precision and recall results respectively for unbalanced case and tha balance case. Additionnally, the tables show results for several initialization for the number of features $K$ for both models. The last colulmn show the number of latent features to which latent models have converged.
 
 \subsubsection{Generative network}
-We consider the generative ability of the models to build new \emph{synthetic} networks based on the information learned on the data. This can be expressed by the predictive likelihood given only the hyperparameters $h$ and the training data:
+We consider the generative ability of the models to build new \emph{artificial} networks based on the information learned on the data. This can be expressed by the predictive likelihood given only the hyperparameters $h$ and the training data:
 \begin{equation}
     \pr(Y_{new} |Y, h) = \int_{\M} \pr(Y_{new} |Y,\M, h)\pr(\M |, h)d\M
 \end{equation}
@@ -190,7 +182,7 @@ The generative graph is the expectation of the predective likelihood on the mode
 \end{equation}
 
 
-The figure \ref{fig:gen_graph} shows the mean and variance of the degrees distribution of graphs generated by the ILFRM and the IMMSB when fitted on the synthetic dataset \ref{sec:datasets}.
+The figure \ref{fig:gen_graph} shows the mean and variance of the degrees distribution of graphs generated by the ILFRM and the IMMSB when fitted on the artificial dataset \ref{sec:datasets}.
 
 
 \subsection{Results}
@@ -201,7 +193,7 @@ The figure \ref{fig:gen_graph} shows the mean and variance of the degrees distri
 
 For all predictive measure, the overall precision, precision for edge and the recall for edge are better for bursty networks, exept for the Network 4. This is because the density of the latter is higher than the other who make the prediction on this network less inbanlance than the other
 
-On bursty networks, it appears that IMMSB has a tendancy to perform better on the networks where homophily is not strongly present. This can be explain by the fact that IMMSB allows relation between classes, and because strong homophily is correlated to more dense community in the synthetic network.
+On bursty networks, it appears that IMMSB has a tendancy to perform better on the networks where homophily is not strongly present. This can be explain by the fact that IMMSB allows relation between classes, and because strong homophily is correlated to more dense community in the artificial network.
 
 
 This observation confirm that IMMSB can capture burstiness and slighly better on slighly homophilic network.
@@ -209,7 +201,7 @@ This observation confirm that IMMSB can capture burstiness and slighly better on
 \paragraph{Results for ILFM}
 Resulst for ILFM show that the models converged to a hihger number of features for networks that are bursty. Even though the number of feature is smaller for the less bursty network, ILFM achive better  results on edge precision an recall.
 
-\subsubsection{Comparison of models}
+\paragraph{Comparison of models}
 In most case, ILFM performs better than IMMSB but the difference is less significative on bursty networks.
 
 \subsubsection{Balanced data}
@@ -219,6 +211,11 @@ In most case, ILFM performs better than IMMSB but the difference is less signifi
 ILFM confirm his tendancy to learn more features on bursty networks. Nevertheless the overall precision and the recall remains significantly better whithin the non-bursty networks. Moreover the overall precision and the recall is significantly better for the strongly homophilic networks.
 
 \paragraph{Comparison of models}
+
+
+Our results confirm the theoretical analysis on nonparametric models, concerning their affinity to the preferential attachment effect and the homophily effect.
+
+%Our experiments evaluate the preferential attachment and the local preferential attachment on the learned communities trough respectively the distribution of degrees in the networks and inside the communities.
 
 \begin{table} \label{table:real1}
     \caption{IMMSB prediction performance results on real networks, for several feature size initialization.}
@@ -232,6 +229,9 @@ manufacturing  & & & & \\
 \end{tabular}  
 \end{table}
 
+\subsubsection{Generative Analisys}
+
+\textcolor{red}{Note about the generative networks: homophily and burstiness measure, respect the theory ?...}
  
 
 \begin{table} \label{table:real2}
@@ -245,11 +245,6 @@ manufacturing  & & & & \\
 \hline
 \end{tabular}  
 \end{table}
-
-Our results confirm the theoretical analysis on nonparametric models, concerning their affinity to the preferential attachment effect and the homophily effect.
-
-%Our experiments evaluate the preferential attachment and the local preferential attachment on the learned communities trough respectively the distribution of degrees in the networks and inside the communities.
-
 
 \begin{figure}[h]
 	\centering
@@ -282,7 +277,7 @@ Our results confirm the theoretical analysis on nonparametric models, concerning
 	\includegraphics[scale=0.4]{img/immsb_g4_d}
 	\endminipage
 	
-	\caption{Generated Networks with Latent Models learned from synthetic datasets}
+	\caption{Generated Networks with Latent Models learned from artificial datasets}
 	\label{fig:gen_graph}
 \end{figure}
 
@@ -303,7 +298,7 @@ Our results confirm the theoretical analysis on nonparametric models, concerning
 	\includegraphics[scale=0.4]{img/immsb_manufacturing_d}
 	\endminipage
 	
-	\caption{Generated Networks with Latent Models learned from synthetic datasets}
+	\caption{Generated Networks with Latent Models learned from artificial datasets}
 	\label{fig:gen_graph}
 \end{figure}
 
