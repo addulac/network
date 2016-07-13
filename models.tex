@@ -85,20 +85,21 @@ The non-parametric version parallels this development but considers, in lieu of 
     &\mat{\beta} \sim \gem(\gamma) \nonumber \\
     \mat{f}_i &\sim \DP(\alpha_0, \beta) \quad\text{ for }  i \in \{1, .., N\} \nonumber
    \end{align}
+where $\gem$ denotes the Griffiths, ??? distribution over the set of natural numbers and $\DP$ a Dirichlet Process  \cite{HDP}.
 \item Generate a weight matrix for each latent class:\\
 \[ \phi_{mn} \sim \mathrm{Beta}(\lambda_0,\lambda_1), \, m,n \in \mathbb{N}^{+*} \]
 \item For any node $i$ and any node $j$, choose a class from their class membership distribution and generate or not a link according to:
    \begin{align}
-    z_{ij} &\sim \mbox{Cat}(\mat{f}_i) \nonumber \\
-    z_{ji} &\sim \mbox{Cat}(\mat{f}_j) \nonumber \\
-    y_{ij} &\sim \mathrm{Bern}(\phi_{f_{ij}f_{ji}})
+    z_{i \rightarrow j} &\sim \mbox{Cat}(\mat{f}_i) \nonumber \\
+    z_{i \leftarrow j} &\sim \mbox{Cat}(\mat{f}_j) \nonumber \\
+    y_{ij} &\sim \mathrm{Bern}(\phi_{z_{i \rightarrow j}f_{i \leftarrow j}})
     \label{eq:link-immsb}
    \end{align}
 \end{enumerate}
 %
-We have this time four real hyper-parameters, two for the hierarchical Dirichlet process ($\gamma$ and $\alpha_0$) and two for the Beta distribution underlying the weight matrix ($\lambda_0$ and $\lambda_1$). As for the previous model, in the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated; as before again, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices
+We have this time four real hyper-parameters, two for the hierarchical Dirichlet process ($\gamma$ and $\alpha_0$) and two for the Beta distribution underlying the weight matrix ($\lambda_0$ and $\lambda_1$). As for the previous model, in the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated; as before again, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. A graphical representation of this model is given in Figure~\ref{fig:ilfrm}.
 
-The inference is this model can be performed via collapsed Gibbs sampling and Metropolis-Hastings updates. Most updates can be found in \cite{HDP} and \cite{diMMSB}. For completeness, we provide them in Appendix~\ref{sec:append}.
+The inference is this model can be performed via collapsed Gibbs sampling updates. Most updates can be found in \cite{HDP} and \cite{diMMSB}. For completeness, we provide them in Appendix~\ref{sec:append}.
 %%
 %\begin{enumerate}
 %\item If the class $k$ has already been observed:

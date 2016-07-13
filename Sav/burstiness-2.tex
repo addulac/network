@@ -1,0 +1,121 @@
+\section{Burstiness}
+\label{sec:burstiness}
+\vspace{-0.2cm}
+\begin{center} \emph{The rich get richer} \end{center}
+
+\vspace{0.1cm}
+
+The term \textit{burstiness} describes the fact that some events appear in bursts, \textit{i.e.} once they appear, they are more likely to appear again. The notion of burstiness is similar to the one of aftereffect of future sampling \cite{feller_68}, which describes the fact that the more we observe an event, the higher the expectation to find new occurrences of this event. In (social) network studies, the burstiness effect is alos referred to as \textit{preferential attachment}\footnote{A.L. Barab\'asi, for example, uses the term \textit{preferential attachement} in \cite{barabasi1999emergence}, and \textit{burstiness} in \cite{barabasi_burst}.}: a node with many connections is more likely to have new connections than a node with few connections. To take into account this behavior, in the network generative model  (BA) \textcolor{red}{Adrien, il faut donner une r\'ef\'erence} model, a node is connected to an existing target node with a probability proportional to the number of links of the target node. This leads to scale-free networks that are characterized by a heavy tailed degree distribution, which can be approximated by a power law distribution such that the fraction of nodes $\pr(d)$ having a degree $d$ follows a power law $d^{-\gamma}$, where $\gamma$ typically ranges between 2 and 3~\cite{barabasi1999emergence}. 
+
+Burstiness has been studied in different fields, in particular in computational linguistics and information retrieval to characterize word occurrences \cite{church1995poisson}. In these domains, simple definitions of burstiness, that directly capture the fact that a probability distribution is bursty if the probability of generating a new occurrences of an event increases with the number of occurrences of this event, have been proposed\cite{clinchant2008bnb,clinchant2010information}. We rely here on the discrete version of theses definitions, which takes the following form:
+%
+\begin{definition}[Burstiness]
+	A discrete distribution $\pr$ is bursty if and only if, for all integers $(n, n')$, $n \geq n'$ :
+	\begin{equation}
+	\pr(X \geq n'+1 \mid X \geq n') > \pr(X \geq n+1 \mid X \geq n) \nonumber
+	\end{equation}
+	where $X$ denotes a random variable.
+\label{def:burst}
+\end{definition}
+%
+In the context of social networks, the notion of burstiness, or preferential attachement, appears at different levels: (a) a global preferential attachment level that characterizes the degree distribution of nodes in the network, (b) a local preferential attachment level that characterizes the degree distribution of nodes within communities, and (c) a class/feature burstiness level that characterizes the distributions of nodes among latent classes/features. We provide below a formal definition of these elements.
+%
+\begin{definition}[Burstiness in social networks]
+Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree. Furthermore, let $\mathcal{M}=\{\mat{F},\mat{\Phi}\}$ be a link prediction model as defined in Section~\ref{sec:models}.
+\begin{description}
+	\item (i) \emph{Global Preferential Attachment}: we say that $\mathcal{M}$ satisfies the global preferential attachement iff, for any node $j \in V$ not connected to $i$, $\pr(y_{ij}=1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$.
+	\item (ii) \emph{Local Preferential Attachment}: we say that $\mathcal{M}$ satisfies the local preferential attachement iff, for any node $j \in V$ not connected to $i$ and belonging to the same community as $i$, $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \mat{F}, \mat{\Phi})$ increases with $n$; $d_{i,c}$ denotes the degree of node $i$ in its community.
+	\item (iii) \emph{Class/Feature Burstiness}: we say that $\mathcal{M}$ satisfies the feature/class burstiness effect, iff, for any node $i$ and latent class/feature $k$, $\pr(f_{ik} \ge 1 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \mat{F}, \mat{\Phi})$ increases with $n$; where $\mat{f}_{\bm{.}k}^{-ik}$ denotes the number of nodes, other than node $i$, assigned to latent class/feature $k$ in the network.
+\end{description}
+\label{def:burst-soc-net}
+\end{definition}
+%
+There are two things to note here. The first one is that $f_{ik}$ in (iii) equals $1$ for ILFM (as it relies on binary features), and is greater than 1 in IMMSB. The second one is that the fact that the probability $\pr(y_{ij}=1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$ is equivalent to the fact that the probability $\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$. Indeed:
+%
+\begin{align}
+\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
+= 1 - \prod_{j \notin \mathcal{V}(i)} P(y_{ij} = 0 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
+= 1 - \prod_{j \notin \mathcal{V}(i)} (1 - P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi})) \nonumber
+\end{align}
+%
+Hence $T\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ and $P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ vary in the same direction. The same development holds for $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \mat{F}, \mat{\Phi})$. The above definitions, characterizing probabilistic link models according to burstiness in social networks, are thus directly related to the general definition of burstiness given in Definition~\ref{def:burst}.
+
+We now turn to the problem of assessing whether ILFM and IMMSB satisfy the above burstiness effects.
+
+\subsection{Burstiness for ILFM}
+
+In this model, one has: $P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) = \sigma(\mat{f}_i \mat{\Phi} \mat{f}_j^\top)$, which does not depend on $n$. This model is thus neutral wrt to global preferential attachment. The same holds for the local preferential attachment. Regarding feature burstiness, the resampling of $\mat{F}$ in the Gibbs updates takes the form (see \cite{ILFRM}):
+%
+\[
+\pr(f_{ik} = 1 \mid \mat{F}^{-ik},\mat{\Phi}, \mat{Y}) \propto \mat{f}_{\bm{.}k}^{-ik} \pr(\mat{Y} \mid f_{ik} = 1,\mat{F}^{-ik},\mat{\Phi})
+\]
+%
+where $\mat{F}^{-ik}$ denotes matrix $\mat{F}$ minus its entry at the $i^{th}$ row, $k^{th}$ column. This shows that $\pr(f_{ik} \ge 1 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \mat{F}, \mat{\Phi})$ increases with $n$.
+
+We thus have the following property:
+\begin{proposition}
+ILFM is neutral with respect to global and local preferential attachment. It furthermore satisfies the feature burstiness effect.
+\end{proposition}
+
+\subsection{Burstiness for IMMSB}
+\label{subsec:burst-immsb}
+
+In IMMSB (which a latent class model), each link has two underlying class assignments, one for each node of the link. We note $Z \in N\times N\times 2$ the matrix that represents those class assignments.
+We seek for the following form of the likelihood, that we marginalize over all the possible couples classes $c=(k, k')$:
+\begin{equation} \label{eq:q}
+\pr(y_{ij}=1 \mid Y^{-i\bm{.}}, Z^{-ij}, d_i ) = \sum_{c=(k, k')} \pr(y_{ij}=1 \mid Y^{-i\bm{.}}, d_i , c) \pr(c \mid  Z^{-ij} ) 
+\end{equation}
+Here note that within the sum, the left hand term is conditionally independent of $Z^{-ij}$. And the right hand term is independent of the adjacency terms $Y^{-i\bm{.}}$ since it do not belongs to the Markov blanket of $c$ random variable.
+
+The first term is the likelihood for the links between $(i,j)$ given the class of each node (k, k'). Due to the Beta-Bernoulli conjugacy of the model, $\phi$ and $\theta$ can be marginalized out, and it simplify to: 
+\begin{equation} \label{eq:qc}
+\pr(y_{ij}=1 \mid Y^{-i\bm{.}}, d_i , c) = \frac{C_{c1}^{-i.} + d_{ic} + \lambda_1}{C_{c\bm{.}}^{-ij} + \lambda_0+\lambda_1} 
+\end{equation}
+Where $C_{c1}$ denotes the count matrix for all interactions having value 1 (link present) with the classes couple being $c=(k, k')$. Thus $C_{c1} = \sum_{i,j} \bm{1}(z_{i\rightarrow j}=k, z_{i\leftarrow j}=k', y_{ij}=1)$ and $C_{c.} = \sum_{i,j} \bm{1}(z_{i\rightarrow j}=k, z_{i\leftarrow j}=k')$\\
+
+We recognize the likelihood form of the Gibbs update~\cite{HDP}, except that we isolate the term depending of the degree on $i$, $d_i$. Hence the term $d_{ic}$ is the element of the degree with a classes couple $c=(k,k')$ and $d_{ic} = \sum_{j' \neq j} \bm{1}(z_{i\rightarrow j'}=k, z_{i\leftarrow j'}=k', y_{ij'}=1) $.\\
+
+The second term of equation \eqref{eq:q}, can be rewrited by noting that the classes of the couple $c$ are independent and that the term $Y^{-j\bm{.}}$ can be dropped because it is not present in the Markov blanket of the class assignment: 
+\begin{equation} \label{eq:topic_assign}
+\pr(c \mid  Z^{-ij} ) =  \pr(z_{i\rightarrow j}=k \mid Z^{-ij}) \pr(z_{i\leftarrow j}=k' \mid Z^{-ij})
+\end{equation}
+
+Again, the two members of the right hand equation \eqref{eq:topic_assign} are the Gibbs updates for the topic assignments of nodes for the interaction $(i,j)$. Both members reduce to simple form due to the conjugacy between the Dirichlet and Multinomial~\cite{DM} or concurrently from the Chinese Restaurant Franchise~\cite{HDP}:
+\begin{align}
+\pr(z_{i\rightarrow j}=k \mid Z^{-ij}) = \frac{N_{ik}^{-ij} + \alpha_k}{ N_{i.}^{-ij} + \alpha_{\bm{.}} } \\
+\pr(z_{i\leftarrow j}=k' \mid Z^{-ij}) = \frac{N_{jk'}^{-ij} + \alpha_{k'}}{ N_{j\bm{.}}^{-ij} + \alpha_{\bm{.}} } 
+\end{align}
+
+Finally, one can see that the only term depending on the degree $d_i$ is isolated, and we can rewrite equation \eqref{eq:q}, with term depending only on $d_i$, $k$, $i$ and $j$:
+\begin{equation}
+\pr(y_{ij}=1 \mid Y^{-i\bm{.}}, Z^{-ij}, d_i ) = \sum_{c=(k, k')} A_c (B_c + d_{ic})
+\end{equation}
+Where $A_c$ and $B_c$ are two positive function of $c$.
+\begin{align}
+A_c &= \frac{N_{ik}^{-ij} + \alpha_k}{ N_{i.}^{-ij} + \alpha_{\bm{.}} } \frac{N_{jk'}^{-ij} + \alpha_{k'}}{ N_{j\bm{.}}^{-ij} + \alpha_{\bm{.}} } \frac{1}{C_{c\bm{.}}^{-ij} + \lambda_0+\lambda_1} \\
+B_c &= C_{c1}^{-i.} + \lambda_1
+\end{align}
+
+As we sum over all possible couple classes, the probability to have a link will augment with the degree with the classes couple corresponding to the element of the degree with the same couple. Hence the probability to observe a link for node $i$ is strictly crescent with his degree $d_i$. 
+
+\paragraph{Preferential Attachment}~\\
+
+The model is bursty hence it can handle the preferential attachment at the network level.
+
+\paragraph{Local Preferential Attachment}~\\
+
+The Local preferential attachment is similar to the notion of burstiness but inside a community/class of the network. Assuming that we know the class of $i$ $z_{i\rightarrow j}$ to be $k$, the probability to have a link becomes: 
+\begin{align}
+&\pr(y_{ij}=1 \mid Y^{-i\bm{.}}, d_i,z_{i\rightarrow j})  = \sum_{k'} \pr(y_{ij}=1 \mid Y^{-i\bm{.}}, Z^{-ij}, d_i , c=(k,k')) \pr(z_{i\leftarrow j}=k' \mid Z^{-ij} ) \\
+&= \sum_{k'} \frac{C_{c1}^{-i.} + d_{ic} + \lambda_1}{C_{c\bm{.}}^{-ij} + \lambda_0 + \lambda_1} \frac{N_{jk'}^{-ij} + \alpha_{k'}}{ N_{j\bm{.}}^{-ij} + \alpha_{\bm{.}} } \\
+&= \sum_{k'} A'_{k'} (B'_{k'} + d_{i(k,k')})
+\end{align}
+
+Here the probability increases with the degree independently of the interactions classes. This means that burstiness is possible inside but also between communities.
+
+\paragraph{Communities Distribution}~\\
+
+....Need to count the table for each classes in Chinese Restaurant Franchise (CRF), to evaluate the distribution according to the hyperprior of HDP...
+
+
+
