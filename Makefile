@@ -9,8 +9,10 @@ dvi: ${SRC}.tex
 	${CONV} ${SRC}.dvi
 	${CC} ${SRC}.tex
 
-bib: dvi
+bib: pdf
 	bibtex ${SRC}
+	pdflatex ${SRC}.tex
+	pdflatex ${SRC}.tex
 
 pdf:
 	pdflatex ${SRC}.tex
