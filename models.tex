@@ -32,7 +32,7 @@ This model makes use of two real hyper-parameters, one for the IBP process ($\al
 
 \begin{figure}[t]
 	\centering
-	\minipage{0.25\textwidth}
+	\minipage{0.25\textwidth}\vspace{1cm}
 	\scalebox{0.88}{
 	\input{./img/ilfrm2.tex}}
 	\endminipage
@@ -82,7 +82,7 @@ The non-parametric version parallels this development but considers, in lieu of 
 \begin{enumerate}
 \item Generate the class membership matrix $\mat{F}_{N \times \infty}$:
    \begin{align}
-    &\mat{\beta} \sim \gem(\gamma) \nonumber \\
+    &\bm{\beta} \sim \gem(\gamma) \nonumber \\
     \mat{f}_i &\sim \DP(\alpha_0, \beta) \quad\text{ for }  i \in \{1, .., N\} \nonumber
    \end{align}
 where $\gem$ denotes the Griffiths, ??? distribution over the set of natural numbers and $\DP$ a Dirichlet Process  \cite{HDP}.
