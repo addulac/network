@@ -2,24 +2,24 @@
 \label{sec:background}
 Without loss of generality, we focus on social networks with binary relationships. Our object of interest is the topology of the network representing the presence or absence of links between nodes in the graph. The network can be either directed or not. For a network with $N$ nodes, we represent the topology by an adjacency matrix $Y \in \{0,1\}^{N\times N}$ associated to a graph $G = (V,E)$, where $V$ is a set of nodes representing entities, $E \in V \times V$ is a set of edges who represents relationships between pairs of entities. From a probabilistic point of view, the network topology is modeled using a kernel with a Bernoulli density. The parameters of the Bernoulli is the probability to observe a link between two nodes.
 
-We define a matrix of weight interactions $\Phi \in W^{K\times K}$ with $W$ the space of weights, where $K$ is the number of classes or features. Let $\Theta \in \mathcal{F}^{N\times K}$, be a matrix where each row $i$ represents the latent feature vector associated to the node $i$,  and $\cal{F}$ the latent feature space. Hence for the MMSB and ILFM, the latent feature vectors are respectively proportion vectors (who sum to one) and binary vectors. In this framework the network is generated with the following density:
+We define a matrix of weight interactions $\mat{\Phi} \in W^{K\times K}$ with $W$ the space of weights, where $K$ is the number of classes or features. Let $\mat{F} \in \mathcal{F}^{N\times K}$, be a matrix where each row $i$ represents the latent feature vector associated to the node $i$,  and $\cal{F}$ the latent feature space. Hence for the MMSB and ILFM, the latent feature vectors are respectively proportion vectors (who sum to one) and binary vectors. In this framework the network is generated with the following density:
 \begin{equation} \label{MFDCA}
-    Y \sim \mathrm{Bern}(\sigma(\Theta \Phi  \Theta^T))
+    Y \sim \mathrm{Bern}(\sigma(\mat{F} \mat{\Phi}  \mat{F}^T))
 \end{equation}
 where $\sigma$ is a function that map values to a probability space. When $\sigma$ is the identity function, the expectation of the observation reduces to a matrix factorization (bilinear) expression, and is related to Discrete Component Analysis (DCA)~\cite{DCA}:
 \begin{equation}
-E_{y \sim p(y|\Theta, \Phi)}[Y] = \Theta \Phi  \Theta^T
+E_{y \sim p(y|\Theta, \Phi)}[Y] = \mat{F} \mat{\Phi}  \mat{F}^T
 \end{equation}
 
-This matrix factorization approach of the Bayesian model is in due to the likelihood of the model when applying the sum rule over the latent variables. Indeed the probability to have a link for the interaction $(i,j)$ is:
-\begin{equation}
-\pr(y_{ij}=1 \mid \Theta, \Phi ) = \sum_{k, k'} \pr(y_{ij}=1\mid\phi_{k,k'}) \pr(k \mid\theta_i) \pr(k' \mid \theta_j)
+This matrix factorization approach of the Bayesian model is in due to the likelihood of the model when we marginalize over the class membership. Indeed the probability to have a link for the interaction $(i,j)$ is:
+\begin{equation} \label{eq:mf}
+\pr(y_{ij}=1 \mid \mat{F}, \mat{\Phi } ) = \sum_{k, k'} \pr(y_{ij}=1\mid\phi_{k,k'}) \pr(k \mid \mat{f}_i) \pr(k' \mid \mat{f}_j)
 \end{equation}
 
 
-The questions that arise are:
+See the Appendix~\ref{sec:mixmembership} for a justification of eq \eqref{eq:mf} using a Mixed Membership Model approach. In this framework, we want to answer the following questions:
 \begin{itemize}
-	\item What kind of properties the model can capture or learn on networks ?
+	\item What properties the model can capture or learn on networks ?
 	\item Which constraint on the models can come with an consistent interpretation of latent variables along with the concepts of communities structure and homophily in social networks  ?
 \end{itemize} 
 

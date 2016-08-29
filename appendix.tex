@@ -1,6 +1,16 @@
 \section{Appendix}
 \label{sec:append}
 
+\subsection{Mixed membership Models}
+\label{sec:mixmembership}
+In the Mixed Membership Models \cite{MMM}, the models can be defined at the link level by the likelihood of generating a link between two nodes given the contribution of each classes (or features). For IMMSB, this likelihood is straightforward, but for ILFM the class membership is defined deterministically by the binary vector $\mat{f}$. If the $k^{th}$ row is active (equal to one) then the node has the membership, else it doesn't. Hence for ILFM, We can write the likelihood  using the Dirac distribution $\delta(x)$ that gives one for $x=0$ as follows:
+
+\begin{align}
+    \pr(y_{ij} \mid \mat{F}, \mat{\Phi } ) &= \sigma \sum_{k, k'} \pr(y_{ij}\mid\phi_{k,k'}) \pr(k \mid \mat{f}_i) \pr(k' \mid \mat{f}_j) \\
+    &=  \sigma \sum_{k, k'} \phi_{k,k'}  \delta(1-f_{ik}) \delta(1-f_{jk'})
+    \end{align}
+    
+
 \subsection{Collapsed Gibbs sampling updates for IMMSB}
 
 We provide here the derivation of the updates of the IMMSB model, described in Section~\ref{sec:models}.
