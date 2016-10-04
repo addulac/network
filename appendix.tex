@@ -28,13 +28,14 @@ Inference for the IMMSB model by using the Collapse Gibbs sampler gives updates 
 \end{align}
 The term $Z^-$ denote that both $z_{ij}$ and $z_{ji}$ are exclude from $Z$. We now treat the first term of equation \ref{eq:cgs}.  
 \begin{align}
-& \pr(z_{ij}, z_{ji} \mid Z^-, \alpha,\mat{\beta})\\
-&\propto \pr(z_{ij} \mid \mat{z}_i^{-j}, \mat{z}_j, \alpha,\mat{\beta})  \pr(z_{ji} \mid \mat{z}_j^{-i}, \mat{z}_i, \alpha,\mat{\beta}) \nonumber
+&\pr(z_{ij}, z_{ji} \mid Z^-, \alpha,\mat{\beta})\\
+&\propto \pr(z_{i\rightarrow j} \mid \{z_{i\rightarrow j'}\}_{j'\neq j}, \{z_{j'\leftarrow i}\}_{j'=1}^N, \alpha,\mat{\beta}) \\
+& \quad .  \pr(z_{i\leftarrow j} \mid \{z_{i'\leftarrow j}\}_{i'\neq i}, \{z_{j\leftarrow i'}\}_{i'=1}^N, \alpha,\mat{\beta}) \nonumber
 \end{align}
-Let's consider the density of $z_{ij}$:
+Let's consider the density of $z_{i\rightarrow j}$:
 \begin{align}
-&\pr(z_{ij} \mid \mat{z}_i^{-j}, \mat{z}_j, \alpha,\mat{\beta}) \propto \pr(z_{ij},  \mat{z}_i^{-j}, \mat{z}_j, \alpha,\mat{\beta}) \\
-&= \int_{f_i} \pr(f_i \mid \mat{\beta}, \alpha) \pr(z_{ij} \mid f_i) \prod_{j_0\neq j} \pr(z_{ij_0} \mid f_i) \prod_{j_0 =  1}^N  \pr(z_{j_0 i} \mid f_i)  df_i \nonumber
+&\propto \pr(z_{i\rightarrow j} \mid \{z_{i\rightarrow j'}\}_{j'\neq j}, \{z_{j'\leftarrow i}\}_{j'=1}^N, \alpha,\mat{\beta})  \\
+&\propto \int_{f_i} \pr(f_i \mid \mat{\beta}, \alpha) \pr(z_{ij} \mid f_i) \prod_{j'\neq j} \pr(z_{ij'} \mid f_i) \prod_{j' =  1}^N  \pr(z_{j' i} \mid f_i)  df_i \nonumber
 \end{align}
 
 
@@ -69,7 +70,7 @@ Where $s(n,m)$ is the unsigned Stirling number of the first kind.
 
 
 ~\\
-Finally, when the markov chain reach the stationnary distribution, the models parameters $\M = \mat{Phi}, \mat{F}$ can be recovered by averaging the topics assignement counts for each membership and each relation:
+Finally, when the markov chain reach the stationnary distribution, the models parameters $\M = \{\mat{\Phi}, \mat{F}\}$ can be recovered by averaging the topics assignement counts for each membership and each relation:
 \begin{align}
 &\pr(f_{ik}) =\frac{ N_{ik} + \alpha\beta_k}{ N_{i\bm{.}} + \sum_k\alpha_k }\\
 &\pr(\phi_c ) = \frac{M_{c1} + \lambda_1}{M_{c\bm{.}} + \lambda_0 + \lambda_1}

@@ -8,7 +8,7 @@ We define a matrix of weight interactions $\mat{\Phi} \in W^{K\times K}$ with $W
 \end{equation}
 where $\sigma$ is a function that map values to a probability space. When $\sigma$ is the identity function, the expectation of the observation reduces to a matrix factorization (bilinear) expression, and is related to Discrete Component Analysis (DCA)~\cite{DCA}:
 \begin{equation}
-E_{y \sim p(y|\Theta, \Phi)}[Y] = \mat{F} \mat{\Phi}  \mat{F}^T
+E_{p(y|\Theta, \Phi)}[Y] = \mat{F} \mat{\Phi}  \mat{F}^T
 \end{equation}
 
 This matrix factorization approach of the Bayesian model is in due to the likelihood of the model when we marginalize over the class membership. Indeed the probability to have a link for the interaction $(i,j)$ is:
