@@ -1,88 +1,60 @@
-\section{Experimental Framework}
+\section{Prediction Evaluation}
 \label{sec:experiments}
 
+In previous section, we show illustrate theoretical results with empirical measures  on realization of networks using the generative property of the probabilistic models. In this section, we seek to explain the predictive performance on several datasets by examining their empirical properties and how well the models can capture them. This analysis provide also a try on a systemic comparison of both models, IMMSB and ILFM. Particularly we will see that performance of those models really depend on the type of data we want to fit.
 
-To illustrate our theoretical results, we evaluate the predictive performance of the models as well as their ability to capture homophily and preferential attachment on artificial and real networks.  
+This section is organised as folllow. In first subsection we descibed our measure for the preferential attachment effect. In the second we present the synthetic and real dataset that we have used. In the third we present our experimental setting. In the last we report our results.
 
-In the sequel of this section, we first describe the evaluation measures for the  properties of networks and the datasets that we used for our experiments. Whereafter, we describe our evaluation protocol consisting of two different approach; a i) predictive performance analysis and a ii) generative based analysis. The last section presents the results.
+\subsection{A measures for the preferential attachment effect}
 
- %To illustrate our theoretical results, we evaluate the ability of the models to capture homophily and the preferential attachment effect on artificial and real networks. In this section, we beforehand present our measures for both properties. Afterwards, we describe the datasets that we have used, then we will explain our evaluation protocol. Finally we present our results and their relations to the theoretic framework.
+Preferential attachment leads to networks characterized by a degree distribution with heavy tail which can take the form of a power law. To evaluate this property,  we  plot the degree distributions in log log scale for the original network and the generated network. Comparaison of the degree distribution with a linear function in the log-log scale  gives us a qualitative measure for the preferential attachment. However, for a better evaluation of the power law behaviour of degree distribution we rely on a  goodnees a fit based on a Kolmogorov-Smirnov (KS) test. We follow the protocol described in \cite{clauset2009power} which consists of the following steps:
+\begin{itemize}
+	\item Estimate the parameters $x_{min}$ and $\alpha$ of the power law model.
+	\item Calculate the goodness of fit between synthetic datasets generated with the power law and the data. The resulting $p$-values gives an estimates of the          plausibility of the hypothesis for the data.
+\end{itemize}
 
-
-\subsection{Measures for the Properties}
-
-\textit{Homophily Indicators}
-
-To evaluate homophily in a given attributed network, we use the measures introduced by \cite{largeron2015}, adapted from the test proposed by \cite{Easley2010}.  This test compares an expected homophily measure corresponding to the probability for two vertices to be similar with an observed homophily measure defined as the probability that two linked vertices are similar. More precisely, given a contingency table defined as follows:
-
-$a = Card\{(i,j)\in V\times (V-1) / (i,j) \in E \land s(i,j)\}$\\
-$b = Card\{(i,j)\in V\times (V-1) / (i,j) \in E \land \neg{s(i,j)}\}$\\ 
-$c = Card\{(i,j)\in V\times (V-1) / (i,j) \notin E \land s(i,j)\}$\\
-$d = Card\{(i,j)\in V\times (V-1) / (i,j) \notin E \land \neg{s(i,j)}\}$\\
-%$\frac{N*(N-1)}{2}$ is the total count of  the cells in the contingency table.\\
-
-where  s(i,j) indicates that i and j are considered as similar, observed homophily, denoted $H_{obs}$, is given by $\frac{a}{a+b}$.\\
-This measure  is equal to 1 when all the pairs of linked vertices are similar. Consequently, high values suggest an homophily effect.
-
-Moreover, $H_{obs}$ can be compared with an expected measure, $H_{expec}$, defined by  $ \frac{a+c}{a+b+c+d}$.\\
-
-If the expected measure is significantly less than the observed measure, then there is evidence for homophily.\\
-
-\textit{Preferential attachment}
-
-Preferential attachment leads to networks characterized by a degree distribution with heavy tail which can take the form of a power law. To evaluate this property, we  plot the degree distributions in log log scale for the original network and the generated network. Comparaison of the degree distribution with a straight line gives us a qualitative measure for the preferential attachment.\\
+As mentionned in \cite{clauset2009power} high value of the $p$-value should be considered with caution for at least two raisons. First there may be other distribution that match the data equally or better. Second, a small number of samples of the data may lead to high p-value and reflect the fact that is hard to rule out an hypothesis in such a case.
 
 \subsection{Datasets}
 In our experiments, we consider four artificial networks and two real networks.\\
 
 \textit{Artificial networks}
 
-The artificial networks have been generated with ANC-Generator \cite{largeron2015}. This generator has been chosen because it allows to build attributed graphs with community structure faithfully following the known properties of real-world networks such as preferential attachment and homophily. 
-Moreover, by modifying the parameters, these properties can be weakened. Finally, ANC-Generator is available under the terms of the GNU Public Licence and the parameters can be shared for experiments reproducibility. 
+The artificial networks have been generated with ANC-Generator \cite{largeron2015}. This generator has been chosen because it allows to build attributed graphs with  community structure faithfully following the known properties of real-world networks such as preferential attachment and homophily.
+Moreover, by modifying the parameters, these properties can be weakened. Finally, ANC-Generator is available under the terms of the GNU Public Licence and the        parameters can be shared for experiments reproducibility.
 
 Four artificial networks have been generated, each one corresponding to a configuration  regarding the properties of interest.
-Table \ref{table:artificial_networks} summarizes these four configurations while Table \ref{table:generatorparameter} gives the parameter setting used to built these artificial networks. Both properties are verified in the first network ($Network1 b/h$) whereas none of them is checked in the $Network3 -b/-h$.  There is only an evidence for homophily in the network $Network4 -b/h$ and  preferential attachment in the network  $Network2 b/-h$.\\ 
+Table \ref{table:artificial_networks} summarizes these four configurations. We report the seed and parameters that we use those synthetic networks in appendix \ref{seed_dancer	}. Each generated networks correspond to a different combination where homophily and preferential attachment are more or less characterizing the underlying networks. For example...
 
-\begin{table} \label{table:artificial_networks}
-    \caption{Artificial networks properties.}
-\begin{tabular}{lrrrr}
-\hline                                                                             
- Networks   &  Preferential attachment    &  Homophily    \\                 
-\hline                                                                             
-$Network1~b/h$ & yes&yes  \\
-$Network2~b/-h$  & yes&no   \\
-$Network3~-b/-h$ &no &no   \\
-$Network4~-b/h$ &no &yes  \\
-\hline                                                                             
-\end{tabular}  
+\begin{table}[h] \label{table:artificial_networks}
+	\caption{Artificial networks properties.}
+	\begin{tabular}{lrrrr}
+		\hline
+		Networks   &  p-value    &  Modularity & Clustering coefff & density   \\
+		\hline
+		$Network1$ b/h   & yes &0.59  & 0.06 & 0.007  \\
+		$Network2$ b/-h  & yes &0.43  & 0.08 & 0.006\\
+		$Network3$ -b/-h & no  &0.71  & 0.49 & 0.01 \\
+		$Network4$ -b/h  & no  &0.68  & 0.61 & 0.06 \\
+		\hline
+	\end{tabular}
+	\caption{Real networks properties.}
+	\begin{tabular}{lrrrr}
+		\hline
+		Networks    &  p-value    &  Modularity & Clustering coefff & density   \\
+		\hline
+		$fb\_uc$          & yes & -  & 0.10 & 0.008 \\
+		$manufacturing$   & yes & -  & 0.59 & 0.24 \\
+	\end{tabular}
 \end{table}
-
-
-\begin{table} \label{table:generatorparameter}
-    \caption{Parameter setting.}
-\begin{tabular}{lrrrr}
-\hline                                                                             
- Networks   &  Parameters and seed used to generate the network in Dancer    \\                 
-\hline                                                                             
-$Network1~b/h$ &    \\
-$Network2~b/-h$  &  \\
-$Network3~-b/-h$ &   \\
-$Network4~-b/h$ &  \\
-\hline                                                                             
-\end{tabular}  
-\end{table}
-
- \textbf{retrouver parametrage}
- \textbf{ajouter commentaire sur properties}
 
 \textit{Real networks}
 
 We evaluate also the models on two  real networks.
-The first one \footnote{available at:} is built from an online community of 1899 students from the University of California. Each node corresponds to a user and a directed edge represents a sent message. 
-The second one \footnote{available at:} is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated to an employee and an oriented link represents like previously a sent email.
+The first one \footnote{available at:} is built from an online community of 1899 students from the University of California. Each node corresponds to a user and a    directed edge represents a sent message.
+The second one \footnote{available at:} is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated  to an employee and an oriented link represents like previously a sent email.
 
-Table 1 summarizes basic characteristics of these artificial and real datasets \textbf{ Mettre nombre de sommets, de liens}.
-
+Table 1 summarizes some properties characteristics of these artificial and real datasets. The  the p-value measure is computed as described in \ref{} as reference for the global preferential attachment effect. we also report the modularity on th given partition (by Dancer) of the networks, and the clustering coefficient.
 
 \begin{figure}[h]
 	\centering
@@ -119,19 +91,17 @@ Table 1 summarizes basic characteristics of these artificial and real datasets \
 	\label{fig:synt_graph}
 \end{figure}
 
-
-
 \begin{figure}[h]
 	\centering
 	
-
+	
 	\minipage{0.25\textwidth}
 	\includegraphics[scale=0.4]{img/irvine}
 	\endminipage
 	\minipage{0.25\textwidth}
 	\includegraphics[scale=0.4]{img/irvine_d}
 	\endminipage
-		\vspace{-0.4cm}
+	\vspace{-0.4cm}
 	\minipage{0.25\textwidth}
 	\includegraphics[scale=0.4]{img/manufacturing}
 	\endminipage
@@ -144,107 +114,13 @@ Table 1 summarizes basic characteristics of these artificial and real datasets \
 
 
 
-\subsection{Evaluation Protocol}
-For each datasets described,  we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameter for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. Each experiences were repeated 10 times, and results were found to be stable regarding on the random initialization and sotchastic optimization.
-
-Our evaluation rely then in two strategy:
+\subsection{Experimental Settings}
+For each datasets described,  we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and       $\gamma \sim \text{Gamma}(1,1)$. The parameter for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to   $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. Each experiences were averaged on 10 repetitions, and results were found to be stable regarding on the random  initialization and stochastic optimization.
 
 
-\subsubsection{Predictive performance}
-We evaluate the performance prediction of the models by building a training set and a testing set from the original datasets. Because the burstiness has a strong impact os the sparsity of the underlying graph, we face a very unbanlanced challenge. Considering this fact, we used two different strategy for building our testing set, in order to assess the impact of the sparsity:
+We evaluate the performance prediction of the models by building a training set and a testing set from the original datasets. In order to achieve this we build a random mask consisting of 20 percent of the size of the adjacency matrix. This mask is used a our testing set, while the 80 remaning percent are used as a training set.
 
-\paragraph{Unbalanced testing set}
-We separate our datasets into a training set representing 80 \% of the size of the network, and 20\% for a testing set, randomly chosen. As the dataset has a small density of edges, this testing set ends up with very small amout of edges.
-
-\paragraph{Balanced testing set}
-In order to create a balanced testing set, we pick randomly 20 \% of the edges of the network and the same amount of non-links. The testing ends up balanced but it represents a small proportion of the dataset.~\\
-
-
-We performed a predictive analysis on the testing set and compared the predictive performance of each models with regards to the properties of the network. 
-The predictive performance of models is calculated using a traditional precision and recall measures for the predicted links, that we calculated as follows:\\
-\begin{align}
-    \mathrm{precision}_{V} = Equation precision to complete... \\
-    \mathrm{recall}_{V} = Equation recall to complete...
-\end{align}
-
-
-The table \ref{table:unbalanced} and table \ref{table:balanced} respectively shows the overall precision, edge precision and recall results respectively for unbalanced case and tha balance case. Additionnally, the tables show results for several initialization for the number of features $K$ for both models. The last colulmn show the number of latent features to which latent models have converged.
-
-\subsubsection{Generative network}
-We consider the generative ability of the models to build new \emph{artificial} networks based on the information learned on the data. This can be expressed by the predictive likelihood given only the hyperparameters $h$ and the training data:
-\begin{equation}
-    \pr(Y_{new} |Y, h) = \int_{\M} \pr(Y_{new} |Y,\M, h)\pr(\M |, h)d\M
-\end{equation}
-
-The generative graph is the expectation of the predective likelihood on the model. The expectation of the generative graph is then given by the bilinear form, according to \ref{MFDCA}:
-\begin{equation}
-    \E_\M[Y_{new} | Y, \M] = \sigma(F \Phi F^T)
-\end{equation}
-
-
-The figure \ref{fig:gen_graph} shows the mean and variance of the degrees distribution of graphs generated by the ILFM and the IMMSB when fitted on the artificial dataset \ref{sec:datasets}.
-
-
-\subsection{Results}
-
-\subsubsection{Unbanlanced data}
-
-\paragraph{Results for IMMSB}
-
-For all predictive measure, the overall precision, precision for edge and the recall for edge are better for bursty networks, exept for the Network 4. This is because the density of the latter is higher than the other who make the prediction on this network less inbanlance than the other
-
-On bursty networks, it appears that IMMSB has a tendancy to perform better on the networks where homophily is not strongly present. This can be explain by the fact that IMMSB allows relation between classes, and because strong homophily is correlated to more dense community in the artificial network.
-
-
-This observation confirm that IMMSB can capture burstiness and slighly better on slighly homophilic network.
-
-\paragraph{Results for ILFM}
-Resulst for ILFM show that the models converged to a hihger number of features for networks that are bursty. Even though the number of feature is smaller for the less bursty network, ILFM achive better  results on edge precision an recall.
-
-\paragraph{Comparison of models}
-In most case, ILFM performs better than IMMSB but the difference is less significative on bursty networks.
-
-\subsubsection{Balanced data}
-\paragraph{Results for IMMSB}
-
-\paragraph{Results for ILFM}
-ILFM confirm his tendancy to learn more features on bursty networks. Nevertheless the overall precision and the recall remains significantly better whithin the non-bursty networks. Moreover the overall precision and the recall is significantly better for the strongly homophilic networks.
-
-\paragraph{Comparison of models}
-
-
-Our results confirm the theoretical analysis on nonparametric models, concerning their affinity to the preferential attachment effect and the homophily effect.
-
-%Our experiments evaluate the preferential attachment and the local preferential attachment on the learned communities trough respectively the distribution of degrees in the networks and inside the communities.
-
-\begin{table} \label{table:real1}
-    \caption{IMMSB prediction performance results on real networks, for several feature size initialization.}
-\begin{tabular}{lrrrr}
-\hline                                                                             
- immsb / mask all   &        5 &       10 &       15 &       20 \\                 
-\hline                                                                             
-fb\_uc & & & & \\
-manufacturing  & & & & \\
-\hline                                                                             
-\end{tabular}  
-\end{table}
-
-\subsubsection{Generative Analisys}
-
-\textcolor{red}{Note about the generative networks: homophily and burstiness measure, respect the theory ?...}
- 
-
-\begin{table} \label{table:real2}
-    \caption{ILFM predictive performance result on real networks}
-\begin{tabular}{lrrrr}
-\hline
- ILFM / mask all   &     global &   precision &      recall &   K-\ensuremath{>} \\
-\hline
-fb\_uc& & & & \\
-manufacturing  & & & & \\
-\hline
-\end{tabular}  
-\end{table}
+In figure \ref{fig:auc} we report the Area Under Curve for for each datasets in order to compare the behavior of IMMSB and ILFM. In figure \ref{fig:gen_graph_s} and \ref{fig:gen_graph_r} we used the models learned on the training set to generate a full networks and report the global and local degree distribution. Finally we report a detailled table on precision and recall for each experiment that corroborate the AUC report in annexe \ref{sec:precision_recall}.
 
 \begin{figure}[h]
 	\centering
@@ -278,7 +154,7 @@ manufacturing  & & & & \\
 	\endminipage
 	
 	\caption{Generated Networks with Latent Models learned from artificial datasets}
-	\label{fig:gen_graph}
+	\label{fig:gen_graph_s}
 \end{figure}
 
 \begin{figure}[h]
@@ -299,10 +175,39 @@ manufacturing  & & & & \\
 	\endminipage
 	
 	\caption{Generated Networks with Latent Models learned from artificial datasets}
-	\label{fig:gen_graph}
+	\label{fig:gen_graph_r}
+\end{figure}
+
+
+\begin{figure}[h]
+	\centering
+	
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.22]{img/M_e/AUC-ROC/figure_1}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.22]{img/M_e/AUC-ROC/figure_2}
+	\endminipage
+	\vspace{-0.4cm}
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.22]{img/M_e/AUC-ROC/figure_3}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.22]{img/M_e/AUC-ROC/figure_4}
+	\endminipage
+		\vspace{-0.4cm}
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.22]{img/M_e/AUC-ROC/figure_5}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\includegraphics[scale=0.22]{img/M_e/AUC-ROC/figure_6}
+	\endminipage
+	
+	\caption{AUC results}
+	\label{fig:auc}
 \end{figure}
 
 
 
-\input{table_results}
+\subsection{results}
 

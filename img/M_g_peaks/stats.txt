@@ -1,0 +1,26 @@
+KS data:  KstestResult(statistic=17334453.755169265, pvalue=nan)
+KS synthetic:  KstestResult(statistic=73951.254724962317, pvalue=nan)
+{'x_min': 743.0, 'alpha': 24.792131829796531, 'n_head': 542.0, 'pvalue': 0.26353790613718414, 'n_tail': 439.0}
+Computing Local Preferential attachment
+Z formation : 0:00:08.814082
+164 unconnected vertex
+x_min 587
+KS data:  KstestResult(statistic=3.4103703840469024e+231, pvalue=nan)
+KS synthetic:  KstestResult(statistic=3.4103703840469024e+231, pvalue=nan)
+{'x_min': 587, 'alpha': 83.944875427616878, 'n_head': 660.0, 'pvalue': 0.0, 'n_tail': 176.0}
+573 unconnected vertex
+x_min 1
+KS data:  KstestResult(statistic=0.3019164838368994, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.33795493934142112, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.1962426543091578, 'n_head': 36.0, 'pvalue': 0.9783393501805054, 'n_tail': 391.0}
+819 unconnected vertex
+x_min 1
+KS data:  KstestResult(statistic=0.29573384532274005, pvalue=1.5765166949677223e-14)
+KS synthetic:  KstestResult(statistic=0.40000000000000002, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2367462540625678, 'n_head': 17.0, 'pvalue': 0.9963898916967509, 'n_tail': 164.0}
+997 unconnected vertex
+x_min 1
+KS data:  KstestResult(statistic=0.66666666666666663, pvalue=0.074074074074074181)
+KS synthetic:  KstestResult(statistic=1.0, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.4808983469629879, 'n_head': 2.0, 'pvalue': 0.7617328519855595, 'n_tail': 1.0}
+active cluster (max assignement): 4

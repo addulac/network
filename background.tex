@@ -1,27 +1,49 @@
-\section{Background}
+\section{Latent Representation}
 \label{sec:background}
-Without loss of generality, we focus on social networks with binary relationships. Our object of interest is the topology of the network representing the presence or absence of links between nodes in the graph. The network can be either directed or not. For a network with $N$ nodes, we represent the topology by an adjacency matrix $Y \in \{0,1\}^{N\times N}$ associated to a graph $G = (V,E)$, where $V$ is a set of nodes representing entities, $E \in V \times V$ is a set of edges who represents relationships between pairs of entities. From a probabilistic point of view, the network topology is modeled using a kernel with a Bernoulli density. The parameters of the Bernoulli is the probability to observe a link between two nodes.
+Without loss of generality, we focus on social networks with binary relationships. A network with $N$ nodes is a graph $G = (V,E)$, where $V$ is a set of nodes (typically representing entities) and $E \in V \times V$ is a set of edges between nodes (typically representing relationships between pairs of entities).The topology of the network is described by the presence or absence of links between nodes in the graph, and can be represented by an adjacency matrix $Y \in \{0,1\}^{N\times N}$.\\
 
-We define a matrix of weight interactions $\mat{\Phi} \in W^{K\times K}$ with $W$ the space of weights, where $K$ is the number of classes or features. Let $\mat{F} \in \mathcal{F}^{N\times K}$, be a matrix where each row $i$ represents the latent feature vector associated to the node $i$,  and $\cal{F}$ the latent feature space. Hence for the MMSB and ILFM, the latent feature vectors are respectively proportion vectors (who sum to one) and binary vectors. In this framework the network is generated with the following density:
-\begin{equation} \label{MFDCA}
-    Y \sim \mathrm{Bern}(\sigma(\mat{F} \mat{\Phi}  \mat{F}^T))
-\end{equation}
-where $\sigma$ is a function that map values to a probability space. When $\sigma$ is the identity function, the expectation of the observation reduces to a matrix factorization (bilinear) expression, and is related to Discrete Component Analysis (DCA)~\cite{DCA}:
+For the link prediction problem in social networks, there is two main approach found in the machine learning literrature. One based on matrix factorization \cite{menon2011link} and the other based on probabilistic models \cite{goldenberg2010survey}. While the former approach often lead to optimization algorithms that scale better, the second offer a richer expressivness and data explanation power, it worth to say that, as for PLSA method, it is always possible to normalize matrices to view the factorization problem as a a probabilistic model. But a deeper relation exists which highlight similarities and differences between both representations. It is due the the assumptions of exchangeability that we make on data, that we expose now.\\
+
+Let's consider the parameters of a network model consisting of a tuple $\Theta = \{ \mat{F} , \mat{\Phi}\}$ such as $\mat{F} \in \mathcal{F}^{N\times K}$ is a matrix representing the latent features of nodes and $\mat{\Phi} \in \mathcal{W}^{K\times K}$ a matrix of weight interactions. The learning problem consist in finding the best model parameters given some criterion to reconstruct the data such as $Y \approx \mat{F}\mat{\Phi}\mat{F}^T$. In matrix factorization, we optimize the following criterion which relate to an empirical error minimization:
+\begin{displaymath}
+    \min\limits_{\Theta} \frac{1}{|Y|} \sum_{(i,j) \in Y} \ell(y_{ij}, \hat y_{ij}(\Theta)) + \mathcal{R}(\Theta)
+\end{displaymath}
+Where $\ell$ is a loss function and $\cal R$ a regularisation term.
+
+In probabilistic modelling, the learning problem is to find the posterior distribution $\p(\Theta | Y)$. Additionnaly, because we focus on static networks here, we make the assumptions of jointly exchangeable graph. It means that the order in which we oberve nodes does not matter. Under such assumptions, the Haldoos-Hoover representation theorem \cite{orbanz2015bayesian}, tell us that the likelihood of the model that we consider has a factorial distribution such as $\p(Y | \Theta) = \prod_{(i,j) \in Y} \p(y_{ij}| \Theta)$. In this settings, the criterion to optimze relate to the maximum a posteri (MAP): 
+\begin{displaymath}
+    \max\limits_{\Theta}  \frac{\p(Y | \Theta) \p(\Theta)}{\p(Y)}
+\end{displaymath}
+
+By taking the log of the MAP, it is easy to show that it is equivalent to optimize the following criterion:
+\begin{displaymath}
+    \min\limits_{\Theta} \sum_{(i,j) \in Y} \left( \log(\p(y_{ij})) - \log(\p(y_{ij}|\Theta))\right) - \log(\p(\theta))
+\end{displaymath}
+
+
+This form hilights the equivalence between the matrix and the probabilistic representation. Indeed, one see that the loss fonction become the error between the log-evidence and the log-likelihood and the regularization term is equal to the negative of the log prior.
+
+
+Finally, because we model binary retionship, a natural kernel for the observation is a bernoullli density, thus we have the following matrix representation for the likelihood:
 \begin{equation}
-E_{p(y|\Theta, \Phi)}[Y] = \mat{F} \mat{\Phi}  \mat{F}^T
+E_{y \sim p(y \mid \Theta)}[Y] = \mat{F} \mat{\Phi}  \mat{F}^T
 \end{equation}
 
-This matrix factorization approach of the Bayesian model is in due to the likelihood of the model when we marginalize over the class membership. Indeed the probability to have a link for the interaction $(i,j)$ is:
-\begin{equation} \label{eq:mf}
-\pr(y_{ij}=1 \mid \mat{F}, \mat{\Phi } ) = \sum_{k, k'} \pr(y_{ij}=1\mid\phi_{k,k'}) \pr(k \mid \mat{f}_i) \pr(k' \mid \mat{f}_j)
+This formalism is similar to work of Buntine on Discrete Component Ananlysis(DCA) \cite{DCA}. In the following we will study two particular models (iMMSB ILFM), that refers to mixed membership model in the sense that the likelihood of the models are defined as a mixture of membership such as:
+\begin{equation}
+\pr(y_{ij}=1 \mid \Theta ) = \sum_{k, k'} \pr(y_{ij}=1\mid\phi_{k,k'}) \pr(k \mid \mat{f}_i) \pr(k' \mid \mat{f}_j)
 \end{equation}
 
+%See the Appendix~\ref{sec:mixmembership} for a justification of eq \eqref{eq:mf} using a Mixed Membership Model approach.
+A key point here, is that the Stochatistic Blockmodel well studied in the literrature \cite{goldenberg2010survey}, where nodes of the networks belong only one clusters (blockmodel) is a special case of this formalism (as well as MMSB and ILFM for extrem case) when the feature vector $f_i$ of node $i$ has one element corresponding to the membership while other are zeros. Besides the choice of prior on $\Phi$ and $\Theta$ represent the context in which  their elements can evolve.
 
-See the Appendix~\ref{sec:mixmembership} for a justification of eq \eqref{eq:mf} using a Mixed Membership Model approach. In this framework, we want to answer the following questions:
+In this framework, we want to answer the following questions:
 \begin{itemize}
 	\item What properties the model can capture or learn on networks ?
 	\item Which constraint on the models can come with an consistent interpretation of latent variables along with the concepts of communities structure and homophily in social networks  ?
 \end{itemize} 
 
-In the next session we review the models of interest.
+%%%
+
+In the next session we review both iMMSB and ILFM more precisely.
 

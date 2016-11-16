@@ -1,0 +1,84 @@
+\section{Preferential attachment: \emph{"The rich get richer"}}
+\label{sec:burstiness}
+
+The term \textit{burstiness} describes the fact that some events appear in bursts, \textit{i.e.} once they appear, they are more likely to appear again. The notion of burstiness is similar to the one of aftereffect of future sampling \cite{feller_68}, which describes the fact that the more we observe an event, the higher the expectation to find new occurrences of this event. In (social) network studies, the burstiness effect is alos referred to as \textit{preferential attachment}\footnote{A.L. Barab\'asi, for example, uses the term \textit{preferential attachement} in \cite{barabasi1999emergence}, and \textit{burstiness} in \cite{barabasi_burst}.}: a node with many connections is more likely to have new connections than a node with few connections. To take into account this behavior, in the network generative model  (BA) \cite{albert2002statistical} model, a node is connected to an existing target node with a probability proportional to the number of links of the target node. This leads to scale-free networks that are characterized by a heavy tailed degree distribution, which can be approximated by a power law distribution such that the fraction of nodes $\pr(d)$ having a degree $d$ follows a power law $d^{-\gamma}$, where $\gamma$ typically ranges between 2 and 3~\cite{barabasi1999emergence}. 
+
+Burstiness has been studied in different fields, in particular in computational linguistics and information retrieval to characterize word occurrences \cite{church1995poisson}. In these domains, simple definitions of burstiness, that directly capture the fact that a probability distribution is bursty if the probability of generating a new occurrences of an event increases with the number of occurrences of this event, have been proposed\cite{clinchant2008bnb,clinchant2010information}. We rely here on the discrete version of theses definitions, which takes the following form:
+%
+\begin{definition}[Burstiness]
+	A discrete distribution $\pr$ is bursty if and only if, for all integers $(n, n')$, $n \geq n'$ :
+	\begin{equation}
+	\pr(X \geq n+1 \mid X \geq n) > \pr(X \geq n'+1 \mid X \geq n') \nonumber
+	\end{equation}
+	where $X$ denotes a random variable.
+\label{def:burst}
+\end{definition}
+%
+In the context of social networks, the notion of burstiness, or preferential attachement, appears at different levels: (a) a global preferential attachment level that characterizes the degree distribution of nodes in the network, (b) a local preferential attachment level that characterizes the degree distribution of nodes within communities, and (c) a class/feature burstiness level that characterizes the distributions of nodes among latent classes/features. We provide below a formal definition of these elements.
+%
+\begin{definition}[Burstiness in social networks]
+Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree. Furthermore, let $\mathcal{M}=\{\mat{F},\mat{\Phi}\}$ be a link prediction model as defined in Section~\ref{sec:models}.
+\begin{description}
+ \item[(i)] \emph{Global Preferential Attachment}: we say that $\mathcal{M}$ satisfies the global preferential attachement iff, for any node $j \in V$ not connected to $i$, $\pr(y_{ij}=1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$.
+ \item[(ii)] \emph{Local Preferential Attachment}: we say that $\mathcal{M}$ satisfies the local preferential attachement iff, for any node $j \in V$ not connected to $i$ and belonging to the same community as $i$, $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \mat{F}, \mat{\Phi})$ increases with $n$; $d_{i,c}$ denotes the degree of node $i$ in its community.
+  \item[(iii)] \emph{Class/Feature Burstiness}: we say that $\mathcal{M}$ satisfies the feature/class burstiness effect, iff, for any node $i$ and latent class/feature $k$, $\pr(f_{ik} > 0 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \mat{F}, \mat{\Phi})$ increases with $n$; where $\mat{f}_{\bm{.}k}^{-ik}$ denotes the number of nodes, other than node $i$, assigned to latent class/feature $k$ in the network.
+\end{description}
+\label{def:burst-soc-net}
+\end{definition}
+%
+There are two things to note here. The first one is that $f_{ik}$ in (iii) equals $1$ for ILFM (as it relies on binary features), and is in $[0,1]$ for IMMSB. The second one is that the fact that the probability $\pr(y_{ij}=1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$ is equivalent to the fact that the probability $\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$. Indeed:
+%
+\begin{align}
+&\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
+&= 1 - \prod_{j \notin \mathcal{V}(i)} P(y_{ij} = 0 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
+&= 1 - \prod_{j \notin \mathcal{V}(i)} (1 - P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi})) \nonumber
+\end{align}
+%
+Hence $\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ and $P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ vary in the same direction. The same development holds for $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \mat{F}, \mat{\Phi})$. The above definitions, characterizing probabilistic link models according to burstiness in social networks, are thus directly related to the general definition of burstiness given in Definition~\ref{def:burst}.
+
+We now turn to the problem of assessing whether ILFM and IMMSB satisfy the above burstiness effects.
+
+\subsection{Burstiness for ILFM}
+
+In this model, one has: $P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) = \sigma(\mat{f}_i \mat{\Phi} \mat{f}_j^\top)$, which does not depend on $n$. This model is thus neutral wrt to global preferential attachment. The same holds for the local preferential attachment. Regarding feature burstiness, the resampling of $\mat{F}$ in the Gibbs updates takes the form (see \cite{ILFRM}):
+%
+\[
+\pr(f_{ik} = 1 \mid \mat{F}^{-ik},\mat{\Phi}, \mat{Y}) \propto \mat{f}_{\bm{.}k}^{-ik} \pr(\mat{Y} \mid f_{ik} = 1,\mat{F}^{-ik},\mat{\Phi})
+\]
+%
+where $\mat{F}^{-ik}$ denotes matrix $\mat{F}$ minus its entry at the $i^{th}$ row, $k^{th}$ column. This shows that $\pr(f_{ik} \ge 1 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \mat{F}, \mat{\Phi})$ increases with $n$.
+
+We thus have the following property:
+%
+\begin{proposition}
+ILFM is neutral with respect to global and local preferential attachment. It furthermore satisfies the feature burstiness effect.
+\end{proposition}
+
+\subsection{Burstiness for IMMSB}
+\label{subsec:burst-immsb}
+
+In IMMSB (which is a latent class model), each link has two underlying class assignments, one for each node of the, potentially directed, link. Let us denote by $\mat{Z}_{N\times N\times 2}$ the tensor that represents these class assignments. We have:
+%
+\begin{align}
+&\pr(y_{ij}=1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
+&= \mathbb{E}_{\pr(\mat{Z}^{-ij}|\mat{F}, \mat{\Phi})} \pr(y_{ij}=1 \mid \mat{Z}^{-ij}, d_i \ge n, \mat{\Phi}) \nonumber
+\end{align}
+%
+where $\mat{Z}^{-ij}$ denotes the complete tensor minus the two entries associated to $y_{ij}$, \textit{i.e.} $z_{i \rightarrow j}$ and $z_{i \leftarrow j}$.
+
+$\pr(y_{ij}=1 \mid \mat{Z}^{-ij}, d_i \ge n, \mat{\Phi})$ is given by Eq.~\ref{eq:link-immsb} and is independent of $n$. This shows that IMMSB is neutral wrt global preferential attachment. The same development and result hold for local preferential attachment.
+
+In addition, one has:
+%
+\begin{align}
+&\pr(f_{ik} > 0 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
+&= 1 - \pr(f_{ik} = 0 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \mat{F}, \mat{\Phi}) \nonumber
+\end{align}
+%
+
+This leads to the following proposition:
+%
+\begin{proposition}
+IMMSB is neutral with respect to global and local preferential attachment. It furthermore satisfies the class burstiness effect.
+\end{proposition}
+%

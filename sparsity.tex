@@ -1,0 +1,35 @@
+\section{Sparsity}
+
+The last property we study in this paper the sparsity. Sparsity is the fact that most value in a dataset are empty. Whenever a feature space can be big the representation of an object in this
+
+%defnition of dense and sparse netwroks are given in Bayesian Models of Graphs, Arrays and Other Exchangeable Random Structures(Peter Orbanz and Daniel M. Roy) \\
+
+%definition of exchangeability for networs first mention in this interesting paper: Modeling homophily and stochastic equivalence in symmetric relational data [Hoff]
+
+
+In the model the density for undirected networks of size $|V|=N$ is defined by the expectation of generating a link:
+%\begin{equation}
+%p(y_{ij}^{new}=1| |V|=N) =  \int_{\Theta} p(y_{ij}^{new}=1|\Theta) \frac{\sum_{n=0}^{\dbinom{N}{2}} p(d^N=n| \Theta)}{\int_{\Theta} \sum_{n=0}^{\dbinom{N}{2}} p(d^N=n | \Theta)) p(\Theta) d\Theta} p(\Theta) d\Theta
+%\end{equation}
+%Where  $p(d^N=n)$ is the probability of a random graph with $N$ vertices and having $n$ edges. Thus it refers to the density of the graph. We now define the set of  adjacency matrix $Y_r$ corresponding to the ensemble of graphs having $n$ edges (and $N$ vertices) $Y_r \in \{Y: d=n\}$. Because of the exchangeability of the models, each of those adjacency matrices have the same distribution under joint random permutation of rows and colomns, given $\Theta$, and the number of different graph that occurs are $\dbinom{N}{C(Y_r)}$, with $C(Y_r)$ is the number of nodes of $Y_r$ having a non empty degree:
+%\begin{equation}
+%p(y_{ij}^{new}=1| |V|=N) =  \int_{\Theta} p(y_{ij}^{new}=1|\Theta) \frac{\sum_{n=0}^{\dbinom{N}{2}} \sum_{Y_r \in \{Y: d=n\}}\dbinom{N}{C(Y_r)} p(Y_r| \Theta)}{\int_{\Theta} \sum_{n=0}^{\dbinom{N}{2}}  \sum_{Y_r \in \{Y: d=n\}}\dbinom{N}{C(Y_r)} p(Y_r | \Theta)) p(\Theta) d\Theta} p(\Theta) d\Theta
+%\end{equation}
+
+
+%Here, one can see that from excheangeability we can take out the sum over graph from the integral on the parameters. The density take though a similar form than equation  \eqref{eq:sum}. We have then that $\Delta_N p(y_{ij}^{new}=1| |V|=N) >0 $.
+
+\begin{align}
+&p(y_{ij}^{new}=1| \mathcal{M}) = \int_{f_i} \int_{f_j} \int_{\Phi} p(f_i| \alpha ) p(f_j| \alpha)p(\Phi| \lambda) \\
+&\times \sum_{k<k'} p(y_{ij} \mid \phi_{kk'})\ p(k\mid f_i)p(k'\mid f_j)df_i df_j d\Phi \\
+&=  \sum_{k<k'} \int_{\Phi} \phi_{kk'} p(\Phi| \lambda) d\Phi \int_{f_i} f_{ik} p(f_i| \alpha )df_i \int_{f_j} f_{jk}  p(f_j| \alpha ) df_j \\
+&= \sum_{k<k'} \E[B(\lambda_1, \lambda_0)] \E[Dir(\mat{\alpha} )]_k \E[Dir(\mat{\alpha})]_{k'} \\
+&= \frac{\lambda_1}{\lambda_0+\lambda_1}\frac{\sum_{kk'} \alpha_k\alpha_k'}{(\sum_k \alpha_k)^2} = \epsilon
+\end{align}
+
+
+Thus the density is not dependent of $N$, and thus the number of edge grows with $N^2$ since its expectation is  $\dbinom{N}{2} \epsilon$.
+
+This result shows that the model generate dense networks because the model is misspecified. More precisely there is no assumptions on the relation between the size of the graph $|V|$ and the number of edge $|E|$, in other words the integral on the model parameter $\Theta$ and the sum over all possible graph can be exchanged because of the exchangability of the models. This result is a direct consequence of the theorem of Aldous for exchangeable graph and constitute the biggest limitation in order to model real world network.
+\textcolor{red}{ecrire la definition de graph echangeable, le theorem et la conséquence sur la densité...}
+

@@ -2,7 +2,6 @@
 %\documentclass[a4paper, 12pt, draft]{article} % don't include images, leave a border of same size...great
 \documentclass[journal]{IEEEtran}
 
-\hyphenation{op-tical net-works semi-conduc-tor}
 
 
 %\usepackage[cmex10]{amsmath, mathtools}
@@ -31,6 +30,7 @@
 %%%%%%%%%% Math
 \renewcommand{\text}{\textnormal}
 \newcommand{\pr}{\mathbf{p}}
+\newcommand{\p}{P}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\divkk}{\mathbb{K}}
 \newcommand{\entropy}{\mathbb{H}}
@@ -42,10 +42,10 @@
 \newcommand{\V}{\mathcal{V}}
 \newcommand{\N}{\mathcal{N}}
 \newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\unit}{1\!\!1}
 
-\title{Are latent feature/class models adapted for link prediction in social networks?}
-%\title{Social Networks Topology Analysis with Bayesian Perspective}
-%\title{Mixed Membership Models Analysis for Social Networks Topology}
+\title{Are Mixed-Membership Models Adapted for Link
+Prediction in Social Networks ?}
 
 %\date{avril 2015}
 
@@ -69,10 +69,12 @@
 \input{models.tex}
 \input{homophily.tex}
 \input{burstiness.tex}
+\input{dynamic.tex}
+\input{sparsity.tex}
 \input{expe.tex}
 \input{related_work.tex}
 \input{conclusion.tex}
-%\input{sup.tex}
+\clearpage
 
 \bibliographystyle{unsrt}
 \bibliography{./a}

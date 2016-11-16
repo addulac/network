@@ -1,9 +1,5 @@
-\section{Burstiness}
+\section{Preferential attachment: \emph{"The rich get richer"}}
 \label{sec:burstiness}
-\vspace{-0.2cm}
-\begin{center} \emph{The rich get richer} \end{center}
-
-\vspace{0.1cm}
 
 The term \textit{burstiness} describes the fact that some events appear in bursts, \textit{i.e.} once they appear, they are more likely to appear again. The notion of burstiness is similar to the one of aftereffect of future sampling \cite{feller_68}, which describes the fact that the more we observe an event, the higher the expectation to find new occurrences of this event. In (social) network studies, the burstiness effect is alos referred to as \textit{preferential attachment}\footnote{A.L. Barab\'asi, for example, uses the term \textit{preferential attachement} in \cite{barabasi1999emergence}, and \textit{burstiness} in \cite{barabasi_burst}.}: a node with many connections is more likely to have new connections than a node with few connections. To take into account this behavior, in the network generative model  (BA) \cite{albert2002statistical} model, a node is connected to an existing target node with a probability proportional to the number of links of the target node. This leads to scale-free networks that are characterized by a heavy tailed degree distribution, which can be approximated by a power law distribution such that the fraction of nodes $\pr(d)$ having a degree $d$ follows a power law $d^{-\gamma}$, where $\gamma$ typically ranges between 2 and 3~\cite{barabasi1999emergence}. 
 
@@ -20,6 +16,7 @@ Burstiness has been studied in different fields, in particular in computational 
 %
 In the context of social networks, the notion of burstiness, or preferential attachement, appears at different levels: (a) a global preferential attachment level that characterizes the degree distribution of nodes in the network, (b) a local preferential attachment level that characterizes the degree distribution of nodes within communities, and (c) a class/feature burstiness level that characterizes the distributions of nodes among latent classes/features. We provide below a formal definition of these elements.
 %
+\textcolor{red}{I propose here ot review $\M$ to work only in the what we call $\M_g$. I think my math is not mature enough to handle now $\M_e$ and $M_g$ without bringing confusion to people like it's doing it for us...Hence our observation who says that iMMSB is better for very bursty network than ILFM could just be handle as a perspective (even down we now that $p(y)| \M_e$) is global bursty, and for ILFM it's not unclear due to the non-conjugacy}
 \begin{definition}[Burstiness in social networks]
 Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree. Furthermore, let $\mathcal{M}=\{\mat{F},\mat{\Phi}\}$ be a link prediction model as defined in Section~\ref{sec:models}.
 \begin{description}
@@ -33,56 +30,109 @@ Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree
 There are two things to note here. The first one is that $f_{ik}$ in (iii) equals $1$ for ILFM (as it relies on binary features), and is in $[0,1]$ for IMMSB. The second one is that the fact that the probability $\pr(y_{ij}=1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$ is equivalent to the fact that the probability $\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$. Indeed:
 %
 \begin{align}
-\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
-= 1 - \prod_{j \notin \mathcal{V}(i)} P(y_{ij} = 0 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
-= 1 - \prod_{j \notin \mathcal{V}(i)} (1 - P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi})) \nonumber
+&\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
+&= 1 - \prod_{j \notin \mathcal{V}(i)} P(y_{ij} = 0 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
+&= 1 - \prod_{j \notin \mathcal{V}(i)} (1 - P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi})) \nonumber
 \end{align}
 %
 Hence $\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ and $P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ vary in the same direction. The same development holds for $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \mat{F}, \mat{\Phi})$. The above definitions, characterizing probabilistic link models according to burstiness in social networks, are thus directly related to the general definition of burstiness given in Definition~\ref{def:burst}.
 
-We now turn to the problem of assessing whether ILFM and IMMSB satisfy the above burstiness effects.
-
-\subsection{Burstiness for ILFM}
-
-In this model, one has: $P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) = \sigma(\mat{f}_i \mat{\Phi} \mat{f}_j^\top)$, which does not depend on $n$. This model is thus neutral wrt to global preferential attachment. The same holds for the local preferential attachment. Regarding feature burstiness, the resampling of $\mat{F}$ in the Gibbs updates takes the form (see \cite{ILFRM}):
-%
-\[
-\pr(f_{ik} = 1 \mid \mat{F}^{-ik},\mat{\Phi}, \mat{Y}) \propto \mat{f}_{\bm{.}k}^{-ik} \pr(\mat{Y} \mid f_{ik} = 1,\mat{F}^{-ik},\mat{\Phi})
-\]
-%
-where $\mat{F}^{-ik}$ denotes matrix $\mat{F}$ minus its entry at the $i^{th}$ row, $k^{th}$ column. This shows that $\pr(f_{ik} \ge 1 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \mat{F}, \mat{\Phi})$ increases with $n$.
-
-We thus have the following property:
-%
 \begin{proposition}
-ILFM is neutral with respect to global and local preferential attachment. It furthermore satisfies the feature burstiness effect.
+	The IMMSB models statisfy the local preferential attachments.
 \end{proposition}
 
-\subsection{Burstiness for IMMSB}
-\label{subsec:burst-immsb}
+\noindent \textbf{Proof} We have:
+In IMMSB one can write the burstiness as follows:
 
-In IMMSB (which is a latent class model), each link has two underlying class assignments, one for each node of the, potentially directed, link. Let us denote by $\mat{Z}_{N\times N\times 2}$ the tensor that represents these class assignments. We have:
-%
-\begin{align}
-\pr(y_{ij}=1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
-= \mathbb{E}_{\pr(\mat{Z}^{-ij}|\mat{F}, \mat{\Phi})} \pr(y_{ij}=1 \mid \mat{Z}^{-ij}, d_i \ge n, \mat{\Phi}) \nonumber
+\begin{equation} 
+p(y_{ij} = 1 | d_i>n, \mathcal{M}) = \int_{\Theta} p(y_{ij}=1|\Theta) \frac{p(d_i>n | \Theta)}{p(d_i>n)} p(\Theta) d\Theta \nonumber
+\end{equation}
+
+By using the fact that the model is exchangeable, we note one realization for a degree $d_i$ as a random array such as $\p(d_i^N=l) = \p((y_{ij'})_{j'\neq j})$ with $\sum_{j'\neq j}y_{ij'} = l$, one can write the local preferential attachment:
+
+\begin{align} \label{eq:sum}
+&p(y_{ij} = 1 | d_{ic}>n, \mathcal{M}) \nonumber \\
+&=  \frac{ \int_{\phi_{c}} p(y_{ij}=1|\phi_{c})\sum_{l=n}^N\dbinom{N}{l} p(d_{ic}^N=l | \phi_{c}) p(\phi_{c}) d\phi_{c}}{\int_{\phi_{c}}\sum_{l=n}^N \dbinom{N}{l}p(d_{ic}^N=l | \phi_{c}))       p(\phi_{c}) d\phi_{c}}  \nonumber \\
+&= \frac{\sum_l^N\dbinom{N}{l} \int_{\phi_{c}} p(y_{ij}=1|\phi_{c}) p(d_{ic}^N=l | \phi_{c}) p(\phi_{c}) d\phi_{c} }{\sum_l^N \dbinom{N}{l}\int_{\phi_{c}} p(d_{ic}^N=l | \phi_{c}) p(\phi_{c}) d\phi_{c} } \nonumber\\
+&= \frac{\sum_l^N\dbinom{N}{l} \text{beta}(l+1+\lambda_1, N-d_{ic}+\lambda_0) }{\sum_l^N \dbinom{N}{l}\text{beta}(l+\lambda_1, N-d_{ic}+\lambda_0) } \nonumber\\
+&=  \frac{\sum_{l=n}^N a_l}{\sum_{l=n}^N b_l}= \frac{\sum_{l=n}^N b_l g_l}{\sum_{l=n}^N b_l} \nonumber
 \end{align}
-%
-where $\mat{Z}^{-ij}$ denotes the complete tensor minus the two entries associated to $y_{ij}$, \textit{i.e.} $z_{i \rightarrow j}$ and $z_{i \leftarrow j}$.
 
-$\pr(y_{ij}=1 \mid \mat{Z}^{-ij}, d_i \ge n, \mat{\Phi})$ is given by Eq.~\ref{eq:link-immsb} and is independent of $n$. This shows that IMMSB is neutral wrt global preferential attachment. The same development and result hold for local preferential attachment.
+with $f_l$ is a strictly positive and crescent function of $l$. This is prooved by the fact that one can extract the following identity:
+\begin{equation}
+\frac{a_l}{b_l} = \frac{l+\lambda_1}{N+\lambda_.} \nonumber
+\end{equation}
 
-In addition, one has:
-%
+Finally we show that having $g_l$ a positive crescnet function on $[n, N]$ is a sufficient condition to obtain the desired results:
 \begin{align}
-\pr(f_{ik} > 0 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
-= 1 - \pr(f_{ik} = 0 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \mat{F}, \mat{\Phi}) \nonumber
+&\Delta_n p(y_{ij} = 1 | d_{ic}>n, \mathcal{M}) \nonumber \\
+&= \frac{\sum_{l=n+1}^N g_l b(l)}{\sum_{l=n+1}^N b(l)} - \frac{g_n b(n) + \sum_{l=n+1}^N g_l b(l)}{b(n) + \sum_{l=n+1}^N b(l)} \nonumber\\
+&= \frac{b(n)}{\left(b(n) + \sum_{l=n+1}^N b(l)\right) \left(\sum_{l=n+1}^N b(l)\right)} \sum_{l=n+1}^N (g_l-g_n)b(l) \nonumber
 \end{align}
-%
+As we have $l \geq n$, it proves the hold. \hfill$\Box$ \\
 
-This leads to the following proposition:
-%
 \begin{proposition}
-IMMSB is neutral with respect to global and local preferential attachment. It furthermore satisfies the class burstiness effect.
+	The ILFM models statisfy the local preferential attachments.
 \end{proposition}
-%
+\textcolor{red}{damn local proof for ILFM to finish...S}
+
+\begin{proposition}
+	Both ILFM and IMMSB models satisfy the feature burstiness.
+\end{proposition}
+
+The proof for this statement comes directly from the Diaconis-Ilvisaker results \cite{diaconis1979conjugate}. They state \emph{'subject to regularity conditions, the conjugate priors typically used satisfy, and are characterized by, a  similar relation of posterior linearity'}:
+\begin{equation}
+\E[\E[X\mid \Theta] \mid X=x] = ax+b \quad \text{for} \quad x=0,1,2,... \nonumber
+\end{equation}
+
+Especially, the Dirichlet Process and the Indian Buffet Process, as prior for the latent features, are typically build on the suitable conjugate distribution respectively Dirichlet-Multinomial and Beta-Bernoulli. Furthermore, this claim is highlighted by the Gibbs update that corroborate the feature burstiness effect:
+\begin{align}
+&\p(f_{ik} = 1 | F^{-ik}) = \frac{m_k^{-ik}}{N} \qquad \text{ILFM feature update} \nonumber \\
+&\p(f_{ik} = 1 | F^{-ik}) = \frac{n_{ik}^{-z_{ij}}+\alpha_k}{N+\alpha_.} \qquad \text{IMMSB feature update} \nonumber \\
+\end{align}
+
+Where the $m_k^{-ik}$ described the numnber of elements that have $k$-iem feature active except for element $i$, similarly $n_{ik}^{-z_{ij}}$ represents the number of times that $i$ was assigned to $k$ except for relation $(ij)$ (class membersehip are jointly sampled in MMSB). In figure () we show a simulation of a several random network generated with the iMMSB and ILFM to exhibit the preferential attachment effect at several levels.
+
+In figure \ref{fig:gen_burst_mmsb} we represent tree networks generated by ILFM and iMMSB. We compute a goodness of fit to quantify the power law hypothesis on the empirical degree distributions. The protocol is described in section \ref{sec:experiments}. As an empirical illustration for our claims on preferential attachment, we show a 3*3 figure where each columns is particular setting of hyper-parameter and the rows are respectively, the global degree distrubution, the local degree distribution and feature distribution (on a max a assignment point of view).
+
+\begin{figure}[h]
+	\centering
+	
+	\minipage{0.16\textwidth}
+	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_peaks/figure_1}
+	\endminipage
+		\minipage{0.16\textwidth}
+	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_power_law/figure_1}
+	\endminipage
+	\minipage{0.16\textwidth}
+	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_regular/figure_1}
+	\endminipage
+		\vspace{-0.4cm}
+	\minipage{0.16\textwidth}
+	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_peaks/figure_3}
+	\endminipage
+		\minipage{0.16\textwidth}
+	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_power_law/figure_3} 
+	\endminipage
+	\minipage{0.16\textwidth}
+	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_regular/figure_3}
+	\endminipage
+		\vspace{-0.4cm}
+	\minipage{0.16\textwidth}
+	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_peaks/figure_5}
+	\endminipage
+	\minipage{0.16\textwidth}
+	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_power_law/figure_5} 
+	\endminipage
+	\minipage{0.16\textwidth}
+	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_regular/figure_5}
+	\endminipage
+	\caption{Generated Networks with in three different settings (same set than for figure \ref{fig:gen_blocks}). The upper figures show the global preferentual attachment. The lower figures show the local preferential attachment. While global preferential attachment is not a pure features of model, we see that the local preferential attachment has linear form in the log-log space.}
+	\label{fig:gen_burst_mmsb}
+\end{figure}
+
+%\paragraph{Remark}
+%We see that is possible to generate networks that don't satisfy the global preferential effect...
+\textcolor{red}{remark on the global preferential attachment, that is not satisify on the realisation of networks provided ?}
+
+

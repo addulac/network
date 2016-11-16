@@ -1,0 +1,118 @@
+Mode: evidence
+corpus: generator4
+ model: immsb
+ K = 9
+ N =  1000
+ hyper: {'alpha': 1.0, 'gmma': 1.0, 'delta': 1.0}
+KS data:  KstestResult(statistic=1.0777158766013528e+19, pvalue=nan)
+KS synthetic:  KstestResult(statistic=3.6240864622423706e+18, pvalue=nan)
+{'x_min': 843.0, 'alpha': 72.773542203592555, 'n_head': 812.0, 'pvalue': 0.6101083032490975, 'n_tail': 192.0}
+Computing Local Preferential attachment
+Z formation : 0:00:09.013885
+KS data:  KstestResult(statistic=0.26467464991409784, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.25683060109289618, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2115105693350199, 'n_head': 46.0, 'pvalue': 0.2815884476534296, 'n_tail': 686.0}
+KS data:  KstestResult(statistic=0.27134708863722312, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.23529411764705882, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2297784909983842, 'n_head': 39.0, 'pvalue': 0.18411552346570398, 'n_tail': 828.0}
+KS data:  KstestResult(statistic=0.26497696833347661, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.29621125143513205, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2539550813286584, 'n_head': 56.0, 'pvalue': 0.9675090252707581, 'n_tail': 815.0}
+KS data:  KstestResult(statistic=0.20083087420761334, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.32913165266106442, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2709804940625764, 'n_head': 76.0, 'pvalue': 1.0, 'n_tail': 638.0}
+KS data:  KstestResult(statistic=0.18646375553650563, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.3282336578581363, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.281490717308597, 'n_head': 66.0, 'pvalue': 1.0, 'n_tail': 653.0}
+KS data:  KstestResult(statistic=0.19513165937667909, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.381342062193126, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.3130908560113554, 'n_head': 76.0, 'pvalue': 1.0, 'n_tail': 535.0}
+KS data:  KstestResult(statistic=0.24242424242424243, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.54545454545454541, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.4018272229552327, 'n_head': 112.0, 'pvalue': 1.0, 'n_tail': 350.0}
+KS data:  KstestResult(statistic=0.51440329218106995, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.7119341563786008, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.5353269822313715, 'n_head': 125.0, 'pvalue': 1.0, 'n_tail': 118.0}
+KS data:  KstestResult(statistic=0.73983739837398377, pvalue=0.0)                                                                                            
+KS synthetic:  KstestResult(statistic=0.88617886178861793, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.6084563143430533, 'n_head': 182.0, 'pvalue': 1.0, 'n_tail': 64.0}
+KS data:  KstestResult(statistic=0.25187104282336903, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.29421221864951769, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2366544888126505, 'n_head': 50.0, 'pvalue': 0.9927797833935018, 'n_tail': 572.0}
+KS data:  KstestResult(statistic=0.24807818738434395, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.31744040150564617, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2574237160599715, 'n_head': 51.0, 'pvalue': 0.9963898916967509, 'n_tail': 746.0}
+KS data:  KstestResult(statistic=0.19835549155352072, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.296875, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2848626810601336, 'n_head': 60.0, 'pvalue': 1.0, 'n_tail': 580.0}
+KS data:  KstestResult(statistic=0.2018997580584948, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.37220447284345048, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2907383994455737, 'n_head': 73.0, 'pvalue': 1.0, 'n_tail': 553.0}
+KS data:  KstestResult(statistic=0.17581493372673462, pvalue=9.5479180117763462e-15)
+KS synthetic:  KstestResult(statistic=0.39583333333333331, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.3587596542606915, 'n_head': 72.0, 'pvalue': 1.0, 'n_tail': 456.0}
+KS data:  KstestResult(statistic=0.24433249370277077, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.52644836272040307, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.4263016725841831, 'n_head': 97.0, 'pvalue': 1.0, 'n_tail': 300.0}
+KS data:  KstestResult(statistic=0.38532110091743121, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.65137614678899081, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.4840264143193218, 'n_head': 84.0, 'pvalue': 1.0, 'n_tail': 134.0}
+KS data:  KstestResult(statistic=0.26548989037250803, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.30645161290322581, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2492205932750309, 'n_head': 52.0, 'pvalue': 0.9891696750902527, 'n_tail': 506.0}
+KS data:  KstestResult(statistic=0.20076253001109889, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.32362459546925565, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.292083970763787, 'n_head': 58.0, 'pvalue': 1.0, 'n_tail': 560.0}
+KS data:  KstestResult(statistic=0.19711407166724659, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.41013071895424835, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2919932411460207, 'n_head': 73.0, 'pvalue': 1.0, 'n_tail': 539.0}
+KS data:  KstestResult(statistic=0.19481075072252196, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.40954274353876741, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.3498004885414594, 'n_head': 77.0, 'pvalue': 1.0, 'n_tail': 426.0}
+KS data:  KstestResult(statistic=0.21832884097035041, pvalue=4.4408920985006262e-16)
+KS synthetic:  KstestResult(statistic=0.50943396226415094, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.4154052694441452, 'n_head': 81.0, 'pvalue': 1.0, 'n_tail': 290.0}
+KS data:  KstestResult(statistic=0.53846153846153844, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.7384615384615385, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.5376559475955529, 'n_head': 105.0, 'pvalue': 1.0, 'n_tail': 90.0}
+KS data:  KstestResult(statistic=0.24998479441529753, pvalue=7.3274719625260332e-15)
+KS synthetic:  KstestResult(statistic=0.36781609195402298, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2827978362336379, 'n_head': 38.0, 'pvalue': 1.0, 'n_tail': 223.0}
+KS data:  KstestResult(statistic=0.20589379763683557, pvalue=6.6613381477509392e-16)
+KS synthetic:  KstestResult(statistic=0.42307692307692307, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.3146135334512641, 'n_head': 76.0, 'pvalue': 1.0, 'n_tail': 340.0}
+KS data:  KstestResult(statistic=0.19697373310807531, pvalue=3.1181479620556729e-10)
+KS synthetic:  KstestResult(statistic=0.41114982578397213, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.3444464066855883, 'n_head': 51.0, 'pvalue': 1.0, 'n_tail': 236.0}
+KS data:  KstestResult(statistic=0.2857142857142857, pvalue=3.7747582837255322e-15)
+KS synthetic:  KstestResult(statistic=0.5073891625615764, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.4040952365135753, 'n_head': 58.0, 'pvalue': 1.0, 'n_tail': 145.0}
+KS data:  KstestResult(statistic=0.38144329896907214, pvalue=3.3639757646142243e-13)
+KS synthetic:  KstestResult(statistic=0.61855670103092786, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.467847705234048, 'n_head': 37.0, 'pvalue': 1.0, 'n_tail': 60.0}
+KS data:  KstestResult(statistic=0.23909827335130918, pvalue=5.1292303737682232e-14)
+KS synthetic:  KstestResult(statistic=0.35687732342007433, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.2766277806008548, 'n_head': 35.0, 'pvalue': 1.0, 'n_tail': 234.0}
+KS data:  KstestResult(statistic=0.19863832274008819, pvalue=1.4240475465499003e-10)
+KS synthetic:  KstestResult(statistic=0.42465753424657532, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.3491122937584163, 'n_head': 40.0, 'pvalue': 1.0, 'n_tail': 252.0}
+KS data:  KstestResult(statistic=0.25358851674641147, pvalue=2.4673596499269479e-12)
+KS synthetic:  KstestResult(statistic=0.54545454545454541, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.393186022400305, 'n_head': 53.0, 'pvalue': 1.0, 'n_tail': 156.0}
+KS data:  KstestResult(statistic=0.34579439252336447, pvalue=6.2099214659383506e-12)
+KS synthetic:  KstestResult(statistic=0.56074766355140182, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.4903013822498572, 'n_head': 37.0, 'pvalue': 1.0, 'n_tail': 70.0}
+KS data:  KstestResult(statistic=0.26244617534977144, pvalue=1.5384807405816048e-07)
+KS synthetic:  KstestResult(statistic=0.43965517241379309, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.3656246693957252, 'n_head': 29.0, 'pvalue': 1.0, 'n_tail': 87.0}
+KS data:  KstestResult(statistic=0.46078431372549017, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.60784313725490191, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.5019314598070568, 'n_head': 47.0, 'pvalue': 1.0, 'n_tail': 55.0}
+KS data:  KstestResult(statistic=0.41304347826086957, pvalue=1.2883149524967052e-07)
+KS synthetic:  KstestResult(statistic=0.67391304347826086, pvalue=0.0)
+{'x_min': 1, 'alpha': 1.4564555108732566, 'n_head': 19.0, 'pvalue': 1.0, 'n_tail': 27.0}
+KS data:  KstestResult(statistic=0.23239731020169185, pvalue=0.0053268390782605923)
+KS synthetic:  KstestResult(statistic=0.52830188679245282, pvalue=2.5313084961453569e-14)
+{'x_min': 1, 'alpha': 1.4129569920233354, 'n_head': 9.0, 'pvalue': 1.0, 'n_tail': 44.0}
+active cluster - modularity 9
+density: 0.545171
