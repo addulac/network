@@ -115,12 +115,28 @@ The inference is this model can be performed via collapsed Gibbs sampling update
 %   \end{align}
 %\end{enumerate}
 
-\subsection{Model Comparison}
+\subsection{Note on model notation}
+As mentioned before, we will consider two versions of this model. The first version corresponds to the typical use of the MMSB model: some observations are available and are used to estimate $\mat{F}$ and $\mat{\Phi}$. In the remainder, we denote by $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ their estimates, which are used to predict new links in the network according to:
+%
+\begin{equation}
+\label{eq:link-me}
+\pr(y_{ij}=1|\mat{\hat{F}},\mat{\hat{\Phi}}) =  \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top
+\end{equation}
+%
+where $^\top$ denotes the transpose. We will refer to the model corresponding to this setting as $\mathcal{M}_e = \{\mat{\hat{F}},\mat{\hat{\Phi}}\}$). Note that the number of nodes $N$ is fixed and corresponds to the number of nodes present in the observation.
+
+The second version is a purely generative version that solely relies on the hyper-parameters to generate networks with a given number of nodes $N$. We will refer to  the model corresponding to this setting as $\mathcal{M}_g = \{\mathcal H\}$ the set of hyperparameter for a given model. The probability of generating a link between  two nodes $i$ and $j$ is given by:
+%
+
+\begin{equation}
+\p(y_{ij} | \M_g) = \int_{F,\Phi} \p(y_{ij}=1, F,\Phi |\M_g) dF\Phi
+\end{equation}
+
+
+\subsection{Note on model performance}
 
 Both ILFM and IMMSB are based on a latent representation of each node in the network (matrix $\mat{F}$) and a latent metric (matrix $\mat{\Theta}$). However, in the case of ILFM, this representation takes the form of a binary vector, whereas in IMMSB it is a vector of proportion. Interpreting the latent dimensions as characteristics or classes, one can view ILFM as performing a hard assignment on those classes whereas IMMSB performs a soft assignment. 
 
-Another distinction between the two lies in the use of the sigmoid function in ILFM to obtain the parameter of a Bernoulli distribution from the latent representations and their weights (or correlations). Because of that, the weight matrix $\mat{\Phi}$ can take on a very general form in this model and can easily be generalized to a multivariate distribution. This is not the case in IMMSB where the elements of $\mat{\Phi}$ should lie in the interval $[0;1]$. 
+ILFM was introduced as performing better than MMSB (parametric version). However, with MCMC inference strategy, ILFM has higher time complexity due to his non-conjugacy that imply a matrix product to compute the likelihood of the model. Furthermore, the complexity of iMMSB is still $O(E^2K^2)$ (against $O(E^4K)$ for ILFM with particular optimisation), which means that this inference scheme don't allow scalability of data. But this complexity can be alleviate to work with millions of nodes by using a inference strategy that rely on variational inference \cite{gopalan2013efficient}.\\
 
-Lastly, a major difference lies in the fact that the complete latent representation of each node is used in ILFM to generate a link, whereas in IMMSB, for each link to be generated, one first selects one component from the latent representations of the nodes involved in the link. This allows one to capture the fact that different classes may explain different links for the same node. At the same time, it has an impact on the homophily effect, as shown in the next section. Note that ILFM is also able to capture the fact that different classes may explain different links for the same node, even though more implicitly, by relying on different dimensions of the latent representations.
-
-ILFM was introduced as performing better than MMSB (parametric version). However, with MCMC inference strategy, ILFM has higher time complexity due to his non-conjugacy that imply a matrix product to compute the likelihood of the model. Furthermore, the complexity of iMMSB is still $O(E^2K^2)$ (against $O(E^3 + EK + K^2)$ for ILFM), which means that this inference scheme don't allow scalability of data. But this complexity can be alleviate to work with millions of nodes by using a inference strategy that rely on variational inference \cite{gopalan2013efficient}.
+ We now turn to the two questions we asked, considering the homophily effect first.

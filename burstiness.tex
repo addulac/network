@@ -16,19 +16,24 @@ Burstiness has been studied in different fields, in particular in computational 
 %
 In the context of social networks, the notion of burstiness, or preferential attachement, appears at different levels: (a) a global preferential attachment level that characterizes the degree distribution of nodes in the network, (b) a local preferential attachment level that characterizes the degree distribution of nodes within communities, and (c) a class/feature burstiness level that characterizes the distributions of nodes among latent classes/features. We provide below a formal definition of these elements.
 %
-\textcolor{red}{I propose here ot review $\M$ to work only in the what we call $\M_g$. I think my math is not mature enough to handle now $\M_e$ and $M_g$ without bringing confusion to people like it's doing it for us...Hence our observation who says that iMMSB is better for very bursty network than ILFM could just be handle as a perspective (even down we now that $p(y)| \M_e$) is global bursty, and for ILFM it's not unclear due to the non-conjugacy}
+
+
 \begin{definition}[Burstiness in social networks]
-Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree. Furthermore, let $\mathcal{M}=\{\mat{F},\mat{\Phi}\}$ be a link prediction model as defined in Section~\ref{sec:models}.
+Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree. Furthermore, let $\mathcal{M}=\{\M_e, \M_g\}$ be a link prediction model as defined in Section~\ref{sec:models}.
 \begin{description}
- \item[(i)] \emph{Global Preferential Attachment}: we say that $\mathcal{M}$ satisfies the global preferential attachement iff, for any node $j \in V$ not connected to $i$, $\pr(y_{ij}=1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$.
- \item[(ii)] \emph{Local Preferential Attachment}: we say that $\mathcal{M}$ satisfies the local preferential attachement iff, for any node $j \in V$ not connected to $i$ and belonging to the same community as $i$, $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \mat{F}, \mat{\Phi})$ increases with $n$; $d_{i,c}$ denotes the degree of node $i$ in its community.
-  \item[(iii)] \emph{Class/Feature Burstiness}: we say that $\mathcal{M}$ satisfies the feature/class burstiness effect, iff, for any node $i$ and latent class/feature $k$, $\pr(f_{ik} > 0 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \mat{F}, \mat{\Phi})$ increases with $n$; where $\mat{f}_{\bm{.}k}^{-ik}$ denotes the number of nodes, other than node $i$, assigned to latent class/feature $k$ in the network.
+ \item[(i)] \emph{Global Preferential Attachment}: we say that $\mathcal{M}$ satisfies the global preferential attachement iff, for any node $j \in V$ not connected to $i$, $\pr(y_{ij}=1 \mid d_i \ge n, \M_e, \M_g)$ increases with $n$.
+ \item[(ii)] \emph{Local Preferential Attachment}: we say that $\mathcal{M}$ satisfies the local preferential attachement iff, for any node $j \in V$ not connected to $i$ and belonging to the same community as $i$, $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \M_e, \M_g$ increases with $n$; $d_{i,c}$ denotes the degree of node $i$ in its community.
+  \item[(iii)] \emph{Class/Feature Burstiness}: we say that $\mathcal{M}$ satisfies the feature/class burstiness effect, iff, for any node $i$ and latent class/feature $k$, $\pr(f_{ik} > 0 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \M_e, \M_g)$ increases with $n$; where $\mat{f}_{\bm{.}k}^{-ik}$ denotes the number of nodes, other than node $i$, assigned to latent class/feature $k$ in the network.
 \end{description}
 \label{def:burst-soc-net}
 \end{definition}
 %
-There are two things to note here. The first one is that $f_{ik}$ in (iii) equals $1$ for ILFM (as it relies on binary features), and is in $[0,1]$ for IMMSB. The second one is that the fact that the probability $\pr(y_{ij}=1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$ is equivalent to the fact that the probability $\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ increases with $n$. Indeed:
-%
+There are two things to note here. The first one is that $f_{ik}$ in (iii) equals $1$ for ILFM (as it relies on binary features), and is in $[0,1]$ for IMMSB. The second one is that the fact that the probability $\pr(y_{ij}=1 \mid d_i \ge n, \M)$ increases with $n$ is equivalent to the fact that the probability $\pr(d_{i} \ge n+1 \mid d_i \ge n, \M)$ increases with $n$. Indeed:
+
+--------------------------------------------------
+--------------------------------------------------
+
+
 \begin{align}
 &\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
 &= 1 - \prod_{j \notin \mathcal{V}(i)} P(y_{ij} = 0 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
@@ -37,8 +42,50 @@ There are two things to note here. The first one is that $f_{ik}$ in (iii) equal
 %
 Hence $\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ and $P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ vary in the same direction. The same development holds for $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \mat{F}, \mat{\Phi})$. The above definitions, characterizing probabilistic link models according to burstiness in social networks, are thus directly related to the general definition of burstiness given in Definition~\ref{def:burst}.
 
+
+--------------------------------------------------
+--------------------------------------------------
+
+\begin{theorem}
+	For jointly exchangeable graph, the burstiness is equivalent to (define $d_i^n$)
+	\begin{align}
+	\pr(d_{i} \ge n+1 \mid d_i^n \ge n, \M_g) \implies \\  \Delta_n \p(y_{ij}=1 | d_i=n, \M_g) > 0
+	\end{align}
+\end{theorem}
+
+\begin{proof}
+	First we recall that for a jointly exchangeable network, we have that:
+	\begin{equation}
+	\p(y_{ij}: (i,j) \in V^2) = \p(y_{\sigma(i)\sigma(j)}: (i,j) \in V^2)
+	\end{equation}
+	For any permutation $\sigma$ of the integer $\{1,..,n\}$. Furthermore, one can write the burstiness of a degree $d_i$ as an increasing function $q_n$ of $n$ such that:
+	\begin{equation}
+	q_n. = \frac{\p(d_i=n+1)}{\p(d_i=n)}
+	\end{equation}
+	
+	For each possible combinaison of the networks that preserve the degree, we choose one such that the edge are left aligned. Thus the left aligned arrow for a degree $d_i=n$ is the distribution $p(d_i^n)=p(y_{i1},..,y_{iN}$ such that the first $n$ term are equal the other are zeros. In turns out that:
+	\begin{align}
+	q_n = \frac{\sum_{l_n}^{N-1} n! p(d_i^{l+1})}{\sum_{l_n}^{N-1} n! p(d_i^{l})} = \frac{\sum_{l=n}^{N-1} u_l}{\sum_{l=n}^{N-1} v_l} = \frac{a_n}{b_n}
+	\end{align}
+\end{proof}
+
+One can remark, that from Bayes law, we have that:
+\begin{equation}
+\frac{u_l}{v_l} = p(y_{ij}=1 | d_i^l) = f_l
+\end{equation}
+With the node $j$, the node that have a different state between $d_i^l$ and $d_i^{l+1}$.
+
+Let's now use this fact to examine  the differential:
+\begin{align*}
+&q_{n+1} - q_n = \frac{a_{n+1}}{b_{n+1}} - \frac{a_{n+1}+v_n f_n}{b_{n+1}+v_n} \\ 
+&\propto a_{n+1} - b_{n+1} f_n \propto \sum_{l=n}^{N-1} v_l (f_l - f_n)
+\end{align*}
+
+Thererefore, as $l >=n$, a sufficient condition to have the last formulae true is to have $f_{l+1} >= f_l$ for $l$ in $(0, N-1)$. 
+
+
 \begin{proposition}
-	The IMMSB models statisfy the local preferential attachments.
+	The IMMSB models satisfy the local preferential attachments in the generative mode $\M_g$
 \end{proposition}
 
 \noindent \textbf{Proof} We have:
