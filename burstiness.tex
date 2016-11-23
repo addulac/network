@@ -94,10 +94,13 @@ p(y_{ij} = 1 | d_i^{N,n}, \mathcal{M}) = \int_{\Theta} p(y_{ij}=1|\Theta) \frac
 By only restraining the relations that occur inside class $c=\{k,k\}$, one can write the local preferential attachment:
 
 \begin{align*} \label{eq:sum}
-&p(y_{ij} = 1 | d_{ic}>n, \mathcal{M})  \\
+&p(y_{ij} = 1 | d_{ic}^{N,n}, \mathcal{M})  \\
 &=  \frac{ \int_{\phi_{c}} p(y_{ij}=1|\phi_{c}) p(d_{ic}^{N,n} | \phi_{c}) p(\phi_{c}) d\phi_{c}}{\int_{\phi_{c}} \p(d_{ic}^{N,n} | \phi_{c}))       p(\phi_{c}) d\phi_{c}}   \\
-&= \frac{ \text{beta}(n+1+\lambda_1, N-d_{ic}+\lambda_0) }{\text{beta}(n+\lambda_1, N-d_{ic}+\lambda_0) } 
+&= \frac{ \text{beta}(n+1+\lambda_1, N-n+\lambda_0) }{\text{beta}(n+\lambda_1, N-n+\lambda_0)} \\
+&= \frac{n+\lambda_1}{N + \lambda_1 +\lambda_0}
 \end{align*}
+
+The last equation show that the predictive likelihood is strictly crescent with $n$.
 
 
 \end{proof}
@@ -110,7 +113,7 @@ By only restraining the relations that occur inside class $c=\{k,k\}$, one can w
 \end{proof}
 
 \begin{proposition}
-	The ILFM and IMMDB models do not statisfy the global and local preferential attachments. in the mode $\M_e$.
+	The ILFM and IMMSB models do not statisfy the global and local preferential attachments. in the mode $\M_e$.
 \end{proposition}
 
 The proof of this statement is trivially true in the sens that given $\mat{F}$ and $\mat{\Theta}$, the link likelihood is fully determined and hence do not depend on new links being generated. 
