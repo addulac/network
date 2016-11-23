@@ -26,7 +26,7 @@ Furthermore, using the Jensen inequality and exchangeability assumption, we can 
 \end{align}	
 
 
-This form highlights the equivalence between the matrix and the probabilistic representation \footnote{For completeness we refer the reader to variational inference,that introduce a variational parameters. It shows minimizing the lower bound is equivalent to minimizing the Kulback-Leibler divergence between the true posterior and the variational parameters.} from an optimization point of view. Moreover, in comparison with th  the matrix factorization objective, the lower bound minimizer has a loss function being the log-evidence and the log-likelihood of observations while the regularization term is equal to the negative of the log prior.
+This form highlights the equivalence between the matrix and the probabilistic representation \footnote{For completeness we refer the reader to variational inference,that introduce a variational parameters. It shows minimizing the lower bound is equivalent to minimizing the Kulback-Leibler divergence between the true posterior and the variational parameters.} from an optimization point of view. Moreover, in comparison with the  the matrix factorization objective, the lower bound minimizer has a loss function being the log-evidence minus the log-likelihood of observations while the regularization term is equal to the negative of the log prior.
 
 
 Finally, because we model binary relationship, a natural kernel for the observation is a Bernoullli density such that $y_{ij} \sim \text{Bern}(\Theta)$. It follows from the fact that the expectation of the Bernoulli is it's own parameter, we have the following matrix representation for the likelihood \footnote{Note that a mapping function could be apply if to fit the value in a probability space as is it done with a sigmoid function in the ILFM model.}:
@@ -40,7 +40,7 @@ This formalism is similar to the work of Buntine on Discrete Component Ananlysis
 \end{equation}
 
 %See the Appendix~\ref{sec:mixmembership} for a justification of eq \eqref{eq:mf} using a Mixed Membership Model approach.
-A key point here, is that the Stochatistic Blockmodel well studied in the literrature \cite{goldenberg2010survey}, where nodes of the networks belong only to one clusters (blockmodel) is a special case of this formalism (as well as MMSB and ILFM for extrem case(limit case)) when the feature vector $f_i$ of node $i$ has one element corresponding to the membership while all the other are zeros. Besides the choice of the priors on $\Phi$ and $\Theta$ represents the context in which  their elements can evolve.
+A key point here, is that the Stochatistic Blockmodel well studied in the literrature \cite{goldenberg2010survey}, where nodes of the networks belong only to one clusters (blockmodel) is a special case of this formalism (as well as MMSB and ILFM for extrem case(limit case)) when the feature vector $f_i$ of node $i$ has one element corresponding to the membership while all the other are zeros. Besides the choice of the priors over $\mat{F}$ and $\mat{\Phi}$ represents the context in which  their elements can evolve.
 
 In the next session we review both iMMSB and ILFM more precisely.
 
