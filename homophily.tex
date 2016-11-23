@@ -18,97 +18,58 @@ s(i,j) > s(i',j')  \implies \pr(y_{ij}=1 \mid \mathcal{M}) > \pr(y_{i'j'}=1  \mi
 A model which verifies this condition is said to be \emph{homophilic} under the simylarity $s$.
 \end{definition}
 %
-As one can note, this definition directly captures the effect "if two nodes are more similar, then they are more likely to be connected The model $\mathcal{M}$ considered can either be regarded in a purely generative setting, or be learned from the data. The above definition encompasses both cases, the parameters $\mat{F}$ and $\mat{\Phi}$ being either generated or learned. Furthermore, in some cases, for example when one has access to users' interest or social information, one may use \textit{a priori} representations of nodes as well as given weight matrix between them. This situation corresponds to the case where the matrices $\mat{F}$ and $\mat{\Phi}$ are given, the variables $y_{ij}$ still being generated according to Eqs.~\ref{eq:link-ilfm} and \ref{eq:link-immsb}. The definition of homophily given above is still applicable in this setting.
+As one can note, this definition directly captures the effect "if two nodes are more similar, then they are more likely to be connected". The similarity function assesses to which extent two nodes share the same (latent) characteristics (or classes). In the case of $\mathcal{M}_e$, these characteristics are captured in the latent features $\mat{F}$ as the model implicitly tries to relate through $\mat{F}$ nodes that are connected in the observation. In the case of $\mathcal{M}_g$ however, there is no mechanism to define latent characteristics as $\mat{F}$ is solely defined from probability distributions that say nothing about possible shared characteristics of nodes. There is thus no sense in this case to talk about homophily. For this reason, we focus on $\mathcal{M}_e$ for homophily. 
 
-The similarity function assesses to which extent two nodes share the same characteristics. The parameter $\mat{F}$ captures some latent characteristics of the nodes, whereas the parameter $\mat{\Phi}$ captures the correlations between these latent characteristics. In a first approach, one can define for $\M_e$ and $\M_g$, on their basis, a "\emph{natural}" similarity between nodes as follows:
+The estimated matrix $\mat{\hat{F}}$ captures some latent characteristics of the nodes, whereas the estimated matrix $\mat{\hat{\Phi}}$ captures the correlations between these latent characteristics. One can thus define, on their basis, a "natural" similarity between nodes as follows:
 %
-\begin{align}
-&s_n^{\M_e}(i,j) = \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top \nonumber \\
-&s_n^{\M_g}(i,j) = \int_{f_i, f_j,\Phi} \mat{f}_i\mat{\Phi} \mat{f}_j^T \p(f_i, f_j) \p(\Phi) df_{i,j}d\Phi
+\begin{equation}
+s_n(i,j) = \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top \nonumber
 %\label{eq:natural-sim}
-\end{align}
+\end{equation}
 %
-It is straightforward that $\mathcal{M}_e$ and $\M_g$ is homophilic wrt to $s$, as $s(i,j)$ corresponds to the probability of generating a link between nodes $i$ and $j$ (Eq.   ~\ref{eq:link-me}). We thus have the following property:
+It is straightforward that $\mathcal{M}_e$ and $\M_g$ is homophilic wrt to $s_n$, as $sn(i,j)$ corresponds to the probability of generating a link between nodes $i$ and $j$ (Eq.   ~\ref{eq:link-me}). We thus have the following property:
 %
-\begin{proposition}[] $\M_e$ and $\M_g$ are homophilic wrt the natural similarities respectively  $s_n^{\M_e}$ and $s_n^{\M_g}$.
+\begin{proposition}[] $\M_e$ is homophilic wrt the natural similarities $s_n$.
 \end{proposition}
 
 The homophyly define by $s_n$ is trivial because there is a direct mapping between the node similarity and the links likelihood. Though, this proposition carry the idea that we can always choose a node similarity that would conserve the homophily effect but with a loss of interpretability of the similarity metric. An exemple of such conservation is any homothetic transformation of the natural similarity.
 
-Therefore, A more interesting question would be to inspect the homophilic effect with a similarity that only depend os the latent features, that is nearest of the classical notion of homphily in networks. We define a latent similarity between nodes which is decorrelated of $\Phi$, which is associated to the topology of the random graph:
+Therefore, A more interesting question would be to inspect the homophilic effect with a similarity that only depend os the latent features.Moreover is share characteristic of with the classical notion of homphily in networks. We define a latent similarity between nodes which is decorrelated of $\Phi$ (Note that $\Phi$ encode the metric to go from the feature space, to the probability space):
 
 \begin{align}
-&s_l^{\M_e}(i,j) = \mat{f}_{i} \mat{f}_j^\top \nonumber \\
-&s_l^{\M_g}(i,j) = \int_{f_i, f_j} \mat{f}_i\mat{f}_j \p(f_i, f_j)  df_{i,j}
+&s_l(i,j) = \mat{f}_{i} \mat{f}_j^\top \nonumber \\
 \label{eq:latent-sim}
 \end{align}
 
 
 \begin{proposition}[]
-	ILFM is and IMMSB does not satisfy the latent homophily under the latent similarities respectively $s_l^{\M_e}$ and $s_l^{\M_g}$.
+	ILFM is and IMMSB does not satisfy the latent homophily under the latent similarities respectively $s_l$.
 \end{proposition}
 
-\noindent \textbf{Proof} We start in the $\M_g$ setting.
-\begin{align*}
-&\p(y_{ij}|\M_g) = \int_{f_i, f_j,\Phi} \mat{f}_i\mat{\Phi} \mat{f}_j^T \p(f_i, f_j) \p(\Phi) df_{i,j}d\Phi \\
-& = \int_{f_i, f_j,\Phi} (\sum_{kk'}f_{ik}f_{jk'}\phi_{kk'}) \prod_{kk'}p(\phi_{kk'}) \p(f_i, f_j)  df_{i,j}d\Phi
-\end{align*}
-We have that $\Phi$ are i.i.d either from beta or normal distribution. Thus we have that $\E[\Phi] = \mu \unit$, where $\unit$ is matrix with one everywhere and $\mu$ a constant corresponding to the mean of the prior over weight. Then we have:
-\begin{align*}
-&\p(y_{ij}|\M_g) =  \mu \int_{f_i, f_j} (\sum_{kk'}f_{ik}f_{jk'})  \p(f_i, f_j)  df_{i,j} \\
-&= \mu \int_{f_i, f_j} (\sum_kf_{ik}f_{jk} +  \sum_{k \neq k'}f_{ik}f_{jk'})  \p(f_i, f_j)  df_{i,j}
-\end{align*}
-
-We will first treat the case of IMMSB. From the models, and HDP priors we have the following properties:
-\begin{align*}
-\p(f_i,f_j|\alpha_0, \pi) &= \p(f_i|\alpha_0,\pi)\p(f_j|\alpha_0,\pi) \\
-\int_{f_i} f_{ik} p(f_i)df_i &= \alpha_0 \pi_k \qquad \text{avec} \quad \mat{\pi} \sim GEM(\gamma)
-\end{align*}
-Thus we can rewrite $p(y_{ij}|\M_g)$ such that:
-\begin{align*}
-p(y_{ij}|\M_g) \propto  \sum_k \pi_k^2 + \sum_{k\neq k'} \pi_k \pi_{k'}
-\end{align*}
-
-We see that the definitions is misspecified, because, in mean there is no variation in neither the similarity, or the link probability (as show in the sparstiy section). That why, a similarity based on either the fixed feature makes more sens 
-
-Suppose now, we have $(i,j,i',j') \in E$ such that $s_l^{\M_g}(i,j) > s_l^{\M_g}(i',j')$. We follows that:
-
-We then redefine the homophily that marginalize over weight, (previous definition !), to keep some variability in the homophiy definition.
-
-~\\
-(....copy paste..old definition...!?)
-~\\
-
-A counter example is as follow, chose $f_i=f_j=(0,1,0)$ and $f_{i'}=(1,0,1)$ and $f_{j'}=(0,1,0)$.Thus we have $s(i,j)=2$ and $s(i',j')=0$, and $p(i,j) \propto 2$ but $p(i',j') \propto 4$. Thus homophily is not satisfied. 
-
-
-
-
-
-
-
-
- 
-%
+\begin{proof}
+We have that:
 \begin{align}
-&\mathbb{E}_{\Phi}[\pr(y_{ij}=1 \mid \mathcal{M})] \nonumber \\
-&= f_i \E[\Phi]f_j = \mu f_i \otimes f_j  \nonumber \\
-&= \mu (\sum_k f_{ik}f_{jk} + \sum_{k\neq k'} f_{ik}f_{jk'} ) \nonumber
+&\pr(y_{ij}=1 \mid \M_e) \nonumber \\
+&=  \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top \nonumber = \sum_{k,k'} f_{ik}\phi_{kk'}f_{jk'}   \nonumber \\
+&= \sum_k f_{ik}\phi_{kk}f_{jk} + \sum_{k\neq k'} f_{ik}\phi_{kk'}f_{jk'} ) \nonumber
 \end{align}
-%
-Where $\otimes$ is the outer product. Whitin the last equation, it is easy to find a counter example where the similarity order is lost by the outer product. Example fall in the stochastic block model case (which is a special case of both model), A counter example is as follow, chose $f_i=f_j=(0,1,0)$ and $f_{i'}=(1,0,1)$ and $f_{j'}=(0,1,0)$.Thus we have $s(i,j)=2$ and $s(i',j')=0$, and $p(i,j) \propto 2$ but $p(i',j') \propto 4$. Thus homophily is not satisfied. Finally, note that because the property is false in the global case, it is straightforward to show that the property is also false in the local case   \hfill $\Box$ \\
 
+ Suposse now that we have a weight matrix with constant weights $\mu$. one can write:
 
+\begin{equation}
+\pr(y_{ij}=1 \mid \mathcal{M_e})= \mu (\sum_k f_{ik}f_{jk} + \sum_{k\neq k'} f_{ik}f_{jk'} ) \nonumber
+\end{equation}
 
-
+It is easy to find a counter example where the similarity order is lost.A counter example is as follow, chose $f_i=f_j=(0,1,0)$ and $f_{i'}=(1,0,1)$ and $f_{j'}=(0,1,0)$.Thus we have $s(i,j)=2$ and $s(i',j')=0$, and $p(i,j) \propto 2$ but $p(i',j') \propto 4$. We see that similarity order does not preserve the likelihood. Thus homophily is not satisfied. 
+\end{proof} 
 
 
 
 This proposition means that the latent features generated or learn for both model will not encode the classical vision of homophily, which says that if two individuals have similar feature, they will be likely to connect. This proposition also hilghight the fact the latent feature of iMMSB and ILFM can't be interpreted out of the box as communities where links occur more likely when two individuals has identical membership.
 
-In the contrary, one can imagine that if $\Phi$ is constrained such that latent homophily is true, one can directly interpret the latent features as communities indicator. This is basically what is done is this paper \cite{AMMSB} to find overlapping communities within the MMSB models. The authors renamed the constraint MMSB to a-MMSB, standing for assortative MMSB. \textcolor{red}{I have the proof with the matrix normal as an example, but a-MMSB is even simpler --- $\phi_{kk'}=0$ if $k\neq k'$. if a possible reference, if needed.}
+In the contrary, one can imagine that if $\Phi$ was constrained such that latent homophily is true, one can directly interpret the latent features as communities indicator. This is basically what is done is this paper \cite{AMMSB} to find overlapping communities within the MMSB models. The authors renamed the constraint MMSB to a-MMSB, standing for assortative MMSB. \textcolor{red}{I have the proof with the matrix normal as an example, but a-MMSB is even simpler --- $\phi_{kk'}=0$ if $k\neq k'$. if a possible reference, if needed.}
 
-In figure \ref{fig:gen_blocks}, we show a clustering result form MMSB based on the blockmodels. We choose the a cluster of assignment for each node which represent the latent feature with highest probability. Thus it appears that MMSB capture the structural equivalence of the underlying networks.
+In figure \ref{fig:gen_blocks}, we show a clustering result form MMSB based on the blockmodels. We choose the cluster assignment for each node which represent the latent feature with highest probability. Thus it appears that MMSB capture the structural equivalence of the underlying networks.
 
 \begin{figure}[h]
 	\centering
@@ -133,7 +94,7 @@ In figure \ref{fig:gen_blocks}, we show a clustering result form MMSB based on t
 	\minipage{0.16\textwidth}
 	\includegraphics[width=3.5cm, height=4cm]{img/M_g_regular/graph_dot}
 	\endminipage
-	\caption{Tree examples of generated network in different setting of IMMSB. We we reorder the adjacency matrix (white dot are links, block dot are non-link) in th upper figure, and plot their associated bockmodel structure in the lower part. The block structure is represented in the lower plots where we represent inter-block and intra-block connection by respectively edges ans self-loop.  }
+	\caption{Tree examples of generated network in different setting of IMMSB. We reorder the adjacency matrix (white dot are links, block dot are non-link) in th upper figure, and plot their associated bockmodel structure in the lower part. The block structure is represented in the lower plots where we represent inter-block and intra-block connection by respectively edges ans self-loop.  }
 	\label{fig:gen_blocks}
 \end{figure}
 

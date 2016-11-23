@@ -1,19 +1,19 @@
 \section{Prediction Evaluation}
 \label{sec:experiments}
 
-In previous section, we show illustrate theoretical results with empirical measures  on realization of networks using the generative property of the probabilistic models. In this section, we seek to explain the predictive performance on several datasets by examining their empirical properties and how well the models can capture them. This analysis provide also a try on a systemic comparison of both models, IMMSB and ILFM. Particularly we will see that performance of those models really depend on the type of data we want to fit.
+In previous section, we shown theoretical results with empirical measures  on realization of networks using the generative property of the probabilistic models. In this section, we seek to explain the predictive performance on several datasets by examining their empirical properties and how well the models can capture them. This analysis provide also a study on a systemic comparison of both models, IMMSB and ILFM. Particularly we will see that performance of those models really depend on the type of data we want to fit.
 
-This section is organised as folllow. In first subsection we descibed our measure for the preferential attachment effect. In the second we present the synthetic and real dataset that we have used. In the third we present our experimental setting. In the last we report our results.
+This section is organized as follow In first subsection we descibed our measure for the preferential attachment effect. In the second we present the synthetic and real dataset that we have used. In the third we present our experimental setting. In the last we report our results.
 
 \subsection{A measures for the preferential attachment effect}
 
-Preferential attachment leads to networks characterized by a degree distribution with heavy tail which can take the form of a power law. To evaluate this property,  we  plot the degree distributions in log log scale for the original network and the generated network. Comparaison of the degree distribution with a linear function in the log-log scale  gives us a qualitative measure for the preferential attachment. However, for a better evaluation of the power law behaviour of degree distribution we rely on a  goodnees a fit based on a Kolmogorov-Smirnov (KS) test. We follow the protocol described in \cite{clauset2009power} which consists of the following steps:
+Preferential attachment leads to networks characterized by a degree distribution with heavy tail which can take the form of a power law. To evaluate this property,  we  plot the degree distributions in log log scale for the original network and the generated network. Comparison of the degree distribution with a linear function in the log-log scale  gives us a qualitative measure for the preferential attachment. However, for a better evaluation of the power law behavior of degree distribution we rely on a  goodnees a fit based on a Kolmogorov-Smirnov (KS) test. We follow the protocol described in \cite{clauset2009power} which consists of the following steps:
 \begin{itemize}
 	\item Estimate the parameters $x_{min}$ and $\alpha$ of the power law model.
 	\item Calculate the goodness of fit between synthetic datasets generated with the power law and the data. The resulting $p$-values gives an estimates of the          plausibility of the hypothesis for the data.
 \end{itemize}
 
-As mentionned in \cite{clauset2009power} high value of the $p$-value should be considered with caution for at least two raisons. First there may be other distribution that match the data equally or better. Second, a small number of samples of the data may lead to high p-value and reflect the fact that is hard to rule out an hypothesis in such a case.
+As mentioned in \cite{clauset2009power} high value of the $p$-value should be considered with caution for at least two raisons. First there may be other distribution that match the data equally or better. Second, a small number of samples of the data may lead to high p-value and reflect the fact that is hard to rule out an hypothesis in such a case.
 
 \subsection{Datasets}
 In our experiments, we consider four artificial networks and two real networks.\\
@@ -54,7 +54,7 @@ We evaluate also the models on two  real networks.
 The first one \footnote{available at:} is built from an online community of 1899 students from the University of California. Each node corresponds to a user and a    directed edge represents a sent message.
 The second one \footnote{available at:} is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated  to an employee and an oriented link represents like previously a sent email.
 
-Table 1 summarizes some properties characteristics of these artificial and real datasets. The  the p-value measure is computed as described in \ref{} as reference for the global preferential attachment effect. we also report the modularity on th given partition (by Dancer) of the networks, and the clustering coefficient.
+Table 1 summarizes some properties characteristics of these artificial and real datasets. The  the p-value measure is computed as described in \ref{} as reference for the global preferential attachment effect. we also report the modularity on the a given (true) partition (by Dancer) of the networks, and the clustering coefficient.
 
 \begin{figure}[h]
 	\centering
@@ -211,3 +211,6 @@ In figure \ref{fig:auc} we report the Area Under Curve for for each datasets in 
 
 \subsection{results}
 
+In figure \ref{fig:gen_graph_s}, show reported the overall degree distribution for IMMSB and ILFM for the different datasets. We can see that the gap between the coefficient of the power law that fit the data in the log-log scale are shorter for the ILFM models that suggest better prediction results on average. But if we observe the result of the AUC reported in figure \ref{auc}, we see the IMMSB models has better results for all the curve measured for the network 1 and the network 2. Because those two graph are more bursty than the other, it sugggest that ILFM perform better than ILFM when the networks when the preferential attachment is strongly present. Moreover, in back to figure \ref{fig:gen_graph_s}, we see that the degree distribution for IMMSB is more smooth whereas in ILFM, there is a strong variance. This is a priori to the fact that i) for ILFM  has an IPB prior which as s strong no linearity in its feature (0 or one). Thus some feature being active could impact severly on the likelihood of links. In IMMSB on the opposite the feature are smoothed by the Dirichlet distribution which has repercussions on the degree distributions. Furthemore, note that the networks where IMMSB beats ILFM, althoug is numner of feature is almost half the number of feature for ILFM.
+
+To conclude, these experiments show that it is important to consider a data properties based approach when evaluating and comparing the performance of learning models, and that a models that seems outperforms other in average could be non optimal depending on what we want to captiure in the data.

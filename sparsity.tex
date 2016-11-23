@@ -1,13 +1,13 @@
 \section{Sparsity}
 
-The last property we study in this paper the sparsity. Sparsity is the fact that most value in a dataset are empty. Whenever a feature space can be big the representation of an object in this
+The last property we study in this paper is the sparsity. Sparsity is the fact that most value in a dataset are empty. Whenever a feature space can be big an object would end with most of his feature to be equal to zeros. In networks, the sparsity is directy quantified by the density of the network. In text collection, a few word of the dictionnary appears in each document and so on.
 
 %defnition of dense and sparse netwroks are given in Bayesian Models of Graphs, Arrays and Other Exchangeable Random Structures(Peter Orbanz and Daniel M. Roy) \\
 
 %definition of exchangeability for networs first mention in this interesting paper: Modeling homophily and stochastic equivalence in symmetric relational data [Hoff]
 
 
-In the model the density for undirected networks of size $|V|=N$ is defined by the expectation of generating a link:
+In the model the density for undirected networks of size $|V|=N$ is defined by the expectation of generating a link, which represent the average chance to observe a link. Hence this quantity is a $M_g$ settings:
 %\begin{equation}
 %p(y_{ij}^{new}=1| |V|=N) =  \int_{\Theta} p(y_{ij}^{new}=1|\Theta) \frac{\sum_{n=0}^{\dbinom{N}{2}} p(d^N=n| \Theta)}{\int_{\Theta} \sum_{n=0}^{\dbinom{N}{2}} p(d^N=n | \Theta)) p(\Theta) d\Theta} p(\Theta) d\Theta
 %\end{equation}
@@ -30,6 +30,4 @@ In the model the density for undirected networks of size $|V|=N$ is defined by t
 
 Thus the density is not dependent of $N$, and thus the number of edge grows with $N^2$ since its expectation is  $\dbinom{N}{2} \epsilon$.
 
-This result shows that the model generate dense networks because the model is misspecified. More precisely there is no assumptions on the relation between the size of the graph $|V|$ and the number of edge $|E|$, in other words the integral on the model parameter $\Theta$ and the sum over all possible graph can be exchanged because of the exchangability of the models. This result is a direct consequence of the theorem of Aldous for exchangeable graph and constitute the biggest limitation in order to model real world network.
-\textcolor{red}{ecrire la definition de graph echangeable, le theorem et la conséquence sur la densité...}
-
+This result shows that the model generate dense networks because the model is misspecified. More precisely, this results generalize for all graph that have an assumption of echangeability. This strong result is a direct consequance of the theorem of Haldous-Houver \ ref{orbanz2015bayesian}. 

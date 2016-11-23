@@ -21,107 +21,99 @@ In the context of social networks, the notion of burstiness, or preferential att
 \begin{definition}[Burstiness in social networks]
 Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree. Furthermore, let $\mathcal{M}=\{\M_e, \M_g\}$ be a link prediction model as defined in Section~\ref{sec:models}.
 \begin{description}
- \item[(i)] \emph{Global Preferential Attachment}: we say that $\mathcal{M}$ satisfies the global preferential attachement iff, for any node $j \in V$ not connected to $i$, $\pr(y_{ij}=1 \mid d_i \ge n, \M_e, \M_g)$ increases with $n$.
- \item[(ii)] \emph{Local Preferential Attachment}: we say that $\mathcal{M}$ satisfies the local preferential attachement iff, for any node $j \in V$ not connected to $i$ and belonging to the same community as $i$, $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \M_e, \M_g$ increases with $n$; $d_{i,c}$ denotes the degree of node $i$ in its community.
-  \item[(iii)] \emph{Class/Feature Burstiness}: we say that $\mathcal{M}$ satisfies the feature/class burstiness effect, iff, for any node $i$ and latent class/feature $k$, $\pr(f_{ik} > 0 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \M_e, \M_g)$ increases with $n$; where $\mat{f}_{\bm{.}k}^{-ik}$ denotes the number of nodes, other than node $i$, assigned to latent class/feature $k$ in the network.
+ \item[(i)] \emph{Global Preferential Attachment}: we say that $\mathcal{M}$ satisfies the global preferential attachement iff, for any node $j \in V$ not connected to $i$, $\pr(y_{ij}=1 \mid d_i \ge n, \M)$ increases with $n$.
+ \item[(ii)] \emph{Local Preferential Attachment}: we say that $\mathcal{M}$ satisfies the local preferential attachement iff, for any node $j \in V$ not connected to $i$ and belonging to the same community as $i$, $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \M$ increases with $n$; $d_{i,c}$ denotes the degree of node $i$ in its community.
+  \item[(iii)] \emph{Class/Feature Burstiness}: we say that $\mathcal{M}$ satisfies the feature/class burstiness effect, iff, for any node $i$ and latent class/feature $k$, $\pr(f_{ik} > 0 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \M)$ increases with $n$; where $\mat{f}_{\bm{.}k}^{-ik}$ denotes the number of nodes, other than node $i$, assigned to latent class/feature $k$ in the network.
 \end{description}
 \label{def:burst-soc-net}
 \end{definition}
 %
 There are two things to note here. The first one is that $f_{ik}$ in (iii) equals $1$ for ILFM (as it relies on binary features), and is in $[0,1]$ for IMMSB. The second one is that the fact that the probability $\pr(y_{ij}=1 \mid d_i \ge n, \M)$ increases with $n$ is equivalent to the fact that the probability $\pr(d_{i} \ge n+1 \mid d_i \ge n, \M)$ increases with $n$. Indeed:
 
---------------------------------------------------
---------------------------------------------------
 
 
-\begin{align}
-&\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
-&= 1 - \prod_{j \notin \mathcal{V}(i)} P(y_{ij} = 0 \mid d_i \ge n, \mat{F}, \mat{\Phi}) \nonumber \\
-&= 1 - \prod_{j \notin \mathcal{V}(i)} (1 - P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi})) \nonumber
-\end{align}
-%
-Hence $\pr(d_{i} \ge n+1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ and $P(y_{ij} = 1 \mid d_i \ge n, \mat{F}, \mat{\Phi})$ vary in the same direction. The same development holds for $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \mat{F}, \mat{\Phi})$. The above definitions, characterizing probabilistic link models according to burstiness in social networks, are thus directly related to the general definition of burstiness given in Definition~\ref{def:burst}.
 
 
---------------------------------------------------
---------------------------------------------------
 
 \begin{theorem}
-	For jointly exchangeable graph, the burstiness is equivalent to (define $d_i^n$)
+	 Given a the distribution $p(d_i=n)$  of a degree $d_i \quad \forall i \in E$, for any joint exchangeable graph $G(V,E)$, then if $n >> 0$ the distribution $p$ is c-bursty iff (\textcolor{red}{Need to introduce this definition of the burstiness, who said that a distribution is c-bursty if it a exist a integer $c$ such that the distribution is bursty for all $n > c$}) :
 	\begin{align}
-	\pr(d_{i} \ge n+1 \mid d_i^n \ge n, \M_g) \implies \\  \Delta_n \p(y_{ij}=1 | d_i=n, \M_g) > 0
+	  \Delta_n \p(y_{ij}=1 | d_i^{n}) > 0
 	\end{align}
+	Where $d_i^{N,n}$ represent the set node $j' \in E \\ j$n with $n$ element taking value 1 and $d_i=n$.
 \end{theorem}
 
 \begin{proof}
-	First we recall that for a jointly exchangeable network, we have that:
-	\begin{equation}
+	First we recall that for a jointly exchangeable graph, we have that:
+	\begin{equation*}
 	\p(y_{ij}: (i,j) \in V^2) = \p(y_{\sigma(i)\sigma(j)}: (i,j) \in V^2)
-	\end{equation}
-	For any permutation $\sigma$ of the integer $\{1,..,n\}$. Furthermore, one can write the burstiness of a degree $d_i$ as an increasing function $q_n$ of $n$ such that:
-	\begin{equation}
-	q_n. = \frac{\p(d_i=n+1)}{\p(d_i=n)}
-	\end{equation}
+	\end{equation*}
+	For any permutation $\sigma$ of the integer $\{1,..,n\}$. Furthermore it can be show that $ \pr(d_i \geq n'+1 \mid d_i \geq n')$ and $\frac{\p(d_i=n+1)}{\p(d_i=n)}$ vary in the same direction with $n$ (Clinchant 2006). Under the exchangeability assumptions, one can write that:
 	
-	For each possible combinaison of the networks that preserve the degree, we choose one such that the edge are left aligned. Thus the left aligned arrow for a degree $d_i=n$ is the distribution $p(d_i^n)=p(y_{i1},..,y_{iN}$ such that the first $n$ term are equal the other are zeros. In turns out that:
-	\begin{align}
-	q_n = \frac{\sum_{l_n}^{N-1} n! p(d_i^{l+1})}{\sum_{l_n}^{N-1} n! p(d_i^{l})} = \frac{\sum_{l=n}^{N-1} u_l}{\sum_{l=n}^{N-1} v_l} = \frac{a_n}{b_n}
-	\end{align}
+	\begin{align*}
+	 b_n=\frac{\p(d_i=n+1)}{\p(d_i=n)} = \frac{\dbinom{N+1}{n+1} p(d_i^{N+1,n+1})}{\dbinom{N}{n} p(d_i^{N,n})}
+	\end{align*}
+	This equation reflect the fact that $\p(d_i=n+1)$ state for a new observation in the underlying random structure $d_i^{N,n}$. Applying a product rule, we have that:
+	
+	\begin{equation*}
+	b_n = \frac{N+1}{n+1} \p(y_{ij}=1 | d_i^{N,n})
+	\end{equation*}
+	
+	The differential is then equal to:
+	\begin{align*}
+	&\Delta_n b_n= b_{n+1} - b_n  \\
+	&= \frac{N+1}{n+2} \p(y_{ij}=1 | d_i^{N,n+1}) - \frac{N+1}{n+1} \p(y_{ij}=1 | d_i^{N,n})
+	\end{align*}
+	
+	The burstiness properties is statisfied iff $\forall n \in \mathbb{N}$:
+	\begin{align*}
+	\Delta_nb_n > 0 \iff \frac{n+1}{n+2}\p(y_{ij}=1 | d_i^{N,n+1})  > \p(y_{ij}=1 | d_i^{N,n})
+	\end{align*}
+	
+	The last equation show that the burstiness condition holds if $n >> 0$.
+	\textcolor{red}{Est ce qu'avec le passage au limite je ne perds pas l'inégalité strict de la definition ? (surement) donc ca renvoit à la note du haut concernant un borne...}
+
+\label{b-theorem}
 \end{proof}
 
-One can remark, that from Bayes law, we have that:
-\begin{equation}
-\frac{u_l}{v_l} = p(y_{ij}=1 | d_i^l) = f_l
-\end{equation}
-With the node $j$, the node that have a different state between $d_i^l$ and $d_i^{l+1}$.
-
-Let's now use this fact to examine  the differential:
-\begin{align*}
-&q_{n+1} - q_n = \frac{a_{n+1}}{b_{n+1}} - \frac{a_{n+1}+v_n f_n}{b_{n+1}+v_n} \\ 
-&\propto a_{n+1} - b_{n+1} f_n \propto \sum_{l=n}^{N-1} v_l (f_l - f_n)
-\end{align*}
-
-Thererefore, as $l >=n$, a sufficient condition to have the last formulae true is to have $f_{l+1} >= f_l$ for $l$ in $(0, N-1)$. 
+The above definitions, characterizing probabilistic link models according to burstiness in social networks, are thus directly related to the general definition of burstiness given in Definition~\ref{def:burst}. Note that the theorem \ref{b-theorem} reflect the fact there is is a cut-off where a distribution loose if bursty aspect. This is illustrated by the power law distribution that need such cut-off because a distribution nned to sum to one  \ref{clauset2009power}.
 
 
 \begin{proposition}
-	The IMMSB models satisfy the local preferential attachments in the generative mode $\M_g$
+	The IMMSB models satisfy the local preferential attachments in the generative mode $\M_g$.
 \end{proposition}
 
-\noindent \textbf{Proof} We have:
-In IMMSB one can write the burstiness as follows:
+\begin{proof}
+We have:
+In IMMSB one can write the predictive distribution conditionned by $d_i^{N,n}$:
 
 \begin{equation} 
-p(y_{ij} = 1 | d_i>n, \mathcal{M}) = \int_{\Theta} p(y_{ij}=1|\Theta) \frac{p(d_i>n | \Theta)}{p(d_i>n)} p(\Theta) d\Theta \nonumber
+p(y_{ij} = 1 | d_i^{N,n}, \mathcal{M}) = \int_{\Theta} p(y_{ij}=1|\Theta) \frac{p(d_i^{N,n} | \Theta)}{pd_i^{N,n}} p(\Theta) d\Theta \nonumber
 \end{equation}
 
-By using the fact that the model is exchangeable, we note one realization for a degree $d_i$ as a random array such as $\p(d_i^N=l) = \p((y_{ij'})_{j'\neq j})$ with $\sum_{j'\neq j}y_{ij'} = l$, one can write the local preferential attachment:
+By only restraining the relations that occur inside class $c=\{k,k\}$, one can write the local preferential attachment:
 
-\begin{align} \label{eq:sum}
-&p(y_{ij} = 1 | d_{ic}>n, \mathcal{M}) \nonumber \\
-&=  \frac{ \int_{\phi_{c}} p(y_{ij}=1|\phi_{c})\sum_{l=n}^N\dbinom{N}{l} p(d_{ic}^N=l | \phi_{c}) p(\phi_{c}) d\phi_{c}}{\int_{\phi_{c}}\sum_{l=n}^N \dbinom{N}{l}p(d_{ic}^N=l | \phi_{c}))       p(\phi_{c}) d\phi_{c}}  \nonumber \\
-&= \frac{\sum_l^N\dbinom{N}{l} \int_{\phi_{c}} p(y_{ij}=1|\phi_{c}) p(d_{ic}^N=l | \phi_{c}) p(\phi_{c}) d\phi_{c} }{\sum_l^N \dbinom{N}{l}\int_{\phi_{c}} p(d_{ic}^N=l | \phi_{c}) p(\phi_{c}) d\phi_{c} } \nonumber\\
-&= \frac{\sum_l^N\dbinom{N}{l} \text{beta}(l+1+\lambda_1, N-d_{ic}+\lambda_0) }{\sum_l^N \dbinom{N}{l}\text{beta}(l+\lambda_1, N-d_{ic}+\lambda_0) } \nonumber\\
-&=  \frac{\sum_{l=n}^N a_l}{\sum_{l=n}^N b_l}= \frac{\sum_{l=n}^N b_l g_l}{\sum_{l=n}^N b_l} \nonumber
-\end{align}
+\begin{align*} \label{eq:sum}
+&p(y_{ij} = 1 | d_{ic}>n, \mathcal{M})  \\
+&=  \frac{ \int_{\phi_{c}} p(y_{ij}=1|\phi_{c}) p(d_{ic}^{N,n} | \phi_{c}) p(\phi_{c}) d\phi_{c}}{\int_{\phi_{c}} \p(d_{ic}^{N,n} | \phi_{c}))       p(\phi_{c}) d\phi_{c}}   \\
+&= \frac{ \text{beta}(n+1+\lambda_1, N-d_{ic}+\lambda_0) }{\text{beta}(n+\lambda_1, N-d_{ic}+\lambda_0) } 
+\end{align*}
 
-with $f_l$ is a strictly positive and crescent function of $l$. This is prooved by the fact that one can extract the following identity:
-\begin{equation}
-\frac{a_l}{b_l} = \frac{l+\lambda_1}{N+\lambda_.} \nonumber
-\end{equation}
 
-Finally we show that having $g_l$ a positive crescnet function on $[n, N]$ is a sufficient condition to obtain the desired results:
-\begin{align}
-&\Delta_n p(y_{ij} = 1 | d_{ic}>n, \mathcal{M}) \nonumber \\
-&= \frac{\sum_{l=n+1}^N g_l b(l)}{\sum_{l=n+1}^N b(l)} - \frac{g_n b(n) + \sum_{l=n+1}^N g_l b(l)}{b(n) + \sum_{l=n+1}^N b(l)} \nonumber\\
-&= \frac{b(n)}{\left(b(n) + \sum_{l=n+1}^N b(l)\right) \left(\sum_{l=n+1}^N b(l)\right)} \sum_{l=n+1}^N (g_l-g_n)b(l) \nonumber
-\end{align}
-As we have $l \geq n$, it proves the hold. \hfill$\Box$ \\
+\end{proof}
 
 \begin{proposition}
-	The ILFM models statisfy the local preferential attachments.
+	The ILFM models statisfy the local preferential attachments. in the generative mode $\M_g$.
 \end{proposition}
-\textcolor{red}{damn local proof for ILFM to finish...S}
+\begin{proof}
+	\textcolor{red}{This is not sure actually, local proof for ILFM to finish...}
+\end{proof}
+
+\begin{proposition}
+	The ILFM and IMMDB models do not statisfy the global and local preferential attachments. in the mode $\M_e$.
+\end{proposition}
+
+The proof of this statement is trivially true in the sens that given $\mat{F}$ and $\mat{\Theta}$, the link likelihood is fully determined and hence do not depend on new links being generated. 
 
 \begin{proposition}
 	Both ILFM and IMMSB models satisfy the feature burstiness.
@@ -138,9 +130,11 @@ Especially, the Dirichlet Process and the Indian Buffet Process, as prior for th
 &\p(f_{ik} = 1 | F^{-ik}) = \frac{n_{ik}^{-z_{ij}}+\alpha_k}{N+\alpha_.} \qquad \text{IMMSB feature update} \nonumber \\
 \end{align}
 
-Where the $m_k^{-ik}$ described the numnber of elements that have $k$-iem feature active except for element $i$, similarly $n_{ik}^{-z_{ij}}$ represents the number of times that $i$ was assigned to $k$ except for relation $(ij)$ (class membersehip are jointly sampled in MMSB). In figure () we show a simulation of a several random network generated with the iMMSB and ILFM to exhibit the preferential attachment effect at several levels.
+Where the $m_k^{-ik}$ described the number of elements that have the $k$-iem feature active except for element $i$, similarly $n_{ik}^{-z_{ij}}$ represents the number of times that $i$ was assigned to $k$ except for relation $(ij)$ (class membersehip are jointly sampled in MMSB).
 
-In figure \ref{fig:gen_burst_mmsb} we represent tree networks generated by ILFM and iMMSB. We compute a goodness of fit to quantify the power law hypothesis on the empirical degree distributions. The protocol is described in section \ref{sec:experiments}. As an empirical illustration for our claims on preferential attachment, we show a 3*3 figure where each columns is particular setting of hyper-parameter and the rows are respectively, the global degree distrubution, the local degree distribution and feature distribution (on a max a assignment point of view).
+In figure \ref{fig:gen_burst_mmsb} we represent tree networks generated by ILFM and iMMSB. We compute a goodness of fit to quantify the power law hypothesis on the empirical degree distributions. The protocol is described in section \ref{sec:experiments}. As an empirical illustration for our claims on preferential attachment, we show a 3*3 figure where each columns is particular setting of hyper-parameter and the rows are respectively, the global degree distribution, the local degree distribution and feature distribution (on a max a assignment point of view).
+
+As we can see in the experiments, we can generate networks that do fit the burstiness definition on the overall degree distribution.
 
 \begin{figure}[h]
 	\centering
@@ -180,6 +174,6 @@ In figure \ref{fig:gen_burst_mmsb} we represent tree networks generated by ILFM 
 
 %\paragraph{Remark}
 %We see that is possible to generate networks that don't satisfy the global preferential effect...
-\textcolor{red}{remark on the global preferential attachment, that is not satisify on the realisation of networks provided ?}
+\textcolor{red}{remark on the global preferential attachment, that is not satisify on the realisation of networks provided in figure 3 ?}
 
 
