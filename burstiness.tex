@@ -6,7 +6,7 @@ The term \textit{burstiness} describes the fact that some events appear in burst
 Burstiness has been studied in different fields, in particular in computational linguistics and information retrieval to characterize word occurrences \cite{church1995poisson}. In these domains, simple definitions of burstiness, that directly capture the fact that a probability distribution is bursty if the probability of generating a new occurrences of an event increases with the number of occurrences of this event, have been proposed\cite{clinchant2008bnb,clinchant2010information}. We rely here on the discrete version of theses definitions, which takes the following form:
 %
 \begin{definition}[Burstiness]
-	A discrete distribution $\pr$ is bursty if and only if, for all integers $(n, n')$, $n \geq n'$ :
+	A discrete distribution $\pr$ is bursty if and only if, for all integers $(n, n')$, $n > n'$ :
 	\begin{equation}
 	\pr(X \geq n+1 \mid X \geq n) > \pr(X \geq n'+1 \mid X \geq n') \nonumber
 	\end{equation}
@@ -14,16 +14,16 @@ Burstiness has been studied in different fields, in particular in computational 
 \label{def:burst}
 \end{definition}
 %
-In the context of social networks, the notion of burstiness, or preferential attachement, appears at different levels: (a) a global preferential attachment level that characterizes the degree distribution of nodes in the network, (b) a local preferential attachment level that characterizes the degree distribution of nodes within communities, and (c) a class/feature burstiness level that characterizes the distributions of nodes among latent classes/features. We provide below a formal definition of these elements.
+In the context of social networks, the notion of burstiness, or preferential attachement, appears at different levels: (a) a global preferential attachment level that characterizes the degree distribution of nodes in the network, (b) a local preferential attachment level that characterizes the degree distribution of nodes within communities, and (c) a feature burstiness level that characterizes the distributions of nodes among latent features. The feature burstiness characterize the importance of each features depending on how much they are represented within each nodes. We provide below a formal definition of these elements.
 %
 
 
 \begin{definition}[Burstiness in social networks]
-Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree. Furthermore, let $\mathcal{M}=\{\M_e, \M_g\}$ be a link prediction model as defined in Section~\ref{sec:models}.
+Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree. Furthermore, let $\mathcal{M} \in \{\M_e, \M_g\}$ be a link prediction model as defined in Section~\ref{sec:models}.
 \begin{description}
  \item[(i)] \emph{Global Preferential Attachment}: we say that $\mathcal{M}$ satisfies the global preferential attachement iff, for any node $j \in V$ not connected to $i$, $\pr(y_{ij}=1 \mid d_i \ge n, \M)$ increases with $n$.
  \item[(ii)] \emph{Local Preferential Attachment}: we say that $\mathcal{M}$ satisfies the local preferential attachement iff, for any node $j \in V$ not connected to $i$ and belonging to the same community as $i$, $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \M$ increases with $n$; $d_{i,c}$ denotes the degree of node $i$ in its community.
-  \item[(iii)] \emph{Class/Feature Burstiness}: we say that $\mathcal{M}$ satisfies the feature/class burstiness effect, iff, for any node $i$ and latent class/feature $k$, $\pr(f_{ik} > 0 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \M)$ increases with $n$; where $\mat{f}_{\bm{.}k}^{-ik}$ denotes the number of nodes, other than node $i$, assigned to latent class/feature $k$ in the network.
+  \item[(iii)] \emph{Feature Burstiness}: we say that $\mathcal{M}$ satisfies the feature burstiness effect, iff, for any node $i$ and latent feature $k$, $\pr(f_{ik} > 0 \mid \mat{f}_{\bm{.}k}^{-ik} \ge n, \M)$ increases with $n$; where $\mat{f}_{\bm{.}k}^{-ik}$ denotes the number of nodes, other than node $i$, assigned to latent class/feature $k$ in the network.
 \end{description}
 \label{def:burst-soc-net}
 \end{definition}
@@ -38,9 +38,9 @@ There are two things to note here. The first one is that $f_{ik}$ in (iii) equal
 \begin{theorem}
 	 Given a the distribution $p(d_i=n)$  of a degree $d_i \quad \forall i \in E$, for any joint exchangeable graph $G(V,E)$, then if $n >> 0$ the distribution $p$ is c-bursty iff (\textcolor{red}{Need to introduce this definition of the burstiness, who said that a distribution is c-bursty if it a exist a integer $c$ such that the distribution is bursty for all $n > c$}) :
 	\begin{align}
-	  \Delta_n \p(y_{ij}=1 | d_i^{n}) > 0
+	  \Delta_n \p(y_{ij}=1 | d_i^{N,n}) > 0
 	\end{align}
-	Where $d_i^{N,n}$ represent the set node $j' \in E \\ j$n with $n$ element taking value 1 and $d_i=n$.
+	Where $d_i^{N,n}$ represent the a set of binary value of size N and having $n$ value to one, where $n$ represent the degree of $i$. 
 \end{theorem}
 
 \begin{proof}
@@ -51,27 +51,27 @@ There are two things to note here. The first one is that $f_{ik}$ in (iii) equal
 	For any permutation $\sigma$ of the integer $\{1,..,n\}$. Furthermore it can be show that $ \pr(d_i \geq n'+1 \mid d_i \geq n')$ and $\frac{\p(d_i=n+1)}{\p(d_i=n)}$ vary in the same direction with $n$ (Clinchant 2006). Under the exchangeability assumptions, one can write that:
 	
 	\begin{align*}
-	 b_n=\frac{\p(d_i=n+1)}{\p(d_i=n)} = \frac{\dbinom{N+1}{n+1} p(d_i^{N+1,n+1})}{\dbinom{N}{n} p(d_i^{N,n})}
+	 b_n=\frac{\p(d_i=n+1)}{\p(d_i=n)} = \frac{\dbinom{N}{n+1} p(d_i^{N,n+1})}{\dbinom{N}{n} p(d_i^{N,n})}
 	\end{align*}
-	This equation reflect the fact that $\p(d_i=n+1)$ state for a new observation in the underlying random structure $d_i^{N,n}$. Applying a product rule, we have that:
+ Applying a product rule, we have that:
 	
 	\begin{equation*}
-	b_n = \frac{N+1}{n+1} \p(y_{ij}=1 | d_i^{N,n})
+	b_n = \frac{N-n}{n+1} \p(y_{ij}=1 | d_i^{N,n})
 	\end{equation*}
 	
 	The differential is then equal to:
 	\begin{align*}
 	&\Delta_n b_n= b_{n+1} - b_n  \\
-	&= \frac{N+1}{n+2} \p(y_{ij}=1 | d_i^{N,n+1}) - \frac{N+1}{n+1} \p(y_{ij}=1 | d_i^{N,n})
+	&= \frac{N-n-1}{n+2} \p(y_{ij}=1 | d_i^{N,n+1}) - \frac{N-n}{n+1} \p(y_{ij}=1 | d_i^{N,n})
 	\end{align*}
 	
 	The burstiness properties is statisfied iff $\forall n \in \mathbb{N}$:
 	\begin{align*}
-	\Delta_nb_n > 0 \iff \frac{n+1}{n+2}\p(y_{ij}=1 | d_i^{N,n+1})  > \p(y_{ij}=1 | d_i^{N,n})
+	&\Delta_nb_n > 0 \iff \\
+	& \frac{(n+1)(N-n-1)}{(n+2)(N-n)}\p(y_{ij}=1 | d_i^{N,n+1})  > \p(y_{ij}=1 | d_i^{N,n})
 	\end{align*}
 	
-	The last equation show that the burstiness condition holds if $n >> 0$.
-	\textcolor{red}{Est ce qu'avec le passage au limite je ne perds pas l'inégalité strict de la definition ? (surement) donc ca renvoit à la note du haut concernant un borne...}
+	The study of the following series 
 
 \label{b-theorem}
 \end{proof}
@@ -88,19 +88,20 @@ We have:
 In IMMSB one can write the predictive distribution conditionned by $d_i^{N,n}$:
 
 \begin{equation} 
-p(y_{ij} = 1 | d_i^{N,n}, \mathcal{M}) = \int_{\Theta} p(y_{ij}=1|\Theta) \frac{p(d_i^{N,n} | \Theta)}{pd_i^{N,n}} p(\Theta) d\Theta \nonumber
+p(y_{ij} = 1 | d_i^{N,n}, \mathcal{M}) = \int_{\Theta} p(y_{ij}=1|\Theta) \frac{p(d_i^{N,n} | \Theta)}{p(d_i^{N,n})} p(\Theta) d\Theta \nonumber
 \end{equation}
 
-By only restraining the relations that occur inside class $c=\{k,k\}$, one can write the local preferential attachment:
+By only restraining the relations that occur inside class $c=\{k,k\}$, thus we note $N^c$ the total number of relations (links and non-links) in the class $c$ for node $i$, one can write the local preferential attachment:
 
 \begin{align*} \label{eq:sum}
 &p(y_{ij} = 1 | d_{ic}^{N,n}, \mathcal{M})  \\
 &=  \frac{ \int_{\phi_{c}} p(y_{ij}=1|\phi_{c}) p(d_{ic}^{N,n} | \phi_{c}) p(\phi_{c}) d\phi_{c}}{\int_{\phi_{c}} \p(d_{ic}^{N,n} | \phi_{c}))       p(\phi_{c}) d\phi_{c}}   \\
-&= \frac{ \text{beta}(n+1+\lambda_1, N-n+\lambda_0) }{\text{beta}(n+\lambda_1, N-n+\lambda_0)} \\
-&= \frac{n+\lambda_1}{N + \lambda_1 +\lambda_0}
+&= \frac{\int_{\phi_c} \phi_c^{n+1}(1-\phi_c)^{N^c-n} \phi_c^{\lambda_1-1} (1-\phi_c)^{\lambda_0-1} d\phi_{c}}{\int_{\phi_c} \phi_c^{n}(1-\phi_c)^{N^c-n} \phi_c^{\lambda_1-1} (1-\phi_c)^{\lambda_0-1} d\phi_{c}} \\
+&= \frac{ \text{B}(n+1+\lambda_1, N^c-n+\lambda_0) }{\text{B}(n+\lambda_1, N^c-n+\lambda_0)} \\
+&= \frac{n+\lambda_1}{N^c + \lambda_1 +\lambda_0}
 \end{align*}
 
-The last equation show that the predictive likelihood is strictly crescent with $n$.
+Where $\text{B}()$ is the beta function. The last equation show that the predictive likelihood is strictly crescent with $n$.
 
 
 \end{proof}
@@ -135,9 +136,9 @@ Especially, the Dirichlet Process and the Indian Buffet Process, as prior for th
 
 Where the $m_k^{-ik}$ described the number of elements that have the $k$-iem feature active except for element $i$, similarly $n_{ik}^{-z_{ij}}$ represents the number of times that $i$ was assigned to $k$ except for relation $(ij)$ (class membersehip are jointly sampled in MMSB).
 
-In figure \ref{fig:gen_burst_mmsb} we represent tree networks generated by ILFM and iMMSB. We compute a goodness of fit to quantify the power law hypothesis on the empirical degree distributions. The protocol is described in section \ref{sec:experiments}. As an empirical illustration for our claims on preferential attachment, we show a 3*3 figure where each columns is particular setting of hyper-parameter and the rows are respectively, the global degree distribution, the local degree distribution and feature distribution (on a max a assignment point of view).
+We represent tree networks generated by ILFM in figure \ref{fig:gen_burst_ilfm} and IMMSB \ref{fig:gen_burst_mmsb}. We compute a goodness of fit to quantify the power law hypothesis on the empirical degree distributions. The protocol is described in section \ref{sec:experiments-busrt}. As an empirical illustration for our claims on preferential attachment, we show a 3*3 figure where each columns is particular setting of hyper-parameter and the rows are respectively, the global degree distribution, the local degree distribution and feature distribution (on a max a assignment point of view).
 
-As we can see in the experiments, we can generate networks that do fit the burstiness definition on the overall degree distribution.
+As we can see in the experiments, we can generate networks that do not fit the burstiness definition on the overall degree distribution.
 
 \begin{figure}[h]
 	\centering

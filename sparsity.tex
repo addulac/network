@@ -7,7 +7,7 @@ The last property we study in this paper is the sparsity. Sparsity is the fact t
 %definition of exchangeability for networs first mention in this interesting paper: Modeling homophily and stochastic equivalence in symmetric relational data [Hoff]
 
 
-In the model the density for undirected networks of size $|V|=N$ is defined by the expectation of generating a link, which represent the average chance to observe a link. Hence this quantity is a $M_g$ settings:
+In the model the density for undirected networks of size $|V|=N$ is defined by the expectation of generating a link, which represent the average chance to observe a link. Hence this quantity is in the $M_g$ settings:
 %\begin{equation}
 %p(y_{ij}^{new}=1| |V|=N) =  \int_{\Theta} p(y_{ij}^{new}=1|\Theta) \frac{\sum_{n=0}^{\dbinom{N}{2}} p(d^N=n| \Theta)}{\int_{\Theta} \sum_{n=0}^{\dbinom{N}{2}} p(d^N=n | \Theta)) p(\Theta) d\Theta} p(\Theta) d\Theta
 %\end{equation}
@@ -20,7 +20,7 @@ In the model the density for undirected networks of size $|V|=N$ is defined by t
 %Here, one can see that from excheangeability we can take out the sum over graph from the integral on the parameters. The density take though a similar form than equation  \eqref{eq:sum}. We have then that $\Delta_N p(y_{ij}^{new}=1| |V|=N) >0 $.
 
 \begin{align}
-&p(y_{ij}^{new}=1| \mathcal{M}) = \int_{f_i} \int_{f_j} \int_{\Phi} p(f_i| \alpha ) p(f_j| \alpha)p(\Phi| \lambda) \\
+&p(y_{ij}^{new}=1| \mathcal{M}_g) = \int_{f_i} \int_{f_j} \int_{\Phi} p(f_i| \alpha ) p(f_j| \alpha)p(\Phi| \lambda) \\
 &\times \sum_{k<k'} p(y_{ij} \mid \phi_{kk'})\ p(k\mid f_i)p(k'\mid f_j)df_i df_j d\Phi \\
 &=  \sum_{k<k'} \int_{\Phi} \phi_{kk'} p(\Phi| \lambda) d\Phi \int_{f_i} f_{ik} p(f_i| \alpha )df_i \int_{f_j} f_{jk}  p(f_j| \alpha ) df_j \\
 &= \sum_{k<k'} \E[B(\lambda_1, \lambda_0)] \E[Dir(\mat{\alpha} )]_k \E[Dir(\mat{\alpha})]_{k'} \\
@@ -30,4 +30,4 @@ In the model the density for undirected networks of size $|V|=N$ is defined by t
 
 Thus the density is not dependent of $N$, and thus the number of edge grows with $N^2$ since its expectation is  $\dbinom{N}{2} \epsilon$.
 
-This result shows that the model generate dense networks because the model is misspecified. More precisely, this results generalize for all graph that have an assumption of echangeability. This strong result is a direct consequance of the theorem of Haldous-Houver \ ref{orbanz2015bayesian}. 
+This result shows that the model generate dense networks because the model is misspecified. More precisely, this results generalize for all graph that have an assumption of echangeability. This strong result is a direct consequance of the theorem of Haldous-Houver \ref{orbanz2015bayesian}. 

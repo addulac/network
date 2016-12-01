@@ -85,8 +85,8 @@ The non-parametric version parallels this development but considers, in lieu of 
     &\bm{\beta} \sim \gem(\gamma) \nonumber \\
     \mat{f}_i &\sim \DP(\alpha_0, \beta) \quad\text{ for }  i \in \{1, .., N\} \nonumber
    \end{align}
-where $\gem$ denotes the Griffiths, ??? distribution over the set of natural numbers and $\DP$ a Dirichlet Process  \cite{HDP}.
-\item Generate a weight matrix for each latent class:\\
+where $\gem$ denotes the Stick Breaking Process distribution over the set of natural numbers and $\DP$ a Dirichlet Process  \cite{HDP}.
+\item Generate a weight matrix for each latent class from i.i.d Beta distribution:\\
 \[ \phi_{mn} \sim \mathrm{Beta}(\lambda_0,\lambda_1), \, m,n \in \mathbb{N}^{+*} \]
 \item For any node $i$ and any node $j$, choose a class from their class membership distribution and generate or not a link according to:
    \begin{align}
@@ -116,7 +116,7 @@ The inference is this model can be performed via collapsed Gibbs sampling update
 %\end{enumerate}
 
 \subsection{Note on model notation}
-As mentioned before, we will consider two versions of this model. The first version corresponds to the typical use of the MMSB model: some observations are available and are used to estimate $\mat{F}$ and $\mat{\Phi}$. In the remainder, we denote by $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ their estimates, which are used to predict new links in the network according to:
+As mentioned before, we will consider two setup for the use of those models. The first setup corresponds to the typical use of for link prediction: some observations are available and are used to estimate $\mat{F}$ and $\mat{\Phi}$. In the remainder, we denote by $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ their estimates, which are used to predict new links in the network according to:
 %
 \begin{equation}
 \label{eq:link-me}
@@ -135,8 +135,8 @@ The second version is a purely generative version that solely relies on the hype
 
 \subsection{Note on model performance}
 
-Both ILFM and IMMSB are based on a latent representation of each node in the network (matrix $\mat{F}$) and a latent metric (matrix $\mat{\Theta}$). However, in the case of ILFM, this representation takes the form of a binary vector, whereas in IMMSB it is a vector of proportion. Interpreting the latent dimensions as characteristics or classes, one can view ILFM as performing a hard assignment on those classes whereas IMMSB performs a soft assignment. 
+Both ILFM and IMMSB are based on a latent representation of each node in the network (matrix $\mat{F}$) and a latent metric (matrix $\mat{\Phi}$). However, in the case of ILFM, this representation takes the form of a binary vector, whereas in IMMSB it is a vector of proportion. Interpreting the latent dimensions as characteristics or classes, one can view ILFM as performing a hard assignment whereas IMMSB performs a soft assignment. 
 
-ILFM was introduced as performing better than MMSB (parametric version). However, with MCMC inference strategy, ILFM has higher time complexity due to his non-conjugacy that imply a matrix product to compute the likelihood of the model. Furthermore, the complexity of iMMSB is still $O(E^2K^2)$ (against $O(E^4K)$ for ILFM with particular optimisation), which means that this inference scheme don't allow scalability of data. But this complexity can be alleviate to work with millions of nodes by using a inference strategy that rely on variational inference \cite{gopalan2013efficient}.\\
+ILFM was introduced as performing better than MMSB (parametric version). However, with MCMC inference strategy, ILFM has higher time complexity due to his non-conjugacy that imply a matrix product to compute the likelihood of the model. Furthermore, the complexity of IMMSB is still $O(E^2K^2)$ (against $O(E^4K)$ for ILFM with particular optimisation), which means that this inference scheme don't allow scalability of data. But this complexity can be alleviate to work with millions of nodes by using a inference strategy that rely on variational inference \cite{gopalan2013efficient}.\\
 
  We now turn to the two questions we asked, considering the homophily effect first.
