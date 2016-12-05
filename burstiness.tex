@@ -21,15 +21,15 @@ In the context of social networks, the notion of burstiness, or preferential att
 \begin{definition}[Burstiness in social networks]
 Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree. Furthermore, let $\mathcal{M} \in \{\M_e, \M_g\}$ be a link prediction model as defined in Section~\ref{sec:models}, and let $\Delta_n$ be the discrete differentiation on $n$: 
 \begin{description}
-\item[(i)] \emph{Global Preferential Attachment}: we say that $\mathcal{M}$ satisfies the global preferential attachement iff, for any node $j \in V$ not connected to $i$, we have:
+\item[(i)] \emph{Global Preferential Attachment}: we say that $\mathcal{M}$ satisfies the global preferential attachement iff, for any node $i \in V$, we have:
  \begin{equation}
  \Delta_n \pr(d_i \geq n+1 | d_i \geq n,  \M) > 0
  \end{equation}
-\item[(ii)] \emph{Local Preferential Attachment}: we say that $\mathcal{M}$ satisfies the local preferential attachement iff, for any node $j \in V$ not connected to $i$ and belonging to the same community as $i$, we have:
+\item[(ii)] \emph{Local Preferential Attachment}: we say that $\mathcal{M}$ satisfies the local preferential attachement iff, for any node $i \in V$ and belonging to a community  $c$, we have:
   \begin{equation}
  \Delta_n \pr(d_{i,c} \geq n+1 | d_{i,c} \geq n,  \M) > 0
  \end{equation}
-  Where $d_{i,c}$ denotes the degree of node $i$ in its community.
+  Where $d_{i,c}$ denotes the degree of node $i$ in its community. \textcolor{red}{communities still ambigious since we do not define it (moreover, we are in a context of soft clusteriong where node can belongd to several classes...)) }
 \item[(iii)] \emph{Feature Burstiness}: we say that $\mathcal{M}$ satisfies the feature burstiness effect, iff, for any feature $k$ in the network,   
   \begin{equation}
 	\Delta_n \pr(f_{\bm{.}k} \geq n+1 | f_{\bm{.}k} \geq n,  \M) > 0
@@ -39,19 +39,19 @@ Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree
 \label{def:burst-soc-net}
 \end{definition}
 %
-Those definitions defines a burstiness property at different level of the networks always capturing the idea that the more an object (ie a link, or a feature) is observed in a the network, the more likely it will be observed again. Nevertheless, the definition of the burstiness involving an inequalities is not easy to handle in general. Thus we study in the following, a way to formulate it in a more analytic convenient form. Let us first define an appropriate random structure for exchangeable networks.
+The definitions of the different properties based on the burstiness involves inequalities whom are not easy to handle in general. Thus, we study in the following a way to formulate it in a more analytic and convenient form. Let us first define an appropriate random structure for exchangeable networks.
 
 \begin{definition}
-	Let $n$ and $N$ be two natural integer such that $N>\geq n$. We define the random structure $x^{N,n}$ as a set of $N$ binary value having $n$ elements such that $\sum_{i=0}^N P(x^{N,i}) = 1$
+	Let $n$ and $N$ be two natural integer such that $N \geq n$. We define the random structure $x^{N,n}$ as a set of $N$ binary value having $n$ elements active (equal to one) and such that $\sum_{i=0}^N P(x^{N,i}) = 1$
 	\label{def:rd_struct}
 \end{definition}
 
-This definition enables the link between the random variable $n$ being a integer (a node degree for example) and the structure that is homogeneous to a row/column in a adjacency matrix that contains in some way this integer.
+This definition enables the link between the random variable $n$ being a integer (a node degree for example) and the structure that is homogeneous to a row (or a column) in a adjacency matrix that contains in some way this integer.
 
-\begin{theorem} \label{th:burst_exch}
+\begin{theorem}[Burstiness to Global Preferential Attachment] \label{th:burst_exch}
 	 A degree distribution $p(d_i=n)$ of any node $i$ in a jointly exchangeable graph $G(V,E)$ is bursty iff :
 	\begin{equation}
-	 \frac{(n+1)(N-n-1)}{(n+2)(N-n)}\p(y_{ij}=1 | d_i^{N,n+1})  > \p(y_{ij}=1 | d_i^{N,n})
+	 \Delta_n  p(y_{ij}=1 | d_i^{N,n}) \frac{N-n}{n+1} > 0
 	\end{equation}
 
 \end{theorem}
@@ -84,7 +84,7 @@ This definition enables the link between the random variable $n$ being a integer
 	& \frac{(n+1)(N-n-1)}{(n+2)(N-n)}\p(y_{ij}=1 | d_i^{N,n+1})  > \p(y_{ij}=1 | d_i^{N,n})
 	\end{align*}
 	
-	The study of the series forming the left hand part of last equation gives hint about how and when the the distribution $p$ would be bursty depending on the predictive distribution of one observation in the data. Particulary this series is less than one with a maxima at $(N-2)/2$ and is symmetric around this extrema for $N \in [0, N-2]$. We represent the series in figuure \ref{fig:bp}.
+	The study of the series forming the left hand part of last equation gives hint about how and when the distribution $p$ would be bursty depending on the predictive distribution of one observation in the data. Particulary this series is less than one with a maxima at $(N-2)/2$ and is symmetric around this extrema for $N \in [0, N-2]$. We represent the series in figure \ref{fig:bp}.
 	
 	
 	\begin{figure}[h]
@@ -100,6 +100,19 @@ This definition enables the link between the random variable $n$ being a integer
 Interestingly this theorem tell us how the burstiness effect, for exchangeable sequence with finite capacity $N$, will collapse for a small number of observation and notably, when the number of observations get closer to the capacity.\\
 
 A typical form of the predictive distribution $\p(y_{ij}=1 | d_i^{N,n})$ is a linear function of the sufficient statistics of the observations (see \ref{prop:diaconis}). Though the burstiness effect would have specific constraint in this case.
+
+\begin{theorem}[Burstiness to Local Preferential Attachment] \label{th:burst_exch}
+	Let $N^c$ and $N^r$ be two integer such that the the former is the number of node in a class $c$, and the second the number of node not being in $c$, such that $N^c+N^r = N$. A local degree distribution $p(d_{i,c}=n)$ of any node $i$ in $c$ in a jointly exchangeable graph $G(V,E)$ is bursty iif,
+	
+	\begin{equation}
+\Delta_n  p(y_{ij}=1 | d_{i,c}^{N,n}) \frac{\sum_{r=0}^{N_r}\dbinom{N}{n+1+r} p(d_{ir}^{N^r,r})}{\sum_{r=0}^{N_r} \dbinom{N}{n+r} p(d_{ir}^{N^r,r}) } > 0
+	\end{equation}
+	
+\end{theorem}
+
+\textcolor{red}{proof: to complete. \\
+	Corollaire: avec une contrainte sur Nc et Nr, il suffit de regarder la croissance de la distribution predictive}
+
 
 %\begin{corollary}
 %	A degree distribution  $p(d_i=n)$ of any node $i$ in a jointly exchangeable graph $G(V,E)$ such that it admits a predictive distribution of the form $\p(y_{ij}=1 | d_i^{N,n}) = an+b$, is bursty iff:
@@ -117,7 +130,7 @@ We now apply the previous results to characterize the preferential attachments e
 
 \begin{proof}
 We have:
-In IMMSB one can write the predictive distribution conditionned by $d_i^{N,n}$:
+In IMMSB one can write the predictive distribution conditioned by $d_i^{N,n}$:
 
 \begin{equation} 
 p(y_{ij} = 1 | d_i^{N,n}, \mathcal{M}) = \int_{\Theta} p(y_{ij}=1|\Theta) \frac{p(d_i^{N,n} | \Theta)}{p(d_i^{N,n})} p(\Theta) d\Theta \nonumber
@@ -152,7 +165,7 @@ Where $\text{B}()$ is the beta function. The last equation show that the predict
 The proof of this statement is trivially true in the sens that given $\mat{F}$ and $\mat{\Theta}$, the link likelihood is fully determined and hence do not depend on new links being generated. Furthermore, we show empirical counter example, where figure \ref{fig:gen_burst_mmsb} show some complex pattern in the empirical distribution of the overall degree that are clearly non bursty.
 
 \begin{proposition} \label{prop:diaconis}
-	Both ILFM and IMMSB models satisfy the feature burstiness for $n < L$ under some conditions on their hyperparameters  and $L$ a number of observation depending of hyperparameters.
+	Both ILFM and IMMSB models satisfy the feature burstiness for $n < L$ under some conditions on their hyperparameters  and $L$ a number of observation depending of the hyperparameters.
 \end{proposition}
 
 \begin{proof}
@@ -171,7 +184,7 @@ Where the $m_k^{-ik}$ described the number of elements that have the $k$-iem fea
 
 By applying theorem \ref{th:burst_exch} for linear predictive distribution, it can be easily show that the burstiness is true below a number $L$ which is the positive roots of the following polynoms:
 \begin{equation}
-	 an^2 + 3an + a + b + N(b-a) = 0
+	 an^2 + 3an - a(N-1) + b(N+1) = 0
 \end{equation}
 
 The condition on the hyperparameters $a$ and $b$ arise in order to find a stricly positive roots of this polynom. In the case of ILFM and IMMSB, it is equivalent to solve the polynom whith a=1 and  $b=0$ or $b=\alpha_k$ for respectively ILFM and IMMSB. The positive roots arise in this case if $b < 1$, which determines $L$.
