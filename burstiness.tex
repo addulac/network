@@ -56,7 +56,7 @@ This definition enables the link between the random variable $n$ being a integer
 
 \end{theorem}
 
-\begin{proof}
+\begin{proof} 	\label{proof:glob}
 	First we recall that for a jointly exchangeable graph, we have that:
 	\begin{equation*}
 	\p(y_{ij}: (i,j) \in V^2) = \p(y_{\sigma(i)\sigma(j)}: (i,j) \in V^2)
@@ -102,24 +102,47 @@ Interestingly this theorem tell us how the burstiness effect, for exchangeable s
 A typical form of the predictive distribution $\p(y_{ij}=1 | d_i^{N,n})$ is a linear function of the sufficient statistics of the observations (see \ref{prop:diaconis}). Though the burstiness effect would have specific constraint in this case.
 
 \begin{theorem}[Burstiness to Local Preferential Attachment] \label{th:burst_exch}
-	Let $N^c$ and $N^r$ be two integer such that the the former is the number of node in a class $c$, and the second the number of node not being in $c$, such that $N^c+N^r = N$. A local degree distribution $p(d_{i,c}=n)$ of any node $i$ in $c$ in a jointly exchangeable graph $G(V,E)$ is bursty iif,
+	Let $\M_g$ be a network model of a jointly exchangeable graph $G(V,E)$ such that $f_i$ and $\phi_{kk'}$ are iid for any $i$, $k$ and $k'$.Moreover,  Let $N^c$ and $N^r$ be two integer such that the the former is the number of node in a class $c$, and the second the number of node not being in $c$, such that $N^c+N^r = N$. A local degree distribution $p(d_{i,c}=n)$ of any node $i$ in $c$ is bursty iif,
 	
 	\begin{equation}
 \Delta_n  p(y_{ij}=1 | d_{i,c}^{N,n}) \frac{\sum_{r=0}^{N_r}\dbinom{N}{n+1+r} p(d_{ir}^{N^r,r})}{\sum_{r=0}^{N_r} \dbinom{N}{n+r} p(d_{ir}^{N^r,r}) } > 0
 	\end{equation}
 	
+	
 \end{theorem}
 
-\textcolor{red}{proof: to complete. \\
-	Corollaire: avec une contrainte sur Nc et Nr, il suffit de regarder la croissance de la distribution predictive}
+\begin{proof}
+The exchangeable graph $G(V,E)$ contains $|V|=N$ nodes. Thus in the context of the local preferential attachment we consider the degree of a node $i$, in a class $c$ containing $N_c$ nodes and we denote the degree of this node within this class by $d_{i,c}$. We note the remaining number of node by $N_r = N - N_c$. We then write  distribution of the degree inside that class by marginalizing the possible edges between $i$ and the nodes that are not in $c$. We have:
+\begin{equation}
+p(d_{ic}=n) = \sum_{r=0}^{N_r} p(d_{ic}=n,d_{ir}=r)
+\end{equation}
+From exchangeable assumptions one as:
+
+\begin{equation}
+p(d_{ic}=n) = \sum_{r=0}^{N_r} \dbinom{N}{n+r} p(d_{ic}^{N_c, n},d_{ir}^{N_r, r})
+\end{equation}
+Under the assumptions that each local random parameters are i.i.d, we can seperate the joint distribution: ( \textcolor{red}{on peut ouvrir la distribution avec les F et les Phi, pour voir que ca marche pour IMMSB mais pas pour ILFM, je me garde de l'écrire la pour gagner du temps !)}: 
+
+\begin{align}
+p(d_{ic}=n) &= \sum_{r=0}^{N_r} \dbinom{N}{n+r} p(d_{ic}^{N_c, n}) p(d_{ir}^{N_r, r}) \\
+ &=  p(d_{ic}^{N_c, n})\sum_{r=0}^{N_r}   \dbinom{N}{n+r} p(d_{ir}^{N_r, r})
+\end{align}
+
+Finally by applying the burstiness properties as in proof \ref{proof:glob}, and product rule we can expess the burstiness in function of the predictive distribution:
+
+\begin{equation}
+b_n =  p(y_{ij}=1 | d_{i,c}^{N,n}) \frac{\sum_{r=0}^{N_r}\dbinom{N}{n+1+r} p(d_{ir}^{N^r,r})}{\sum_{r=0}^{N_r} \dbinom{N}{n+r} p(d_{ir}^{N^r,r}) }
+\end{equation}
+
+\end{proof}
+
+\textcolor{red}{Corollaire:  avec une contrainte sur Nc et Nr, il suffit de regarder la croissance de la distribution predictive, je l'ai vue en tracant la fraction, mais je n'ai pas réussi à le prouver analytiquement ...}
 
 
 %\begin{corollary}
 %	A degree distribution  $p(d_i=n)$ of any node $i$ in a jointly exchangeable graph $G(V,E)$ such that it admits a predictive distribution of the form $\p(y_{ij}=1 | d_i^{N,n}) = an+b$, is bursty iff:
 %Polynome solution, constraint on the positive roots, a, b > ...
 %\end{corollary}
-
-
 
 We now apply the previous results to characterize the preferential attachments effect in social networks.
 
@@ -147,7 +170,6 @@ By only restraining the relations that occur inside class $c=\{k,k\}$, thus we n
 \end{align*}
 
 Where $\text{B}()$ is the beta function. The last equation show that the predictive likelihood is strictly crescent with $n$.
-
 
 \end{proof}
 
