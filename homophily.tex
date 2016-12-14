@@ -15,10 +15,10 @@ A definition of homophily has been proposed in~\cite{la2010randomization}. Howev
 s(i,j) > s(i',j')  \implies \pr(y_{ij}=1 \mid \mathcal{M}) > \pr(y_{i'j'}=1  \mid \mathcal{M}) \nonumber
 \end{equation}
 %
-A model which verifies this condition is said to be \emph{homophilic} under the simylarity $s$.
+A model which verifies this condition is said to be \emph{homophilic} under the similarity $s$.
 \end{definition}
 %
-As one can note, this definition directly captures the effect "if two nodes are more similar, then they are more likely to be connected". The similarity function assesses to which extent two nodes share the same latent characteristics. In the case of $\mathcal{M}_e$, these characteristics are captured in the latent features $\mat{F}$ as the model implicitly tries to relate through $\mat{F}$ nodes that are connected in the observations. In the case of $\mathcal{M}_g$ however, there is no mechanism to define latent characteristics as $\mat{F}$ is solely defined from probability distributions that say nothing about possible shared characteristics of nodes. There is thus no sense in this case to talk about homophily. For this reason, we focus only on $\mathcal{M}_e$ for homophily. 
+As one can note, this definition directly captures the effect "if two nodes are more similar, then they are more likely to be connected The similarity function assesses to which extent two nodes share the same latent characteristics. In the case of $\mathcal{M}_e$, these characteristics are captured in the latent features $\mat{F}$ as the model implicitly tries to relate through $\mat{F}$ nodes that are connected in the observations. In the case of $\mathcal{M}_g$ however, there is no mechanism to define latent characteristics as $\mat{F}$ is solely defined from probability distributions that say nothing about possible shared characteristics of nodes. There is thus no sense in this case to talk about homophily. For this reason, we focus only on $\mathcal{M}_e$ for homophily. 
 
 The estimated matrix $\mat{\hat{F}}$ captures some latent characteristics of the nodes, whereas the estimated matrix $\mat{\hat{\Phi}}$ captures the correlations between these latent characteristics. One can thus define, on their basis, a "natural" similarity between nodes as follows:
 %
@@ -95,7 +95,7 @@ In figure \ref{fig:gen_blocks}, we show a clustering result from IMMSB based on 
 	\minipage{0.16\textwidth}
 	\includegraphics[width=3.5cm, height=4cm]{img/M_g_regular/graph_dot}
 	\endminipage
-	\caption{Tree examples of generated network in different setting of IMMSB. We reorder the adjacency matrix (white dot are links, block dot are non-link) in th upper figure, and plot their associated bockmodel structure in the lower part. The block structure is represented in the lower plots where we represent inter-block and intra-block connection by respectively edges ans self-loop.  }
+	\caption{Tree examples of generated network in different setting of IMMSB. We reorder the adjacency matrix (white dot are links, block dot are non-link) in th upper figure, and plot their associated bock model structure in the lower part. The block structure is represented in the lower plots where we represent inter-block and intra-block connection by respectively edges ans self-loop.  }
 	\label{fig:gen_blocks}
 \end{figure}
 
