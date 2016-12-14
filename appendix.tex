@@ -72,8 +72,8 @@ Where $s(n,m)$ is the unsigned Stirling number of the first kind.
 ~\\
 Finally, when the markov chain reach the stationnary distribution, the models parameters $\M = \{\mat{\Phi}, \mat{F}\}$ can be recovered by averaging the topics assignement counts for each membership and each relation:
 \begin{align}
-&\pr(f_{ik}) =\frac{ N_{ik} + \alpha\beta_k}{ N_{i\bm{.}} + \sum_k\alpha_k }\\
-&\pr(\phi_c ) = \frac{M_{c1} + \lambda_1}{M_{c\bm{.}} + \lambda_0 + \lambda_1}
+&\hat f_{ik} =\frac{ N_{ik} + \alpha\beta_k}{ N + \sum_k\alpha_k }\\
+&\hat \phi_c  = \frac{M_{c1} + \lambda_1}{M_{c\bm{.}} + \lambda_0 + \lambda_1}
 \end{align}
 
 

@@ -16,7 +16,7 @@ Where $\ell$ is a loss function and $\cal R$ a regularization term.
 
 Comparatively, in probabilistic modeling, the learning problem is to find the posterior distribution $\p(\Theta | Y)$. The exchangeable assumptions means that the order in which we observe nodes does not matter. It implies that the joint likelihood of data has a factorial distribution such as $\p(Y | \Theta) = \prod_{(i,j) \in Y} \p(y_{ij}| \Theta)$. In this settings, the natural criterion to optimize relate to a Maximum a Posteriori (MAP) estimate: 
 \begin{displaymath}
-    \max\limits_{\Theta}  \frac{\p(Y | \Theta) \p(\Theta)}{\p(Y)}
+    \mathrm{arg}\max\limits_{\Theta}  \frac{\p(Y | \Theta) \p(\Theta)}{\p(Y)}
 \end{displaymath}
 
 Furthermore, using the Jensen inequality and exchangeability assumption, we can show:
