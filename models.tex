@@ -2,7 +2,7 @@
 %\emph{Yet another view} ~\\
 \label{sec:models}
 
-As mentioned before, we focus in this study on two major representatives of the latent models used for link prediction in social networks, namely the latent feature model \cite{BMF} and the mixed-membership stochastic block model \cite{MMSB}. To be as general as possible, we consider non-parametric extensions of these models, respectively based on the Indian Buffet Process (IBP) and the Hierarchical Dirichlet Process (HDP). Similar extensions have already been considered in the past, {\it e.g.} through the Infinite Latent Feature model \cite{ILFRM} and through conditional random fields \cite{iMMSB} or a dynamic version of the Hierarchical Dirichlet Process \cite{diMMSB}.
+As mentioned before, we focus in this study on two major representatives of the latent models used for link prediction in social networks, namely the latent feature model \cite{BMF} and the mixed-membership stochastic block model \cite{MMSB}. To be as general as possible, we consider non-parametric extensions of these models, ILFM and IMMSB respectively based on the Indian Buffet Process (IBP) and the Hierarchical Dirichlet Process (HDP). Similar extensions have already been considered in the past, {\it e.g.} through the Infinite Latent Feature model \cite{ILFRM} and through conditional random fields \cite{iMMSB} or a dynamic version of the Hierarchical Dirichlet Process \cite{diMMSB}.
 %\textcolor{red}{To be completed - maybe second extension not considered yet}
 
 We now briefly describe the two models retained.
@@ -12,7 +12,7 @@ We now briefly describe the two models retained.
 
 \subsection{Infinite Latent Feature Model (ILFM)}
 
-In the latent feature model, each node is represented by a vector of binary features. The probability of linking two nodes is then based on a weighted similarity between their feature vectors, the weight matrix being generated according to a normal distribution. In its non-parametric version, the feature vectors are now generated according to an IBP, leading feature vectors of infinite dimensions (even though only a finite number of dimensions are actually active). The following steps summarizes this process:
+In the latent feature model, each node is represented by a finite vector of binary features. The probability of linking two nodes is then based on a weighted similarity between their feature vectors, the weight matrix being generated according to a normal distribution. In its non-parametric version, the feature vectors are now generated according to an IBP, leading to feature vectors of infinite dimensions (even though only a finite number of dimensions is actually active). The following steps summarize this process:
 %
 \begin{enumerate}
 \item Generate a feature matrix $\mat{F}_{N \times \infty}$ representing the feature vector of each node: $\mat{F} \sim \IBP(\alpha)$
@@ -26,9 +26,9 @@ y_{ij} \sim \mathrm{Bern}(\sigma(\mat{f}_{i} \mat{\Phi} \mat{f}_{j}^\top))
 \end{equation}
 \end{enumerate}
 %
-where $\sigma()$ is the sigmoid function, mapping $[-\infty, +\infty]$ values to [0,1], and where $y_{ij}$ is a binary variable indicating that a link has been generated ($y_{ij}=1$) or not ($y_{ij}=0$). We will denote by $\mat{Y}$ the $N \times N$ matrix with elements $y_{ij}$. Finally, $\mat{f}_{i}$ denotes the row vector corresponding to the $i^{th}$ row of $\mat{F}$.
+where $\sigma()$ is the sigmoid function, mapping $[-\infty, +\infty]$ values to [0,1], and where $y_{ij}$ is a binary variable indicating that a link has been generated ($y_{ij}=1$) or not ($y_{ij}=0$). We will denote by $\mat{Y}$ the $N \times N$ matrix with elements $y_{ij}$. Finally, $\mat{f}_{i}$ denotes the row feature vector corresponding to the $i^{th}$ row of $\mat{F}$.
 
-This model makes use of two real hyper-parameters, one for the IBP process ($\alpha$), and one for the variance of the normal distribution underlying the weight matrix ($\sigma_w$). In the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated. Lastly, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. In practice however, one always deal with a finite number of latent features. A graphical representation of this model is given in Figure~\ref{fig:ilfrm}.
+This model makes use of two real hyper-parameters, one for the IBP process ($\alpha$), and one for the variance of the normal distribution underlying the weight matrix ($\sigma_w$). In the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated. Lastly, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. In practice however, one always deal with a finite number of latent features. A graphical representation of this model is given in Figure~\ref{fig:ilfrm} (left).
 
 \begin{figure}[t]
 	\centering
@@ -77,7 +77,7 @@ Standard Gibbs sampling and Metropolis-Hastings algorithms can be used for infer
 
 The MMSB model generates class membership distributions per node on the basis of a Dirichlet distribution. Then, for each connection between two nodes, a particular class for each node is first sampled from the class membership distribution, and the probability of connecting the two nodes is, as in the previous model, based on a Bernoulli distribution integrating the weight of the two classes. 
 
-The non-parametric version parallels this development but considers, in lieu of the Dirichlet distribution, a hierarchical Dirichlet process, leading to the following generative model:
+The non-parametric version IMMSB parallels this development but considers, in lieu of the Dirichlet distribution, a hierarchical Dirichlet process, leading to the following generative model:
 %
 \begin{enumerate}
 \item Generate the class membership matrix $\mat{F}_{N \times \infty}$:
@@ -88,7 +88,7 @@ The non-parametric version parallels this development but considers, in lieu of 
 where $\gem$ denotes the Stick Breaking Process distribution over the set of natural numbers and $\DP$ a Dirichlet Process  \cite{HDP}.
 \item Generate a weight matrix for each latent class from i.i.d Beta distribution:\\
 \[ \phi_{mn} \sim \mathrm{Beta}(\lambda_0,\lambda_1), \, m,n \in \mathbb{N}^{+*} \]
-\item For any node $i$ and any node $j$, choose a class from their class membership distribution and generate or not a link according to:
+\item For any node $i$ and any node $j$, choose a class from their class membership distribution according to a Categorical distribution and generate or not a link according to a Bernoulli distribution:
    \begin{align}
     z_{i \rightarrow j} &\sim \mbox{Cat}(\mat{f}_i) \nonumber \\
     z_{i \leftarrow j} &\sim \mbox{Cat}(\mat{f}_j) \nonumber \\
@@ -97,9 +97,9 @@ where $\gem$ denotes the Stick Breaking Process distribution over the set of nat
    \end{align}
 \end{enumerate}
 %
-We have this time four real hyper-parameters, two for the hierarchical Dirichlet process ($\gamma$ and $\alpha_0$) and two for the Beta distribution underlying the weight matrix ($\lambda_0$ and $\lambda_1$). As for the previous model, in the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated; as before again, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. A graphical representation of this model is given in Figure~\ref{fig:ilfrm}.
+We have this time four real hyper-parameters, two for the hierarchical Dirichlet process ($\gamma$ and $\alpha_0$) and two for the Beta distribution underlying the weight matrix ($\lambda_0$ and $\lambda_1$). As for the previous model, in the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated; as before again, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. A graphical representation of this model is given in Figure~\ref{fig:ilfrm}(right).
 
-The inference is this model can be performed via collapsed Gibbs sampling updates. Most updates can be found in \cite{HDP} and \cite{diMMSB}. For completeness, we provide them in Appendix~\ref{sec:append}.
+The inference for this model can be performed via collapsed Gibbs sampling updates. Most updates can be found in \cite{HDP} and \cite{diMMSB}. For completeness, we provide them in Appendix~\ref{sec:append}.
 %%
 %\begin{enumerate}
 %\item If the class $k$ has already been observed:
@@ -116,16 +116,16 @@ The inference is this model can be performed via collapsed Gibbs sampling update
 %\end{enumerate}
 
 \subsection{Note on model notation}
-As mentioned before, we will consider two setup for the use of those models. The first setup corresponds to the typical use of for link prediction: some observations are available and are used to estimate $\mat{F}$ and $\mat{\Phi}$. In the remainder, we denote by $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ their estimates, which are used to predict new links in the network according to:
+As mentioned before, we will consider two setups for the use of those models. The first setup corresponds to the typical use for link prediction: some observations are available and are used to estimate $\mat{F}$ and $\mat{\Phi}$. In the remainder, we denote by $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ their estimates, which are used to predict new links in the network according to:
 %
 \begin{equation}
 \label{eq:link-me}
 \pr(y_{ij}=1|\mat{\hat{F}},\mat{\hat{\Phi}}) =  \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top
 \end{equation}
 %
-where $^\top$ denotes the transpose. We will refer to the model corresponding to this setting as $\mathcal{M}_e = \{\mat{\hat{F}},\mat{\hat{\Phi}}\}$). Note that the number of nodes $N$ is fixed and corresponds to the number of nodes present in the observation.
+where $^\top$ denotes the transpose. We will refer to the model corresponding to this setting as $\mathcal{M}_e = \{\mat{\hat{F}},\mat{\hat{\Phi}}\}$). Note that the number of nodes $N$ is fixed and corresponds to the number of nodes present in the observations.
 
-The second version is a purely generative version that solely relies on the hyper-parameters to generate networks with a given number of nodes $N$. We will refer to  the model corresponding to this setting as $\mathcal{M}_g = \{\mathcal H\}$ the set of hyperparameter for a given model. The probability of generating a link between  two nodes $i$ and $j$ is given by:
+The second version is a purely generative version that solely relies on the hyper-parameters to generate networks with a given number of nodes $N$. The model corresponding to this setting will be denoted$\mathcal{M}_g = \{\mathcal H\}$, where $\mathcal H$ is \the set of hyperparameters for a given model. The probability of generating a link between  two nodes $i$ and $j$ is given by:
 %
 
 \begin{equation}
@@ -135,8 +135,8 @@ The second version is a purely generative version that solely relies on the hype
 
 \subsection{Note on model performance}
 
-Both ILFM and IMMSB are based on a latent representation of each node in the network (matrix $\mat{F}$) and a latent metric (matrix $\mat{\Phi}$). However, in the case of ILFM, this representation takes the form of a binary vector, whereas in IMMSB it is a vector of proportion. Interpreting the latent dimensions as characteristics or classes, one can view ILFM as performing a hard assignment whereas IMMSB performs a soft assignment. 
+Both ILFM and IMMSB are based on a latent representation of each node in the network (matrix $\mat{F}$) and a latent metric (matrix $\mat{\Phi}$). However, in the case of ILFM, this representation takes the form of a binary vector, whereas in IMMSB it is a vector of proportion. Interpreting the latent feature dimensions as characteristics or classes, one can view ILFM as performing a hard assignment whereas IMMSB performs a soft assignment. 
 
-ILFM was introduced as performing better than MMSB (parametric version). However, with MCMC inference strategy, ILFM has higher time complexity due to his non-conjugacy that imply a matrix product to compute the likelihood of the model. Furthermore, the complexity of IMMSB is still $O(E^2K^2)$ (against $O(E^4K)$ for ILFM with particular optimisation), which means that this inference scheme don't allow scalability of data. But this complexity can be alleviate to work with millions of nodes by using a inference strategy that rely on variational inference \cite{gopalan2013efficient}.\\
+ILFM was introduced as performing better than MMSB (parametric version). However, with MCMC inference strategy, ILFM has higher time complexity due to its non-conjugacy that requires a matrix product to compute the likelihood of the model. Furthermore, the complexity of IMMSB is still $O(E^2K^2)$ (against $O(E^4K)$ for ILFM with particular optimization), which means that this inference scheme  does not allow to handle large size data. However, this complexity limit can be overcome  to work with millions of nodes by using a inference strategy that relies on variational inference \cite{gopalan2013efficient}.\\
 
  We now turn to the two questions we asked, considering the homophily effect first.

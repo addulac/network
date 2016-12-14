@@ -1,22 +1,22 @@
 \section{Latent Representation}
 \label{sec:background}
-Without loss of generality, we focus on social networks with binary relationships. A network with $N$ nodes is a graph $G = (V,E)$, where $V$ is a set of nodes (typically representing entities) and $E \in V \times V$ is a set of edges between nodes (typically representing relationships between pairs of entities).The topology of the network is described by the presence or absence of links between nodes in the graph, and can be represented by an adjacency matrix $Y \in \{0,1\}^{N\times N}$.\\
+A network can be described by a graph $G = (V,E)$, where $V$ is a set of $N$ nodes (typically representing entities) and $E \in V \times V$ is a set of edges between nodes (typically representing relationships between pairs of entities). In the following work we focus on social networks with binary relationships. Thus, the topology of the network is described by the presence or absence of links between nodes in the graph, and can be represented by an adjacency matrix $Y \in \{0,1\}^{N\times N}$.\\
 
-For the link prediction problem in social networks, there is two main approach found in the machine learning literrature. One based on matrix factorization \cite{menon2011link} and the other based on probabilistic models \cite{goldenberg2010survey}. While the former approach often lead to optimization algorithms that scale better, the second offer a richer expressivness and data explanation power, it is worth to say that, as for PLSA method, it is always possible to normalize matrices to view the factorization problem as a a probabilistic model. But a deeper relation exists which highlight similarities and differences between both representations. It is due the the assumptions of exchangeability that we make on data, that is implicit for matrix factorization models, that we expose now.\\
+To handle the link prediction problem in social networks, there are two main approaches in the machine learning literature, one based on matrix factorization \cite{menon2011link} and the other based on probabilistic models \cite{goldenberg2010survey}. While the first approach often lead to optimization algorithms that scale better, the second one offers a richer expressiveness and data explanation power.  One can noticed that, as for PLSA method, it is always possible to normalize matrices to view the factorization problem as a probabilistic model but, a deeper relation exists which highlight similarities and differences between both representations. That is due to to the assumptions of exchangeability made on the data, that are implicit for matrix factorization models and that we expose now.\\
 
-Let's consider the parameters of a link prediction model consisting of a tuple $\Theta = \{ \mat{F} , \mat{\Phi}\}$ such as $\mat{F} \in \mathcal{F}^{N\times K}$ is a matrix representing the latent features of nodes and $\mat{\Phi} \in \mathcal{W}^{K\times K}$ a matrix of weight interactions such that each feaure vector $(\mat{f}_i)_{i=1}^N$ are i.i.d and each weight $\phi_{kk'}$ for $(k,k') \in K\times K$ are also i.i.d \footnote{Note that the features iid assumptions doesn't hold for IBP based model, but the exchangeability still holds as mentioned here \ref{orbanz2015bayesian}}. The Haldous-Hoover theorem \cite{orbanz2015bayesian} tell us that under such assumptions, that likelihood of links in a network are conditionally i.i.d given $\Theta$, and more precisely we have $\p(y_{ij}|\Theta) = \mat{f}_i \Phi \mat{f}_j^T$.
+Let's consider the parameters of a link prediction model consisting of a tuple $\Theta = \{ \mat{F} , \mat{\Phi}\}$ such as $\mat{F} \in \mathcal{F}^{N\times K}$ is a matrix representing the latent features of nodes and $\mat{\Phi} \in \mathcal{W}^{K\times K}$ a matrix of weight interactions such that the feaure vectors $(\mat{f}_i)_{i=1}^N$ are i.i.d and the weights $\phi_{kk'}$ for $(k,k') \in K\times K$ are also i.i.d \footnote{Note that the features iid assumptions do not hold for Indian Buffet Process (IBP) based model, but the exchangeability still hold as mentioned in \ref{orbanz2015bayesian}}. The Haldous-Hoover theorem \cite{orbanz2015bayesian} tell us that under such assumptions, that likelihood of links in the network are conditionally i.i.d given $\Theta$, and more precisely we have $\p(y_{ij}|\Theta) = \mat{f}_i \Phi \mat{f}_j^T$.
 
 The learning problem consist in finding the best model parameters given some criterion to reconstruct the data such as $\p(Y) \approx \mat{F}\mat{\Phi}\mat{F}^T$. 
 
-In matrix factorization, we optimize the following criterion which relate to an empirical error minimization estimate:
+In matrix factorization, we optimize the following criterion which is related to an empirical error minimization estimate:
 \begin{displaymath}
-    \min\limits_{\Theta} \frac{1}{|Y|} \sum_{(i,j) \in Y} \ell(y_{ij}, \hat y_{ij}(\Theta)) + \mathcal{R}(\Theta)
+    \mathrm{arg}\max\limits_{\Theta} \frac{1}{|Y|} \sum_{(i,j) \in Y} \ell(y_{ij}, \hat y_{ij}(\Theta)) + \mathcal{R}(\Theta)
 \end{displaymath}
-Where $\ell$ is a loss function and $\cal R$ a regularization term.
+where $\ell$ is a loss function and $\cal R$ a regularization term.
 
-Comparatively, in probabilistic modeling, the learning problem is to find the posterior distribution $\p(\Theta | Y)$. The exchangeable assumptions means that the order in which we observe nodes does not matter. It implies that the joint likelihood of data has a factorial distribution such as $\p(Y | \Theta) = \prod_{(i,j) \in Y} \p(y_{ij}| \Theta)$. In this settings, the natural criterion to optimize relate to a Maximum a Posteriori (MAP) estimate: 
+Comparatively, in probabilistic modeling, the learning problem is to find the posterior distribution $\p(\Theta | Y)$. The exchangeable assumptions mean that the order in which we observe nodes does not matter. It implies that the joint likelihood of data has a factorial distribution such as $\p(Y | \Theta) = \prod_{(i,j) \in Y} \p(y_{ij}| \Theta)$. In this setting, the natural criterion to optimize is related to a Maximum a Posteriori (MAP) estimate: 
 \begin{displaymath}
-    \mathrm{arg}\max\limits_{\Theta}  \frac{\p(Y | \Theta) \p(\Theta)}{\p(Y)}
+    \mathrm{arg}\max\limits_{\Theta}  \frac{\p(Y | \Theta) \p(\Theta)}{\p(Y)} 
 \end{displaymath}
 
 Furthermore, using the Jensen inequality and exchangeability assumption, we can show:
@@ -26,21 +26,21 @@ Furthermore, using the Jensen inequality and exchangeability assumption, we can 
 \end{align}	
 
 
-This form highlights the equivalence between the matrix and the probabilistic representation \footnote{For completeness we refer the reader to variational inference,that introduce a variational parameters. It shows minimizing the lower bound is equivalent to minimizing the Kulback-Leibler divergence between the true posterior and the variational parameters.} from an optimization point of view. Moreover, in comparison with the  the matrix factorization objective, the lower bound minimizer has a loss function being the log-evidence minus the log-likelihood of observations while the regularization term is equal to the negative of the log prior.
+This form highlights the equivalence between the matrix and the probabilistic representation \footnote{For completeness we refer the reader to variational inference, that introduce a variational parameters. It shows minimizing the lower bound is equivalent to minimizing the Kulback-Leibler divergence between the true posterior and the variational parameters.} from an optimization point of view. Moreover, in comparison with the  matrix factorization objective, the lower bound minimizer has a loss function being the log-evidence minus the log-likelihood of observations while the regularization term is equal to the negative of the log prior.
 
 
-Finally, because we model binary relationship, a natural kernel for the observation is a Bernoullli density such that $y_{ij} \sim \text{Bern}(\Theta)$. It follows from the fact that the expectation of the Bernoulli is it's own parameter, we have the following matrix representation for the likelihood \footnote{Note that a mapping function could be apply if to fit the value in a probability space as is it done with a sigmoid function in the ILFM model.}:
+Finally, because we model binary relationships, a natural kernel for the observations is a Bernoullli density such that $y_{ij} \sim \text{Bern}(\Theta)$. It follows from the fact that the expectation of the Bernoulli is the distribution's parameter, we have the following matrix representation for the likelihood \footnote{Note that a mapping function could be apply to fit the value in a probability space as it is done with a sigmoid function in the ILFM model.}:
 \begin{equation}
 E_{y \sim p(y \mid \Theta)}[Y] = \mat{F} \mat{\Phi}  \mat{F}^T
 \end{equation}
 
-This formalism is similar to the work of Buntine on Discrete Component Ananlysis (DCA) \cite{DCA}. In the following we will study two particular models (iMMSB ILFM), whom both refer to mixed membership model in the sense that the likelihood of the models are defined as a mixture of membership from a share distribution such as:
+This formalism is similar to that retained by Buntine and Jakulin in their work on Discrete Component Analysis (DCA) \cite{DCA}. In the following,  we will study two particular models IMMSB and ILFM, whom both refer to mixed membership model in the sense that the likelihood of the models is defined as a mixture of membership from a share distribution such as:
 \begin{equation}
 \pr(y_{ij}=1 \mid \Theta ) = \sum_{k, k'} \pr(y_{ij}=1\mid\phi_{k,k'}) \pr(k \mid \mat{f}_i) \pr(k' \mid \mat{f}_j)
 \end{equation}
 
 %See the Appendix~\ref{sec:mixmembership} for a justification of eq \eqref{eq:mf} using a Mixed Membership Model approach.
-A key point here, is that the Stochatistic Blockmodel well studied in the literrature \cite{goldenberg2010survey}, where nodes of the networks belong only to one clusters (blockmodel) is a special case of this formalism (as well as IMMSB and ILFM for extrem case(limit case)) when the feature vector $f_i$ of node $i$ has one element corresponding to the membership while all the other are zeros. Besides the choice of the priors over $\mat{F}$ and $\mat{\Phi}$ represents the context in which  their elements can evolve.
+A key point here, is that the Stochatic Block Model well studied in the literature \cite{goldenberg2010survey}, where nodes of the networks belong only to one clusters (Block model) is a special case of this formalism (as well as IMMSB and ILFM for the limit case) when the feature vector $f_i$ of node $i$ has one element corresponding to the membership while all the others are equal to zero. Besides the choice of the priors over $\mat{F}$ and $\mat{\Phi}$ represents the context in which  their elements can evolve.
 
 In the next session we review both IMMSB and ILFM more precisely.
 
