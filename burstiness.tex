@@ -39,10 +39,10 @@ Let $i$ be a node in a social network $G=(V,E)$, and let $d_i$ denote its degree
 \label{def:burst-soc-net}
 \end{definition}
 %
-The definitions of the different properties based on the burstiness involves inequalities whom are not easy to handle in general. Thus, we study in the following a way to formulate it in a more analytic and convenient form. Let us first define an appropriate random structure for exchangeable networks.
+The definitions of the different properties based on the burstiness involves inequalities who are not easy to handle in general. Thus, we study in the following a way to formulate it in a more convenient form. Let us first define an appropriate random structure for exchangeable networks.
 
 \begin{definition}
-	Let $n$ and $N$ be two natural integer such that $N \geq n$. We define the random structure $x^{N,n}$ as a set of $N$ binary value having $n$ elements active (equal to one) and such that $\sum_{i=0}^N P(x^{N,i}) = 1$
+	Let $n$ and $N$ be two natural integer such that $N \geq n$. We define the random structure $x^{N,n}$ as a set of $N$ binary value having $n$ elements active (equal to one) and such that $\sum_{i=0}^N P(x^{N,i}) = 1$.
 	\label{def:rd_struct}
 \end{definition}
 
@@ -59,9 +59,9 @@ This definition enables the link between the random variable $n$ being a integer
 \begin{proof} 	\label{proof:glob}
 	First we recall that for a jointly exchangeable graph, we have that:
 	\begin{equation*}
-	\p(y_{ij}: (i,j) \in V^2) = \p(y_{\sigma(i)\sigma(j)}: (i,j) \in V^2)
+	\p(y_{ij}: (i,j) \in V^2) = \p(y_{\pi(i)\pi(j)}: (i,j) \in V^2)
 	\end{equation*}
-	For any permutation $\sigma$ of the integer $\{1,..,n\}$. Furthermore it can be show that $ \pr(d_i \geq n'+1 \mid d_i \geq n')$ and $\frac{\p(d_i=n+1)}{\p(d_i=n)}$ vary in the same direction with $n$ (Clinchant 2006). Under the exchangeability assumptions, one can write that:
+	For any permutation $\pi$ of the integer $\{1,..,n\}$. Furthermore it can be show that $ \pr(d_i \geq n'+1 \mid d_i \geq n')$ and $\frac{\p(d_i=n+1)}{\p(d_i=n)}$ vary in the same direction with $n$ (Clinchant 2006). Under the exchangeability assumptions, one can write that:
 	
 	\begin{align*}
 	 b_n=\frac{\p(d_i=n+1)}{\p(d_i=n)} = \frac{\dbinom{N}{n+1} p(d_i^{N,n+1})}{\dbinom{N}{n} p(d_i^{N,n})}
@@ -86,7 +86,7 @@ This definition enables the link between the random variable $n$ being a integer
 	\label{b-theorem}
 \end{proof}
 	
-	The study of the series forming the left hand part of last equation gives hint about how and when the distribution $p$ would be bursty depending on the predictive distribution of one observation in the data. Particularly this series is less than one with a maxima at $(N-2)/2$ and is symmetric around this extrema for $N \in [0, N-2]$. We represent the series in figure \ref{fig:bp}.
+	The study of the series forming the left hand part of the last equation gives hint about how and when the distribution $p$ would be bursty depending on the predictive distribution of a new observation in the data. Particularly this series is less than 1 with a maxima at $(N-2)/2$ and its symmetric around this extrema for $N \in [0, N-2]$. We represent the series in figure \ref{fig:bp}.
 	
 	
 	\begin{figure}[h]
@@ -107,12 +107,12 @@ We now study the case where the predictive distribution has a linear form such t
 \begin{equation}
 p(y_{ij}=1 | d_i^{N,n}) = an+b
 \end{equation}  
-Where $n$ is a positive integers and $a$ and $b$ two positive real numbers. From theorem \ref{th:burst_exch} one has the following condition:
+Where $n$ is a positive integers and $a$ and $b$ two positive real numbers. From theorem \ref{th:burst_exch} one has the following condition in order to satisfy the global preferential attachment:
 
 \begin{equation} \label{eq:polynom}
 \frac{-an^2 -3an +a(N-1)-b(N+1)}{(n+2)(N-n)} > 0 
 \end{equation}
-The denominator of this equation is strictly positive for $n \in [0, N-1]$. The condition depend then on the sign of the numerator being a polynom of degree 2. Thus it admit 2 roots $n_-$ and $n_+$ such that:
+The denominator of this equation is strictly positive for $n \in [0, N-1]$. The condition depend then on the sign of the numerator being a polynom of degree 2. Thus it admits 2 roots $n_-$ and $n_+$ such that:
 \begin{align}
 n_+ &= \frac{-3a + \sqrt{a(4N(a-b)+5a-4b)}}{2a} \\
 n_- &= \frac{-3a - \sqrt{a(4N(a-b)+5a-4b)}}{2a} \\
@@ -127,7 +127,7 @@ Furthermore, the roots need to be positive which traduce the following constrain
 \begin{align}
 \sqrt{a(4N(a-b)+5a-4b)} > 3a \iff a\frac{N-1}{N+1} > b
 \end{align}
-If such constraint is satisfied, the polynom admit positive value for $n \in [0, n_+]$. This development shows that for certain form of the predictive distribution the burstiness can be satisfy for all integers $n$, but still a bursty phenomenon can exists on a subset which is determine by the hyperparameters of the model.
+If such constraint is satisfied, the polynom admit positive value for $n \in [0, n_+]$. This development shows that for certain form of the predictive distribution the burstiness can not be satisfy for all integers $n$, but still a bursty phenomenon can exists on a subset which is determine by the hyperparameters of the model.
 
 In particular let's suppose the predictive distribution take this specific form:
 \begin{equation}
@@ -138,10 +138,10 @@ This is equivalent to solving the polynom \eqref{eq:polynom} for $a=1$ and $b=\l
 \lambda_1 < \frac{N-1}{N+1}
 \end{equation}
 
-We now propose a relation to go from the definition of the local preferential effect to the predictive likelihood inside a latent class. The reason of why the theorem \ref{th:burst_exch} can not be directly applicable is because, when looking only at the relation that occur inside a class, one need to marginalize the remainder relation that are not in this class.
+We now propose a relation to go from the definition of the local preferential effect to the predictive likelihood inside a latent class. The reason of why the theorem \ref{th:burst_exch} can not be directly apply is because, when looking only at the relation that occurs inside a class, one need to marginalize the remainder relations that are not in this class.
 
 \begin{theorem}[Burstiness to Local Preferential Attachment] \label{th:burst_local}
-	Let $\M_g$ be a network model of a jointly exchangeable graph $G(V,E)$ such that $f_i$ and $\phi_{kk'}$ are iid for any $i$, $k$ and $k'$.Moreover,  Let $N^c$ and $N^r$ be two integer such that the the former is the number of node in a class $c$, and the second the number of node not being in $c$, such that $N^c+N^r = N$. A local degree distribution $p(d_{i,c}=n)$ of any node $i$ in $c$ is bursty iif,
+	Let $\M_g$ be a network model of a jointly exchangeable graph $G(V,E)$ such that $f_i$ and $\phi_{kk'}$ are iid for any $i$, $k$ and $k'$. Moreover,  Let $N^c$ and $N^r$ be two integer such that the the former is the number of node in a class $c$, and the second the number of node not being in $c$, such that $N^c+N^r = N$. A local degree distribution $p(d_{i,c}=n)$ of any node $i$ in $c$ is bursty iif,
 	
 	\begin{equation}
 \Delta_n  p(y_{ij}=1 | d_{i,c}^{N^c,n}) \frac{\sum_{r=0}^{N^r}\dbinom{N}{n+1+r} p(d_{ir}^{N^r,r})}{\sum_{r=0}^{N^r} \dbinom{N}{n+r} p(d_{ir}^{N^r,r}) } > 0
@@ -180,10 +180,10 @@ b_n =  p(y_{ij}=1 | d_{i,c}^{N^c,n}) \frac{\sum_{r=0}^{N^r}\dbinom{N}{n+1+r} p(
 
 We can see that in the case where $N^r=0$ equation \eqref{eq:29} reduce to:
 \begin{equation}
-b_n = p(y_{ij}=1 | d_{i,c}^{N^c,n}) \frac{\dbinom{N}{n+1}}{ \dbinom{N}{n+r} } =  p(y_{ij}=1 | d_{i,c}^{N^c,n}) \frac{N-n}{n=1}
+b_n = p(y_{ij}=1 | d_{i,c}^{N^c,n}) \frac{\dbinom{N}{n+1}}{ \dbinom{N}{n} } =  p(y_{ij}=1 | d_{i,c}^{N^c,n}) \frac{N-n}{n=1}
 \end{equation}
 
-And in this case $N^c=N$. This show that the results of theorem \ref{th:burst_exch} and \ref{th:burst_local} are equivalent in this case which is sounds since $N^r=0$ means that there only one class, and so it is like evaluating the global preferential attachment.
+And in this case $N^c=N$. This show that the results of theorem \ref{th:burst_exch} and \ref{th:burst_local} are equivalent in this case which is sounds since $N^r=0$ means that there is only one class, and so it is like evaluating the global preferential attachment.
 %\begin{corollary}
 %	A degree distribution  $p(d_i=n)$ of any node $i$ in a jointly exchangeable graph $G(V,E)$ such that it admits a predictive distribution of the form $\p(y_{ij}=1 | d_i^{N,n}) = an+b$, is bursty iff:
 %Polynome solution, constraint on the positive roots, a, b > ...
@@ -193,7 +193,7 @@ We now apply the previous results to characterize the preferential attachments e
 
 
 \begin{proposition}
-	The IMMSB models satisfy the local preferential attachments in the generative model $\M_g$. \textcolor{red}{No consensus yet on making this proposition on theorem V.1 or V.2 ? But theorem V.1 doesnt account for simulation that are always bursty with regards to the degree distribution}
+	The IMMSB models satisfy the local preferential attachments in the generative model $\M_g$. \textcolor{red}{No consensus yet on making this proposition on theorem V.1 or V.2 ? But theorem V.1 doesnt account for simulation that are always bursty with regards to the degree distribution.}
 \end{proposition}
 
 \begin{proof}
@@ -203,7 +203,7 @@ In IMMSB one can write in the general case the predictive distribution condition
 p(y_{ij} = 1 | d_i^{N,n}, \mathcal{M}_g) = \int_{\Theta} p(y_{ij}=1|\Theta) \frac{p(d_i^{N,n} | \Theta)}{p(d_i^{N,n})} p(\Theta) d\Theta \nonumber
 \end{equation}
 
-By only restraining the relations that occur inside class $c=\{k,k\}$, thus we note $N^c$ the total number of nodes being in the class $c$. In IMMSB being in class $c$ means that for an interaction between (any) nodes $i$ and $j$, they took membership associated to feature $k$.   (An other membership could be drawn for an other interaction, which make $N_c$ less or equal than $N$) . One can write the predictive distribution inside this class as follows:
+We only restrain the relations that occur inside a class $c=\{k,k\}$, thus we note $N^c$ the total number of nodes being in the class $c$. In IMMSB being in class $c$ means that for an interaction between (any) nodes $i$ and $j$, they took a membership associated to feature $k$.   (An other membership could be drawn for an other interaction, which make $N_c$ less or equal than $N$). One can write the predictive distribution inside this class as follows:
 
 \begin{align*} \label{eq:sum}
 &p(y_{ij} = 1 | d_{ic}^{N^c,n}, \mathcal{M}_g)  \\
@@ -222,7 +222,7 @@ Where $\text{B}()$ is the beta function. The last equation show that the predict
 \end{proposition}
 
 \begin{proof}
-As for IMMSB proof, we only consider the relations  that occur inside class $c=\{k,k\}$, thus we note $N^c$ the total number of nodes being in the class $c$. In ILFM being in the class $c$ means that we evaluate the predictive distribution by only considering the column $k$ of the feature matrix. We can interpret this operation has looking the connections pattern when only the contribution of the feature $k$ is at work. One can write the predictive distribution inside this class as follows:
+As for IMMSB proof, we only consider the relations  that occur inside class $c=\{k,k\}$, thus we note $N^c$ the total number of nodes being in the class $c$. In ILFM being in the class $c$ means that we evaluate the predictive distribution by only considering the column $k$ of the feature matrix. We can interpret this operation as looking the connections pattern when only the contribution of the feature $k$ is at work. One can write the predictive distribution inside this class as follows:
 
 \begin{align*}
 &\p(y_{ij}=1 | d_{ic}^{N^c,n}, \M_g)  \\
@@ -240,24 +240,39 @@ With $\sigma(\phi) = \frac{1}{1+\exp(-\phi)}$ and $\p(\phi) = \mathcal{N}(0, \si
 \textcolor{red}{not ended yet...no theorem to go from the definition to the predictive likelihood}
 \end{proof}
 
+
+We now turn to the mode $\M_e$. It is important to note here the fact that the probability $\pr(y_{ij}=1 \mid d_i \ge n, \M_e)$ increases with $n$ is equivalent to the fact that the probability $\pr(d_{i} \ge n+1 \mid d_i \ge n, \M_e)$ increases with $n$. Indeed:
+
+
+\begin{align}
+&\pr(d_{i} \ge n+1 \mid d_i \ge n, \M_e) \nonumber \\
+&= 1 - \prod_{j \notin \mathcal{V}(i)} P(y_{ij} = 0 \mid d_i \ge n, \M_e) \nonumber \\
+&= 1 - \prod_{j \notin \mathcal{V}(i)} (1 - P(y_{ij} = 1 \mid d_i \ge n, \M_e)) \nonumber
+\end{align}
+
+
+Hence $\pr(d_{i} \ge n+1 \mid d_i \ge n, \M_e)$ and $P(y_{ij} = 1 \mid d_i \ge n, \M_e)$ vary in the same direction. The same development holds for $\pr(y_{ij}=1 \mid d_{i,c} \ge n, \M_e)$. The above definitions, characterizing probabilistic link models in the mode $\M_e$ according to burstiness in social networks, are thus directly related to the general definition of burstiness given in Definition~\ref{def:burst}.
+
+
+
+
 \begin{proposition}
 	The ILFM and IMMSB models do not satisfy the global and local preferential attachments. in the mode $\M_e$.
 \end{proposition}
 
 The proof of this statement is trivially true in the sens that given $\mat{F}$ and $\mat{\Theta}$, the likelihood is fully determined and hence do not depend on new links being generated. More precisely one has:
 \begin{align}
-\p(y_{ij}=1| d_i^{N,n}, \M_e) &= \p(y_{ij}=1| \M_e)\\
+\p(y_{ij}=1| d_i \ge n, \M_e) &= \p(y_{ij}=1| \M_e)\\
 &= \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top
 \end{align}
-The predictive likelihood does not depend on $n$, and it follows from theorem \ref{th:burst_exch} that the burstiness is not satisfied in this case (specifically because the series $\frac{N-n}{n+1}$ is decreasing for $n\in [0, N-2]$).
+The predictive likelihood does not depend on $n$ and hence the burstiness is not satisfied. The same development holds for the local preferential attachment by indexing variable by a class $c$.
 
-Furthermore, we show simulations, where figure \ref{fig:gen_burst_mmsb} show some complex pattern in the empirical distribution of the overall degree that are clearly non bursty. One can note that, despite this result, the inference procedure of the posterior distribution will be likely to produce latent features that fit an possible presence of burstiness of the data. This is particularly visible on the predictive likelihood for IMMSB which take the following form (see details in appendix \ref{sec:append}):
+Furthermore, we report simulations in figure \ref{fig:gen_burst_mmsb} show complex pattern in the empirical distribution of the overall degree that are clearly non bursty. One can note that, despite this result, the inference procedure of the posterior distribution will be likely to produce latent features that fit an possible presence of burstiness of the data as report in section \ref{sec:experiments}. This is particularly visible on the predictive likelihood for IMMSB which take the following form (see details in appendix \ref{sec:append}):
 \begin{equation} \label{eq:ppp}
 p(y_{ij}=1 | \M_e)\propto \sum_{kk'} \frac{M_{(kk')1} + \lambda_1}{M_{(kk')\bm{.}} + \lambda_0 + \lambda_1}  (N_{ik} + \alpha\beta_k ) (N_{jk} + \alpha\beta_k)
 \end{equation}   
-One can see the features that are associated with the weights that cumulate number of observed links will be likely to generate links. In the case of ILFM the mixing between feature and weight is less clear since the non-conjugacy produce no close relation between the posterior and the sufficient statistics of the data (ie the degrees count). 
+One can see the features that are associated with the weights that cumulate number of observed links will be more likely to generate new links. In the case of ILFM the mixing between feature and weight is less clear since the non-conjugacy produce no close relation between the posterior and the sufficient statistics of the data (ie the degrees count). 
 
-The same development holds for the local burstiness by selecting the appropriate class in the summation of equation \eqref{eq:ppp}.
 \begin{proposition} \label{prop:diaconis}
 	Both ILFM and IMMSB models satisfy the feature burstiness for $n < L$ under some conditions on their hyperparameters  and $L$ a number of observation depending of the hyperparameters.
 \end{proposition}
