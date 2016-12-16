@@ -2,7 +2,7 @@
 %\emph{Yet another view} ~\\
 \label{sec:models}
 
-As mentioned before, we focus in this study on two major representatives of the latent models used for link prediction in social networks, namely the latent feature model \cite{BMF} and the mixed-membership stochastic block model \cite{MMSB}. To be as general as possible, we consider non-parametric extensions of these models, ILFM and IMMSB respectively based on the Indian Buffet Process (IBP) and the Hierarchical Dirichlet Process (HDP). Similar extensions have already been considered in the past, {\it e.g.} through the Infinite Latent Feature model \cite{ILFRM} and through conditional random fields \cite{iMMSB} or a dynamic version of the Hierarchical Dirichlet Process \cite{diMMSB}.
+As mentioned before, we focus in this study on two major representatives of the latent models used for link prediction in social networks, namely the latent feature model \cite{BMF} and the mixed-membership stochastic blockmodel \cite{MMSB}. To be as general as possible, we consider non-parametric extensions of these models, ILFM and IMMSB respectively based on the Indian Buffet Process (IBP) and the Hierarchical Dirichlet Process (HDP). Similar extensions have already been considered in the past, {\it e.g.} through the Infinite Latent Feature model \cite{ILFRM} and through conditional random fields \cite{iMMSB} or a dynamic version of the Hierarchical Dirichlet Process \cite{diMMSB}.
 %\textcolor{red}{To be completed - maybe second extension not considered yet}
 
 We now briefly describe the two models retained.
@@ -73,7 +73,7 @@ Standard Gibbs sampling and Metropolis-Hastings algorithms can be used for infer
 %r_{\phi_{mn}\rightarrow \phi_{mn}^*} = \frac{ P(\mat{Y} \mid \mat{F}, \mat{\Phi}^*)P(\phi_{mn}^* \mid \sigma_w)J(\phi_{mn} \mid \phi_{mn}^*) }{ P(\mat{Y} \mid \mat{F}, \mat{\Phi})P(\phi_{mn} \mid \sigma_w)J(\phi_{mn}^* \mid \phi_{mn} )} \nonumber
 %\end{equation}
 
-\subsection{Infinite Mixed-Membership Stochastic Block Model (IMMSB)}
+\subsection{Infinite Mixed-Membership Stochastic BlockModel (IMMSB)}
 
 The MMSB model generates class membership distributions per node on the basis of a Dirichlet distribution. Then, for each connection between two nodes, a particular class for each node is first sampled from the class membership distribution, and the probability of connecting the two nodes is, as in the previous model, based on a Bernoulli distribution integrating the weight of the two classes. 
 
@@ -132,6 +132,10 @@ The second version is a purely generative version that solely relies on the hype
 \p(y_{ij} | \M_g) = \int_{F,\Phi} \p(y_{ij}=1, F,\Phi |\M_g) dF\Phi
 \end{equation}
 
+\subsection{Note on model terminology}
+As mentioned in the introduction, the ILFM and IMMSB models are often classified in the literature in a more general set of models, respectively called the latent feature models and the latent class models. In this paper, when referring to matrix $F$ (or row $f_i$) in the general case, we will adopt the terminology  \emph{latent feature} without distinctions for both models. The concept of mixed-membership means that nodes of the networks can belongs to several (latent) \emph{object}. The nature to this object and the way of how each of this object relate to each other is determined by the priors of the models. In order to avoid the ambiguity of calling this \emph{object} by either a class, a feature, a characteristic or worse a community. To avoid those ambiguity we will call this \emph{object} a \textbf{block}. This the common intuition behind the latent feature whether they arise from the Dirichlet Process of the IMMSB or the Indian Buffet process of the ILFM. Note that a block, refers to its original introduction in the (stochastic) Blockmodel,  where precisely IMMSB and ILFM, relax the uniqueness of the membership, in a soft way in the former, and in a hard way for the second. A block refer to notion of structural community in social networks \textcolor{red}{christine tu as la reférence ??} which also refer to the notion of structural equivalence (or synonymously stochastic equivalence) \cite{goldenberg2010survey}.
+
+Finally note that the notion of block will be especially usfull to define the local preferential attachment in \ref{def:burst-soc-net}.
 
 \subsection{Note on model performance}
 

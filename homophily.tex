@@ -57,20 +57,32 @@ We have that:
  Suppose now that we have a weight matrix with constant weights $\mu$. One can write:
 
 \begin{equation}
-\pr(y_{ij}=1 \mid \mathcal{M_e})= \mu (\sum_k f_{ik}f_{jk} + \sum_{k\neq k'} f_{ik}f_{jk'} ) \nonumber
+    \pr(y_{ij}=1 \mid \mathcal{M}_e)= \mu (\sum_k f_{ik}f_{jk} + \sum_{k\neq k'} f_{ik}f_{jk'} ) \nonumber
 \end{equation}
 
-It is easy to find a counterexample where the similarity order is lost. A counter example is as follow, choose $f_i=f_j=(0,1,0)$ and $f_{i'}=(1,0,1)$ and $f_{j'}=(0,1,0)$.Thus,  we have $s(i,j)=2$ and $s(i',j')=0$, and $p(y_{ij}) \propto 2$ but $p(y_{i'j'}) \propto 4$. We see that the similarity order does not preserve the likelihood. Thus, homophily is not satisfied. 
+It is easy to find a counterexample where the similarity order is lost. A counter example is as follow, choose $f_i=f_j=(0,1,0)$ and $f_{i'}=(1,0,1)$ and $f_{j'}=(0,1,0)$. Thus,  we have $s(i,j)=1$ and $s(i',j')=0$, and suppose $\mu$ is equal to 1. We have  $p(y_{ij}) = 1$ but $p(y_{i'j'}) \propto 2$. We see that the similarity order does not preserve the likelihood. Thus, homophily is not satisfied. 
 \end{proof} 
 
 
 
 This proposition means that the latent features generated or learned for both model will not reflect the classical vision of homophily, according to which two individuals having similar features are more  likely to be connected. This proposition also highlights the fact that, in the general case,  the latent features of IMMSB and ILFM can not be interpreted out of the box as communities in the usual sense according to which  individuals having an identical membership have a high probability to be connected.
 
-Nevertheless, one can imagine that if  $\Phi$ was constrained such that latent homophily is true,  the latent features could be interpreted as communities indicators. This  specific case corresponds to an approach introduced to find overlapping communities within the MMSB models \cite{AMMSB}. The authors renamed the constraint MMSB to a-MMSB, standing for assortative MMSB. \textcolor{red}{I have the proof with the matrix normal as an example, but a-MMSB is even simpler --- $\phi_{kk'}=0$ if $k\neq k'$. if a possible reference, if needed.}
+Nevertheless, it is worth to say this proposition doesn't means that models could not commply with the homophily effect. Rather, it says that to comply with the homophily effect one has  to relax the default iid assumptions over the weight of  $\Phi$. Typically if the models fix all the non-diagonal weight of $\Phi$ to zeros, links would only occur inside a block. In such a case, the latent features could be interpreted as communities indicators, in the classic sens of communities (high densities of links inside vs low densities outside ). This  specific case corresponds to an approach introduced to find overlapping communities within the MMSB models \cite{AMMSB}. The authors renamed the constraint MMSB to a-MMSB, standing for assortative MMSB. \textcolor{red}{I have the proof with the matrix normal as an example, but proof for a-MMSB is even simpler --- $\phi_{kk'}=0$ if $k\neq k'$.}
 
-In figure \ref{fig:gen_blocks}, we show a clustering result from IMMSB based on the block models. Each node is assigned to the cluster  corresponding to its latent feature having the highest probability.  It appears on the matrix that MMSB captures the structural equivalence of the underlying network and not a community structure where the communities correspond to densely connected components.
+\subsection{Empirical Illustration}
+\label{subsec:mg}
 
+In order to illustrate our results, we provide a set of experiments for both models, that show some random realization of networks structure created by the models. It shows that the blockmodel structure do not enforce an homophily effect. In other word, the blocks structure defined by the latent features do no enforce that links inside a block has a high density.
+
+In figure \ref{fig:gen_blocks_mmsb}, we report a blocks structure generated for 3 setting of IMMSB, (column 1:$\alpha=0.01, \gamma=3, \lambda_1=\lambda_2=1$ , column 2:$\alpha=1, \gamma=1, \lambda_1=\lambda_2=1$, column 3: $\alpha=1, \gamma=1, \lambda_1=\lambda_2=1$) and each of this settings we fix $N=100$. For each settings we followed the generative process in order to create a full networks. To create the blocks structure, we choose to assign each node to a block by a max assignment of its latent features. This consist of selecting the block of a node that correspond to its most representative features.
+
+%In figure \ref{fig:gen_blocks_ilfm}, with report similar experiment for ILFM with the 3 settings () and $N=100$. Representing the block structure for ILFM is more arbitrary, because of the hard assignment of nodes. One way to do it is to cluster the feature matrix F in a lower dimensional space to find a membership for each node. We thus perform a Kmeans clustering by setting the number of block equal to $K/3$ ($K$ being the dimension of the latent feature).
+
+Given, the block structure, we reordered the adjacency matrices in a descending order of the size of block. It means that the block with the highest number of node is in the top left corner, and the lowest in the bottom right corner.
+
+Additionally, we reported the block structure in a graph form where blocks size correspond to the number of nodes associated to it and the weighted edges between blocks reflects the strength of connections between blocks.
+
+Note that did not report a block structure for ILFM because such a structure is not well defined in this model because of the hard assignment of nodes. Since the latent feature are exchangeable we cannot a specific membership.
 
 \begin{figure}[h]
 	\centering
@@ -95,8 +107,8 @@ In figure \ref{fig:gen_blocks}, we show a clustering result from IMMSB based on 
 	\minipage{0.16\textwidth}
 	\includegraphics[width=3.5cm, height=4cm]{img/M_g_regular/graph_dot}
 	\endminipage
-	\caption{Tree examples of generated network in different setting of IMMSB. We reorder the adjacency matrix (white dot are links, block dot are non-link) in th upper figure, and plot their associated bock model structure in the lower part. The block structure is represented in the lower plots where we represent inter-block and intra-block connection by respectively edges ans self-loop.  }
-	\label{fig:gen_blocks}
+	\caption{Block struture for IMMSB for 3 generated networks. The 3 column represent 3 different settings. The first row represent the block structure draw on the adjacency matrix. The second row represent the underlying blockmodel structure }
+	\label{fig:gen_blocks_mmsb}
 \end{figure}
 
 

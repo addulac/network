@@ -1,13 +1,14 @@
 \section{Sparsity}
+\label{sec:sparsity}
 
-The last property we study in this paper is the sparsity. Sparsity is the fact that most value in a dataset are empty. Whenever a feature space can be big an object would end with most of his feature to be equal to zeros. In networks, the sparsity is directly quantified by the density of the network. In text collection for example, a few words of the dictionary appears in each document and so on.
+The last property we study in this paper is the sparsity. Sparsity is the fact that most values in a dataset are empty. Whenever a feature space can be big, an object would end up with most of his features to be equal to zero. In networks, the sparsity is directly quantified by the density of the network which means that a few numner of edges is actually observed compared to set of possible edges in the networ proportional to $\dbinom{N}{2}$. An other typical exemple where sparsity appears, is in text collections, where a few words of the dictionary appears in each document.
 
 %defnition of dense and sparse netwroks are given in Bayesian Models of Graphs, Arrays and Other Exchangeable Random Structures(Peter Orbanz and Daniel M. Roy) \\
 
 %definition of exchangeability for networs first mention in this interesting paper: Modeling homophily and stochastic equivalence in symmetric relational data [Hoff]
 
 
-In the model the density for undirected networks of size $|V|=N$ is defined by the expectation of generating a link, which represent the average chance to observe a link. Hence this quantity is in the $M_g$ settings:
+In the model the density for undirected networks of size $|V|=N$ is defined by the expectation of generating a link, which represents the average chance to observe a link between two nodes. Hence this quantity is in the $M_g$ settings:
 %\begin{equation}
 %p(y_{ij}^{new}=1| |V|=N) =  \int_{\Theta} p(y_{ij}^{new}=1|\Theta) \frac{\sum_{n=0}^{\dbinom{N}{2}} p(d^N=n| \Theta)}{\int_{\Theta} \sum_{n=0}^{\dbinom{N}{2}} p(d^N=n | \Theta)) p(\Theta) d\Theta} p(\Theta) d\Theta
 %\end{equation}
@@ -28,6 +29,6 @@ In the model the density for undirected networks of size $|V|=N$ is defined by t
 \end{align}
 
 
-Thus the density is not dependent of $N$, and thus the number of edge grows with $N^2$ since its expectation is  $\dbinom{N}{2} \epsilon$.
+We see that the density do not dependent of $N$, and thus the number of edge grows with $N^2$ since its expectation is  $\dbinom{N}{2} \epsilon$.
 
-This result shows that the model generate dense networks because the model is misspecified. More precisely, this results generalize for all graph that have an assumption of exchangeability. This strong result is a direct consequence of the theorem of Haldous-Houver \ref{orbanz2015bayesian}. 
+This result shows that the model generate dense networks because the model is misspecified. More precisely, this results can be generalize for all graph that have an assumption of exchangeability, and particularly this excheangeability assumtions is true for the two models we studied here, though less obvious for ILFM since IBP doesn't draw independant feature vector, but the nodes exchangeability is inherited from the features echangeability of the IBP \cite{orbanz2015bayesian}. This strong result is a direct consequence of the Haldous-Houver reprentation theorem for exchangeable array wich generalize the de Finetti theorem.\cite{orbanz2015bayesian}. 

@@ -1,6 +1,6 @@
 \section{Introduction}
 \label{sec:introduction}
-In recent years, several powerful relational learning models have been proposed to solve the problem commonly referred to as \textit{link prediction} that consists in predicting the likelihood of a future association between two nodes in a network \cite{Liben-Nowell07, HassanZaki11}. Among such models, the class of probabilistic generative models has received much attention as such models can be used to both generate artificial networks and infer new links from existing ones. Two main class of models have been proposed and studied in the literature: the latent feature model (LFM) \cite{BMF} and its non-parametric extension (ILFM) \cite{ILFRM}, and the mixed-membership stochastic block model (MMSB) \cite{MMSB} and its non parametric extension (IMMSB) \cite{iMMSB,diMMSB} based respectively on the Indian Buffet Process (IBP) and the Hierarchical Dirichlet Process (HDP). In this paper, we focus on this two models, and we study some of their properties related to link prediction in social networks. 
+In recent years, several powerful relational learning models have been proposed to solve the problem commonly referred to as \textit{link prediction} that consists in predicting the likelihood of a future association between two nodes in a network \cite{Liben-Nowell07, HassanZaki11}. Among such models, the class of probabilistic generative models has received much attention as such models can be used to both generate artificial networks and infer new links from existing ones. Two main class of models have been proposed and studied in the literature: the latent feature model (LFM) \cite{BMF} and its non-parametric extension (ILFM) \cite{ILFRM}, and the mixed-membership stochastic blockmodel (MMSB) \cite{MMSB} and its non parametric extension (IMMSB) \cite{iMMSB,diMMSB} based respectively on the Indian Buffet Process (IBP) and the Hierarchical Dirichlet Process (HDP). In this paper, we focus on this two models, and we study some of their properties related to link prediction in social networks. 
 
 Indeed, although drawn from a wide range of domains, most real world social networks exhibit common properties, such as the \textit{homophily}, \textit{preferential attachment} and \textit{small world} effects \cite{Newman2010, Barabasi2003}. A natural question that arises is thus whether or not models as IMMSB and ILFM comply with such properties. However, these models can be considered in two settings. 
 
@@ -23,5 +23,20 @@ This quantity is know as the evidence for the data.
 
 The question we ask ourselves in this second setting is thus: \textit{Do link prediction models comply with the homophily and preferential attachment effects}.
 
+\textcolor{red}{
+    \begin{itemize}
+    \item The two question above do not reflect completely the speech below that contains also the feature dynamic and sparsity.
+    \item The contribution for me will be to say that, the purpose of the work is i) to formalize properties of real world networks and ii) understand how and why models would comply with properties.
+\end{itemize}
+}
 
-The remainder of the paper is organized as follows. In the second section \ref{sec:background} we set up the probabilistic context of our analysis. Then, in section \ref{sec:models}, we present the two general class of models known as class based models and feature based models. In sections \ref{sec:homophily} and \ref{sec:burstiness}, we propose respectively formal definitions for the homophily and preferential effects and study how models comply with this properties. \textcolor{red}{Then section on feature dynamics and sparsity}. In section \ref{sec:experiments},we report an empirical study of the predictive performance of the models on synthetic and real networks with regards to the properties. We conclude in the last section \ref{sec:concl}. 
+
+The remainder of the paper is organized as follows. In the second section \ref{sec:background} we set up the probabilistic context of our analysis. Then, in section \ref{sec:models}, we present the two general class of models known as class based models and feature based models. In sections \ref{sec:homophily}, \ref{sec:burstiness}, \ref{sec:dynamic} and \ref{sec:sparsity} we respectively propose formal definition and study the compliancy of the models of the following properties:
+\begin{itemize}
+    \item Homophily,
+    \item Preferential attachment,
+    \item Feature dynamics,
+    \item Sparsity.
+\end{itemize}
+
+In section \ref{sec:experiments}, we report an empirical study of the predictive performance of the models on synthetic and real networks with regards to the properties. We conclude in the last section \ref{sec:concl}. 
