@@ -1,0 +1,13 @@
+graph  {
+	0	 [fillcolor="#4B0082",
+		height=1.97723767468,
+		style=filled,
+		width=1.97723767468];
+	0 -- 0	 [penwidth=14.6099200991];
+	1	 [fillcolor="#FF69B4",
+		height=0.300883993973,
+		style=filled,
+		width=0.300883993973];
+	0 -- 1	 [penwidth=0.419710426924];
+	1 -- 1	 [penwidth=0.0999310540296];
+}

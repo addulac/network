@@ -316,88 +316,90 @@ This proposition suggest that HDP and IBP are admissible priors in order to sati
 
 \subsection{Empirical Illustration}
 
-We illustrate the burstiness results, by generating 3 random networks for each of the both models. We use the 3 same settings for IMMSB (figure \ref{fig:gen_burst_mmsb}) than those in the previous section. For ILFM (figure \ref{}) we use the following 3 settings: (column 1:$\alpha=0.01,  \lambda_1=\lambda_2=1$ , column 2:$\alpha=1, \lambda_1=\lambda_2=1$, column 3: $\alpha=1, \lambda_1=\lambda_2=1$) and we fix $\sigma_w=1$ and again $N=1000$.
+We illustrate the burstiness results by generating 3 random networks for each of both models, that we report in figure \ref{fig:gen_burst}. We use the 3 same settings for IMMSB  than those in the previous section. For ILFM  we use the following 3 settings: (column 1:$\alpha=1,  \lambda_1=\lambda_2=1$ , column 2:$\alpha=0.1, \lambda_1=\lambda_2=1$, column 3: $\alpha=1, \lambda_1=\lambda_2=10$) and we fix $\sigma_w=1$ and again $N=1000$.
 
-Then each row of the two figure represent the three following measure that correspond respectively to global preferential attachment, the local preferential attachment and the feature burstiness:
+Each row of the two set of figures represents the three following measure, that corresponds respectively to the global preferential attachment, the local preferential attachment and the feature burstiness:
 \begin{itemize}
     \item First row measure the overall degree distributions; We report average and standard deviation of the degree distribution in a linear scale for each generated network.
-    \item Second row measure the local degree distribution on a loglog scale:
+    \item Second row measure the local degree distribution on a log-log scale:
         \begin{itemize}
-            \item for IMMSB each networks has an associated membership tensor $Z$, that indicates the membership that each nodes take for each interactions. In order to draw the local degree distribution for a block $c$, we reduce the adjacency matrix to retain only links that occurs for any two nodes taking membership $c$. The local degree distribution is thus computed on the reduce adjacency matrix $Y_c = Y \otimes (Z_i^k \times Z_j^k)$ where $\otimes$ is the hadamard product and $\times$ the outer product and $Z_i^k$ is the membership matrix of a nodes $i$ such that $Z_{il}=0$ if $l\neq q$.
-            \item for ILFM each nodes is associated to a fix feature vector; the local degree distribution for the block $k$ is obtain by taking only the contribution 
-                of the features $k$ on the adjacency matrix. The local degree degree distribution is computed on the reduce adjacency matrix $Y_c = Y \otimes (F_{.k}\times F_{.k}^T)$. 
+            \item for IMMSB each networks has an associated membership tensor $Z$, that indicates the membership of nodes for each  interactions. In order to draw the local degree distribution for a block $c$, we reduce the adjacency matrix in order to retain only the links that occurs inside a block $c$. The local degree distribution is thus computed on the reduce adjacency matrix $Y_c = Y \otimes (Z_i^k \times Z_j^k)$ where $\otimes$ is the hadamard product and $\times$ the outer product. $Z_i^k$ is the membership matrix of a nodes $i$ such that $Z_{il}=0$ if $l\neq q$.
+            \item for ILFM each nodes is associated to a fix feature vector; the local degree distribution for the block $k$ is obtain by taking only the contribution of the features $k$ on the adjacency matrix. Thus, The local degree degree distribution is computed on the reduce adjacency matrix $Y_c = Y \otimes (F_{.k}\times F_{.k}^T)$. 
         \end{itemize}
-    \item Third row measure the distribution of the block membership. Hence for IMMSB, for a feature $k$, we measure $\sum_{ij} \mathbb{1}(Z_{i\rightarrow j} = k$ which indicates the number of nodes who were associated to the bock $k$. For ILFM the number of times nodes associated to a block $k$ is simply $\sum_n F^{nk}$.
+    \item Third row measure the distribution of the block membership. Hence for IMMSB, for a feature $k$, we measure $\sum_{ij} \mathbb{1}(Z_{i\rightarrow j} = k)$ which indicates the number of nodes who were associated to the block $k$. For ILFM the number of nodes associated to a block $k$ is simply $\sum_n F_{nk}$.
 \end{itemize}
 
 
-We provide in annexe (\textcolor{red}{not yet included}), to be complete, an goodness of fit again a power law distribution for all local degrees distribution in order to quantify the power law hypothesis on the empirical degree distributions. The protocol is described in section \ref{sec:experiments-busrt}. 
+We provide in annexe (\textcolor{red}{not yet included}),  an goodness of fit for all local degrees distribution that we plotted, in order to quantify the power law hypothesis on the empirical degree distributions. The protocol is described in section \ref{sec:experiments-busrt}. 
+
+\textcolor{red}{here, draw some conclusion that confirm theory and prediction !!!}
 
 
-\begin{figure*}[h]
-	\centering
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_peaks/figure_1}
+\begin{figure*}[ht]
+	\centering IMMSB\\
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/M_g_peaks/figure_1}
 	\endminipage
-		\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_power_law/figure_1}
+		\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/M_g_power_law/figure_1}
 	\endminipage
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_regular/figure_1}
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/M_g_regular/figure_1}
 	\endminipage
-		\vspace{-0.4cm}
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_peaks/figure_3}
+		\vspace{-0.29cm}
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/M_g_peaks/figure_3}
 	\endminipage
-		\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_power_law/figure_3} 
+		\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/M_g_power_law/figure_3} 
 	\endminipage
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_regular/figure_3}
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/M_g_regular/figure_3}
 	\endminipage
-		\vspace{-0.4cm}
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_peaks/figure_5}
+		\vspace{-0.28cm}
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/M_g_peaks/figure_5}
 	\endminipage
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_power_law/figure_5} 
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/M_g_power_law/figure_5} 
 	\endminipage
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_regular/figure_5}
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/M_g_regular/figure_5}
 	\endminipage
 
+    \vspace{0.2cm}
+	 ILFM
 
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_peaks/figure_1}
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/ilfm/1/figure_1}
 	\endminipage
-		\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_power_law/figure_1}
+		\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/ilfm/2/figure_1}
 	\endminipage
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_regular/figure_1}
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/ilfm/3/figure_1}
 	\endminipage
-		\vspace{-0.4cm}
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_peaks/figure_3}
+		\vspace{-0.29cm}
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/ilfm/1/figure_3}
 	\endminipage
-		\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_power_law/figure_3} 
+		\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/ilfm/2/figure_3} 
 	\endminipage
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_regular/figure_3}
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/ilfm/3/figure_3}
 	\endminipage
-		\vspace{-0.4cm}
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_peaks/figure_5}
+		\vspace{-0.28cm}
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/ilfm/1/figure_5}
 	\endminipage
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_power_law/figure_5} 
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/ilfm/2/figure_5} 
 	\endminipage
-	\minipage{0.16\textwidth}
-	\includegraphics[width=3.2cm, height=3.7cm]{img/M_g_regular/figure_5}
+	\minipage{0.27\textwidth}
+	\includegraphics[scale=0.27]{img/ilfm/3/figure_5}
 	\endminipage
-	\caption{Generated Networks with ILFM for three different settings (same set than for figure \ref{fig:gen_blocks_mmsb}). The top rows measure the global preferential attachment through the overall degree distribution. The middle row measure the local preferential attachment through the local degree distribution. The last row measure the feature burstiness through the block membership distribution.}
-	\label{fig:gen_burst_mmsb}
+    \caption{Generated Networks with IMMSB (top) and ILFM (bottom) for three different settings (same set than for figure \ref{fig:gen_blocks_mmsb}). The top rows measure the global preferential attachment through the overall degree distribution. The middle row measure the local preferential attachment through the local degree distribution. The last row measure the feature burstiness through the block membership distribution.}
+	\label{fig:gen_burst}
 \end{figure*}
-
 

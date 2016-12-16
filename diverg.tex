@@ -1,0 +1,82 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[unicode=true]{hyperref}
+\hypersetup{
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\date{}
+
+\begin{document}
+
+\section{Discussion sur les modéles
+Baysien}\label{discussion-sur-les-moduxe9les-baysien}
+
+Je ressent le besoin de vous ecrire un peu plus en details, mon point de
+vue, et de le confronter à celui d'Eric, par rapport au modèles Bayesien
+et notamment au concept \(M_e\) et \(M_g\). Le but de papier est de
+trouver un terrain d'entente et sur le formalisme et le discours, car
+sans cela, nous perdons beaucoup de temps a rediscuter cela, et avec un
+impact aussi sur la cohésion du papier que l'on écrit . Et je vais
+tenter de vous exposer pourquoi.
+
+....[[Draft]]
+
+Tout d'abord spécifions les hypothèses de base de notre \emph{système d'apprentissage} Bayesien.
+
+On définie une structure aléatoire, qui est notre source d'apprentissage comme une variable aléatoire $X$ sur un espace mesurable. Le theoreme de représenation [ref Otz] tel que le theorems De Finetti pour les séqences de variable $(X_1, X_2,...)$ écheangle, le theorem de Haldous-Hoover pour les graph echeangable, et plus généralement que si une distribution sur structure $X$ dans a un groupe de symmetrie $G$, alors elle a une représentation de la forme
+
+\begin{equation}
+    P(X) = \int_T
+\end{equation}
+
+Sur les distribution ergodic.
+
+Donc ce theroem définie une distribution sur les observation, communément appelé le likelihood, et une mesure sur les paramétre $\Theta$, qui represente le prior sur l'espace des observations. 
+
+L'application du theoreme de baye consiste, à evaluer la distribution des paramètres aleatoires selon les observations $X$. 
+
+L'inference statistique ou "l'apprentissage consiste à extraction de l'information contenue dans $\Theta$, (link to kulklback leibler divergence. minimisation and variational inference). Et l'eloignement de l'aléaoire contenue dans le likelihood (Minimisation de l'entropie du likelihood)
+
+\end{document}

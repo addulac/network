@@ -1,26 +1,41 @@
-KS data:  KstestResult(statistic=17334453.755169265, pvalue=nan)
-KS synthetic:  KstestResult(statistic=73951.254724962317, pvalue=nan)
-{'x_min': 743.0, 'alpha': 24.792131829796531, 'n_head': 542.0, 'pvalue': 0.26353790613718414, 'n_tail': 439.0}
+Warning, only zeros in adjacency matrix...
+zsampler: 4 topics purged
+Sample m...
+Sample Beta...
+Beta Dirichlet Prior: [ 2.], alpha0: 1.0000
+Mode: evidence
+corpus: generator10
+ model: immsb
+ K = 16
+ N =  1000
+ hyper: {'alpha': 1.0, 'gmma': 2.0, 'delta': 0.5}
+/home/dulac/Documents/workInProgress/networkofgraphs/process/pymake/src/utils/algo.py:399: RuntimeWarning: invalid value encountered in divide
+  cdf = lambda x: 1 - zeta(alpha, x) / zeta(alpha, x_min)
+KS data:  KstestResult(statistic=nan, pvalue=nan)
+KS synthetic:  KstestResult(statistic=nan, pvalue=nan)
+{'x_min': 947.0, 'alpha': 179.17869243898085, 'n_head': 779.0, 'pvalue': 0.0, 'n_tail': 196.0}
 Computing Local Preferential attachment
-Z formation : 0:00:08.814082
-164 unconnected vertex
-x_min 587
-KS data:  KstestResult(statistic=3.4103703840469024e+231, pvalue=nan)
-KS synthetic:  KstestResult(statistic=3.4103703840469024e+231, pvalue=nan)
-{'x_min': 587, 'alpha': 83.944875427616878, 'n_head': 660.0, 'pvalue': 0.0, 'n_tail': 176.0}
-573 unconnected vertex
-x_min 1
-KS data:  KstestResult(statistic=0.3019164838368994, pvalue=0.0)
-KS synthetic:  KstestResult(statistic=0.33795493934142112, pvalue=0.0)
-{'x_min': 1, 'alpha': 1.1962426543091578, 'n_head': 36.0, 'pvalue': 0.9783393501805054, 'n_tail': 391.0}
-819 unconnected vertex
-x_min 1
-KS data:  KstestResult(statistic=0.29573384532274005, pvalue=1.5765166949677223e-14)
-KS synthetic:  KstestResult(statistic=0.40000000000000002, pvalue=0.0)
-{'x_min': 1, 'alpha': 1.2367462540625678, 'n_head': 17.0, 'pvalue': 0.9963898916967509, 'n_tail': 164.0}
-997 unconnected vertex
-x_min 1
-KS data:  KstestResult(statistic=0.66666666666666663, pvalue=0.074074074074074181)
-KS synthetic:  KstestResult(statistic=1.0, pvalue=0.0)
-{'x_min': 1, 'alpha': 1.4808983469629879, 'n_head': 2.0, 'pvalue': 0.7617328519855595, 'n_tail': 1.0}
-active cluster (max assignement): 4
+Z formation : 0:01:26.548207
+clustering method: modularity, active clusters ratio: 0.875000
+KS data:  KstestResult(statistic=0.38652461197181626, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.19308943089430894, pvalue=0.0)
+{'x_min': 1.0, 'alpha': 1.1632339841048531, 'n_head': 11.0, 'pvalue': 0.0, 'n_tail': 973.0}
+KS data:  KstestResult(statistic=0.68934526397324358, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.68729608364537464, pvalue=0.0)
+{'x_min': 4.0, 'alpha': 1.2882348385870097, 'n_head': 23.0, 'pvalue': 0.5595667870036101, 'n_tail': 953.0}
+KS data:  KstestResult(statistic=0.34756760814993787, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.26210526315789473, pvalue=0.0)
+{'x_min': 1.0, 'alpha': 1.2305957716105156, 'n_head': 24.0, 'pvalue': 0.0, 'n_tail': 926.0}
+KS data:  KstestResult(statistic=0.24950348852862836, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.38367844092570036, pvalue=0.0)
+{'x_min': 1.0, 'alpha': 1.3691938388819027, 'n_head': 76.0, 'pvalue': 1.0, 'n_tail': 745.0}
+KS data:  KstestResult(statistic=0.2730145257685479, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.25710594315245477, pvalue=0.0)
+{'x_min': 1.0, 'alpha': 1.2296385870449507, 'n_head': 47.0, 'pvalue': 0.41155234657039713, 'n_tail': 727.0}
+KS data:  KstestResult(statistic=0.22866814612977762, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.32622333751568383, pvalue=0.0)
+{'x_min': 1.0, 'alpha': 1.2661587998834825, 'n_head': 65.0, 'pvalue': 1.0, 'n_tail': 732.0}
+KS data:  KstestResult(statistic=0.20555329736694095, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.53761467889908254, pvalue=0.0)
+{'x_min': 1.0, 'alpha': 1.4096735729769589, 'n_head': 108.0, 'pvalue': 1.0, 'n_tail': 437.0}
+density: 0.756294

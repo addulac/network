@@ -72,17 +72,17 @@ Nevertheless, it is worth to say this proposition doesn't means that models coul
 \subsection{Empirical Illustration}
 \label{subsec:mg}
 
-In order to illustrate our results, we provide a set of experiments for both models, that show some random realization of networks structure created by the models. It shows that the blockmodel structure do not enforce an homophily effect. In other word, the blocks structure defined by the latent features do no enforce that links inside a block has a high density.
+In order to illustrate our results, we provide a set of experiments where we use models to generate random networks and extract the underlying block structure. It shows that the block structure do not enforce an homophily effect. In other word, it do no enforce that links inside a block has a higher density than outside a block.
 
-In figure \ref{fig:gen_blocks_mmsb}, we report a blocks structure generated for 3 setting of IMMSB, (column 1:$\alpha=0.01, \gamma=3, \lambda_1=\lambda_2=1$ , column 2:$\alpha=1, \gamma=1, \lambda_1=\lambda_2=1$, column 3: $\alpha=1, \gamma=1, \lambda_1=\lambda_2=1$) and each of this settings we fix $N=100$. For each settings we followed the generative process in order to create a full networks. To create the blocks structure, we choose to assign each node to a block by a max assignment of its latent features. This consist of selecting the block of a node that correspond to its most representative features.
+In figure \ref{fig:gen_blocks_mmsb}, we report the block structure  generated for 3 settings of IMMSB, (column 1:$\alpha=1, \gamma=2, \lambda_1=\lambda_2=0.5$ , column 2:$\alpha=0.1, \gamma=1, \lambda_1=5, \lambda_0=1$, column 3: $\alpha=1, \gamma=1, \lambda_1=\lambda_2=1$). Then for each of this settings we fix $N=100$ and generate full networks. To create the blocks structure, we choose to assign each nodes to a block by a max assignment of its latent features. It consist of selecting the block for a node which corresponds to its most representative feature.
 
 %In figure \ref{fig:gen_blocks_ilfm}, with report similar experiment for ILFM with the 3 settings () and $N=100$. Representing the block structure for ILFM is more arbitrary, because of the hard assignment of nodes. One way to do it is to cluster the feature matrix F in a lower dimensional space to find a membership for each node. We thus perform a Kmeans clustering by setting the number of block equal to $K/3$ ($K$ being the dimension of the latent feature).
 
-Given, the block structure, we reordered the adjacency matrices in a descending order of the size of block. It means that the block with the highest number of node is in the top left corner, and the lowest in the bottom right corner.
+Given, the block structure, we reordered the adjacency matrices in a descending order of the size of blocks. It means that the block with the highest number of node is in the top left corner, and the lowest in the bottom right corner.
 
-Additionally, we reported the block structure in a graph form where blocks size correspond to the number of nodes associated to it and the weighted edges between blocks reflects the strength of connections between blocks.
+We also reported the block structure in a graph form where blocks size correspond to the number of nodes associated to it and the weighted edges between blocks reflects the strength of connections between blocks.
 
-Note that did not report a block structure for ILFM because such a structure is not well defined in this model because of the hard assignment of nodes. Since the latent feature are exchangeable we cannot a specific membership.
+Note that did not report a block structure for ILFM. The reason is that such a structure is not well defined in this model because of the hard assignment of nodes and because feature are indistinguishable. The first fact is due to fact IBP draw binary feature (In our current settingds). The second is due to the fact latent feature are exchangeable in the IBP prior which provide no obvious way to assign a specific membership of any interactions. 
 
 \begin{figure}[h]
 	\centering
@@ -102,12 +102,12 @@ Note that did not report a block structure for ILFM because such a structure is 
 	\includegraphics[width=3.5cm, height=4cm]{img/M_g_peaks/graph_dot}
 	\endminipage
 		\minipage{0.16\textwidth}
-	\includegraphics[width=3.5cm, height=4cm]{img/M_g_power_law/graph_dot} 
+    \hspace{1cm}\includegraphics[width=3.0cm, height=4cm]{img/M_g_power_law/graph_dot} 
 	\endminipage
 	\minipage{0.16\textwidth}
 	\includegraphics[width=3.5cm, height=4cm]{img/M_g_regular/graph_dot}
 	\endminipage
-	\caption{Block struture for IMMSB for 3 generated networks. The 3 column represent 3 different settings. The first row represent the block structure draw on the adjacency matrix. The second row represent the underlying blockmodel structure }
+	\caption{Block structure for IMMSB for 3 generated networks. The 3 columns represent 3 different settings. The first row represent the block structure draw on the adjacency matrix. The second row represent the graph of the underlying block structure.}
 	\label{fig:gen_blocks_mmsb}
 \end{figure}
 
