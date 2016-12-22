@@ -3,31 +3,31 @@
 % K = 5
 
 \begin{table*}[h] \label{table:unbalanced}
-\caption{Predictive Performance on a UnBalanced Testing set}
+\caption{Predictive Performance for Synthetic datasets}
 	\begin{minipage}[h]{0.45\linewidth} 
 K = 5\hspace{5pt}
-\begin{tabular}{lllll}
+\begin{tabular}{llllll}
 \hline
- IMMSB   &   global &   precision &   recall &    K-\ensuremath{>} \\
+ IMMSB   &   global &   precision &   recall & $f_1$ &    K-\ensuremath{>} \\
 \hline
- Network1 b/h         &    0.990 &       0.029 &    0.032 & 5.0 $\pm$ 0.0 \\
- Network2 b/-h       &    0.992 &       0.032 &    0.034 & 5.0 $\pm$ 0.0 \\
- Network3 -b/-h       &    0.979 &       0.031 &    0.034 & 5.0 $\pm$ 0.0 \\
- Network4 -b/h       &    0.887 &       0.151 &    0.192 & 5.0 $\pm$ 0.0 \\
+Network1        &    0.990 &       0.029 &    0.032 & 0.030 & 5.3 $\pm$ 0.4 \\
+Network2       &    0.992 &       0.032 &    0.034 &  0.032 & 5.8 $\pm$ 1.1 \\
+Network3        &    0.979 &       0.031 &    0.034 & 0.032 & 5.1 $\pm$ 0.3     \\
+Network4       &    0.887 &       0.151 &    0.192 &  0.170 & 5.4 $\pm$ 0.4 \\
 
 \hline
 \end{tabular}
 \end{minipage}
 \hspace{0.8cm}
 \begin{minipage}[h]{0.45\linewidth}
-\begin{tabular}{lllll}
+\begin{tabular}{llllll}
 \hline
-  ILFM & global &   precision &   recall &     K-\ensuremath{>} \\
+  ILFM & global &   precision &   recall &   $f_1$ &   K-\ensuremath{>} \\
 \hline
- Network1 b/h       &    0.990 &       0.051 &    0.053 & 13.4 $\pm$ 0.8    \\
- Network2 b/-h     &    0.992 &       0.044 &    0.045 & 14.0 $\pm$ 2.0    \\
- Network3 -b/-h     &    0.982 &       0.114 &    0.116 & 10.0 $\pm$ 2.1 \\
- Network4 -b/h     &    0.926 &       0.389 &    0.393 & 7.2 $\pm$ 1.6     \\
+Network1      &    0.990 &       0.051 &    0.053 &  0.053 &  13.4 $\pm$ 0.8    \\
+Network2     &    0.992 &       0.044 &    0.045 &   0.044 &  14.0 $\pm$ 2.0    \\
+Network3      &    0.982 &       0.114 &    0.116 &  0.121 &  10.0 $\pm$ 2.1 \\
+Network4     &    0.926 &       0.389 &    0.393 &   0.390 &  7.2 $\pm$ 1.6     \\
 
 \hline
 \end{tabular}
@@ -37,22 +37,22 @@ K = 5\hspace{5pt}
 
 	\begin{minipage}[h]{0.45\linewidth} 
 K = 10
-\begin{tabular}{lllll}
-Network1 b/h         &    0.990 &       0.044 &    0.046 & 10.0 $\pm$ 0.0 \\
- Network2 b/-h       &    0.992 &       0.039 &    0.045 & 10.0 $\pm$ 0.0 \\
- Network3 -b/-h       &    0.979 &       0.030 &    0.035 & 10.0 $\pm$ 0.0 \\
- Network4 -b/h       &    0.897 &       0.202 &    0.238 & 10.0 $\pm$ 0.0 \\
+\begin{tabular}{llllll}
+Network1       &    0.990 &       0.044 &    0.046 &  0.042 & 10.8 $\pm$ 0.6 \\
+Network2      &    0.992 &       0.039 &    0.045 &   0.039 & 10.8 $\pm$ 0.6 \\
+Network3       &    0.979 &       0.030 &    0.035 &  0.032 & 11.0 $\pm$ 1.0 \\
+Network4      &    0.897 &       0.202 &    0.238 &   0.206 & 10.4 $\pm$ 0.8 \\
 
 \hline
 \end{tabular}
 \end{minipage}
 \hspace{0.8cm}
 \begin{minipage}[h]{0.45\linewidth}
-\begin{tabular}{lllll}
- Network1 b/h       &    0.990 &       0.049 &    0.053 & 17.2 $\pm$ 2.8 \\
- Network2 b/-h     &    0.992 &       0.047 &    0.051 & 17.2 $\pm$ 2.1 \\
- Network3 -b/-h     &    0.982 &       0.132 &    0.132 & 12.2 $\pm$ 2.0 \\
- Network4 -b/h     &    0.934 &       0.448 &    0.447 & 9.2 $\pm$ 1.2 \\
+\begin{tabular}{llllll}
+Network1      &    0.990 &       0.049 &    0.053 &  0.055 &  17.2 $\pm$ 2.8 \\
+Network2     &    0.992 &       0.047 &    0.051 &   0.052 &  17.2 $\pm$ 2.1 \\
+Network3      &    0.982 &       0.132 &    0.132 &  0.137 &  12.2 $\pm$ 2.0 \\
+Network4     &    0.934 &       0.448 &    0.447 &   0.463 &  9.2 $\pm$ 1.2 \\
 
 \hline
 \end{tabular}
@@ -62,22 +62,22 @@ Network1 b/h         &    0.990 &       0.044 &    0.046 & 10.0 $\pm$ 0.0 \\
 
 	\begin{minipage}[h]{0.45\linewidth} 
 K = 15
-\begin{tabular}{lrrrr}
- Network1 b/h         &    0.990 &       0.038 &    0.041 & 15.0 $\pm$ 0.0 \\
- Network2 b/-h       &    0.992 &       0.036 &    0.038 & 15.0 $\pm$ 0.0 \\
- Network3 -b/-h       &    0.979 &       0.029 &    0.032 & 15.0 $\pm$ 0.0 \\
- Network4 -b/h       &    0.898 &       0.207 &    0.245 & 15.0 $\pm$ 0.0 \\
+\begin{tabular}{lrrrrr}
+Network1        &    0.990 &       0.038 &    0.041 &    0.040 &  15.6 $\pm$ 1.0 \\
+Network2       &    0.992 &       0.036 &    0.038 &     0.037 &  16.0 $\pm$ 0.8 \\
+Network3        &    0.979 &       0.029 &    0.032 &    0.033 &  15.5 $\pm$ 0.5 \\
+Network4       &    0.898 &       0.207 &    0.245 &     0.229 &  15.5 $\pm$ 0.8 \\
 
 \hline
 \end{tabular}
 \end{minipage}
 \hspace{0.8cm}
 \begin{minipage}[h]{0.45\linewidth}
-\begin{tabular}{lrrrr}
- Network1 b/h       &    0.990 &       0.050 &    0.053 & 20.6 $\pm$ 2.1 \\
- Network2 b/-h     &    0.992 &       0.049 &    0.055 & 21.2 $\pm$ 2.1 \\
- Network3 -b/-h     &    0.983 &       0.164 &    0.166 & 17.2 $\pm$ 1.3 \\
- Network4 -b/h     &    0.939 &       0.499 &    0.501 & 14.8 $\pm$ 0.4    \\
+\begin{tabular}{lrrrrr}
+Network1      &    0.990 &       0.050 &    0.053 &  0.007 &      20.6 $\pm$ 2.1 \\
+Network2     &    0.992 &       0.049 &    0.055 &   0.049 &      21.2 $\pm$ 2.1 \\
+Network3      &    0.983 &       0.164 &    0.166 &  0.164 &      17.2 $\pm$ 1.3 \\
+Network4     &    0.939 &       0.499 &    0.501 &   0.499 &      14.8 $\pm$ 0.4    \\
 
 \hline
 \end{tabular}
@@ -87,23 +87,24 @@ K = 15
 
 	\begin{minipage}[h]{0.45\linewidth} 
 K = 20
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrrrrr}
 
- Network1 b/h          &   0.9899 &      0.0348 &   0.0375 & 20 \\
- Network2 b/-h       &   0.9923 &      0.0494 &   0.0590 & 20 \\
- Network3 -b/-h      &   0.9794 &      0.0289 &   0.0338 & 20 \\
- Network4 -b/h        &   0.9067 &      0.2646 &   0.3034 & 20 \\
+Network1         &   0.989 &      0.034 &   0.037 &   0.040 &  22.0 $\pm$ 2.4 \\
+Network2       &   0.992 &      0.049 &   0.059 &     0.040 &  21.2 $\pm$ 1.2 \\
+Network3       &   0.979 &      0.028 &   0.033 &     0.034 &  21.2 $\pm$ 1.6 \\
+Network4        &   0.906 &      0.264 &   0.303 &    0.223 &  21.2 $\pm$ 1.1 \\
 \hline
 \end{tabular}
 \end{minipage}
 \hspace{0.8cm}
 \begin{minipage}[h]{0.45\linewidth}
-\begin{tabular}{lrrrr}
-Network1 b/h       &   0.9902 &      0.0641 &   0.0626 &  23 \\
-Network2 b/-h     &   0.9915 &      0.0477 &   0.0636 & 17 \\
-Network3 -b/-h     &   0.9827 &      0.1523 &   0.1518 &  20 \\
-Network4 -b/h     &   0.9396 &      0.4986 &   0.5053 &  22 \\
+\begin{tabular}{lrrrrr}
+Network1      &   0.990 &      0.064 &   0.062 &   0.058 &  22.0 $\pm$ 2.4 \\
+Network2     &   0.991 &      0.047 &   0.063 &    0.048 &  21.2 $\pm$ 1.3 \\
+Network3      &   0.982 &      0.152 &   0.151 &   0.197 &  21.2 $\pm$ 1.6 \\
+Network4     &   0.939 &      0.498 &   0.505 &    0.505 &  21.2 $\pm$ 1.0 \\
 \hline
+
 \end{tabular}
 \end{minipage}
 \end{table*}
@@ -117,116 +118,116 @@ Network4 -b/h     &   0.9396 &      0.4986 &   0.5053 &  22 \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-% Debug 11 / MASK 1
-
-% K = 5
-
-\begin{table*}[h] \label{table:balanced}
-\caption{Predictive Performance on a Balanced Testing set}
-	\begin{minipage}[h]{0.45\linewidth} 
-K =  5\hspace{5pt}
-\begin{tabular}{lrlll}
-\hline
- IMMSB   &   global &   precision &   recall &    K-\ensuremath{>} \\
-\hline
- Network1 b/h          &    0.549 &       0.758 &    0.022 & 5.0 $\pm$ 0.0 \\
- Network2 b/-h        &    0.558 &       0.834 &    0.019 & 5.0 $\pm$ 0.0 \\
- Network3 -b/-h        &    0.527 &       0.729 &    0.027 & 5.0 $\pm$ 0.0 \\
- Network4 -b/h        &    0.557 &       0.743 &    0.162 & 5.0 $\pm$ 0.0 \\
-
-\hline
-\end{tabular}
-\end{minipage}
-\hspace{0.8cm}
-\begin{minipage}[h]{0.45\linewidth}
-\begin{tabular}{lrlll}
-\hline
- ILFM   &   global &   precision &   recall &     K-\ensuremath{>} \\
-\hline
- Network1 b/h        &    0.568 &       0.912 &    0.047 & 13.6 $\pm$ 2.3 \\
- Network2 b/-h      &    0.574 &       0.893 &    0.041 & 16.4 $\pm$ 3.4 \\
- Network3 -b/-h      &    0.571 &       0.912 &    0.100 & 9.2 $\pm$ 1.3 \\
- Network4 -b/h      &    0.668 &       0.906 &    0.362 & 7.6 $\pm$ 1.3 \\
-
-\hline
-\end{tabular}
-\end{minipage}
-
-% K = 10
-
-	\begin{minipage}[h]{0.45\linewidth} 
-K = 10
-\begin{tabular}{lrrrr}
- Network1 b/h          &    0.558 &       0.842 &    0.028 & 10.0 $\pm$ 0.0 \\
- Network2 b/-h        &    0.567 &       0.926 &    0.034 & 10.0 $\pm$ 0.0 \\
- Network3 -b/-h        &    0.530 &       0.776 &    0.027 & 10.0 $\pm$ 0.0 \\
- Network4 -b/h        &    0.567 &       0.764 &    0.184 & 10.0 $\pm$ 0.0 \\
-
-\hline
-\end{tabular}
-\end{minipage}
-\hspace{0.8cm}
-\begin{minipage}[h]{0.45\linewidth}
-\begin{tabular}{lrrrr}
- Network1 b/h        &    0.556 &       0.928 &    0.044 & 17.2 $\pm$ 2.0 \\
- Network2 b/-h      &    0.573 &       0.935 &    0.041 & 17.6 $\pm$ 3.2    \\
- Network3 -b/-h      &    0.579 &       0.947 &    0.118 & 12.8 $\pm$ 0.9 \\
- Network4 -b/h      &    0.718 &       0.943 &    0.457 & 10.8 $\pm$ 0.7 \\
-
-\hline
-\end{tabular}
-\end{minipage}
-
-% K = 15
-
-	\begin{minipage}[h]{0.45\linewidth} 
-K = 15
-\begin{tabular}{lrrrr}
- Network1 b/h          &    0.555 &       0.871 &    0.035 & 15.0 $\pm$ 0.0 \\
- Network2 b/-h        &    0.570 &       0.854 &    0.030 & 15.0 $\pm$ 0.0 \\
- Network3 -b/-h        &    0.532 &       0.728 &    0.027 & 15.0 $\pm$ 0.0 \\
- Network4 -b/h        &    0.565 &       0.757 &    0.178 & 15.0 $\pm$ 0.0 \\
-
-\hline
-\end{tabular}
-\end{minipage}
-\hspace{0.8cm}
-\begin{minipage}[h]{0.45\linewidth}
-\begin{tabular}{lrrrr}
- Network1 b/h        &    0.569 &       0.928 &    0.046 & 20.8 $\pm$ 1.3 \\
- Network2 b/-h      &    0.564 &       0.903 &    0.042 & 21.6 $\pm$ 2.4 \\
- Network3 -b/-h      &    0.594 &       0.952 &    0.153 & 18.0 $\pm$ 0.8 \\
- Network4 -b/h      &    0.723 &       0.945 &    0.467 & 15.0 $\pm$ 0.0    \\
-
-\hline
-\end{tabular}
-\end{minipage}
-
-% K = 20
-
-	\begin{minipage}[h]{0.45\linewidth} 
-K = 20
-\begin{tabular}{lrrrr}
-
- Network1 b/h           &   0.5501 &      0.8980 &   0.0425 & 20 \\
- Network2 b/-h        &   0.5734 &      0.9615 &   0.0326 & 20 \\
- Network3 -b/-h       &   0.5286 &      0.6456 &   0.0255 & 20 \\
- Network4 -b/h         &   0.5577 &      0.7475 &   0.1662 & 20 \\
-\hline
-\end{tabular}
-\end{minipage}
-\hspace{0.8cm}
-\begin{minipage}[h]{0.45\linewidth}
-\begin{tabular}{lrrrr}
- Network1 b/h         &   0.5428 &      0.9737 &   0.0359 &  21 \\
- Network2 b/-h      &   0.5577 &      0.8462 &   0.0389 &  20 \\
- Network3 -b/-h     &   0.5997 &      0.9503 &   0.1630 &  22 \\
- Network4 -b/h      &   0.7291 &      0.9473 &   0.4813 & 20 \\
-\hline
-\end{tabular}
-\end{minipage}
-\end{table*}
-
+%% Debug 11 / MASK 1
+%
+%% K = 5
+%
+%\begin{table*}[h] \label{table:balanced}
+%\caption{Predictive Performance on a Balanced Testing set}
+%	\begin{minipage}[h]{0.45\linewidth} 
+%K =  5\hspace{5pt}
+%\begin{tabular}{lrlll}
+%\hline
+% IMMSB   &   global &   precision &   recall &    K-\ensuremath{>} \\
+%\hline
+% Network1 b/h           &    0.549 &       0.758 &    0.022 & 5.0 $\pm$ 0.0 \\
+% Network2 b/-h        &    0.558 &       0.834 &    0.019 & 5.0 $\pm$ 0.0 \\
+% Network3 -b/-h        &    0.527 &       0.729 &    0.027 & 5.0 $\pm$ 0.0 \\
+% Network4 -b/h        &    0.557 &       0.743 &    0.162 & 5.0 $\pm$ 0.0 \\
+%
+%\hline
+%\end{tabular}
+%\end{minipage}
+%\hspace{0.8cm}
+%\begin{minipage}[h]{0.45\linewidth}
+%\begin{tabular}{lrlll}
+%\hline
+% ILFM   &   global &   precision &   recall &     K-\ensuremath{>} \\
+%\hline
+% Network1       &    0.568 &       0.912 &    0.047 & 13.6 $\pm$ 2.3 \\
+% Network2      &    0.574 &       0.893 &    0.041 & 16.4 $\pm$ 3.4 \\
+% Network3       &    0.571 &       0.912 &    0.100 & 9.2 $\pm$ 1.3 \\
+% Network4      &    0.668 &       0.906 &    0.362 & 7.6 $\pm$ 1.3 \\
+%
+%\hline
+%\end{tabular}
+%\end{minipage}
+%
+%% K = 10
+%
+%	\begin{minipage}[h]{0.45\linewidth} 
+%K = 10
+%\begin{tabular}{lrrrr}
+% Network1         &    0.558 &       0.842 &    0.028 & 10.0 $\pm$ 0.0 \\
+% Network2        &    0.567 &       0.926 &    0.034 & 10.0 $\pm$ 0.0 \\
+% Network3         &    0.530 &       0.776 &    0.027 & 10.0 $\pm$ 0.0 \\
+% Network4        &    0.567 &       0.764 &    0.184 & 10.0 $\pm$ 0.0 \\
+%
+%\hline
+%\end{tabular}
+%\end{minipage}
+%\hspace{0.8cm}
+%\begin{minipage}[h]{0.45\linewidth}
+%\begin{tabular}{lrrrr}
+% Network1       &    0.556 &       0.928 &    0.044 & 17.2 $\pm$ 2.0 \\
+% Network2      &    0.573 &       0.935 &    0.041 & 17.6 $\pm$ 3.2    \\
+% Network3       &    0.579 &       0.947 &    0.118 & 12.8 $\pm$ 0.9 \\
+% Network4      &    0.718 &       0.943 &    0.457 & 10.8 $\pm$ 0.7 \\
+%
+%\hline
+%\end{tabular}
+%\end{minipage}
+%
+%% K = 15
+%
+%	\begin{minipage}[h]{0.45\linewidth} 
+%K = 15
+%\begin{tabular}{lrrrr}
+% Network1         &    0.555 &       0.871 &    0.035 & 15.0 $\pm$ 0.0 \\
+% Network2        &    0.570 &       0.854 &    0.030 & 15.0 $\pm$ 0.0 \\
+% Network3         &    0.532 &       0.728 &    0.027 & 15.0 $\pm$ 0.0 \\
+% Network4        &    0.565 &       0.757 &    0.178 & 15.0 $\pm$ 0.0 \\
+%
+%\hline
+%\end{tabular}
+%\end{minipage}
+%\hspace{0.8cm}
+%\begin{minipage}[h]{0.45\linewidth}
+%\begin{tabular}{lrrrr}
+% Network1       &    0.569 &       0.928 &    0.046 & 20.8 $\pm$ 1.3 \\
+% Network2      &    0.564 &       0.903 &    0.042 & 21.6 $\pm$ 2.4 \\
+% Network3       &    0.594 &       0.952 &    0.153 & 18.0 $\pm$ 0.8 \\
+% Network4      &    0.723 &       0.945 &    0.467 & 15.0 $\pm$ 0.0    \\
+%
+%\hline
+%\end{tabular}
+%\end{minipage}
+%
+%% K = 20
+%
+%	\begin{minipage}[h]{0.45\linewidth} 
+%K = 20
+%\begin{tabular}{lrrrr}
+%
+% Network1          &   0.5501 &      0.8980 &   0.0425 & 20 \\
+% Network2        &   0.5734 &      0.9615 &   0.0326 & 20 \\
+% Network3        &   0.5286 &      0.6456 &   0.0255 & 20 \\
+% Network4         &   0.5577 &      0.7475 &   0.1662 & 20 \\
+%\hline
+%\end{tabular}
+%\end{minipage}
+%\hspace{0.8cm}
+%\begin{minipage}[h]{0.45\linewidth}
+%\begin{tabular}{lrrrr}
+% Network1        &   0.5428 &      0.9737 &   0.0359 &  21 \\
+% Network2      &   0.5577 &      0.8462 &   0.0389 &  20 \\
+% Network3      &   0.5997 &      0.9503 &   0.1630 &  22 \\
+% Network4      &   0.7291 &      0.9473 &   0.4813 & 20 \\
+%\hline
+%\end{tabular}
+%\end{minipage}
+%\end{table*}
+%
 
 %\begin{table}
 %    \caption{Homohily test for IMMSB fit on diferent configarations}
@@ -255,3 +256,104 @@ K = 20
 %\hline
 %\end{tabular}
 %\end{table}
+
+% Debug 11 / MASK 1
+
+% K = 5
+
+\begin{table*}[h] \label{table:real_pred}
+\caption{Predictive Performance on a Real Datasets}
+	\begin{minipage}[h]{0.45\linewidth} 
+K = 5\hspace{5pt}
+\begin{tabular}{llllll}
+\hline
+ IMMSB   &   global &   precision &   recall & $f_1$ &    K-\ensuremath{>} \\
+\hline
+ fb\_uc          &    0.989 &       0.057 &    0.061 &  0.053 &   6.0 $\pm$ 1.2 \\
+ manufacturing  &    0.809 &       0.545 &    0.550 & 	0.576 &	5.0 $\pm$ 0.3 \\
+
+
+\hline
+\end{tabular}
+\end{minipage}
+\hspace{0.8cm}
+\begin{minipage}[h]{0.45\linewidth}
+\begin{tabular}{llllll}
+\hline
+  ILFM & global &   precision &   recall &   $f_1$ &   K-\ensuremath{>} \\
+\hline
+ fb\_uc            &    0.990 &       0.084 &    0.087 & 	0.084 &	10.8 $\pm$ 1.4 \\
+ manufacturing    &    0.831 &       0.589 &    0.588 & 	0.588 &	9.2 $\pm$ 0.9 \\
+
+
+\hline
+\end{tabular}
+\end{minipage}
+
+% K = 10
+
+	\begin{minipage}[h]{0.45\linewidth} 
+K = 10
+\begin{tabular}{llllll}
+ fb\_uc          &    0.990 &       0.055 &    0.051 &	0.053 &	 11.2 $\pm$ 0.8 \\
+ manufacturing  &    0.821 &       0.572 &    0.580 & 	0.576 &	10.7 $\pm$ 0.8 \\
+
+
+\hline
+\end{tabular}
+\end{minipage}
+\hspace{0.8cm}
+\begin{minipage}[h]{0.45\linewidth}
+\begin{tabular}{llllll}
+ fb\_uc            &    0.990 &       0.085 &    0.089 & 	0.086 &	12.4 $\pm$ 1.8 \\
+ manufacturing    &    0.838 &       0.613 &    0.610 & 	0.612 &	11.2 $\pm$ 1.5 \\
+
+
+\hline
+\end{tabular}
+\end{minipage}
+
+% K = 15
+
+	\begin{minipage}[h]{0.45\linewidth} 
+K = 15
+\begin{tabular}{lrrrrr}
+ fb\_uc          &    0.990 &       0.053 &    0.049 & 0.051 &		18.0 $\pm$ 2.5 \\
+ manufacturing  &    0.828 &       0.590 &    0.590 &  0.590 & 	16.2 $\pm$ 1.0 \\
+
+
+\hline
+\end{tabular}
+\end{minipage}
+\hspace{0.8cm}
+\begin{minipage}[h]{0.45\linewidth}
+\begin{tabular}{lrrrrr}
+ fb\_uc            &    0.990 &       0.085 &    0.086 & 	0.085 &	16.0 $\pm$ 0.0 \\
+ manufacturing    &    0.849 &       0.631 &    0.643 &		0.637 &	 14.5 $\pm$ 1.5 \\
+
+\hline
+\end{tabular}
+\end{minipage}
+
+% K = 20
+
+	\begin{minipage}[h]{0.45\linewidth} 
+K = 20
+\begin{tabular}{lrrrrr}
+ fb\_uc           &    0.990 &       0.055 &    0.052 & 0.053 &		23.2 $\pm$ 2.0 \\
+ manufacturing  &    0.831 &       0.593 &    0.595 & 	0.594 &	21.2 $\pm$ 0.4 \\
+
+\hline
+\end{tabular}
+\end{minipage}
+\hspace{0.8cm}
+\begin{minipage}[h]{0.45\linewidth}
+\begin{tabular}{lrrrrr}
+ fb\_uc            &    0.990 &       0.094 &    0.095 &	0.094 &	 19.0 $\pm$ 1.0 \\
+ manufacturing    &    0.852 &       0.648 &    0.641 & 	0.644 &	20.5 $\pm$ 0.5 \\
+
+\hline
+
+\end{tabular}
+\end{minipage}
+\end{table*}
