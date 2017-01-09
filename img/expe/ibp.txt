@@ -1,0 +1,37 @@
+Mode: predictive
+corpus: generator4
+ model: ibp
+ K = 10
+ N =  1000
+ hyper: 0
+KS data:  KstestResult(statistic=2725.6417798184102, pvalue=nan)
+KS synthetic:  KstestResult(statistic=2725.6438020631017, pvalue=nan)
+{'x_min': 71.0, 'alpha': 2.6790415568956378, 'n_head': 481.0, 'pvalue': 0.5884476534296029, 'n_tail': 508.0}
+Computing Local Preferential attachment
+clustering method: modularity, active clusters ratio: 1.000000
+KS data:  KstestResult(statistic=0.17115462274586835, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.077193508661034471, pvalue=1.7261158382853026e-05)
+{'x_min': 183.0, 'alpha': 3.1279323057637765, 'n_head': 53.0, 'pvalue': 0.0, 'n_tail': 920.0}
+/home/dtrckd/Desktop/workInProgress/networkofgraphs/process/pymake/src/utils/algo.py:399: RuntimeWarning: invalid value encountered in divide
+  cdf = lambda x: 1 - zeta(alpha, x) / zeta(alpha, x_min)
+KS data:  KstestResult(statistic=nan, pvalue=nan)
+KS synthetic:  KstestResult(statistic=nan, pvalue=nan)
+{'x_min': 990.0, 'alpha': 400.60869665075478, 'n_head': 808.0, 'pvalue': 0.0, 'n_tail': 49.0}
+KS data:  KstestResult(statistic=nan, pvalue=nan)
+KS synthetic:  KstestResult(statistic=nan, pvalue=nan)
+{'x_min': 991.0, 'alpha': 330.98401212036345, 'n_head': 824.0, 'pvalue': 0.0, 'n_tail': 73.0}
+KS data:  KstestResult(statistic=0.23449710739511465, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.13219616204690832, pvalue=9.3258734068513149e-15)
+{'x_min': 458.0, 'alpha': 3.5321453133906258, 'n_head': 120.0, 'pvalue': 0.0, 'n_tail': 818.0}
+KS data:  KstestResult(statistic=nan, pvalue=nan)
+KS synthetic:  KstestResult(statistic=nan, pvalue=nan)
+{'x_min': 991.0, 'alpha': 504.17364092647347, 'n_head': 866.0, 'pvalue': 0.0, 'n_tail': 34.0}
+KS data:  KstestResult(statistic=0.34212829493901165, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.29580348004094165, pvalue=0.0)
+{'x_min': 460.0, 'alpha': 3.06386227709829, 'n_head': 285.0, 'pvalue': 0.0, 'n_tail': 692.0}
+KS data:  KstestResult(statistic=0.34820795216441564, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.18216181753427707, pvalue=0.0)
+{'x_min': 474.0, 'alpha': 3.481244920788265, 'n_head': 166.0, 'pvalue': 0.0, 'n_tail': 795.0}
+density: 0.05993
+
+
