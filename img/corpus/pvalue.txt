@@ -1,0 +1,10 @@
+\begin{tabular}{lrrrr}
+\hline
+           &   pvalue &   alpha &   x\_min &   n\_tail \\
+\hline
+ Network 4 &    0.000 &   1.435 &       5 &  977.000 \\
+ Network 3 &    1.000 &   1.952 &       4 &  943.000 \\
+ Network 2 &    0.982 &   2.897 &       3 & 1000.000 \\
+ Network 1 &    1.000 &   2.424 &       3 & 1000.000 \\
+\hline
+\end{tabular}

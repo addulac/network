@@ -1,0 +1,318 @@
+\documentclass[a4paper, 12pt]{article}
+
+%\usepackage[cmex10]{amsmath, mathtools}
+\usepackage{amsmath,amssymb,amsbsy,amsfonts,amsthm}
+\usepackage{multirow}
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{url}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{fancyvrb}
+\usepackage{yfonts}
+\usepackage{dsfont}
+\usepackage{calc} %    For the \widthof macro
+\usepackage{xparse} %  For \NewDocumentCommand
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{lipsum}
+%\input{../tikz.conf}
+
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+\usetikzlibrary{bayesnet}
+
+%%%%%%%%%%%%%%%%%%%%
+%%% Goemetry
+%%%%%%%%%%%%%%%%%%%%
+%\usepackage[margin=0.25in]{geometry}
+\usepackage{geometry}
+\geometry{
+    a4paper,
+ total={420pt,700pt},
+ %left=20mm,
+ top=20mm,
+ }
+
+
+\title{Networks Properties Properties}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Training Datasets}
+
+\subsection{Artificial networks}
+
+The artificial networks have been generated with ANC-Generator \cite{largeron2015}. This generator has been chosen because it allows to build attributed graphs with  community structure faithfully following the known properties of real-world networks such as preferential attachment and homophily.
+Moreover, by modifying the parameters, these properties can be weakened. Finally, ANC-Generator is available under the terms of the GNU Public License and the        parameters can be shared for experiments reproducibility.
+
+Four artificial networks have been generated. Each of them characterized by a different affinities to preferential attachment and homphily. Their adjacency matrices and global degree distribution has been reported in figure \ref{fig:synt_graph}. In table \ref{table:synt_graph} we report the results of a power law goodness of fit for degree distribution of the networks. Figure \ref{fig:synt_graph_local} represent the local degree distribution associated to each \emph{ground truth} cluster for each networks. Table \ref{xx} report the power law goodness of fit results in the local case.
+
+
+\input{t/a.tex}
+\input{t/b.tex}
+
+\begin{table}[h]
+\label{table:synt_graph}
+\caption{Power law goodness of fit results for characterization of global degree attachment in synthetic networks.}
+\centering
+\begin{tabular}{lrrrr}
+\hline
+           &   pvalue &   alpha &   x\_min &   n\_tail \\
+\hline
+ Network 4 &    0.000 &   1.354 &       3 & 1000.000 \\
+ Network 3 &    0.798 &   1.758 &       3 & 1000.000 \\
+ Network 2 &    0.971 &   2.897 &       3 & 1000.000 \\
+ Network 1 &    1.000 &   2.424 &       3 & 1000.000 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Real networks}
+
+We evaluate also the models on two  real networks.
+The first one \footnote{available at:} is built from an online community of 1899 students from the University of California. Each node corresponds to a user and a    directed edge represents a sent message.
+The second one \footnote{available at:} is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated  to an employee and an oriented link represents like previously a sent email.
+
+Their adjacency matrices and global degree distribution has been reported in figure \ref{fig:real_graph}.  Table \ref{table:real_graph} summarizes some properties characteristics of these artificial and real datasets. The goodness of fit is reported in table \ref{table:real_graph}  as a reference for the global preferential attachment effect. 
+
+\input{t/c.tex}
+
+\begin{table}
+\label{table:real_graph}
+\caption{Power law goodness of fit results for characterization of global degree attachment in real networks.}
+\centering
+\begin{tabular}{lrrrr}
+   &   pvalue &   alpha &   x\_min &   n\_tail \\
+\hline
+ Manufacturing &    0.000 &   1.434 &       3 &  167.000 \\
+ UC Irvine     &    0.989 &   1.787 &       3 & 1899.000 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Goodness of fit measure}
+
+\label{sec:experiments-burst}
+Preferential attachment leads to networks characterized by a degree distribution with heavy tail. A typical form of such law, often meet in data, is a a power law distribution. Comparison of the degree distribution with a linear function in the log-log scale  gives us a qualitative measure for the preferential attachment. However, for a better evaluation of the power law hypothesis on the degree distribution, we rely on a  goodness a fit based on a Kolmogorov-Smirnov (KS) test. We follow the protocol described in \cite{clauset2009power} which consists of the following steps:
+\begin{itemize}
+	\item Estimate the parameters $x_\text{min}$ and $\alpha$ of the power law model. Nevertheless, in order to provide a comparable measure of different degrees distributions, as it is the case in our experimentations, we chose to fix $x_\text{min}$  to the smallest value observed in the degree distribution evaluated.
+	\item Calculate the goodness of fit of the data sample (typically the degree of a networks). The resulting $p$-values gives an estimate of the  plausibility of the hypothesis for the data. The p-value is actually the ratio of the number of the time that a kolmogorov-Smirnov test statistics, evaluated on samples generated by the power law, is higher than the KS test statistics on the data samples. 
+    \item the number of time $S$, the KS statistics is compared is chose, following \cite{clauset2009power}, with a precision of $\epsilon = 3^{-2}$. The  number of loop is then $S = \frac{1}{4}\epsilon^{-2}$.
+\end{itemize}
+
+As mentioned in \cite{clauset2009power} high value of the $p$-value should be considered with caution for at least two reasons. First, there may be other distribution that match the data equally or better. Second, a small number of samples of the data may lead to high p-value and reflect the fact that is hard to rule out an hypothesis in such a case.
+
+\subsection{Homophily and Clustering measure}
+\textcolor{red}{Temporally section, just in case}
+
+Here is a  table where are reported homophily (from Dancer, with the Kleinberg measure, $H_{obs} - H_{exp}$)) and clustering measure to show the correlation that exists between those measure. 
+
+In order to highlight correlation between different properties of learning datasets (other than the burstiness). And answer the following questions: ~\\
+
+\hspace{1cm}\textit{"Are the burstinesses effects really decorrelated from other properties (clustering, sparstity), to conclude on the fact that a model perform better than a other because of this particular properties (ie the global or local burstiness) ? (\textbf{Correlation \emph{vs} Causality}) } (the same questions holds for the impact that each properties have on each other. ) 
+
+\begin{table}[h] \label{table:artificial_networks_hom}
+\centering
+	\caption{table:artificial networks clustering and homophily measures.}
+	\begin{tabular}{lcrrr}
+		\hline
+		Networks   &  homophily ($H_ {obs}$ ; $\Delta_{obs - exp}$)    &  Modularity & Clustering coefff & density   \\
+		\hline
+		$Network1$  & 0.561 ;  0.08  &0.59  & 0.06 & 0.007  \\
+		$Network2$  & 0.429 ; -0.04  &0.43  & 0.08 & 0.006 \\
+		$Network3$  & 0.439 ; -0.03  &0.71  & 0.49 & 0.01 \\
+		$Network4$  & 0.621 ;  0.18  &0.68  & 0.61 & 0.06 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{$M_e$ -- Model fitted}
+
+For each datasets described earlier, we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameter for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. Each experiences were averaged on 10 repetitions, and results were found to be stable regarding on the random  initialization and the stochastic optimization procedure. 
+ 
+
+In order to evaluate the  prediction performance of the models, we build a training set and a testing set from the original datasets. In order to achieve this, we build a random mask consisting of 20 percent of the size of the adjacency matrix. This mask is used a our testing set, while the 80 remaining percent are used as a training set. The results for the prediction evaluation are reported in i) the AUC-ROC measures in figure \ref{fig:auc}, and ii) in the precision/recall results in table \ref{table:unbalanced}.
+
+The inference procedure was run under this settings in all of the 4 synthetic datasets and 2 real networks.
+
+All our experimental platform is available online \footnote{https://github.com/dtrckd/pymake}. It is an ongoing development in order to provide a flexible way to design and run experiments and make data analysis.
+
+\input{t/table_results}
+
+\input{t/auc}
+
+
+\subsection{Burstiness}
+
+In order to measure the different level of burstiness we used the models to generate full networks. (The procedure for such measure is similar than those explain in the section \ref{sec:mgmg}. Thus given the model parameters $\mathcal{M}_e = \{F ,\Phi\}$, we generate a set of 20 networks. In the next, results are averaged  with standard deviation for all those generated networks.
+
+% Global
+In figure \ref{fig:me_fit_gburst_mmsb} and \ref{fig:me_fit_gburst_mmsb}, we report the global degree for generated networks for respectively IMMSB and ILFM. In Table \ref{table_global_gof}, we report the corresponding goodness of fit evaluation.
+
+\textcolor{red}{here comment...} 
+
+\input{t/me_fit_gburst_mmsb}
+\input{t/me_fit_gburst_ibp}
+
+\begin{table}
+    \label{table:global_gof}
+    \caption{Power law Goodness of fit for the global preferential attachment effect.}
+    \begin{tabular}{lllll}
+    \hline
+        \textbf{IMMSB} & pvalue          & alpha           & x\_min          & n\_tail           \\
+    \hline
+    Network 1     & 0.907 $\pm$ 0.11 & 1.396 $\pm$ 0.004 & 1.0 $\pm$ 0.0    & 990.1 $\pm$ 3.1  \\
+    Network 2     & 1.0 $\pm$ 0.0     & 1.452 $\pm$ 0.005 & 1.0 $\pm$ 0.0    & 974.4 $\pm$ 4.9  \\
+    Network 3     & 0.0 $\pm$ 0.0     & 1.294 $\pm$ 0.001 & 1.0 $\pm$ 0.0    & 999.0 $\pm$ 0.9 \\
+    Network 4     & 0.0 $\pm$ 0.0     & 1.203 $\pm$ 0.025 & 1.25 $\pm$ 0.5 & 999.1 $\pm$ 0.7 \\
+    Manufacturing & 0.006 $\pm$ 0.01 & 1.244 $\pm$ 0.002 & 1.0 $\pm$ 0.0    & 165.3 $\pm$ 1.3 \\
+    UC Irvine     & 1.0 $\pm$ 0.0     & 1.348 $\pm$ 0.002 & 1.0 $\pm$ 0.0    & 1852.7 $\pm$ 5.7 \\
+    \hline
+    \end{tabular}
+
+    \begin{tabular}{lllll}
+    \hline
+        \textbf{ILFM} & pvalue          & alpha           & x\_min       & n\_tail           \\
+    \hline
+    Network 1     & 1.0 $\pm$ 0.0     & 1.4 $\pm$ 0.003 & 1.0 $\pm$ 0.0 & 919.5 $\pm$ 5.9 \\
+    Network 2     & 1.0 $\pm$ 0.0     & 1.4 $\pm$ 0.004 & 1.0 $\pm$ 0.0 & 893.7 $\pm$ 7.1  \\
+    Network 3     & 0.01 $\pm$ 0.02  & 1.3 $\pm$ 0.002 & 1.0 $\pm$ 0.0 & 982.7 $\pm$ 3.6 \\
+    Network 4     & 0.0 $\pm$ 0.0     & 1.2 $\pm$ 0.018 & 1.1 $\pm$ 0.3 & 998.4 $\pm$ 0.9 \\
+    Manufacturing & 0.018 $\pm$ 0.01 & 1.2 $\pm$ 0.002 & 1.0 $\pm$ 0.0 & 164.2 $\pm$ 1.4 \\
+    UC Irvine     & 1.0 $\pm$ 0.0     & 1.3 $\pm$ 0.002 & 1.0 $\pm$ 0.0 & 1798.3 $\pm$ 8.2 \\
+    \hline
+    \end{tabular}
+\end{table}
+
+
+
+% Local
+In figure \ref{fig:me_fit_lburst_mmsb} and \ref{fig:me_fit_lburst_ibp}, we report the local degree for generated networks for respectively IMMSB and ILFM. In Table \ref{local_global_gof}, we report the corresponding goodness of fit evaluation. \underline{Note, that the pvalue reported here, are the averaged of all} classes.
+
+
+\textcolor{red}{here comment...} ~\\
+\textcolor{red}{x\_min could be removed from table, I explains earlier how I choose it.}
+
+\input{t/me_fit_lburst_mmsb}
+\input{t/me_fit_lburst_ibp}
+
+
+\begin{table}
+    \label{table:local_gof}
+    \caption{Power law Goodness of fit for the local preferential attachment effect.}
+    \begin{tabular}{lllll}                                                                                    
+    \hline                                                                
+        \textbf{IMMSB}  & pvalue         & alpha           & x\_min          & n\_tail             \\            
+    \hline                                                                                                    
+    Network 1     & 1.0 $\pm$ 0.0    & 7.433 $\pm$ 2.2 & 1.0 $\pm$ 0.0    & 53.737 $\pm$ 9.8   \\
+    Network 2     & 1.0 $\pm$ 0.0    & 1 $\pm$ 0.0    & 1.0 $\pm$ 0.0    & 41.895 $\pm$ 11.2  \\                             
+    Network 3     & 1.0 $\pm$ 0.0    & 4.074 $\pm$ 0.7 & 1.0 $\pm$ 0.0    & 112.143 $\pm$ 18.5 \\                
+    Network 4     & 1.0 $\pm$ 0.0    & 1.957 $\pm$ 0.2 & 1.0 $\pm$ 0.0    & 316.095 $\pm$ 69.5 \\
+    Manufacturing & 0.55 $\pm$ 0.5 & 1.242 $\pm$ 1.1 & 0.55 $\pm$ 0.4 & 31.4 $\pm$ 14.644    \\              
+    UC Irvine     & 1.0 $\pm$ 0.0    & 5.213 $\pm$ 0.9 & 1.0 $\pm$ 0.0    & 242.0 $\pm$ 26.1   \\                
+    \hline                                                                
+    \end{tabular}    
+
+    \begin{tabular}{lllll}                                                                                    
+    \hline                                                                
+        \textbf{ILFM} & pvalue         & alpha           & x\_min          & n\_tail             \\            
+    \hline                                                                                                    
+    Network 1     & 1.0 $\pm$ 0.0    & 7.433 $\pm$ 2.181 & 1.0 $\pm$ 0.0    & 53.737 $\pm$ 9.8   \\
+    Network 2     & 1.0 $\pm$ 0.0    & None $\pm$ 0.0    & 1.0 $\pm$ 0.0    & 41.895 $\pm$ 11.2  \\                             
+    Network 3     & 1.0 $\pm$ 0.0    & 4.074 $\pm$ 0.706 & 1.0 $\pm$ 0.0    & 112.143 $\pm$ 18.5 \\                
+    Network 4     & 1.0 $\pm$ 0.0    & 1.957 $\pm$ 0.226 & 1.0 $\pm$ 0.0    & 316.095 $\pm$ 69.5 \\
+    Manufacturing & 0.55 $\pm$ 0.497 & 1.242 $\pm$ 1.156 & 0.55 $\pm$ 0.497 & 31.4 $\pm$ 14.6    \\              
+    UC Irvine     & 1.0 $\pm$ 0.0    & 5.213 $\pm$ 0.902 & 1.0 $\pm$ 0.0    & 242.0 $\pm$ 26.1   \\                
+    \hline                                                                
+    \end{tabular}    
+\end{table}
+
+\subsection{Homophily}
+
+We evaluate in this section the behaviour of homophily of models according to both, the natural and the latent similarity, reported respectively in tables \ref{table:homo_natural} and \ref{table:homo_latent}. Those results are obtained by computing the Pearson correlation coefficient between a random adjacency matrix and a similarity matrix matrix as defined in \ref{sec_homophily} from a model (either IMMSB or ILFM). Each of these coefficient is averaged an basis on 20 networks generated from the fitted models in the same setting than for previous section.
+
+Firstly, we can notice that the results are stable since the standard deviation is not significant for all experiments. Secondly those results illustrate the fact that both models are homophilic under the natural similarity with a positive correlation in all networks,  and not under the latent similarity with a correlation coefficient near to 0 and oscillating between positive and negative value (Note this last fact depend on the initialization and the seed of the models).
+
+\begin{table}
+    \caption{Correlation between the natural similarity matrix and adjacency matrix for IMMSB and ILFM.}
+    \begin{tabular}{lll}
+    \hline
+    & IMMSB   & ILFM  \\
+    \hline
+    Network 1     & 0.23 $\pm$ 0.004  & 0.135 $\pm$ 0.001      \\
+    Network 2     & 0.225 $\pm$ 0.005 & 0.112 $\pm$ 0.001      \\
+    Network 3     & 0.186 $\pm$ 0.002 & 0.165 $\pm$ 0.001      \\
+    Network 4     & 0.385 $\pm$ 0.001 & 0.443 $\pm$ 0.0        \\
+    Manufacturing & 0.661 $\pm$ 0.003 & 0.583 $\pm$ 0.002      \\
+    UC Irvine     & 0.21 $\pm$ 0.002  & 0.129 $\pm$ 0.001      \\
+    \hline
+    \end{tabular}
+\end{table}
+
+
+\begin{table}
+    \caption{Correlation between the latent similarity matrix and adjacency matrix for IMMSB and ILFM.}
+    \begin{tabular}{lll}
+    \hline
+    & ILFM  & IMMSB \\
+    \hline
+    Network 1     & 0.021 $\pm$ 0.001  & -0.035 $\pm$ 0.001      \\
+    Network 2     & -0.007 $\pm$ 0.001 & -0.051 $\pm$ 0.001      \\
+    Network 3     & 0.012 $\pm$ 0.001  & 0.002 $\pm$ 0.001       \\
+    Network 4     & 0.141 $\pm$ 0.001  & 0.056 $\pm$ 0.001       \\
+    Manufacturing & 0.11 $\pm$ 0.003   & 0.073 $\pm$ 0.004       \\
+    UC Irvine     & 0.148 $\pm$ 0.002  & -0.063 $\pm$ 0.0        \\
+    \hline
+    \end{tabular}
+\end{table}
+
+
+
+
+\section{$M_e$ -- Model Generated}
+\label{sec:mgmg}
+
+\subsection{Burstiness}
+
+\textcolor{red}{Je changerais la forme (comment les groupe de figure sont plotté) selon ce que lon conviendra de conserver dan le partie expé.}
+
+We illustrate the burstiness results by generating 3 random networks for each of both models. We report it in figure \ref{fig:gen_burst}. We use the 3 same settings for IMMSB  than those in the previous section. For ILFM  we use the following 3 settings: (column 1:$\alpha=1,  \lambda_1=\lambda_2=1$ , column 2:$\alpha=0.1, \lambda_1=\lambda_2=1$, column 3: $\alpha=1, \lambda_1=\lambda_2=10$) and we fix $\sigma_w=1$ and again $N=1000$.
+
+Each row of the two sets of figures represents the three following measures who corresponds respectively to the global preferential attachment, the local preferential attachment and the feature burstiness:
+\begin{itemize}
+    \item First row: we measure the overall degree distributions; We report the average and standard deviation of the degree distribution in a linear scale for each generated network.
+    \item Second row: we measure the local degree distribution on a log-log scale:
+        \begin{itemize}
+            \item for IMMSB, each network has an associated membership tensor $Z$, that indicates the membership of nodes for each  interactions. In order to draw the local degree distribution for a block $c$, we reduce the adjacency matrix in order to retain only the links that occurs inside a block $c$. The local degree distribution is thus computed on the reduce adjacency matrix $Y_c = Y \otimes (Z_i^c \times Z_j^c)$ where $\otimes$ is the hadamard product and $\times$ the outer product. $Z_i^c$ is the membership matrix of a nodes $i$ such that $Z_{ik}^c=0$ if $k\neq c$ (links that occurs outside $c$ will be ignored).
+            \item for ILFM, each node is associated with a fix feature vector; the local degree distribution for the block $c$ is obtain by taking only the contribution of the features $c$ on the adjacency matrix. Thus, the local degree degree distribution is computed on the reduce adjacency matrix $Y_c = Y \otimes (F_{.c}\times F_{.c})$. 
+        \end{itemize}
+    \item Third row measure the distribution of the block membership, which directly reflect the feature burstiness. Hence for IMMSB, for a feature $k$, we measure $\sum_{ij} \mathds{1}(Z_{i\rightarrow j} = k, Z_{i\leftarrow j} = k)$ which indicates the number of nodes who were associated to the block $k$. For ILFM the number of nodes associated to a block $k$ is simply $\sum_n F_{nk}$.
+\end{itemize}
+
+
+% not sure it use significantly usefull, because p-value are either 0 or 1 ...
+%We provide in annexe (\textcolor{red}{not yet included}),  an goodness of fit for all local degrees distribution that we plotted, in order to quantify the power law hypothesis on the empirical degree distributions. The number of feature is typically too small to evaluate an significant goodness of fit. The protocol is described in section \ref{sec:experiments-busrt}. 
+
+The simulation shows us the following facts about the properties of the models:
+\begin{itemize}
+	\item For both model the global degree distribution don't exhibit a bursty phenomenon,
+	\item The local degree distribution show that IMMSB exhibit a bursty phenomenon which is not the case for ILFM,
+	\item Both models exhibits a bursty phenomenon on the feature distribution. This distributions for ILFM has a long tail for all of the 3 settings while for IMMSB, the tail shape is more or less long depending of the $\alpha$ and $\gamma$ parameters.
+\end{itemize}
+
+For the case of the global preferential attachment we have no formal proof for the non-compliance of the models, due the non closed form of the evidence in both models, due to the admixture design \textcolor{red}{ref ((Multiple Hypergeometric Functions: Probabilistic Interpretations and Statistical Uses
+James M. Dickey )) ce papier est cite dans LDA pour justifier l'inference approxime, mais je n'arrive pas a trouver ca papier !!!}. However, as reported simulations (figure \ref{fig:gen_burst}), we see that the empirical distributions of the overall degrees are clearly non bursty.
+
+\input{t/me_generate_burst}
+
+
+\subsection{Homophily}
+
+
+\end{document}

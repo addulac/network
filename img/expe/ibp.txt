@@ -35,3 +35,158 @@ KS synthetic:  KstestResult(statistic=0.18216181753427707, pvalue=0.0)
 density: 0.05993
 
 
+Mode: predictive
+corpus: generator10
+ model: ibp
+ K = 11
+ N =  1000
+ hyper: 0
+KS data:  KstestResult(statistic=1.2339050194162531, pvalue=nan)
+KS synthetic:  KstestResult(statistic=1.2298024553136888, pvalue=nan)
+{'x_min': 3.0, 'alpha': 1.5424080555154047, 'n_head': 109.0, 'pvalue': 0.5523465703971119, 'n_tail': 866.0}
+Computing Local Preferential attachment
+clustering method: modularity, active clusters ratio: 1.000000
+KS data:  KstestResult(statistic=0.4536464699219549, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.4536464699219549, pvalue=0.0)
+{'x_min': 24.0, 'alpha': 2.9382859576342026, 'n_head': 185.0, 'pvalue': 0.516245487364621, 'n_tail': 803.0}
+KS data:  KstestResult(statistic=0.52564986489077137, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.24964936886395511, pvalue=0.0)
+{'x_min': 477.0, 'alpha': 4.723518144629975, 'n_head': 166.0, 'pvalue': 0.0, 'n_tail': 547.0}
+KS data:  KstestResult(statistic=0.54384461318553523, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.22803347280334729, pvalue=0.0)
+{'x_min': 193.0, 'alpha': 3.6642650850953826, 'n_head': 211.0, 'pvalue': 0.0, 'n_tail': 745.0}
+KS data:  KstestResult(statistic=0.50051557754114551, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.19855943770261109, pvalue=0.0)
+{'x_min': 246.0, 'alpha': 4.299743591477073, 'n_head': 172.0, 'pvalue': 0.0, 'n_tail': 720.0}
+KS data:  KstestResult(statistic=0.54678642862107507, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.19753086419753085, pvalue=0.0)
+{'x_min': 318.0, 'alpha': 3.8815929349391203, 'n_head': 161.0, 'pvalue': 0.0, 'n_tail': 730.0}
+density: 0.01019
+Mode: predictive
+corpus: generator12
+ model: ibp
+ K = 13
+ N =  1000
+ hyper: 0
+KS data:  KstestResult(statistic=0.18017730214971983, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.44804469273743019, pvalue=0.0)
+{'x_min': 1.0, 'alpha': 1.4106332265326209, 'n_head': 133.0, 'pvalue': 1.0, 'n_tail': 762.0}
+Computing Local Preferential attachment
+clustering method: modularity, active clusters ratio: 1.000000
+KS data:  KstestResult(statistic=0.51004977109381144, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.50904170657768233, pvalue=0.0)
+{'x_min': 12.0, 'alpha': 3.1413005765141349, 'n_head': 257.0, 'pvalue': 0.5776173285198556, 'n_tail': 735.0}
+KS data:  KstestResult(statistic=0.80035536993958933, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.5165929203539823, pvalue=0.0)
+{'x_min': 178.0, 'alpha': 3.7496275738016416, 'n_head': 490.0, 'pvalue': 0.0, 'n_tail': 414.0}
+KS data:  KstestResult(statistic=0.79123548898940099, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.49404761904761907, pvalue=0.0)
+{'x_min': 408.0, 'alpha': 5.2299683844751099, 'n_head': 356.0, 'pvalue': 0.0, 'n_tail': 316.0}
+KS data:  KstestResult(statistic=0.52272047158050905, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.40713224368499257, pvalue=0.0)
+{'x_min': 577.0, 'alpha': 3.7579403318091797, 'n_head': 262.0, 'pvalue': 0.0, 'n_tail': 411.0}
+KS data:  KstestResult(statistic=0.74030092463925512, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.54545454545454541, pvalue=0.0)
+{'x_min': 525.0, 'alpha': 4.2743013191843264, 'n_head': 327.0, 'pvalue': 0.0, 'n_tail': 278.0}
+KS data:  KstestResult(statistic=0.56578947368421051, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.60675100946995941, pvalue=0.0)
+{'x_min': 448.0, 'alpha': 2.9575978938189769, 'n_head': 387.0, 'pvalue': 0.5595667870036101, 'n_tail': 297.0}
+KS data:  KstestResult(statistic=0.64956566702627427, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.53299492385786806, pvalue=0.0)
+{'x_min': 729.0, 'alpha': 5.728811284631778, 'n_head': 212.0, 'pvalue': 0.0, 'n_tail': 182.0}
+KS data:  KstestResult(statistic=0.69919779834381013, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.51987136381843913, pvalue=0.0)
+{'x_min': 703.0, 'alpha': 7.1956803438647388, 'n_head': 193.0, 'pvalue': 0.0, 'n_tail': 191.0}
+KS data:  KstestResult(statistic=0.80397340395684536, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.73397435897435892, pvalue=0.0)
+{'x_min': 539.0, 'alpha': 3.3099107207507612, 'n_head': 459.0, 'pvalue': 0.0, 'n_tail': 165.0}
+density: 0.003946
+Mode: predictive
+corpus: generator7
+ model: ibp
+ K = 16
+ N =  1000
+ hyper: 0
+KS data:  KstestResult(statistic=0.89757979099337626, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.92073304347408191, pvalue=0.0)
+{'x_min': 2.0, 'alpha': 1.6051584804086558, 'n_head': 204.0, 'pvalue': 0.47653429602888087, 'n_tail': 703.0}
+Computing Local Preferential attachment
+clustering method: modularity, active clusters ratio: 1.000000
+KS data:  KstestResult(statistic=0.6604436122725208, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.24739410770668363, pvalue=0.0)
+{'x_min': 582.0, 'alpha': 7.3073894523186489, 'n_head': 114.0, 'pvalue': 0.0, 'n_tail': 423.0}
+KS data:  KstestResult(statistic=0.58171666684951806, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.41323792486583183, pvalue=0.0)
+{'x_min': 656.0, 'alpha': 4.5130735011613865, 'n_head': 242.0, 'pvalue': 0.0, 'n_tail': 317.0}
+KS data:  KstestResult(statistic=0.65445539463920277, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.37718365728318437, pvalue=0.0)
+{'x_min': 639.0, 'alpha': 5.8658752413647131, 'n_head': 194.0, 'pvalue': 0.0, 'n_tail': 312.0}
+KS data:  KstestResult(statistic=0.58749057653837655, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.41533546325878595, pvalue=0.0)
+{'x_min': 609.0, 'alpha': 4.0121591917762078, 'n_head': 278.0, 'pvalue': 0.0, 'n_tail': 348.0}
+KS data:  KstestResult(statistic=0.57973213730771811, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.35412026726057905, pvalue=0.0)
+{'x_min': 715.0, 'alpha': 6.1040467978362463, 'n_head': 170.0, 'pvalue': 0.0, 'n_tail': 279.0}
+density: 0.00502
+Mode: predictive
+corpus: manufacturing
+ model: ibp
+ K = 11
+ N =  167
+ hyper: 0
+KS data:  KstestResult(statistic=0.29056240254104143, pvalue=1.3138379273414102e-12)
+KS synthetic:  KstestResult(statistic=0.24691358024691357, pvalue=3.4800291537351313e-09)
+{'x_min': 1.0, 'alpha': 1.2416673283976287, 'n_head': 7.0, 'pvalue': 0.20938628158844766, 'n_tail': 155.0}
+Computing Local Preferential attachment
+clustering method: modularity, active clusters ratio: 1.000000
+KS data:  KstestResult(statistic=8.1876708651575427, pvalue=nan)
+KS synthetic:  KstestResult(statistic=8.1876708651575427, pvalue=nan)
+{'x_min': 103.0, 'alpha': 5.4820191582333777, 'n_head': 40.0, 'pvalue': 0.7111913357400722, 'n_tail': 98.0}
+KS data:  KstestResult(statistic=2085.5701211716296, pvalue=nan)
+KS synthetic:  KstestResult(statistic=1123.0241672494683, pvalue=nan)
+{'x_min': 135.0, 'alpha': 10.974180128413433, 'n_head': 57.0, 'pvalue': 0.6606498194945848, 'n_tail': 77.0}
+KS data:  KstestResult(statistic=461.84213099788019, pvalue=nan)
+KS synthetic:  KstestResult(statistic=461.84213099788019, pvalue=nan)
+{'x_min': 142.0, 'alpha': 13.769830248931617, 'n_head': 70.0, 'pvalue': 0.6209386281588448, 'n_tail': 48.0}
+KS data:  KstestResult(statistic=540260.03966875386, pvalue=nan)
+KS synthetic:  KstestResult(statistic=540260.03966875386, pvalue=nan)
+{'x_min': 146.0, 'alpha': 16.62356819895723, 'n_head': 81.0, 'pvalue': 0.628158844765343, 'n_tail': 52.0}
+KS data:  KstestResult(statistic=14080.752148476422, pvalue=nan)
+KS synthetic:  KstestResult(statistic=6686.3643449295068, pvalue=nan)
+{'x_min': 139.0, 'alpha': 13.006930672819536, 'n_head': 80.0, 'pvalue': 0.6353790613718412, 'n_tail': 57.0}
+KS data:  KstestResult(statistic=2254.7139606262213, pvalue=nan)
+KS synthetic:  KstestResult(statistic=1206.4992893211006, pvalue=nan)
+{'x_min': 135.0, 'alpha': 11.075906776930212, 'n_head': 63.0, 'pvalue': 0.6389891696750902, 'n_tail': 71.0}
+density: 0.207357739611
+Mode: predictive
+corpus: fb_uc
+ model: ibp
+ K = 11
+ N =  1899
+ hyper: 0
+KS data:  KstestResult(statistic=0.63273308347126733, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.63720485541089833, pvalue=0.0)
+{'x_min': 2.0, 'alpha': 1.4480750772190842, 'n_head': 326.0, 'pvalue': 0.49458483754512633, 'n_tail': 1463.0}
+Computing Local Preferential attachment
+clustering method: modularity, active clusters ratio: 1.000000
+KS data:  KstestResult(statistic=0.43281269188244498, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.17301038062283736, pvalue=0.0)
+{'x_min': 229.0, 'alpha': 7.7014489422113792, 'n_head': 257.0, 'pvalue': 0.0, 'n_tail': 1477.0}
+KS data:  KstestResult(statistic=0.71135273607595451, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.52964426877470361, pvalue=0.0)
+{'x_min': 980.0, 'alpha': 3.7579726197287666, 'n_head': 633.0, 'pvalue': 0.0, 'n_tail': 632.0}
+KS data:  KstestResult(statistic=0.57852959469216336, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.30100896860986548, pvalue=0.0)
+{'x_min': 252.0, 'alpha': 4.9403280141391557, 'n_head': 502.0, 'pvalue': 0.0, 'n_tail': 1282.0}
+KS data:  KstestResult(statistic=0.58696865440739709, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.34238227146814404, pvalue=0.0)
+{'x_min': 244.0, 'alpha': 4.4781450837504959, 'n_head': 579.0, 'pvalue': 0.0, 'n_tail': 1226.0}
+KS data:  KstestResult(statistic=0.67669673279425602, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.37018480881067412, pvalue=0.0)
+{'x_min': 840.0, 'alpha': 3.6414033515343824, 'n_head': 559.0, 'pvalue': 0.0, 'n_tail': 933.0}
+KS data:  KstestResult(statistic=0.55970107672965008, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.23649198999527865, pvalue=0.0)
+{'x_min': 440.0, 'alpha': 7.626590430312989, 'n_head': 334.0, 'pvalue': 0.0, 'n_tail': 1229.0}
+KS data:  KstestResult(statistic=0.58642759786078735, pvalue=0.0)
+KS synthetic:  KstestResult(statistic=0.44461778471138846, pvalue=0.0)
+{'x_min': 1134.0, 'alpha': 3.7247628030153392, 'n_head': 556.0, 'pvalue': 0.0, 'n_tail': 726.0}
