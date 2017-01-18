@@ -35,7 +35,7 @@
  }
 
 
-\title{Networks Properties Properties}
+\title{Networks Properties -- Experiments}
 
 \begin{document}
 
@@ -327,22 +327,20 @@ In figure \ref{fig:me_fit_lburst_mmsb} and \ref{fig:me_fit_lburst_ibp}, we repor
 
 We evaluate in this section the behaviour of homophily of models according to both, the natural and the latent similarity.
 
-In table  \ref{table:homo_latent} we compute the Pearson correlation for the homophily measure. Note that this coefficient for the natural similarity is always equal to one.
+In table \ref{table:homo_pearson} we compute the Pearson correlation for the homophily measure. Note that this coefficient for the natural similarity is always equal to one.
 
-\begin{table}
+In table \ref{table:homo_natural} and \ref{table:homo_latent} we compute contingency tables for homophily.
+\textcolor{red}{ces deux tablueaux sont horrible a formater. Je les laisse tel quel pour le moemnt que tu vois les valeurs, masi je ne pense que ce soit la mesure à retenir. A la rigueur un average sur tout les network de cess valeurs...}
+
+\input{t/table_homo_natural}
+\input{t/table_homo_latent}
+
+\begin{table}[h]
     \caption{Correlation between the latent similarity matrix and the predictive likelihood for IMMSB and ILFM.}
-    \label{table:homo_conting}
-
-    to come...
-
-
-\end{table}
-
-\begin{table}
-    \caption{Correlation between the latent similarity matrix and the predictive likelihood for IMMSB and ILFM.}
+    \centering
     \begin{tabular}{lll}
     \hline
-%    & ILFM  & IMMSB \\
+    & ILFM  & IMMSB \\
     \hline
     Network 1     & 0.082 &  -0.126   \\
     Network 2     & 0.001     &  -0.116   \\
@@ -351,7 +349,7 @@ In table  \ref{table:homo_latent} we compute the Pearson correlation for the hom
     Manufacturing & 0.384     &  -0.011   \\
     UC Irvine     & 0.286     &  -0.213   \\
     \hline
-    \label{table:homo_latent}
+    \label{table:homo_pearson}
     \end{tabular}
 \end{table}
 
