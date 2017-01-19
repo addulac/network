@@ -296,8 +296,6 @@ In figure \ref{fig:me_fit_lburst_mmsb} and \ref{fig:me_fit_lburst_ibp}, we repor
     \item local preferential attachment : We can see that the fitness for the local degree distributions of IMMSB is strong for every networks except in the lesser extent for Manufacturing. The confident is also relatively high because of a very small variance over the different class, except again for manunufacturing. The instability of Manufacturing is probably due to his small number of nodes. For ILFM, the fitness decrease from network1 to network4. Also, the pvalue has high variance for network 2 to 4 and for manufacturing which is correlated with the decay of the global burstiness.
 \end{itemize}
 
-\textcolor{red}{here comment...} 
-
 \subsection{Homophily}
 
 %We evaluate in this section the behaviour of homophily of models according to both, the natural and the latent similarity, reported respectively in tables \ref{table:homo_natural} and \ref{table:homo_latent}. Those results are obtained by computing the Pearson correlation coefficient between a random adjacency matrix and a similarity matrix matrix as defined in \ref{sec_homophily} from a model (either IMMSB or ILFM). Each of these coefficient is averaged an basis on 20 networks generated from the fitted models.
@@ -377,8 +375,6 @@ In table \ref{table:homo_natural} and \ref{table:homo_latent} we compute conting
 \end{itemize}
 
 
-
-
 \subsection{Prediction Performance}
 In order to evaluate the  prediction performance of the models, we build a training set and a testing set from the original datasets. In order to achieve this, we generate a random mask consisting of 20 percent of the size of the adjacency matrix. This mask is used a our testing set, while the 80 remaining percent are used as a training set. The results for the prediction evaluation are reported in i) the AUC-ROC measures in figure \ref{fig:auc}, and ii) in the precision/recall results in table \ref{table:unbalanced}.
 Each prediction results were averaged on 10 repetitions, and results were found to be stable regarding on the random  initialization and the stochastic optimization procedure. 
@@ -388,7 +384,11 @@ Each prediction results were averaged on 10 repetitions, and results were found 
 \input{t/auc}
 
 \subsubsection{Comments}
-\textcolor{red}{here comment...} 
+
+\begin{itemize}
+\item comparing the performance between both models in the links prediction precision and recall and $F_1$ measure (ref{table:unbalanced}), can seem to conflict with results in the ROC curve (\ref{fig:auc}). More precisely we see that ILFM dominate IMMSB on the $f_1$ measures on all experiments except for one (network 1, K=15). But on the AUC-ROC analysis( \ref{fig:auc}) we see that IMMSB dominate ILFM for two networks (Networks 1 and Networks 2), although it's number of latent feature is almost half lesser than for ILFM. This behavior is also reflected on the accuracy for both models (global precision); The accuracy of IMMSB models is higher for the Network1 and Network2, and this is the opposite for ILFM, which are more accurate for Network3 and Network4. Interestingly, we see that for ILFM, the dimension of the latent feature for which ILFM converged, for the two first networks is significantly higher than the two other. In other words the ILFM model seems to compensate is weak performance by increasing the number of features.
+ 
+\end{itemize}
 
 \section{$M_e$ -- Model Generated}
 \label{sec:mgmg}
