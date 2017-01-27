@@ -17,6 +17,9 @@ bib: pdf
 pdf:
 	pdflatex ${SRC}.tex
 
+dev:
+	pdflatex expe_dev.tex
+
 test:
 	${CC} ${TEST}.tex
 	${CONV} ${TEST}.dvi; 

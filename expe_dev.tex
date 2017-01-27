@@ -49,7 +49,7 @@ This article focus on two properties of networks, namely the preferential attach
 
 \subsection{Measures for the properties}
 
-\subsubsection{Preferential attachment}
+\subsubsection{Burstiness}
 \label{sec:experiments-burst}
 
 The measures considered to evaluate the preferential attachment rely on a goodness of fit. Indeed, it has been reported that preferential attachment leads to networks characterized by a degree distribution with heavy tail \textbf{ref?}. A typical form of such law, often meet in data, is a a power law distribution. The comparison of the degree distribution in the log-log scale with a linear function gives us a qualitative measure for the preferential attachment. To obtain a second evaluation of the power law hypothesis for the degree distribution, we rely on a  goodness a fit based on a Kolmogorov-Smirnov (KS) test. We follow the protocol described in \cite{clauset2009power} which consists of the following steps:
@@ -60,6 +60,15 @@ The measures considered to evaluate the preferential attachment rely on a goodne
 \end{itemize}
 
 If p is large (close to 1), then the difference between the data and the model can be attributed to statistical fluctuations alone; if it is small, the model is not a plausible fit for the data and we can not conclude that there is an evidence for the preferential attachment in the network. However, as mentioned in \cite{clauset2009power} high value of the $p$-value should be considered with caution for at least two reasons. First, there may be other distribution that match the data equally or better. Second, a small number of samples of the data may lead to high p-value and reflect the fact that is hard to rule out a hypothesis in such a case.
+
+
+
+\paragraph{Local burstiness : }
+In the context of latent models, while there is no ambiguity in computing the overall degree distribution, it is less obvious for the local case. We explain here the computation of the local degree distribution for each models according to section \ref{sec:burstiness} :
+\begin{itemize}
+        \item for IMMSB, each network has an associated membership tensor $Z$, that indicates the membership of nodes for each  interactions. In order to draw the local degree distribution for a block $c$, we reduce the adjacency matrix in order to retain only the links that occurs inside a block $c$. The local degree distribution is thus computed on the reduce adjacency matrix $Y_c = Y \otimes (Z_i^c \times Z_j^c)$ where $\otimes$ is the hadamard product and $\times$ the outer product. $Z_i^c$ is the membership matrix of a nodes $i$ such that $Z_{ik}^c=0$ if $k\neq c$ (links that occurs outside $c$ will be ignored).
+        \item for ILFM, each node is associated with a fix feature vector; the local degree distribution for the block $c$ is obtain by taking only the contribution of the features $c$ on the adjacency matrix. Thus, the local degree degree distribution is computed on the reduce adjacency matrix $Y_c = Y \otimes (F_{.c}\times F_{.c})$. 
+\end{itemize}
 
 \subsubsection{Homophily}
 
@@ -83,18 +92,41 @@ Thus, the performance of the models can be evaluated with usual measures:
 
 \section{Training Datasets}
 
-In our experiments, we consider four artificial networks and two real networks.
+In our experiments, we consider four artificial networks and four real networks. We described in the following those networks, and show a summary of properties in table \ref{table:networks_measures}.
+
+
+\begin{table}[h] 
+	\centering
+	\caption{Networks standard measure on datasets.}
+	%\resizebox{\textwidth}{!}{  
+		\begin{tabular}{lcrrrrcr}
+			\hline
+			Networks     & Nodes & edges & density    \\
+			\hline
+			Network1          & 1000  & 6014  & 0.007 \\
+			Network2          & 1000  & 5000  & 0.006 \\
+			Network3          & 1000  & 11000 & 0.01  \\
+			Network4          & 1000  & 61000 & 0.06   \\
+			manufacturing     & 167  & 5950   & 0.24  \\
+			UC Irvine         & 1899 & 22195  & 0.08  \\
+			\hline
+		\end{tabular}
+%	}
+	\label{table:networks_measures}
+\end{table}
+
+
 
 \subsection{Artificial networks}
 
 The artificial networks have been generated with DANC-Generator \cite{largeron2015}. This generator has been chosen because it allows to build an attributed graph having a community structure  and  the known properties of real-world networks such as preferential attachment and homophily.
-Moreover, by modifying the parameters, these properties can be weakened. Finally, DANC-Generator is available under the terms of the GNU Public License and the        parameters can be shared for experiments reproducibility.
+Moreover, by modifying the parameters, these properties can be weakened. Finally, DANC-Generator is available under the terms of the GNU Public License and the parameters can be shared for experiments reproducibility.
 
-Four artificial networks (Network1, ..., Network4) have been generated.  Their adjacency matrices and global degree distributions are presented in Figure \ref{fig:synt_graph}. Table \ref{table:synt_graph} gives the results of the KS test: $p$-value, values estimated for the parameters  $\alpha$ and $x_\text{min}$,  and $n_{tail}$ \textbf{ntail ?}. For each network, Figure \ref{fig:synt_graph_local} represents the local degree distribution associated to each \emph{ground truth} community and Table \ref{table:synt_graph_local} reports the KS results in the local case. The inner degree distribution (edges inside a community) and outer degree distribution (edges between community) are plotted separately.
+Four artificial networks (Network1, ..., Network4) have been generated. Their adjacency matrices and global degree distributions are presented in Figure \ref{fig:synt_graph}. Table \ref{table:synt_graph} gives the results of the KS test: $p$-value, values estimated for the parameters  $\alpha$ and $x_\text{min}$,  and $n_{tail}$ \textbf{ntail ?}. For each network, Figure \ref{fig:synt_graph_local} represents the local degree distribution associated to each \emph{ground truth} community and Table \ref{table:synt_graph_local} reports the KS results in the local case. The inner degree distribution (edges inside a community) and outer degree distribution (edges between community) are plotted separately.
 
 Each network presents a different affinity to preferential attachment and homophily.
-Indeed, As shown Figure \ref{fig:synt_graph}, Network1 and Network2 , and to a lesser extend, Network3 verify preferential attachment whereas it is not the case for the Network3. The results of the KS test in Table \ref{table:synt_graph} confirm this analysis since the $p$-value equals 1 for Network1 and Network2 and is equal to 0 for Network4.
-Concerning the local preferential attachment, that can be evaluated on these artificial networks where the ground truth communities are provided by the generator, the same conclusions can be drawn from the Figure \ref{fig:synt_graph_local} and the Table \ref{table:synt_graph_local}.
+Indeed, As shown Figure \ref{fig:synt_graph}, Network1 and Network2, and to a lesser extend, Network3 verify preferential attachment whereas it is not the case for the Network3. The results of the KS test in Table \ref{table:synt_graph} confirm this analysis since the $p$-value is very high for network 1 and 2. The $p$-value decrease for network3 until a null value for network4.
+Concerning the local preferential attachment, that can be evaluated on these artificial networks where the ground truth communities are provided by the generator, and reported in Figure \ref{fig:synt_graph_local} and the Table \ref{table:synt_graph_local}. It shows a tendency to the properties for being strongly represented in the two first networks and in a lesser extend for the two last. This is particularly visible on high variance on the $p$-value for network 3 and 4, where the properties vary among classes.
 
 \input{t/a.tex}
 \input{t/b.tex}
@@ -154,50 +186,11 @@ The adjacency matrices and global degree distributions are presented in Figure \
 \label{table:real_graph}
 \end{table}
 
-Finally Table \ref{table:networks_measures} summarizes some other properties characteristics of these artificial and real networks. 
-
-\subsection{Standard Measures}
-\textcolor{red}{Temporally section, need discussion}
-
-Here is a  table where we reported  some standard measure on networks. 
-\textcolor{red}{ Is homophily (from Dancer, with the Kleinberg measure, $H_{obs} - H_{exp}$)  standard ? }
-
-It is important to note that each measure is not decorrelated from each others. Are we sure that we can answer the following question ? : ~\\
-
-\hspace{1cm}\textit{"Are the burstinesses effects really decorrelated from other properties (clustering, sparstity), to conclude on the fact that a model perform better than a other because of this particular properties (ie the global or local burstiness) ? (\textbf{Correlation \emph{vs} Causality}) } (the same questions holds for the impact that each properties have on each other. ) 
-
-\begin{table}[h] 
-\centering
-	\caption{table:Networks standard measure on datasets.}
-\resizebox{\textwidth}{!}{  
-	\begin{tabular}{lcrrrrrr}
-		\hline
-		Networks   &  \small{homophily} ($H_ {obs}$ ; $\Delta_{obs - exp}$)    &  Modularity & \small{Clustering coefff} & density  & Nodes & edges & \small{diameter}   \\
-		\hline
-		Network1      & 0.561 ;  0.08 & 0.59 & 0.06 & 0.007 & 1000  & 6014  & 8 \\
-		Network2      & 0.429 ; -0.04 & 0.43 & 0.08 & 0.006 & 1000  & 5000 & 10 \\
-		Network3      & 0.439 ; -0.03 & 0.71 & 0.49 & 0.01  & 1000  & 11000 &8 \\
-		Network4      & 0.621 ;  0.18 & 0.68 & 0.61 & 0.06  & 1000  & 61000  & 5 \\
-		manufacturing & --            & --   & 0.59 & 0.24  & 167  & 5950 & 5 \\
-		UC Irvine     & --            & --   & 0.10 & 0.08  & 1899 & 22195  & -- \\
-		\hline
-	\end{tabular}
-}
-\label{table:networks_measures}
-\end{table}
-
-\subsubsection{Comments}
-
-\paragraph{Note on the goodness of fit results for synthetic networks:}
-\begin{itemize}
-    \item Network 1 to 4 have a decreasing pvalue in their overall degree distribution. Network 1 and 2 have a relatively high pvalue that suggests a high confidence in a power law fit. In the opposite, Network 4 reject the power law hypothesis strongly with a null pvalue.
-    \item The analysis on local degree distribution show that network has high pvalue with a small standard deviation, while network 3 and 4 have lower pvalue and higher standard deviation which suggest that they satisfy poorly the local preferential attachment.
-\end{itemize}
 
 
 \section{$M_e$ -- Model fitted}
 
-For each datasets described earlier, we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameter for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. 
+For each datasets described earlier, we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in section \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameter for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. 
 
 The inference procedure was run under this settings in all of the 4 synthetic datasets and 2 real networks.
 
@@ -364,14 +357,14 @@ In table \ref{table:homo_natural} and \ref{table:homo_latent} we compute conting
     Manufacturing & 0.384     &  -0.011   \\
     UC Irvine     & 0.286     &  -0.213   \\
     \hline
-    \label{table:homo_pearson}
     \end{tabular}
+    \label{table:homo_pearson}
 \end{table}
 
 
 \subsubsection{Comments}
 \begin{itemize}
-    \item The measure of the natural similarity over links and non links satisfy the homophily effect for IMMSB and ILFM (table \ref{table:homo_natural_ibp} and \ref{table:homo_latent_immsb}). In the contrary there is no evidence for a correlation between the latent similarity and the link likelihood (table \ref{homo_pearson}. 
+    \item The measure of the natural similarity over links and non links satisfy the homophily effect for IMMSB and ILFM (table \ref{table:homo_natural_ibp} and \ref{table:homo_latent_immsb}). In the contrary there is no evidence for a correlation between the latent similarity and the link likelihood (table \ref{table:homo_pearson}). 
 \end{itemize}
 
 
@@ -390,44 +383,7 @@ Each prediction results were averaged on 10 repetitions, and results were found 
  
 \end{itemize}
 
-\section{$M_e$ -- Model Generated}
-\label{sec:mgmg}
-
-\subsection{Burstiness}
-
-\textcolor{red}{Je changerais la forme (comment les groupe de figure sont plotté) selon ce que lon conviendra de conserver dan le partie expé.}
-
-We illustrate the burstiness results by generating 3 random networks for each of both models. We report it in figure \ref{fig:gen_burst}. We use the 3 same settings for IMMSB  than those in the previous section. For ILFM  we use the following 3 settings: (column 1:$\alpha=1,  \lambda_1=\lambda_2=1$ , column 2:$\alpha=0.1, \lambda_1=\lambda_2=1$, column 3: $\alpha=1, \lambda_1=\lambda_2=10$) and we fix $\sigma_w=1$ and again $N=1000$.
-
-Each row of the two sets of figures represents the three following measures who corresponds respectively to the global preferential attachment, the local preferential attachment and the feature burstiness:
-\begin{itemize}
-    \item First row: we measure the overall degree distributions; We report the average and standard deviation of the degree distribution in a linear scale for each generated network.
-    \item Second row: we measure the local degree distribution on a log-log scale:
-        \begin{itemize}
-            \item for IMMSB, each network has an associated membership tensor $Z$, that indicates the membership of nodes for each  interactions. In order to draw the local degree distribution for a block $c$, we reduce the adjacency matrix in order to retain only the links that occurs inside a block $c$. The local degree distribution is thus computed on the reduce adjacency matrix $Y_c = Y \otimes (Z_i^c \times Z_j^c)$ where $\otimes$ is the hadamard product and $\times$ the outer product. $Z_i^c$ is the membership matrix of a nodes $i$ such that $Z_{ik}^c=0$ if $k\neq c$ (links that occurs outside $c$ will be ignored).
-            \item for ILFM, each node is associated with a fix feature vector; the local degree distribution for the block $c$ is obtain by taking only the contribution of the features $c$ on the adjacency matrix. Thus, the local degree degree distribution is computed on the reduce adjacency matrix $Y_c = Y \otimes (F_{.c}\times F_{.c})$. 
-        \end{itemize}
-    \item Third row measure the distribution of the block membership, which directly reflect the feature burstiness. Hence for IMMSB, for a feature $k$, we measure $\sum_{ij} \mathds{1}(Z_{i\rightarrow j} = k, Z_{i\leftarrow j} = k)$ which indicates the number of nodes who were associated to the block $k$. For ILFM the number of nodes associated to a block $k$ is simply $\sum_n F_{nk}$.
-\end{itemize}
-
-
-% not sure it use significantly usefull, because p-value are either 0 or 1 ...
-%We provide in annexe (\textcolor{red}{not yet included}),  an goodness of fit for all local degrees distribution that we plotted, in order to quantify the power law hypothesis on the empirical degree distributions. The number of feature is typically too small to evaluate an significant goodness of fit. The protocol is described in section \ref{sec:experiments-busrt}. 
-
-The simulation shows us the following facts about the properties of the models:
-\begin{itemize}
-	\item For both model the global degree distribution don't exhibit a bursty phenomenon,
-	\item The local degree distribution show that IMMSB exhibit a bursty phenomenon which is not the case for ILFM,
-	\item Both models exhibits a bursty phenomenon on the feature distribution. This distributions for ILFM has a long tail for all of the 3 settings while for IMMSB, the tail shape is more or less long depending of the $\alpha$ and $\gamma$ parameters.
-\end{itemize}
-
-For the case of the global preferential attachment we have no formal proof for the non-compliance of the models, due the non closed form of the evidence in both models, due to the admixture design \textcolor{red}{ref ((Multiple Hypergeometric Functions: Probabilistic Interpretations and Statistical Uses
-James M. Dickey )) ce papier est cite dans LDA pour justifier l'inference approxime, mais je n'arrive pas a trouver ca papier !!!}. However, as reported simulations (figure \ref{fig:gen_burst}), we see that the empirical distributions of the overall degrees are clearly non bursty.
-
-%\input{t/me_generate_burst}
-
-
-\subsection{Homophily}
+%\section{$M_e$ -- Model Generated}
 
 
 \bibliographystyle{unsrt}
