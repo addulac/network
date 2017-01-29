@@ -1,0 +1,127 @@
+\documentclass[a4paper, 12pt]{article}
+
+%\usepackage[cmex10]{amsmath, mathtools}
+\usepackage{amsmath,amssymb,amsbsy,amsfonts,amsthm}
+\usepackage{multirow}
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{url}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{fancyvrb}
+\usepackage{yfonts}
+\usepackage{dsfont}
+\usepackage{calc} %    For the \widthof macro
+\usepackage{xparse} %  For \NewDocumentCommand
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usetikzlibrary{bayesnet}
+%\input{../tikz.conf}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+
+%%%%%%%%%%%%%%%%%%%%
+%%% Goemetry
+%%%%%%%%%%%%%%%%%%%%
+%\usepackage[margin=0.25in]{geometry}
+\usepackage{geometry}
+\geometry{
+    a4paper,
+ total={420pt,700pt},
+ %left=20mm,
+ top=20mm,
+ }
+
+
+\title{On the relation between burstiness and sparsity (\emph{and small world effect ?})}
+
+\begin{document}
+
+\maketitle
+%\tableofcontents
+
+\section{Introduction}
+
+We show the relation that exists between two important properties that arise in a wide range of domains, namely the burstiness and the sparsity properties. Though, these two properties shows up in a considerable number of datasets, such as biology, text corpus, geophysics, and complex networks, we will focus, in this paper, on a formalization that concerns networks data.~\\
+
+The burstiness is known as the rich get richer property. I don't know a metaphor for the second but it is also clearly related to \textbf{the small world effect} in the following sens: 
+
+\begin{quote}
+    \emph{It is surpising that, in a world that have many nodes, just a traversal of few nodes can connect anybody.}
+\end{quote}
+
+The sparsity concerns this "small world" assessment in the fact that it is "surprising". If this is surprising it is precisely because there is an (implicit) assumptions of sparsity in the networks. In a world with milliard of individuals, we have barely hundred of relationship, and it will be surprising to find someone with million of friends or collaborators...
+
+In a other hands, the property of small world don't make so much sens in a dense networks, because of his triviality. Indeed, it is not "surprising" that each nodes are separated by a few number of edges in this case. Though, this property carries little information in such a case.  ~\\
+
+As far as I now, the typical definition of the small world effect (SME) is :
+\begin{quote}
+    \emph{The overall (or expected) closeness (?) increase at a $\log(N)$ rate.}
+\end{quote}
+
+This definition encode the intuition behind the SME. But within this definition, a densely connected network will be higly likely to satisfy the definition. Whereas, the SME become interesting when it is non trivially true.~\\
+
+The objective of this paper is to study the case when the SME is non trivial, that is, when it is accompanied with the sparsity property. Furthermore we aim at answering the following questions : 
+\begin{itemize}
+    \item burstiness $\Rightarrow$ sparsity ?
+    \item burstiness $\Rightarrow$ sparsity  $\wedge$ small world ? 
+    \item sparsity  $\wedge$ small world $\Rightarrow$ burstiness ? 
+\end{itemize}
+
+\section{Power law to sparsity}
+This is a preliminary result that show that power law (a particular case of burstiness) implies sparsity in the networks (under regularity condition).~\\
+
+We first define the sparsity, for networks, following \cite{orbanz2015bayesian} and \cite{veitch2015class} : 
+\begin{definition}[Sparsity]
+    Given a graph $G = (V,E)$ containing $n$ vertice, it is say to be sparse if the following holds:
+    \begin{equation}
+        \frac{|E|}{|V|^2} \rightarrow 0 \qquad \mathrm{as} \quad  n \rightarrow \infty  
+    \end{equation}
+\end{definition}
+
+
+We define the burstiness as follows :
+\begin{definition}[Burstiness]
+    A given distribution $f$ on $x \in \mathbb{N}$ integer is said to be bursty iff $\forall n \in \mathbb{N} $ :
+    \begin{equation}
+        P_f(x \geq n+1 \mid x \geq n) \quad  \mathrm{increase\ with} \quad n
+    \end{equation}
+\end{definition}
+
+This definition of the sparsity is equivalent to the following properties on the distribution $f$ : 
+\begin{itemize}
+    \item log-convexity of the survival function : $\Delta_n^2 P_f(x \geq n) > 0$
+    \item increasing of increment of $f$ : $\Delta \frac{f(x+1)}{f(x)} > 0$
+\end{itemize}
+
+We now assume that $f(x) = C x^{- \alpha}$ with $C$ and $\alpha$ two positive parameters of the power law, and $x$ a random variable on integers It our case $x$ is homogeneous to a degree. Now, let's suppose a unoriented graph $G=(V,E)$. Let's define : 
+\begin{equation}
+    f_k =  \textnormal{\{\# the number of nodes  having a degree equal to $k$ in $G$ \}}.
+\end{equation}
+
+We can write the number of vertexes and the number of edges in the graph as follows :
+\begin{equation}
+    N = \sum_{k=1}^\infty f_k  \quad\qquad E = \frac{1}{2}\sum_{k=1}^\infty k f_k 
+\end{equation}
+
+When $N >> \infty$ we assume that the empirical distribution of the degree converge towards it's true distribution, in our case a power law, such that :
+\begin{equation}
+    \frac{f_k}{N} = f(k)
+\end{equation}
+
+Replacing the terms, we have the following :
+\begin{equation} \label{eq:e_zeta}
+    E = \frac{CN}{2}\sum_{k=1}^\infty x^{\alpha-1} = \frac{CN}{2} \zeta(\alpha-1)
+\end{equation}
+
+Where $\zeta$ is the Riemann Zeta function. It converges if $\alpha > 2$, and in this case we have $E = O(N)$, which show that the graph $G$ is sparse if $\alpha > 2$.
+
+\bibliographystyle{unsrt}
+\bibliography{./a}
+
+\end{document}
