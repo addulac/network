@@ -36,4 +36,7 @@ clean:
 	rm -f *.nav
 	rm -f *.snm
 	rm -f *.vrb
+	rm -f *.fls
+	rm -f *.fls
+	rm -f *.fdb_latexmk
 
