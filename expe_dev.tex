@@ -22,6 +22,8 @@
 
 \usetikzlibrary{bayesnet}
 
+\usepackage{longtable,booktabs}
+
 %%%%%%%%%%%%%%%%%%%%
 %%% Goemetry
 %%%%%%%%%%%%%%%%%%%%
@@ -34,7 +36,6 @@
  top=20mm,
  }
 
-
 \title{Networks Properties -- Experiments}
 
 \begin{document}
@@ -42,28 +43,31 @@
 \maketitle
 \tableofcontents
 
-To illustrate our theoretical results, we evaluate the predictive performance and the ability of the models to capture homophily and preferential attachment on artificial and real networks. In the sequel, we first describe the measures used to evaluate the properties of interest and the predictive performance, then the datasets used in our experiments. Then, we detail the evaluation protocol and we present the experimental results.
+To illustrate our theoretical results, we evaluate the predictive performance and the ability of the models to capture homophily and preferential attachment on artificial and real networks. In the sequel, we first describe the measures used to evaluate the properties of interest and the predictive performance, then the datasets used in our experiments. Afterwards, we detail the evaluation protocol and we present the experimental results.
 
 \section{pymake software}
-All our experiments were realized with a frameworks that we developed, and open sourced, available at : https://github.com/dtrckd/pymake. This repository is in current active development in order ot populate Bayesian modelisation, and to do reproducible research. The framework currently contains Gibbs sampler for the MMSB and IBP, for parametric and nonparametric versions. The frameworks also aims helping the design of experiments, the use of available datasets online and working scientific library such as \emph{numpy} \footnote{http://www.numpy.org/}, \emph{scikit-learn} \footnote{http://scikit-learn.org/}, \emph{networkx} \footnote{https://networkx.github.io/} and others.
+All our experiments were realized with a frameworks that we developed, and open sourced, available at : https://github.com/dtrckd/pymake. This repository is in current active development in order ot populate Bayesian modelisation, and to do reproducible research. The framework currently contains Gibbs sampler for the MMSB and ILFM notably for parametric and nonparametric versions. The frameworks also aims helping the design of experiments, the use of available datasets online and working scientific library such as \emph{numpy} \footnote{http://www.numpy.org/}, \emph{scikit-learn} \footnote{http://scikit-learn.org/}, \emph{networkx} \footnote{https://networkx.github.io/} and others.
 
 \section{Evaluation Measures}
 This article focus on two properties of networks, namely the preferential attachment effect and the homophily. In this section, we present the measures used in our experiments in order to characterized these properties and to evaluate the predictive performance of the models.
 
 \subsection{Measures for the properties}
 
-\subsubsection{Burstiness}
+\subsubsection{Preferential attachment}
 \label{sec:experiments-burst}
 
-The measures considered to evaluate the preferential attachment rely on a goodness of fit. Indeed, it has been reported that preferential attachment leads to networks characterized by a degree distribution with heavy tail \textbf{ref?}. A typical form of such law, often meet in data, is a a power law distribution. The comparison of the degree distribution in the log-log scale with a linear function gives us a qualitative measure for the preferential attachment. To obtain a second evaluation of the power law hypothesis for the degree distribution, we rely on a  goodness a fit based on a Kolmogorov-Smirnov (KS) test. We follow the protocol described in \cite{clauset2009power} which consists of the following steps:
+The measures considered to evaluate the preferential attachment rely on a goodness of fit. Indeed, it has been reported that preferential attachment leads to networks characterized by a degree distribution with heavy tail drawn from a power law \textbf{ref?}. A graphical method, most often used to verify that the observations are consistent with this law  consists in constructing the histogram representing the degree distribution and if the plot on doubly logarithmic axes approximately falls on a straight line, then one can assume that the distribution follows a power law. Thus, the comparison of the degree distribution in the log-log scale with a linear function gives us a qualitative measure for the preferential attachment. To obtain a second evaluation of the power law hypothesis for the degree distribution, we follow the statistical framework, introduced by \cite{clauset2009power}, for discerning and quantifying power-law behavior in empirical data. This framework combines maximum-likelihood fitting methods with goodness-of-fit tests based on the Kolmogorov-Smirnov statistic. It includes the following steps:
+
+
 \begin{itemize}
-	\item Estimate the parameters $x_\text{min}$ and $\alpha$ of the power law model. Nevertheless, in order to provide a comparable measure of different degrees distributions, as it is the case in our experimentations, we choose to fix $x_\text{min}$  to the smallest value observed in the degree distribution evaluated.
-	\item Calculate the goodness of fit on the data sample (typically the degree of a networks). The resulting $p$-value gives an estimate of the  plausibility of the hypothesis for the data. The p-value is actually the ratio of the number of the time where a kolmogorov-Smirnov test statistics, evaluated on samples generated by the power law, is higher than the KS test statistics on the data samples. 
-    \item the number of times $S$ where the KS statistics is compared is chosen, following \cite{clauset2009power}, with a precision of $\epsilon = 3^{-2}$. The  number of loops is then $S = \frac{1}{4}\epsilon^{-2}$.
+	\item Estimate the parameters $\alpha$ and $x_\text{min}$ of the power law model. $\alpha$ is the scaling parameter of the law and $x_\text{min}$, the lower bound for the tail,  has been fix in our experiments, to the smallest value observed in the distributions evaluated, to allow their comparisons.
+	\item  Using the Kolmogorov-Smirnov (KS) statistic, compute the distance $KS_{obs}$  between the degree distribution obtained on the network with the theoretical distribution corresponding to the power law with the estimated parameters.
+	\item Sample $S$ synthetic datasets from the power law with the estimated parameters. For each sample s, using the Kolmogorov-Smirnov statistic, compute the distance $KS_{s}$ between the distribution obtained on this synthetic dataset drawn from the power law with the corresponding theoretical distribution. According to  \cite{clauset2009power}, the number of samples $S$ is chosen such that $S = \frac{1}{4}\epsilon^{-2}$, with a precision  $\epsilon = 3^{-2}$. 
+    \item  The p-value is defined as the fraction of  the resulting statistics $KS_s, s \in \{1,...,S\}$ obtained on the samples larger than the value $KS_{obs}$ computed on the network distribution.  
 \end{itemize}
 
-If p is large (close to 1), then the difference between the data and the model can be attributed to statistical fluctuations alone; if it is small, the model is not a plausible fit for the data and we can not conclude that there is an evidence for the preferential attachment in the network. However, as mentioned in \cite{clauset2009power} high value of the $p$-value should be considered with caution for at least two reasons. First, there may be other distribution that match the data equally or better. Second, a small number of samples of the data may lead to high p-value and reflect the fact that is hard to rule out a hypothesis in such a case.
-
+ If  p-value is large (close to 1), then the difference between the data and the model can be attributed to statistical fluctuations alone; if it is small, the model is not a plausible fit for the data and we can not conclude that there is an evidence for the preferential attachment in the network. 
+\textbf{arevoir}However, as mentioned in \cite{clauset2009power} high value of the $p$-value should be considered with caution for at least two reasons. First, there may be other distribution that match the data equally or better. Second, a small number of samples of the data may lead to high p-value and reflect the fact that is hard to rule out a hypothesis in such a case.
 
 
 \paragraph{Local burstiness : }
@@ -78,43 +82,43 @@ In the context of latent models, while there is no ambiguity in computing the ov
 For the homophily property, defined in section \ref{sec:homophily}, we rely on two different measures:
 
 \begin{itemize}
-    \item  Pearson' correlation coefficient between the probability of having a link $P(y_{ij}=1),  i, j \in E^2 $, and the  \textbf{latent / natural ?} similarity $(s_{ij})$ for all pairs of vertices. 
-    \item  Means and standard deviations of the similarity computed respectively on the linked and non-linked pairs of nodes.
+    \item  Pearson correlation coefficient between the probability of having a link $P(y_{ij}=1)$  and the natural or latent similarity ($s_n(i,j)$ and $s_l(i,j)$) for all pairs of vertices $(i,j) \in E^2 $. 
+    \item  Means and variances of the similarity ($s_n(i,j)$ and $s_l(i,j)$) computed on the linked and non-linked pairs of nodes.
 \end{itemize}
 
-\subsection{Prediction Performance}
+\subsection{Prediction performance evaluation}
 The prediction problem is equivalent to a binary prediction problem in two classes since it consists to decide for each pair of nodes if there is an edge or not between them. 
 Thus, the performance of the models can be evaluated with usual measures:
 
 \begin{itemize}
 
 \item Precision/Recall/$F_1$ :  The local precision, recall and $F_1$ scores concern the links predicted as an edge.  The global (precision), denoted global in the tables, refers to the accuracy of the model. 
-\textit{mettre ailleurs} Note that each group of row is indexed by  a number $K$ which indicates various values of initialization of the latent feature dimension.
 \item AUC-ROC : Receiver operating characteristic curves allow also to graphically compare the  models on each dataset.
 \end{itemize}
 
 \section{Training Datasets}
 
-In our experiments, we consider four artificial networks and four real networks. We described in the following those networks, and show a summary of properties in table \ref{table:networks_measures}.
-
+In our experiments, we consider four artificial networks and four real networks.  Main topological characteristics of these networks are summarized in Table \ref{table:networks_measures} and we describe those networks in the sequel.
 
 \begin{table}[h] 
 	\centering
-	\caption{Networks standard measure on datasets.}
+	\caption{Characteristics of artificial and real networks.}
 	%\resizebox{\textwidth}{!}{  
-		\begin{tabular}{lcrrrrcr}
-			\hline
-			Networks     & Nodes & edges & density    \\
-			\hline
-			Network1          & 1000  & 6014  & 0.007 \\
-			Network2          & 1000  & 5000  & 0.006 \\
-			Network3          & 1000  & 11000 & 0.01  \\
-			Network4          & 1000  & 61000 & 0.06   \\
-			manufacturing     & 167  & 5950   & 0.24  \\
-			UC Irvine         & 1899 & 22195  & 0.08  \\
-			\hline
-		\end{tabular}
-%	}
+    \begin{tabular}{lrrr}
+        \hline
+        \textbf{Networks} &   nodes &   edges &   density \\
+        \hline
+        Network 1 &    1000 &    3507 &     0.007 \\
+        Network 2 &    1000 &    3000 &     0.006 \\
+        Network 3 &    1000 &    6000 &     0.012 \\
+        Network 4 &    1000 &   31000 &     0.062 \\
+        Manufacturing &     167 &    5950 &     0.215 \\
+        UC Irvine     &    1899 &   22195 &     0.006 \\
+        Blogs         &    1490 &   20512 &     0.009 \\
+        Emaileu       &    1004 &   25899 &     0.026 \\
+        Protein       &    2114 &    4317 &     0.002 \\
+    \hline
+    \end{tabular}
 	\label{table:networks_measures}
 \end{table}
 
@@ -125,33 +129,33 @@ In our experiments, we consider four artificial networks and four real networks.
 The artificial networks have been generated with DANC-Generator \cite{largeron2015}. This generator has been chosen because it allows to build an attributed graph having a community structure  and  the known properties of real-world networks such as preferential attachment and homophily.
 Moreover, by modifying the parameters, these properties can be weakened. Finally, DANC-Generator is available under the terms of the GNU Public License and the parameters can be shared for experiments reproducibility.
 
-Four artificial networks (Network1, ..., Network4) have been generated. Their adjacency matrices and global degree distributions are presented in Figure \ref{fig:synt_graph}. Table \ref{table:synt_graph} gives the results of the KS test: $p$-value, values estimated for the parameters  $\alpha$ and $x_\text{min}$,  and $n_{tail}$ \textbf{ntail ?}. For each network, Figure \ref{fig:synt_graph_local} represents the local degree distribution associated to each \emph{ground truth} community and Table \ref{table:synt_graph_local} reports the KS results in the local case. The inner degree distribution (edges inside a community) and outer degree distribution (edges between community) are plotted separately.
+Four artificial networks (Network1, ..., Network4) have been generated. Their adjacency matrices and global degree distributions are presented in Figure \ref{fig:synt_graph}. Table \ref{table:synt_graph} gives the resulting $p$-value of the KS test as well as the  values estimated for the parameters  $\alpha$ and $x_\text{min}$,  and  the number $n_{tail}$ of observations in the distribution such as $x \geq x_\text{min}$ . For each network, Figure \ref{fig:synt_graph_local} represents the local degree distribution associated to each \emph{ground truth} community and Table \ref{table:synt_graph_local} reports the KS results in the local case. The inner degree distribution (edges inside a community) and outer degree distribution (edges between community) are plotted separately.
 
 Each network presents a different affinity to preferential attachment and homophily.
-Indeed, As shown Figure \ref{fig:synt_graph}, Network1 and Network2, and to a lesser extend, Network3 verify preferential attachment whereas it is not the case for the Network3. The results of the KS test in Table \ref{table:synt_graph} confirm this analysis since the $p$-value is very high for network 1 and 2. The $p$-value decrease for network3 until a null value for network4.
-Concerning the local preferential attachment, that can be evaluated on these artificial networks where the ground truth communities are provided by the generator, and reported in Figure \ref{fig:synt_graph_local} and the Table \ref{table:synt_graph_local}. It shows a tendency to the properties for being strongly represented in the two first networks and in a lesser extend for the two last. This is particularly visible on high variance on the $p$-value for network 3 and 4, where the properties vary among classes.
+Indeed, As shown Figure \ref{fig:synt_graph}, Network1 and Network2, and to a lesser extend, Network3 verify preferential attachment whereas it is not the case for Network4. The results of the KS test given in Table \ref{table:synt_graph} confirm this analysis since the $p$-value is very high for Network1 and Network2, respectively equals to 1 and 0.99 but it decreases for Network3 and is equal 0 for Network4.
+Concerning the local preferential attachment, that can be evaluated on these artificial networks where the ground truth communities are provided by the generator, the local degree distributions per class are given in Figure \ref{fig:synt_graph_local} and the average results (and variances) for the p-value computed over the classes are reported in Table \ref{table:synt_graph_local}. They show that the local preferential attachment is verified in the two first networks and in a lesser extend for the  last ones. In particularly, the high variance of the $p$-value for Network3 and Network4 indicates that the property varies among the classes.
 
 \input{t/a.tex}
 \input{t/b.tex}
 
 \begin{table}[h]
-\caption{Power law goodness of fit results for characterization of global preferential attachment in synthetic networks.}
+\caption{Power law goodness of fit results for the global preferential attachment in artificial networks.}
 \centering
-    \begin{tabular}{lrrrr}
-    \hline
-               &   pvalue &   alpha &   x\_min &   n\_tail \\
-    \hline
-     Network1 &    1.000 &   2.424 &       3 & 1000.000 \\
-     Network2 &    0.971 &   2.897 &       3 & 1000.000 \\
-     Network3 &    0.798 &   1.758 &       3 & 1000.000 \\
-     Network4 &    0.000 &   1.354 &       3 & 1000.000 \\
-    \hline
-    \end{tabular}
+  \begin{tabular}{lrrrr}
+  	\hline
+  	&   pvalue &   alpha &   x\_min &   n\_tail \\
+  	\hline
+  	Network 1 &    1.000 &   2.424 &       3 &     1000 \\
+  	Network 2 &    0.993 &   2.897 &       3 &     1000 \\
+  	Network 3 &    0.765 &   1.758 &       3 &     1000 \\
+  	Network 4 &    0.000 &   1.354 &       3 &     1000 \\
+  	\hline
+  \end{tabular}
 \label{table:synt_graph}
 \end{table}
 
 \begin{table}[h]
-\caption{Power law goodness of fit results for characterization of local preferential attachment in synthetic networks.}
+\caption{Power law goodness of fit results for the local preferential attachment in artificial networks.}
 \centering
     \begin{tabular}{lllll}
     \hline
@@ -168,24 +172,29 @@ Concerning the local preferential attachment, that can be evaluated on these art
 
 \subsection{Real networks}
 
-We evaluate also the models on two real networks.
+We evaluated also the models on five real networks.
 The first one, denoted UC Irvine \footnote{available at:}, is built from a online community of 1899 students from the University of California. Each node corresponds to a user and a   directed edge represents a sent message.
 The second one, denoted Manufacturing \footnote{available at:}, is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated  to an employee and an oriented link represents like previously a sent email.
 
-The adjacency matrices and global degree distributions are presented in Figure \ref{fig:real_graph}. The goodness of fit based on the KS test, used as a reference for the global preferential attachment effect, is reported in Table \ref{table:real_graph}. According to Figure \ref{fig:real_graph} as well as Table \ref{table:real_graph}, it appears that the preferential attachment property is verified in Manufacturing and not in UC Irvine.
+The adjacency matrices and global degree distributions are presented in Figure \ref{fig:real_graph}. The goodness of fit based on the KS test, used as a reference for the global preferential attachment effect, is reported in Table \ref{table:real_graph}. According to Figure \ref{fig:real_graph} as well as Table \ref{table:real_graph}, it appears that the preferential attachment property is verified in UC Irvine, with a p-value equals to 0.989, and not in Manufacturing where the p-value is null. As the ground truth is not available for these networks, the local preferential attachment can not be verified.
 
 \input{t/c.tex}
 
 \begin{table}
-\caption{Power law goodness of fit results for characterization of global degree attachment in real networks.}
+\caption{Power law goodness of fit results for the global degree attachment in real networks.}
 \centering
 \begin{tabular}{lrrrr}
-   &   pvalue &   alpha &   x\_min &   n\_tail \\
-\hline
- Manufacturing &    0.000 &   1.434 &       3 &  167.000 \\
- UC Irvine     &    0.989 &   1.787 &       3 & 1899.000 \\
-\hline
+	\hline
+	&   pvalue &   alpha &   x\_min &   n\_tail \\
+	\hline
+	Manufacturing &    0.000 &   1.434 &       3 &      167 \\
+	UC Irvine     &    0.993 &   1.787 &       3 &     1899 \\
+	Blogs         &    1.000 &   1.526 &       2 &     1490 \\
+	Emaileu       &    0.000 &   1.392 &       2 &     1004 \\
+	Protein       &    1.000 &   2.190 &       2 &     2114 \\
+	\hline
 \end{tabular}
+
 \label{table:real_graph}
 \end{table}
 
@@ -193,104 +202,62 @@ The adjacency matrices and global degree distributions are presented in Figure \
 
 \section{$M_e$ -- Model fitted}
 
-For each datasets described earlier, we run a MCMC inference consisting of 200 iterations to learn the posterior distribution of each the IMMSB model and ILFM, described in section \ref{sec:models}. For IMMSB, concentration parameters of HDP were optimized following \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameter for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. 
+For each dataset described earlier, we run a MCMC inference consisting of 200 iterations to learn the posterior distribution for the IMMSB and ILFM  models described in section \ref{sec:models}. For IMMSB, the concentration parameters of HDP were optimized according to  \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameters for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. 
 
-The inference procedure was run under this settings in all of the 4 synthetic datasets and 2 real networks.
+The inference procedure was run with these settings for the four artificial networks  and five real networks.
 
 All our experimental platform is available online \footnote{https://github.com/dtrckd/pymake}. It is an ongoing development in order to provide a flexible way to design and run experiments and make data analysis.
 
-\subsection{Burstiness}
+\subsection{Preferential attachment}
 
-In order to measure the different level of burstiness we used the models to generate full networks. (The procedure for such measure is similar than those explain in the section \ref{sec:mgmg}. Thus given the model parameters $\mathcal{M}_e = \{F ,\Phi\}$, we generate a set of 20 networks. In the next, results are averaged  with standard deviation for all those generated networks.
+In order to evaluate the preferential attachment (local and global), we used the models to generate full networks. The procedure  is similar than those explained in section \ref{sec:mgmg}. Thus, given the model parameters $\mathcal{M}_e = \{F ,\Phi\}$ learned from an initial network, we generate a set of 20 networks, noted with an asterisk and corresponding to this original network  and, the results presented in the sequel are averaged on this set and given with the standard deviation. 
 
 % Global
-In figure \ref{fig:me_fit_gburst_mmsb} and \ref{fig:me_fit_gburst_ibp}, we report the global degree for generated networks for respectively IMMSB and ILFM. In Table \ref{table:global_gof}, we report the corresponding goodness of fit evaluation.
-
+The global degree distribution of the  networks generated with  IMMSB and ILFM are respectively presented in Figures \ref{fig:me_fit_gburst_mmsb} and \ref{fig:me_fit_gburst_ibp}. Table \ref{table:global_gof} provides  the corresponding goodness of fit evaluation.
+IMMSB and ILFM pass the goodness of fit test for Network1*, Network2* and UC Irvine* with high p-value (0.907 or 1) but that is not the case  for the three other networks (Network3*, Network4* and Manufacturing*) with a p-value near or equals to zero. This shows that even if the models IMMSB and ILFM  are neutral with respect to global preferential attachment, they are able to generate  networks having the property,  when this property is strongly verified in the original network used to learn the parameters.
+\textbf{ARV} When the global preferential attachment is less strong, as for Network3, we can noticed if we consider the tail of the generated distributions, ILFM appears to have straight tail than ILFM.
 
 \input{t/me_fit_gburst_mmsb}
-\input{t/me_fit_gburst_ibp}
+\input{t/me_fit_gburst_ilfm}
 
 \begin{table}
-    \caption{Power law Goodness of fit for the global preferential attachment effect.}
+    \caption{Power law Goodness of fit for the \textbf{global} preferential attachment effect.}
 \centering
-    \begin{tabular}{lllll}
-    \hline
-        \textbf{IMMSB} & pvalue          & alpha           & x\_min          & n\_tail           \\
-    \hline
-    Network1     & 0.907 $\pm$ 0.11 & 1.396 $\pm$ 0.004 & 1.0 $\pm$ 0.0    & 990.1 $\pm$ 3.1  \\
-    Network2     & 1.0 $\pm$ 0.0     & 1.452 $\pm$ 0.005 & 1.0 $\pm$ 0.0    & 974.4 $\pm$ 4.9  \\
-    Network3     & 0.0 $\pm$ 0.0     & 1.294 $\pm$ 0.001 & 1.0 $\pm$ 0.0    & 999.0 $\pm$ 0.9 \\
-    Network4     & 0.0 $\pm$ 0.0     & 1.203 $\pm$ 0.025 & 1.25 $\pm$ 0.5 & 999.1 $\pm$ 0.7 \\
-    Manufacturing & 0.006 $\pm$ 0.01 & 1.244 $\pm$ 0.002 & 1.0 $\pm$ 0.0    & 165.3 $\pm$ 1.3 \\
-    UC Irvine     & 1.0 $\pm$ 0.0     & 1.348 $\pm$ 0.002 & 1.0 $\pm$ 0.0    & 1852.7 $\pm$ 5.7 \\
-    \hline
-    \end{tabular}
-
-    \begin{tabular}{lllll}
-    \hline
-        \textbf{ILFM} & pvalue          & alpha           & x\_min       & n\_tail           \\
-    \hline
-    Network1     & 1.0 $\pm$ 0.0     & 1.4 $\pm$ 0.003 & 1.0 $\pm$ 0.0 & 919.5 $\pm$ 5.9 \\
-    Network2     & 1.0 $\pm$ 0.0     & 1.4 $\pm$ 0.004 & 1.0 $\pm$ 0.0 & 893.7 $\pm$ 7.1  \\
-    Network3     & 0.01 $\pm$ 0.02  & 1.3 $\pm$ 0.002 & 1.0 $\pm$ 0.0 & 982.7 $\pm$ 3.6 \\
-    Network4     & 0.0 $\pm$ 0.0     & 1.2 $\pm$ 0.018 & 1.1 $\pm$ 0.3 & 998.4 $\pm$ 0.9 \\
-    Manufacturing & 0.018 $\pm$ 0.01 & 1.2 $\pm$ 0.002 & 1.0 $\pm$ 0.0 & 164.2 $\pm$ 1.4 \\
-    UC Irvine     & 1.0 $\pm$ 0.0     & 1.3 $\pm$ 0.002 & 1.0 $\pm$ 0.0 & 1798.3 $\pm$ 8.2 \\
-    \hline
-    \end{tabular}
-    \label{table:global_gof}
+	\input{img/corpus/immsb_global_table}
+	\input{img/corpus/ilfm_global_table}
+\label{table:global_gof}
 \end{table}
 
 
 
 % Local
-In figure \ref{fig:me_fit_lburst_mmsb} and \ref{fig:me_fit_lburst_ibp}, we report the local degree for generated networks for respectively IMMSB and ILFM. In Table \ref{table:local_gof}, we report the corresponding goodness of fit evaluation. \underline{Note that the pvalue reported here, are the averaged of all} classes.
-
+The local degree distributions of the  networks generated with IMMSB and ILFM are respectively given in Figures \ref{fig:me_fit_lburst_mmsb} and \ref{fig:me_fit_lburst_ibp}. Table \ref{table:local_gof} reports the corresponding goodness of fit evaluation. 
+IMMSB complies with the local preferential attachment  for every network, with a p-value equals to 1,  except, in the lesser extent, for Manufacturing* (p-value = 0.55). We can also noticed that the  variance is very small  over the different classes, except again for Manunufacturing*. The instability observed on this network is probably due to its small number of nodes. For ILFM, the fitness decreases from Network 1* to Network 4* varying between 1 and 0.69. Also, the variance of the p-value is high  for the Network 2* , 3*  and 4* and for Manufacturing*.  Moreover, we can observe on Figure \ref{fig:me_fit_lburst_mmsb} that the local degree distributions follow a straight line on a doubly
+logarithmic plot for every network generated with IMMSB whereas it is not the case on Figure  \ref{fig:me_fit_lburst_ibp} for the networks generated with ILFM, notably for Network 3*, Network 4* or Manufacturing*.  This confirms our theoretical results according which IMMSB complies with local preferential attachment when ILFM is neutral.
+\textbf{Also, the pvalue has high variance for network 2 to 4 and for manufacturing which is correlated with the decay of the global burstiness}
+%\underline{Remember  that the pvalue reported here, corresponds to  the average computed over  the classes}.
 
 \textcolor{red}{here comment...} ~\\
 \textcolor{red}{x\_min could be removed from table, I explains earlier how I choose it.}
 
 \input{t/me_fit_lburst_mmsb}
-\input{t/me_fit_lburst_ibp}
+\input{t/me_fit_lburst_ilfm}
 
 
 \begin{table}
-    \caption{Power law Goodness of fit for the local preferential attachment effect.}
+    \caption{Power law Goodness of fit for the \textbf{local} preferential attachment effect.}
 \centering
-    \begin{tabular}{lllll}                                                                                    
-    \hline                                                                
-        \textbf{IMMSB}  & pvalue         & alpha           & x\_min          & n\_tail             \\            
-    \hline                                                                                                    
-    Network1     & 1.0 $\pm$ 0.0    & 7.433 $\pm$ 2.2 & 1.0 $\pm$ 0.0    & 53.737 $\pm$ 9.8   \\
-    Network2     & 1.0 $\pm$ 0.0    & 1 $\pm$ 0.0    & 1.0 $\pm$ 0.0    & 41.895 $\pm$ 11.2  \\                             
-    Network3     & 1.0 $\pm$ 0.0    & 4.074 $\pm$ 0.7 & 1.0 $\pm$ 0.0    & 112.143 $\pm$ 18.5 \\                
-    Network4     & 1.0 $\pm$ 0.0    & 1.957 $\pm$ 0.2 & 1.0 $\pm$ 0.0    & 316.095 $\pm$ 69.5 \\
-    Manufacturing & 0.55 $\pm$ 0.5 & 1.242 $\pm$ 1.1 & 0.55 $\pm$ 0.4 & 31.4 $\pm$ 14.644    \\              
-    UC Irvine     & 1.0 $\pm$ 0.0    & 5.213 $\pm$ 0.9 & 1.0 $\pm$ 0.0    & 242.0 $\pm$ 26.1   \\                
-    \hline                                                                
-    \end{tabular}    
-
-    \begin{tabular}{lllll}
-    \hline
-        \textbf{ILFM} & pvalue          & alpha           & x\_min           & n\_tail              \\
-    \hline
-    Network1     & 1.0 $\pm$ 0.0     & 1.93 $\pm$ 0.3  & 1.0 $\pm$ 0.0     & 325.7 $\pm$ 154.9 \\
-    Network2     & 0.952 $\pm$ 0.2 & 1.76 $\pm$ 0.5 & 0.9 $\pm$ 0.2 & 423.8 $\pm$ 210.1  \\
-    Network3     & 0.957 $\pm$ 0.2 & 1.58 $\pm$ 0.3 & 1.0 $\pm$ 0.0     & 587.0 $\pm$ 252.2 \\
-    Network4     & 0.698 $\pm$ 0.4 & 1.33 $\pm$ 0.1 & 1.0 $\pm$ 0.0     & 632.9 $\pm$ 200.1  \\
-    Manufacturing & 0.69 $\pm$ 0.3   & 1.40 $\pm$ 0.2 & 1.0 $\pm$ 0.0     & 92.0 $\pm$ 26.5     \\
-    UC Irvine     & 1.0 $\pm$ 0.0     & 1.87 $\pm$ 0.4   & 1.0 $\pm$ 0.0     & 994.3 $\pm$ 408.8 \\
-    \hline
-    \end{tabular}
+	\input{img/corpus/immsb_local_table}
+	\input{img/corpus/ilfm_local_table}
 \label{table:local_gof}
 \end{table}
 
-\subsubsection{Comments}
-
-\begin{itemize}
-    \item global preferential attachment : both IMMSB and ILFM pass the goodness of fit test for networks 1,2 and UC irvine. The 3 other are rejected. This show that the models can fit to strongly bursty networks. When burstiness is less strong, as for network3, we can notice if we consider the tail of the generated distributions, ILFM appears to have straight tail than ILFM.
-    \item local preferential attachment : We can see that the fitness for the local degree distributions of IMMSB is strong for every networks except in the lesser extent for Manufacturing. The confident is also relatively high because of a very small variance over the different class, except again for manunufacturing. The instability of Manufacturing is probably due to his small number of nodes. For ILFM, the fitness decrease from network1 to network4. Also, the pvalue has high variance for network 2 to 4 and for manufacturing which is correlated with the decay of the global burstiness.
-\end{itemize}
+%\subsubsection{Comments}
+%
+%\begin{itemize}
+%    \item global preferential attachment : both IMMSB and ILFM pass the goodness of fit test for networks 1,2 and UC irvine. The 3 other are rejected. This show that the models can fit to strongly bursty networks. When burstiness is less strong, as for network3, we can notice if we consider the tail of the generated distributions, ILFM appears to have straight tail than ILFM.
+%    \item local preferential attachment : We can see that the fitness for the local degree distributions of IMMSB is strong for every networks except in the lesser extent for Manufacturing. The confident is also relatively high because of a very small variance over the different class, except again for manunufacturing. The instability of Manufacturing is probably due to his small number of nodes. For ILFM, the fitness decrease from network1 to network4. Also, the pvalue has high variance for network 2 to 4 and for manufacturing which is correlated with the decay of the global burstiness.
+%\end{itemize}
 
 \subsection{Homophily}
 
@@ -336,43 +303,42 @@ In figure \ref{fig:me_fit_lburst_mmsb} and \ref{fig:me_fit_lburst_ibp}, we repor
 %\end{table}
 
 
-We evaluate in this section the behaviour of homophily of models according to both, the natural and the latent similarity.
+We evaluate in this section the behaviour of models concerning the homophily effect according to  the natural and the latent similarities.
+
+Table \ref{table:homo_pearson} presents the Pearson correlation coefficient between the probability of having a link $P(y_{ij}=1)$ in the networks generated respectively with ILFM and with IMMSB  and the latent similarity $s_l(i,j)$. Notice that, for the both models, this coefficient  is always equal to one for the natural similarity whereas it takes low values for the latent similarity, always below 0.386, confirming that the both models are neutral for the latent homophily.
+
 
 In table \ref{table:homo_pearson} we compute the Pearson correlation for the homophily measure. Note that this coefficient for the natural similarity is always equal to one.
 
-In table \ref{table:homo_natural} and \ref{table:homo_latent} we compute contingency tables for homophily.
-\textcolor{red}{ces deux tablueaux sont horrible a formater. Je les laisse tel quel pour le moemnt que tu vois les valeurs, masi je ne pense que ce soit la mesure à retenir. A la rigueur un average sur tout les network de cess valeurs...}
-
-\input{t/table_homo_natural}
-\input{t/table_homo_latent}
+We present also in tables \ref{table:homo_natural} and \ref{table:homo_latent} the means and variances of the natural and latent similarities ($s_n(i,j)$ and $s_l(i,j)$) computed on the linked and non-linked pairs of nodes. We can observed that for the both models,  linked nodes are more similar , in average, than non linked nodes in every network for the natural similarity (\ref{table:homo_natural})  whereas for the latent similarityt, we can not observe a  difference between the linked nodes and not linked nodes for the both models. This confirms our theoretical result according which ILFM and IMMSB are homophilic with respect to the natural similarity but not homophilic for the latent similarity
+%\input{t/table_homo_natural}
+%\input{t/table_homo_latent}
+\begin{table}
+    \caption{Power law Goodness of fit for the \textbf{global} preferential attachment effect.}
+\centering
+\input{img/fix/immsb_homo_contingency_table}
+\input{img/fix/ilfm_homo_contingency_table}
+    \label{table:homo_contingency}
+\end{table}
 
 \begin{table}[h]
     \caption{Correlation between the latent similarity matrix and the predictive likelihood for IMMSB and ILFM.}
     \centering
-    \begin{tabular}{lll}
-    \hline
-    & IMMSB  & ILFM \\
-    \hline
-    Network 1     & 0.082 &  -0.126   \\
-    Network 2     & 0.001     &  -0.116   \\
-    Network 3     & 0.114     &  0.123    \\
-    Network 4     & 0.076     &  0.009    \\
-    Manufacturing & 0.384     &  -0.011   \\
-    UC Irvine     & 0.286     &  -0.213   \\
-    \hline
-    \end{tabular}
+    \input{img/fix/homo_pearson_table}
     \label{table:homo_pearson}
 \end{table}
 
 
 \subsubsection{Comments}
 \begin{itemize}
-    \item The measure of the natural similarity over links and non links satisfy the homophily effect for IMMSB and ILFM (table \ref{table:homo_natural_ibp} and \ref{table:homo_latent_immsb}). In the contrary there is no evidence for a correlation between the latent similarity and the link likelihood (table \ref{table:homo_pearson}). 
+    \item The measure of the natural similarity over links and non links satisfy the homophily effect for IMMSB and ILFM (table \ref{table:homo_natural_ilfm} and \ref{table:homo_latent_immsb}). In the contrary there is no evidence for a correlation between the latent similarity and the link likelihood (table \ref{table:homo_pearson}). 
 \end{itemize}
 
 
 \subsection{Prediction Performance}
-In order to evaluate the  prediction performance of the models, we build a training set and a testing set from the original datasets. In order to achieve this, we generate a random mask consisting of 20 percent of the size of the adjacency matrix. This mask is used a our testing set, while the 80 remaining percent are used as a training set. The results for the prediction evaluation are reported in i) the AUC-ROC measures in figure \ref{fig:auc}, and ii) in the precision/recall results in table \ref{table:unbalanced}.
+\subsection{Prediction Performance}
+In order to evaluate the  prediction performance of the models, we built a training set and a testing set from the original datasets. In order to achieve this, we generate a random mask consisting of 20 percent of the size of the adjacency matrix. This mask is used as our testing set, while the 80 remaining percent are used as a training set. The results for the prediction evaluation are reported in  the AUC-ROC measures in figure \ref{fig:auc}. In addition,  table \ref{table:unbalanced} presents local precision, recall and $F_1$ scores.   Notice the experiments have been done with different  values of initialization for the latent feature dimension K, also given in the table.
+\textbf{arevoir}
 Each prediction results were averaged on 10 repetitions, and results were found to be stable regarding on the random  initialization and the stochastic optimization procedure. 
 
 \input{t/table_results}
