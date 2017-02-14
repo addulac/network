@@ -16,12 +16,9 @@
 \usepackage{tikz}
 \usepackage{lipsum}
 %\input{../tikz.conf}
-
 \usepackage{graphicx}
 \usepackage{subcaption}
-
 \usetikzlibrary{bayesnet}
-
 \usepackage{longtable,booktabs}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -35,6 +32,8 @@
  %left=20mm,
  top=20mm,
  }
+
+\newcommand*{\lpath}{./}%
 
 \title{Networks Properties -- Experiments}
 
@@ -135,8 +134,8 @@ Each network presents a different affinity to preferential attachment and homoph
 Indeed, As shown Figure \ref{fig:synt_graph}, Network1 and Network2, and to a lesser extend, Network3 verify preferential attachment whereas it is not the case for Network4. The results of the KS test given in Table \ref{table:synt_graph} confirm this analysis since the $p$-value is very high for Network1 and Network2, respectively equals to 1 and 0.99 but it decreases for Network3 and is equal 0 for Network4.
 Concerning the local preferential attachment, that can be evaluated on these artificial networks where the ground truth communities are provided by the generator, the local degree distributions per class are given in Figure \ref{fig:synt_graph_local} and the average results (and variances) for the p-value computed over the classes are reported in Table \ref{table:synt_graph_local}. They show that the local preferential attachment is verified in the two first networks and in a lesser extend for the  last ones. In particularly, the high variance of the $p$-value for Network3 and Network4 indicates that the property varies among the classes.
 
-\input{t/a.tex}
-\input{t/b.tex}
+\input{\lpath/t/a.tex}
+\input{\lpath/t/b.tex}
 
 \begin{table}[h]
 \caption{Power law goodness of fit results for the global preferential attachment in artificial networks.}
@@ -178,7 +177,7 @@ The second one, denoted Manufacturing \footnote{available at:}, is an internal e
 
 The adjacency matrices and global degree distributions are presented in Figure \ref{fig:real_graph}. The goodness of fit based on the KS test, used as a reference for the global preferential attachment effect, is reported in Table \ref{table:real_graph}. According to Figure \ref{fig:real_graph} as well as Table \ref{table:real_graph}, it appears that the preferential attachment property is verified in UC Irvine, with a p-value equals to 0.989, and not in Manufacturing where the p-value is null. As the ground truth is not available for these networks, the local preferential attachment can not be verified.
 
-\input{t/c.tex}
+\input{\lpath/t/c.tex}
 
 \begin{table}
 \caption{Power law goodness of fit results for the global degree attachment in real networks.}
@@ -217,14 +216,14 @@ The global degree distribution of the  networks generated with  IMMSB and ILFM a
 IMMSB and ILFM pass the goodness of fit test for Network1*, Network2* and UC Irvine* with high p-value (0.907 or 1) but that is not the case  for the three other networks (Network3*, Network4* and Manufacturing*) with a p-value near or equals to zero. This shows that even if the models IMMSB and ILFM  are neutral with respect to global preferential attachment, they are able to generate  networks having the property,  when this property is strongly verified in the original network used to learn the parameters.
 \textbf{ARV} When the global preferential attachment is less strong, as for Network3, we can noticed if we consider the tail of the generated distributions, ILFM appears to have straight tail than ILFM.
 
-\input{t/me_fit_gburst_mmsb}
-\input{t/me_fit_gburst_ilfm}
+\input{\lpath/t/me_fit_gburst_mmsb}
+\input{\lpath/t/me_fit_gburst_ilfm}
 
 \begin{table}
     \caption{Power law Goodness of fit for the \textbf{global} preferential attachment effect.}
 \centering
-	\input{img/corpus/immsb_global_table}
-	\input{img/corpus/ilfm_global_table}
+	\input{\lpath/img/corpus/immsb_global_table}
+	\input{\lpath/img/corpus/ilfm_global_table}
 \label{table:global_gof}
 \end{table}
 
@@ -240,15 +239,15 @@ logarithmic plot for every network generated with IMMSB whereas it is not the ca
 \textcolor{red}{here comment...} ~\\
 \textcolor{red}{x\_min could be removed from table, I explains earlier how I choose it.}
 
-\input{t/me_fit_lburst_mmsb}
-\input{t/me_fit_lburst_ilfm}
+\input{\lpath/t/me_fit_lburst_mmsb}
+\input{\lpath/t/me_fit_lburst_ilfm}
 
 
 \begin{table}
     \caption{Power law Goodness of fit for the \textbf{local} preferential attachment effect.}
 \centering
-	\input{img/corpus/immsb_local_table}
-	\input{img/corpus/ilfm_local_table}
+	\input{\lpath/img/corpus/immsb_local_table}
+	\input{\lpath/img/corpus/ilfm_local_table}
 \label{table:local_gof}
 \end{table}
 
@@ -261,48 +260,6 @@ logarithmic plot for every network generated with IMMSB whereas it is not the ca
 
 \subsection{Homophily}
 
-%We evaluate in this section the behaviour of homophily of models according to both, the natural and the latent similarity, reported respectively in tables \ref{table:homo_natural} and \ref{table:homo_latent}. Those results are obtained by computing the Pearson correlation coefficient between a random adjacency matrix and a similarity matrix matrix as defined in \ref{sec_homophily} from a model (either IMMSB or ILFM). Each of these coefficient is averaged an basis on 20 networks generated from the fitted models.
-
-%Firstly, we can notice that the results are stable since the standard deviation is not significant for all experiments. Secondly those results illustrate the fact that both models are homophilic under the natural similarity with a positive correlation in all networks,  and not under the latent similarity with a correlation coefficient near to 0 and oscillating between positive and negative value (Note that this last fact depend on the initialization and the seed of the models).
-
-%%%% correlation betewwen edges and similarity
-%\begin{table}
-%\caption{Correlation between the natural similarity matrix and adjacency matrix for IMMSB and ILFM.}
-%\centering
-%    \begin{tabular}{lll}
-%    \hline
-%    & IMMSB   & ILFM  \\
-%    \hline
-%    Network1     & 0.23 $\pm$ 0.004  & 0.135 $\pm$ 0.001      \\
-%    Network2     & 0.225 $\pm$ 0.005 & 0.112 $\pm$ 0.001      \\
-%    Network3     & 0.186 $\pm$ 0.002 & 0.165 $\pm$ 0.001      \\
-%    Network4     & 0.385 $\pm$ 0.001 & 0.443 $\pm$ 0.0        \\
-%    Manufacturing & 0.661 $\pm$ 0.003 & 0.583 $\pm$ 0.002      \\
-%    UC Irvine     & 0.21 $\pm$ 0.002  & 0.129 $\pm$ 0.001      \\
-%    \hline
-%    \end{tabular}
-%\label{table:homo_natural}
-%\end{table}
-%
-%
-%\begin{table}
-%    \caption{Correlation between the latent similarity matrix and adjacency matrix for IMMSB and ILFM.}
-%    \begin{tabular}{lll}
-%    \hline
-%    & ILFM  & IMMSB \\
-%    \hline
-%    Network1     & 0.021 $\pm$ 0.001  & -0.035 $\pm$ 0.001      \\
-%    Network2     & -0.007 $\pm$ 0.001 & -0.051 $\pm$ 0.001      \\
-%    Network3     & 0.012 $\pm$ 0.001  & 0.002 $\pm$ 0.001       \\
-%    Network4     & 0.141 $\pm$ 0.001  & 0.056 $\pm$ 0.001       \\
-%    Manufacturing & 0.11 $\pm$ 0.003   & 0.073 $\pm$ 0.004       \\
-%    UC Irvine     & 0.148 $\pm$ 0.002  & -0.063 $\pm$ 0.0        \\
-%    \hline
-%    \end{tabular}
-%\label{table:homo_latent}
-%\end{table}
-
-
 We evaluate in this section the behaviour of models concerning the homophily effect according to  the natural and the latent similarities.
 
 Table \ref{table:homo_pearson} presents the Pearson correlation coefficient between the probability of having a link $P(y_{ij}=1)$ in the networks generated respectively with ILFM and with IMMSB  and the latent similarity $s_l(i,j)$. Notice that, for the both models, this coefficient  is always equal to one for the natural similarity whereas it takes low values for the latent similarity, always below 0.386, confirming that the both models are neutral for the latent homophily.
@@ -311,20 +268,19 @@ Table \ref{table:homo_pearson} presents the Pearson correlation coefficient betw
 In table \ref{table:homo_pearson} we compute the Pearson correlation for the homophily measure. Note that this coefficient for the natural similarity is always equal to one.
 
 We present also in tables \ref{table:homo_natural} and \ref{table:homo_latent} the means and variances of the natural and latent similarities ($s_n(i,j)$ and $s_l(i,j)$) computed on the linked and non-linked pairs of nodes. We can observed that for the both models,  linked nodes are more similar , in average, than non linked nodes in every network for the natural similarity (\ref{table:homo_natural})  whereas for the latent similarityt, we can not observe a  difference between the linked nodes and not linked nodes for the both models. This confirms our theoretical result according which ILFM and IMMSB are homophilic with respect to the natural similarity but not homophilic for the latent similarity
-%\input{t/table_homo_natural}
-%\input{t/table_homo_latent}
+
 \begin{table}
-    \caption{Power law Goodness of fit for the \textbf{global} preferential attachment effect.}
+    \caption{Contingency table for the homophily effect with regards to the choice on the similarity (natural/latent).}
 \centering
-\input{img/fix/immsb_homo_contingency_table}
-\input{img/fix/ilfm_homo_contingency_table}
+\input{\lpath/img/fix/immsb_homo_contingency_table}
+\input{\lpath/img/fix/ilfm_homo_contingency_table}
     \label{table:homo_contingency}
 \end{table}
 
 \begin{table}[h]
     \caption{Correlation between the latent similarity matrix and the predictive likelihood for IMMSB and ILFM.}
     \centering
-    \input{img/fix/homo_pearson_table}
+    \input{\lpath/img/fix/homo_pearson_table}
     \label{table:homo_pearson}
 \end{table}
 
@@ -341,9 +297,9 @@ In order to evaluate the  prediction performance of the models, we built a train
 \textbf{arevoir}
 Each prediction results were averaged on 10 repetitions, and results were found to be stable regarding on the random  initialization and the stochastic optimization procedure. 
 
-\input{t/table_results}
+\input{\lpath/t/table_results}
 
-\input{t/auc}
+\input{\lpath/t/auc}
 
 \subsubsection{Comments}
 

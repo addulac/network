@@ -2,8 +2,6 @@
 %\documentclass[a4paper, 12pt, draft]{article} % don't include images, leave a border of same size...great
 \documentclass[journal]{IEEEtran}
 
-
-
 %\usepackage[cmex10]{amsmath, mathtools}
 \usepackage{amsmath,amssymb,amsbsy,amsfonts,amsthm}
 \usepackage{multirow}
@@ -14,13 +12,11 @@
 \usepackage{fancyvrb}
 \usepackage{yfonts}
 \usepackage{dsfont}
-
 \usepackage{wrapfig}
 \usepackage{tikz}
 %\input{../tikz.conf}
-
 \usetikzlibrary{bayesnet}
-
+\usepackage{longtable,booktabs}
 %%%%%%%%%%% Box 
 \usepackage{calc}%    For the \widthof macro
 \usepackage{xparse}%  For \NewDocumentCommand
@@ -28,6 +24,7 @@
 
 
 %\input{./header.tex}
+\newcommand*{\lpath}{.}%
 %%%%%%%%%% Math
 \renewcommand{\text}{\textnormal}
 %\newcommand{\pr}{\mathbf{p}}
@@ -48,15 +45,16 @@
 
 %\renewcommand{\Phi}{\mat{\Phi}}
 
-\title{Are Mixed-Membership Models Adapted for Link
-Prediction in Social Networks ?}
-
-%\date{avril 2015}
 
 \newtheorem{definition}{Definition}[section]
 \newtheorem{proposition}{Proposition}[section]
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}{Corollary}[section]
+
+\title{Are Mixed-Membership Models Adapted for Link
+Prediction in Social Networks ?}
+
+%\date{avril 2015}
 
 \begin{document}
 	
@@ -66,26 +64,24 @@ Prediction in Social Networks ?}
 
 \IEEEpeerreviewmaketitle
 
-
-
-\input{intro.tex}
+\input{long_version/intro.tex}
 %\input{motiv.tex}
-\input{background.tex}
-\input{models.tex}
-\input{homophily.tex}
-\input{burstiness.tex}
-\input{dynamic.tex}
-\input{sparsity.tex}
-\input{expe.tex}
-\input{related_work.tex}
-\input{conclusion.tex}
+\input{long_version/background.tex}
+\input{long_version/models.tex}
+\input{long_version/homophily.tex}
+\input{long_version/burstiness.tex}
+\input{long_version/dynamic.tex}
+\input{long_version/sparsity.tex}
+\input{long_version/expe.tex}
+\input{long_version/related_work.tex}
+\input{long_version/conclusion.tex}
 \clearpage
 
 \bibliographystyle{unsrt}
-\bibliography{./a}
+\bibliography{\lpath/a}
 
 \appendix
-\input{appendix}
+\input{long_version/appendix}
 
 \end{document}
 

@@ -1,29 +1,22 @@
 SRC=main
-TEST=test
 CC=latex
 CONV=dvipdf
 
-all: pdf
+all: long short
 
 dvi: ${SRC}.tex
 	${CONV} ${SRC}.dvi
 	${CC} ${SRC}.tex
 
-bib: pdf
+long:
+	pdflatex long_version/${SRC}.tex
+
+short:
+	pdflatex short_version/${SRC}.tex
+
+_bib:
 	bibtex ${SRC}
-	pdflatex ${SRC}.tex
-	pdflatex ${SRC}.tex
-
-pdf:
-	pdflatex ${SRC}.tex
-
-dev:
-	pdflatex expe_dev.tex
-
-test:
-	${CC} ${TEST}.tex
-	${CONV} ${TEST}.dvi; 
-
+bib: _bib long short
 
 clean:
 	rm -f *.dvi
@@ -38,5 +31,6 @@ clean:
 	rm -f *.vrb
 	rm -f *.fls
 	rm -f *.fls
+	rm -f *.synctex.gz
 	rm -f *.fdb_latexmk
 
