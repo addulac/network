@@ -2,11 +2,19 @@
 # Purpose
 We follow an axiomatic approach of social networks within the probabilistic framework. We focus on two Bayesian models that put different priors over networks. Besides, we study and formalize, in this framework, some fundamental topological properties of social networks and show their connections with the models.
 
+This interest is to understand how hierarchical models works, and to
+predict for what type of data a model will be more appropriate than
+another and why, depending on formal properties on models. Those
+properties are accessible in the data under satistical measures...
 
 
 # Remarks
 
-###Max assignement and blockmodel
+### Task for long_version
+* Global attachment "probleme" -> non-calculability and configuration
+of Z/F feature matrix...
+
+### Max assignement and blockmodel
 
 Pour calculer la "puissance" d'interactions entre deux classe, j'utilise une mesure de la moyenne pondéré de la distribution des degrés locales (les deux classes ne sont pas nécessairement égales.)
  

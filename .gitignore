@@ -24,3 +24,5 @@
 *.synctex.gz
 /*.pdf
 *_version/*.pdf
+__MACOSX/
+.session.vim

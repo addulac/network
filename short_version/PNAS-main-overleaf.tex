@@ -1,0 +1,245 @@
+\documentclass[9pt,twocolumn,twoside]{pnas-new}
+% Use the lineno option to display guide line numbers if required.
+% Note that the use of elements such as single-column equations
+% may affect the guide line number alignment. 
+
+\templatetype{pnasresearcharticle} % Choose template 
+% {pnasresearcharticle} = Template for a two-column research article
+% {pnasmathematics} = Template for a one-column mathematics article
+% {pnasinvited} = Template for a PNAS invited submission
+
+%\usepackage[cmex10]{amsmath, mathtools}
+\usepackage{amsmath,amssymb,amsbsy,amsfonts,amsthm}
+\usepackage{multirow}
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{url}
+%\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{fancyvrb}
+\usepackage{yfonts}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{bayesnet}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+\usepackage{calc}%    For the \widthof macro
+\usepackage{xparse}%  For \NewDocumentCommand
+
+%\input{./header.tex}
+%%%%%%%%%% Math
+\renewcommand{\text}{\textnormal}
+\newcommand{\ifm}{\texttt{ILFM}}
+\newcommand{\imb}{\texttt{IMMSB}}
+\newcommand{\pr}{p}
+\newcommand{\p}{p}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\divkk}{\mathbb{K}}
+\newcommand{\entropy}{\mathbb{H}}
+\newcommand{\gem}{\mathrm{GEM}}
+\newcommand{\Mult}{\mathrm{Mult}}
+\newcommand{\DP}{\mathrm{DP}}
+\newcommand{\IBP}{\mathrm{IBP}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\unit}{1\!\!1}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+
+
+\title{Stochastic mixed membership models and link prediction: a study of homophily and preferential attachment in social networks}
+
+% Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
+\author[a,b]{Adrien Dulac}
+\author[a]{Eric Gaussier} 
+\author[b,1]{Christine Largeron}
+
+\affil[a]{Univ. Grenoble Alpes, CNRS, Grenoble INP, LIG - F-38000 Grenoble}
+\affil[b]{Universit\'e Jean Monnet, Laboratoire Hubert Curien - F-42000 Saint-Etienne}
+%\affil[c]{Affiliation Three}
+
+% Please give the surname of the lead author for the running footer
+\leadauthor{Dulac} 
+
+% Please add here a significance statement to explain the relevance of your work
+\significancestatement{We introduce formal definitions of the compliance of probabilistic link prediction models to homophily and preferential attachment in social networks, and show that standard stochastic mixed membership models comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachement, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft.}
+
+% Please include corresponding author, author contribution and author declaration information
+\authorcontributions{All authors contributed equally to the theoretical development and experimental design. A. Dulac furthermore implemented all the models and ran the experiments.}
+%\authordeclaration{Please declare any conflict of interest here.}
+%\equalauthors{\textsuperscript{1}A. Dulac, E. Gaussier and C. Largeron contributed equally to this work.}
+\correspondingauthor{\textsuperscript{1}To whom correspondence should be addressed. E-mail: Christine.Largeron@univ-st-etienne.fr}
+
+% Keywords are not mandatory, but authors are strongly encouraged to provide them. If provided, please include two to five keywords, separated by the pipe symbol, e.g:
+\keywords{Stochastic mixed membership models $|$ Social networks $|$ Homophily $|$ Preferential attachment} 
+
+\begin{abstract}
+We assess here whether standard stochastic mixed membership models are adapted to link prediction in social networks by studying how they handle homophily and preferential attachment. To do so, we introduce formal definitions of the compliance of probabilistic link prediction models to homophily and preferential attachment. Our theoretical analysis reveals that standard stochastic mixed membership models comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachement, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft. We lastly illustrate these elements on synthetic and real networks.
+\end{abstract}
+
+\dates{This manuscript was compiled on \today}
+\doi{\url{www.pnas.org/cgi/doi/10.1073/pnas.XXXXXXXXXX}}
+
+\begin{document}
+
+% Optional adjustment to line up main text (after abstract) of first page with line numbers, when using both lineno and twocolumn options.
+% You should only change this length when you've finalised the article contents.
+\verticaladjustment{-2pt}
+
+\maketitle
+\thispagestyle{firststyle}
+\ifthenelse{\boolean{shortarticle}}{\ifthenelse{\boolean{singlecolumn}}{\abscontentformatted}{\abscontent}}{}
+
+Several powerful relational learning models have been proposed to solve the problem commonly referred to as \textit{link prediction} that consists in predicting the likelihood of a future association between two nodes in a network \cite{Liben-Nowell07, HassanZaki11}. Among such models, the class of stochastic mixed membership models has received much attention as such models can be used to discover hidden properties and infer new links in social networks. Two main models in this class have been proposed and studied in the literature: the latent feature model \cite{BMF} and its non-parametric extension \cite{ILFRM}, and the mixed-membership stochastic block model \cite{MMSB}, and its non parametric extension \cite{iMMSB,diMMSB}.
+
+Nevertheless, although drawn from a wide range of domains, real world social networks exhibit general properties that have been put forward in different studies. In this work, we focus on two important properties, namely \textit{homophily} and \textit{preferential attachment} \cite{Newman2010, Barabasi2003}, and assess to which extent link prediction models as the ones mentioned above comply with such properties.
+
+Stochastic mixed membership models are generative models that rely on latent factors (sometimes referred to as latent \textit{classes} or \textit{features}) that represent hidden properties of nodes, corresponding to individuals, in a graph representing the social network. They are characterized by the fact that each node can "belong" to several latent factors, which reflects the fact that each individual usually has several properties, for example can belong to several communities\footnote{As mentioned in \cite{goldenberg2010survey}, the reader should however bear in mind that the notion of latent factors is of stochastic nature and is an approximation of the notions of communities and shared properties.}. The relation between a node $i$ and the latent factors is encoded in a vector denoted $\mat{f}_{i}$, of finite dimension $K$ in standard versions of the models, and of infinite dimensions in  non-parametric versions. The collection of all vectors $\mat{f}_{i}$ ($1 \le i \le N$) constitutes the factor matrix $\mat{F}$. Furthermore, a weight matrix $\mat{\Phi}$ is used to encode correlations between the latent factors.
+
+Stochastic mixed membership models differ on the way the vectors $\mat{f}_{i}$ ($1 \le i \le N$) and the matrix $\mat{\Phi}$ are generated. As mentioned before, and to be as general as possible, we consider here the non-parametric versions of the latent feature model \cite{ILFRM}, referred to as \ifm, and of the mixed-membership stochastic block model \cite{iMMSB,diMMSB}, referred to as \imb. In \ifm, the factor matrix $\mat{F}$ is generated by an Indian Buffet Process, and each element of the matrix $\mat{\Phi}$ is generated according to a normal distribution with 0 mean and fixed, common variance. The Indian Buffet Process yields binary vectors; the $k^{\mbox{th}}$ coordinate of the vector $\mat{f}_{i}$, denoted $f_{ik}$, is thus either $1$ or $0$, meaning that node $i$ belongs or not to the $k^{\mbox{th}}$ latent factor. In \imb, the factor matrix $\mat{F}$ is obtained with a Hierarchical  Dirichlet Process, and each element of the matrix $\mat{\Phi}$ is generated according to a Beta distribution with fixed, common parameters. The Hierarchical  Dirichlet Process yields this time membership probabilities; $f_{ik}$ directly encodes the probability that node $i$ belongs to the $k^{\mbox{th}}$ latent factor. We refer the interested reader to \cite{ILFRM} and \cite{iMMSB} for more details on these processes.
+
+Once the factor and weight matrices have been generated, the probability to generate a link between any two nodes $i$ and $j$ for \ifm\ is given by:
+%
+\begin{align}
+P(y_{ij}=1|\mat{F},\mat{\Phi}) = \sigma(\mat{f}_{i} \mat{\Phi} \mat{f}_{j}^\top)
+\label{eq:ilfm}
+\end{align}
+%
+where $\sigma()$ is the sigmoid function and $\top$ denotes the transpose. In \imb, one has first to select two latent factors from $\mat{f}_i$ and $\mat{f}_j$, and then generate or not a link between $i$ and $j$. This amounts to: (a) choose a class from the class membership distributions according to a categorical distribution:
+%
+\begin{align}
+ z_{i \rightarrow j} &\sim \mbox{Cat}(\mat{f}_i) \nonumber \\
+ z_{i \leftarrow j} &\sim \mbox{Cat}(\mat{f}_j) \nonumber
+\end{align} 
+%
+and (b) generate a link with probability:
+%
+\begin{align}
+ P(y_{ij}=1|,\mat{\Phi}) = \phi_{z_{i \rightarrow j}z_{i \leftarrow j}}
+\label{eq:immsb}
+\end{align}
+%
+where $\phi_{kk'}$ denotes the element of $\mat{\Phi}$ at row $k$, column $k'$.
+%
+A graphical representation of these models is given in Figure~\ref{fig:ilfrm}.
+
+\begin{figure}[t]
+	\centering
+	\minipage{0.25\textwidth}\vspace{1cm}
+	\scalebox{0.77}{
+	\input{ilfrm2.tex}}
+	\endminipage
+	\minipage{0.25\textwidth}
+	\scalebox{0.77}{
+		\input{mmsb2.tex}}
+	\endminipage
+	\caption{The two graphical representations of (left) the infinite latent feature model and (right) the infinite mixed-membership stochastic block model.}
+%	The difference between the two models lies in the way representations are associated to nodes: a fixed representation is used in the case of the latent feature model, whereas the representation in the stochastic block model varies according to the link considered.}
+	\label{fig:ilfrm}
+\end{figure}
+
+In the typical use of the above models for link prediction, some observations (\textit{i.e.} an existing network, observed till a certain time) are available and are used to estimate $\mat{F}$ and $\mat{\Phi}$, from which new links are predicted. In the remainder, we denote by $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ the estimates of $\mat{F}$ and $\mat{\Phi}$, that are usually obtained through standard (collapsed) Gibbs sampling and Metropolis-Hastings algorithms \cite{ILFRM,IBP,HDP,diMMSB}. We furthermore denote by $\mathcal{M}_e$ the version of both ILFM and IMMSB in which $\mat{F}$ and $\mat{\Phi}$ are assumed known and fixed to $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$. We now investigate whether, from the learned parameters $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, the new links generated produce a network that comply with homophily and preferential attachement.
+
+\section{Homophily: \emph{"Birds of a feather flock together"}}
+\label{sec:homophily}
+
+Homophily refers to the tendency of individuals to connect to similar others: two individuals (and thus their corresponding nodes in a social network) are more likely to be connected if they share common characteristics~\cite{mcpherson2001birds,lazarsfeld1954friendship}. The characteristics often considered are inherent to the individuals and may represent their social status, their preferences or their interest. A related notion is the one of {\it assortativity}, that is slightly more general as it applies to any network, and not just social networks, and refers to the tendency of nodes in networks to be connected to others that are similar in some way.
+
+A definition of homophily has been proposed in~\cite{la2010randomization}. However, this definition, which relies on a single characteristic (as age or gender), does not allow one to assess whether latent models for link prediction capture the homophily effect or not. We thus introduce a new definition of homophily below:
+%
+\begin{definition}[Homophily] \label{def:homophily}
+	Let $\mathcal{M}_e$ be a probabilistic link prediction model and $s$ a similarity measure between nodes. We say that \emph{$\mathcal{M}_e$ is homophilic under the similarity $s$} iff, $\forall (i,j,i',j') \in V^4$:
+%
+\begin{equation}
+s(i,j) > s(i',j')  \implies \pr(y_{ij}=1 \mid \mathcal{M}_e) > \pr(y_{i'j'}=1  \mid \mathcal{M}_e) \nonumber
+\end{equation}
+%
+\end{definition}
+%
+\noindent As one can note, this definition directly captures the effect "if two nodes are more similar, then they are more likely to be connected". 
+
+Different similarities can be considered, as long as they are based on the proximity of the properties of the nodes considered. In stochastic mixed membership models, these properties are encoded in the latent factors. Indeed, as mentioned before, the factor matrix $\mat{\hat{F}}$ aims at capturing some latent properties of the nodes, whereas the estimated matrix $\mat{\hat{\Phi}}$ captures the correlations between these latent properties. One can thus define, on their basis, a "natural" similarity between nodes as follows:
+%
+\begin{equation}
+s_n(i,j) = \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top \nonumber
+\end{equation}
+%
+It is straightforward that both \ifm\ and \imb\ in the setting $\mathcal{M}_e$ are homophilic with respect to $s_n$. Indeed, $\pr(y_{ij}=1 \mid \mathcal{M}_e)$ increases with $s_n$ for \ifm\ as the sigmoid function is strictly increasing (Eq.~\ref{eq:ilfm}). Furthermore, marginalizing over the $z$ variables in \imb\ leads to:
+%
+\begin{align}
+\pr(y_{ij} =1 \mid \mathcal{M}_e) & = \sum_{k,k'} \hat{\phi}_{k,k'} \pr(z_{i \rightarrow j}=k | \mathcal{M}_e) \pr(z_{i \leftarrow j}=k | \mathcal{M}_e) \nonumber \\
+& = \sum_{k,k'} \hat{\phi}_{k,k'} \hat{f}_{ik} \hat{f}_{jk'} = \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top \nonumber
+\end{align}
+
+Dropping the correlation between latent factors in the natural similarity leads to a new similarity, solely based on the latent factors and defined by $s_l(i,j) = \mat{\hat{f}}_{i} \mat{\hat{f}}_j^\top \nonumber$ ($s_l$ stands for latent similarity). With this similarity, however, neither \ifm\  nor \imb\ are homophilic. Indeed, let us first assume that $\mat{\hat{\Phi}}$ is null on the diagonal, and strictly positive elsewhere (this can be obtained for both models). For \imb, one has:
+%
+\begin{align}
+\pr(y_{ij}=1 \mid \M_e) & = \sum_{k' \neq k} \hat{f}_{ik} \hat{\phi}_{kk'} \hat{f}_{jk'} \nonumber 
+\end{align}
+%
+as $\hat{\phi}_{kk} = 0$. Let us now consider $\mat{\hat{f}}_i=\mat{\hat{f}}_j=(0,1,0)$ and $\mat{\hat{f}}_{i'}=(1,0,1)$ and $\mat{\hat{f}}_{j'}=(0,1,0)$. Then, $s_l(i,j)=1$ and $s_l(i',j')=0$. However, $\pr(y_{ij}=1 \mid \M_e) = 0$ whereas $\pr(y_{ij}=1 \mid \M_e) > 0$. \imb\ is thus not homophilic under $s_l$. The same example can be used to show that \ifm\ is neither homophilic under $s_l$.
+
+This shows that, for a model to be homophilic, it should be designed according to the similarity at the basis of the proximity between nodes and individuals. Both \ifm\ and \imb\ have been designed on the basis the natural similarity $s_n$, and directly encode the fact that similar nodes, according to $s_n$, are more likely to connected.  It is furthermore possible to make these models homophilic under $s_l$ by imposing constraints on the weight matrix $\mat{\Phi}$ (and hence its estimate $\mat{\hat{\Phi}}$); for example, considering positive, diagonal matrices with equal values on the diagonal leads to homophilic models. In that case, the latent factors can be interpreted as community indicators, each community being of equal importance. This is in line with what is done in the study presented in \cite{AMMSB} to find overlapping communities through assortativity constraints in the mixed membership stochastic block model.
+
+\section{Preferential attachment: \emph{"The rich get richer"}}
+\label{sec:burstiness}
+
+Preferential attachment, sometimes referred to as the \textit{rich get richer} rule, is a mechanism according to which each node is connected to an existing node with a probability that increases with the number of links of the chosen node\footnote{This property is well captured by a power law distribution, hence the claim often made that preferential attachment translates as a power law distribution for the node degrees.}. However, as noted in Leskovec \textit{et al.}, usually, in social networks, entities do not have a global knowledge of the network. The preferential attachment model is thus more likely to be local, and to be specific to communities \cite{LeskovecBKT08}.
+
+Preferential attachment relates to a general phenomenon known as \textit{burstiness}\footnote{A.L. Barab\'asi, for example, uses the term \textit{preferential attachement} in \cite{barabasi1999emergence}, and \textit{burstiness} in \cite{barabasi_burst}.} which describes the fact that some events appear in bursts, \textit{i.e.} once they appear, they are more likely to appear again. Burstiness has been studied in different fields, in particular in computational linguistics and information retrieval to characterize word occurrences \cite{church1995poisson}. In these domains, simple definitions of burstiness, that directly capture the fact that a probability distribution is bursty if the probability of generating a new occurrence of an event increases with the number of occurrences of this event, have been proposed \cite{clinchant2008bnb,clinchant2010information}, for both discrete and continuous probability distributions. We adapt here these definitions for preferential attachment in social networks.
+
+As mentioned before, in the context of social networks, the notion of preferential attachement appears at different levels: (a) at a global level that characterizes the degree distribution of nodes in the network, and (b) at a local level that characterizes the degree distribution of nodes within classes. These two phenomena simply state that the more links a node has, either globally in the network or within a particular class, the more likely it will be linked to new nodes, globally in the network or locally in its class. For global preferential attachment, the degree of a node is a known integer; for local preferential attachment, in most models, the exact degree is not known, and one has to rely on an estimate. We provide below a formal definition of these elements.
+%
+\begin{definition}[Preferential attachment]
+Let $i$ be a node in a social network and let $d_i$ denote its degree. 
+\begin{description}
+ \item[(1)] \emph{Global Preferential Attachment}: we say that a probabilistic link prediction model $\mathcal{M}_e$ satisfies the global preferential attachement iff, for any node $i$, $\pr(d_i \ge n+1 \mid d_i \ge n, \mathcal{M}_e)$ increases with $n \in \mathbb{N}$;
+ \item[(2)] \emph{Local Preferential Attachment}: we say that a probabilistic link prediction model $\mathcal{M}_e$ satisfies the local preferential attachement iff, for any node $i$, denoting $d_{i,k}$ the degree of node $i$ in class $k$, $\forall \epsilon \in [0,1], \, \pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x \in [0,N-1]$. Furthermore, $d_{i,k}$ is defined as the expectation, over all nodes in the network, of forming a link through latent factor $k$.
+\end{description}
+\label{def:burst-soc-net}
+\end{definition}
+%
+As one can note, these definitions directly translate the fact that "the more connections a node has, the more likely it is to be connected to new nodes". The only difference between the local and global cases lies in the fact the degree is usuallly unknown in the local case, and is here estimated through its expectation.
+
+For global preferential attachment, the degree $d_i$ directly corresponds to the number of outgoing links of node $i$. Exploiting the fact that the observations are independent given $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, one has:
+%
+\begin{align}
+\pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) = 1 - \prod_{j \notin \mathcal{V}(i)} P(y_{ij} = 0 \mid d_{i} \ge n, \mathcal{M}_e) \nonumber \\
+= 1 - \prod_{j \notin \mathcal{V}(i)} (1 - P(y_{ij} = 1 \mid d_{i} \ge n, \mathcal{M}_e)) \nonumber
+\end{align}
+%
+where $\mathcal{V}(i)$ denotes the set of nodes connected to node $i$. Hence $\pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e)$ and $P(y_{ij} = 1 \mid d_{i} \ge n, \mathcal{M}_e)$ vary in the same direction. 
+
+For \ifm, one has: $\pr(y_{ij}=1 | d_i \ge n, \mathcal{M}_e) = \sigma(\mat{\hat{f}}_i \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top)$, which is independent of $n$. Similarly, for \imb, one has, by marginalizing over the $z$ variables: $\pr(y_{ij}=1 | d_i \ge n, \mathcal{M}_e) = \mat{\hat{f}}_i \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top$, which is also independent of $n$. We thus have the following property:
+%
+\begin{proposition}[]
+\label{pref-attch-glob}
+Both \ifm\ and \imb\ do not satisfy global preferential attachment.
+\end{proposition}
+
+For local preferential attachment, the situation is slightly more complex:
+%
+\begin{proposition}[]
+\label{pref-attch-loc}
+\imb\ satisfies local preferential attachment whereas \ifm\ does not.
+\end{proposition}
+%
+\noindent \textbf{Proof} Let $y_{ij,k}$ be the binary random variable that is $1$ if nodes $i$ and $j$ are linked through the latent factor $k$ and $0$ otherwise. Then, $d_{i,k} = \sum_{j \in \mathcal{V}(i)} \pr(y_{ij,k} =1 | \mathcal{M}_e)$. For \imb, this leads to $d_{i,k} = \sum_{j \in \mathcal{V}(i)} \hat{f}_{ik} \hat{\Phi}_{kk} \hat{f}_{jk} = \hat{f}_{ik} \sum_{j \in \mathcal{V}(i)} \hat{\Phi}_{kk} \hat{f}_{jk}$. The positive reinforcement effect of the Dirichlet Process \cite{teh2006hierarchical} at the basis of \imb\ corresponds to a burstiness phenomenon and directly translates, for any $i$ and any $k$, as: $\pr(\hat{f}_{ik} \ge x'+\epsilon' \mid \hat{f}_{ik} \ge x',\mathcal{M}_e)$ increases with $x'$ (for all $\epsilon'$ and $x'$ chosen in accordance with the domain of definition of $\hat{f}_{ik}$). Setting $x=x'(\sum_{j \in \mathcal{V}(i)} \hat{\Phi}_{kk} \hat{f}_{jk})$ and $\epsilon = \epsilon'(\sum_{j \in \mathcal{V}(i)} \hat{\Phi}_{kk} \hat{f}_{jk})$ and exploiting the fact that $\sum_{j \in \mathcal{V}(i)} \hat{\Phi}_{kk} \hat{f}_{jk}$ is positive and independent of $i$ leads to: $\pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x$, which proves that \imb\ satisfies the local preferential attachment effect. For \ifm, as $\hat{f}_{ik}$ is binary, there no positive reinforcement effect associated to it and the above reasoning does not hold (all the more so that $\hat{\Phi}_{kk}$ can be negative). As the factor matrix is binary, one has:
+%
+\[ 
+d_{i,k} = \sum_{j \in \mathcal{V}_i} \sigma(\hat{f}_{ik} \hat{\Phi}_{kk} \hat{f}_{jk}) =  \sigma(\hat{\Phi}_{kk}) |\{j \in \mathcal{V}(i), \hat{f}_{jk} =1\}|
+\]
+%
+where $|.|$ denotes the cardinal of a set. The local degree for \ifm\ thus amounts to the number of nodes connected to $i$ that belong to latent factor $k$, weighted by $\sigma(\hat{\Phi}_{kk})$. As $\sigma(\hat{\Phi}_{kk})$ is strictly positive,  $\pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e) = \pr(|\{j \in \mathcal{V}(i), \hat{f}_{jk} =1\}| \ge x+\epsilon \mid |\{j \in \mathcal{V}(i), \hat{f}_{jk} =1\}| \ge x, \mathcal{M}_e)$. The reasoning for global preferential attachement thus applies here, showing that \imb\ does not satisfy the local preferential attachment effect. \hspace{7.1cm} $\Box$
+
+The above propositions show that both models are deficient in the sense that they do not guarantee that the networks they generate will comply to the global (and local in case of \ifm) preferential attachment phenomena, which are \textit{inherent} properties of the probability distributions underlying the models. This does not mean however that \ifm\ and \imb\ ISMMB are not able to model well social networks during the learning phase, even according to the underlying degree distribution. Indeed, the Gibbs updates for both models will assign higher weight to nodes and factors that have been used during the learning phase. Provided there is enough training data, both models will likely reproduce the degree distributions observed in the training data. We will observe that in the following section, devoted to the illustration of the properties we have established.
+
+\section{Illustration}
+
+\bibliographystyle{unsrt}
+\bibliography{pnas}
+
+\end{document}
