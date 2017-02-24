@@ -30,22 +30,11 @@ In the context of latent models, while there is no ambiguity in computing the ov
 
 \subsection{Homophily Measures}
 
-For the homophily property, defined in section \ref{sec:homophily}, we rely on two different measures:
-
-\begin{itemize}
-    \item  Pearson correlation coefficient between the probability of having a link $P(y_{ij}=1)$  and the natural or latent similarity ($s_n(i,j)$ and $s_l(i,j)$) for all pairs of vertices $(i,j) \in E^2 $. 
-    \item  Means and variances of the similarity ($s_n(i,j)$ and $s_l(i,j)$) computed on the linked and non-linked pairs of nodes.
-\end{itemize}
+For the homophily property, defined in section \ref{sec:homophily}, we measured the distribution of both similarity, natural and latent for the links and the non-links. The links or non-links are obtained by running the models in a generative mode. For each models we aggregated  the similarity of each couple of nodes as well as link prediction (links or non-links). The distributions of similarities are then represented on a boxplot that shows how the they are spread according to links and non-links.
 
 \subsection{Prediction performance evaluation}
 The prediction problem is equivalent to a binary prediction problem in two classes since it consists to decide for each pair of nodes if there is an edge or not between them. 
-Thus, the performance of the models can be evaluated with usual measures:
-
-\begin{itemize}
-
-\item Precision/Recall/$F_1$ :  The local precision, recall and $F_1$ scores concern the links predicted as an edge.  The global (precision), denoted global in the tables, refers to the accuracy of the model. 
-\item AUC-ROC : Receiver operating characteristic curves allow also to graphically compare the  models on each dataset.
-\end{itemize}
+Thus, the performance of the models can be evaluated with usual AUC-ROC measures: Receiver operating characteristic curves allow to graphically compare the predictive performance of the models on each datasets.
 
 \subsection{Training Datasets}
 
@@ -88,47 +77,109 @@ The adjacency matrices and global degree distributions are presented in Figure \
 \input{\lpath/t/b.tex}
 
 \begin{table}[h]
-    \caption{Power law goodness of fit results for the \textbf{global} preferential attachment for datasets networks.}
+    \caption{Power law goodness of fit results for the preferential attachment for datasets networks.}
 \centering
-  \begin{tabular}{lrr}
-  	\hline
-  	&   pvalue &   alpha    \\
-  	\hline
-    Network 1     &    1.000 &   2.424 \\
-    Network 4     &    0.000 &   1.354 \\
-    Blogs         &    1.000 &   1.526 \\
-    Manufacturing &    0.000 &   1.434 \\
-  	\hline
-  \end{tabular}
 \label{table:synt_graph}
 \end{table}
 
-\begin{table}[h]
-    \caption{Power law goodness of fit results for the \textbf{local} preferential attachment for datasets networks.}
-\centering
-    \begin{tabular}{lrr}
-    \hline
-    & pvalue          & alpha   \\
-    \hline
-    Network 1     &   1.0 $\pm$ 0.0  &  2.394 $\pm$ 0.5  \\
-    Network 4     &   0.6 $\pm$ 0.5  &  1.538 $\pm$ 0.2  \\
-    Blogs         &   1.0 $\pm$ 0.   &  1.683 $\pm$ 0.3  \\
-    Manufacturing & 0.525 $\pm$ 0.2  &  1.385 $\pm$ 0.1  \\
-    \hline
-    \end{tabular}
-\label{table:synt_graph_local}
-\end{table}
 
 \subsection{Model Evaluation}
 For each dataset described earlier, we run a MCMC inference consisting of 200 iterations to learn the posterior distribution for the IMMSB and ILFM  models described in section \ref{sec:models}. For IMMSB, the concentration parameters of HDP were optimized according to  \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameters for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. 
 
-The inference procedure was run with these settings for the four artificial networks  and five real networks.
-
-All our experimental platform is available online \footnote{https://github.com/dtrckd/pymake}. It is an ongoing development in order to provide a flexible way to design and run experiments and make data analysis.
-
-
 The inference procedure was run with these settings for the four datasets networks previously described.
 
-All our experimental platform is available online \footnote{https://github.com/dtrckd/pymake}. It is an ongoing development in order to provide a flexible way to design and run experiments and make data analysis.
+All our experimental platform is available online \footnote{https://github.com/dtrckd/pymake}. It is an ongoing development in order to provide a flexible way to design and share and make experiments data analysis.
 
-...
+We report in table \ref{table:me_gofit} the value of the power-law goodness of fit as described earlier for a 10 random generated networks form the model fitted on all four dataset. This table shows that the IMMSB comply with the preferential attachment with a maximal pvalue for each datasets while ILFM obtain low pvalue for the networks that were less locally bursty with a value of 0.5 and 0.3 for respectively Network4 and Manufacturing. Also, the mean value of the power-law coefficient $\alpha$ is significantly greater for IMMSB on all dataset with stronger value on the strongest locally bursty networks, Network1 and Blogs.
+
+The figure \ref{fig:me_local} illustrate the local preferential attachments by plotting the averaged local degree distribution of the generated networks. We shows that the shape of local degree distribution appears more bursty for IMMSB and with more fluctuation for ILFM.
+
+
+
+
+\begin{table}[t]
+    \caption{Power law goodness of fit results for the preferential attachment for empirical data and fitted models.}
+\centering
+  \begin{tabular}{lrrrr}
+      \multirow{2}{*}{\textbf{Empirical}}  &
+      \multicolumn{2}{c}{Global} & \multicolumn{2}{c}{Local}\\
+      \cmidrule(r){2-3} \cmidrule(l){4-5}
+      &   pvalue &   alpha   & pvalue & alpha   \\
+  	\hline
+    Network 1     &    1.0 &   2.4 & 1.0 $\pm$ 0.0  &  2.4 $\pm$ 0.5  \\
+    Network 4     &    0.0 &   1.3 & 0.6 $\pm$ 0.5  &  1.5 $\pm$ 0.2 \\
+    Blogs         &    1.0 &   1.5 & 1.0 $\pm$ 0.   &  1.7 $\pm$ 0.3 \\
+    Manufacturing &    0.0 &   1.4 & 0.5 $\pm$ 0.2  &  1.4 $\pm$ 0.1 \\
+  	\hline
+
+      \ \textbf{IMMSB} &&&& \\
+  	\hline
+    Network 1     & 0.9 \(\pm\) 0.1   & 1.4 \(\pm\) 0.0 & 1.0 \(\pm\) 0.0   & 2.9 \(\pm\) 1.4 \\
+    Network 4     & 0.0 \(\pm\) 0.0   & 1.3 \(\pm\) 0.1 & 1.0 \(\pm\) 0.0   & 1.8 \(\pm\) 0.2 \\
+    Blogs         & 1.0 \(\pm\) 0.0   & 1.3 \(\pm\) 0.0 & 1.0 \(\pm\) 0.0   & 4.5 \(\pm\) 0.9 \\
+    Manufacturing & 0.0 \(\pm\) 0.1   & 1.2 \(\pm\) 0.0 & 1.0 \(\pm\) 0.1   & 1.8 \(\pm\) 0.2 \\
+  	\hline
+
+      \ \textbf{ILFM} &&&& \\
+  	\hline
+    Network 1     & 1.0 \(\pm\) 0.0 & 1.4 \(\pm\) 0.0 & 1.0 \(\pm\) 0.0 & 1.8 \(\pm\) 0.3 \\
+    Network 4     & 0.0 \(\pm\) 0.0 & 1.2 \(\pm\) 0.0 & 0.5 \(\pm\) 0.5 & 1.3 \(\pm\) 0.1 \\
+    Blogs         & 1.0 \(\pm\) 0.0 & 1.3 \(\pm\) 0.0 & 1.0 \(\pm\) 0.0 & 1.5 \(\pm\) 0.1 \\
+    Manufacturing & 0.0 \(\pm\) 0.0 & 1.2 \(\pm\) 0.0 & 0.3 \(\pm\) 0.3 & 1.3 \(\pm\) 0.0 \\
+  	\hline
+  \end{tabular}
+\label{table:me_gofit}
+\end{table}
+
+\begin{figure}[h]
+        \begin{minipage}{0.24\textwidth}
+            \includegraphics[width=\textwidth]{img/corpus/immsb_network1_1}
+        \end{minipage}
+        \begin{minipage}{0.24\textwidth}
+            \includegraphics[width=\textwidth]{img/corpus/ilfm_network1_1}
+        \end{minipage}
+        \vskip\baselineskip
+        \begin{minipage}{0.24\textwidth}
+            \includegraphics[width=\textwidth]{img/corpus/immsb_network4_1}
+        \end{minipage}
+        \begin{minipage}{0.24\textwidth}
+            \includegraphics[width=\textwidth]{img/corpus/ilfm_network4_1}
+        \end{minipage}
+        \caption {Local degree distribution for of fitted models for Network 1 (first column) and Network 4 (second column) learned by IMMSB (row 1) and ILFM (row 2).} 
+	\label{fig:me_local}
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering
+        \begin{minipage}{0.24\textwidth}
+            \includegraphics[width=\textwidth]{img/corpus/roc_network1_20}
+        \end{minipage}
+        \begin{minipage}{0.24\textwidth}
+            \includegraphics[width=\textwidth]{img/corpus/roc_network4_20}
+        \end{minipage}
+        \begin{minipage}{0.4\textwidth}
+            \includegraphics[width=\textwidth]{img/corpus/testset_max_20_roc_evolution.png}
+        \end{minipage}
+        \caption{The two upper top figures represent AUC-ROC curves that compares ILFM and IMMSB on network 1 and network4. The bottom figure is the relative AUC values when the size of the traning set vary. } 
+	\label{fig:auc}
+\end{figure}
+
+
+In figure \ref{fig:auc} we report the AUC-ROC evaluation The two upper roc curves show a typically experiment for a bursty network (Network1) and a non bursty (Network 4). The figures show that IMMSB dominate ILFM on the first and is being dominated on the second. The bottom figure illustrate the relative performance of both models on each datasets for different ratio of the training size.The relative performance  is defined as the difference of the AUC value between IMMSB abd ILFM. The x-axis is the following ratio $\frac{testset size}{training size}$. Hence the number of training data decrease in this graph. We shows that for bursty network the prediction relative performance of IMMSB increase when the quantity of training data decrease. For the non-bursty networks, the results is the opposite the relative performance of ILFM increase when the size the training data decrease. This is particularly visible for Network4. For manufacturing this is more contrasted probably due to the fact that the size of this networks is quite small which make the comparison more difficult.
+
+
+\begin{figure}[h]
+    \centering
+        \begin{minipage}{0.24\textwidth}
+            \includegraphics[width=\textwidth]{img/corpus/homo_mustach_immsb}
+        \end{minipage}
+        \begin{minipage}{0.24\textwidth}
+            \includegraphics[width=\textwidth]{img/corpus/homo_mustach_ilfm}
+        \end{minipage}
+        \caption{Box plot for IMMSB (left) and ILFM (left) of the distribution for natural and latent similarity on the overall datasets. }
+        \label{fig:homo_mustach}
+\end{figure}
+
+In figure \ref{fig:homo_mustach} we report the homophily measure. The left and right figures represent respectively the distribution of similarities for IMMSB and ILFM. It confirms that the natural similarities are statistically higher for the links than the non-links for both models but for IMMSB non-links similarities are more concentrated around zeros which is an interesting insight of the bursty behavior of IMMSB. For the latent similarity we see that there is no evidence of correlation the similarities with either  the links and non-links. 
+
