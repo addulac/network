@@ -76,11 +76,6 @@ The adjacency matrices and global degree distributions are presented in Figure \
 \input{\lpath/t/a.tex}
 \input{\lpath/t/b.tex}
 
-\begin{table}[h]
-    \caption{Power law goodness of fit results for the preferential attachment for datasets networks.}
-\centering
-\label{table:synt_graph}
-\end{table}
 
 
 \subsection{Model Evaluation}
@@ -90,11 +85,9 @@ The inference procedure was run with these settings for the four datasets networ
 
 All our experimental platform is available online \footnote{https://github.com/dtrckd/pymake}. It is an ongoing development in order to provide a flexible way to design and share and make experiments data analysis.
 
-We report in table \ref{table:me_gofit} the value of the power-law goodness of fit as described earlier for a 10 random generated networks form the model fitted on all four dataset. This table shows that the IMMSB comply with the preferential attachment with a maximal pvalue for each datasets while ILFM obtain low pvalue for the networks that were less locally bursty with a value of 0.5 and 0.3 for respectively Network4 and Manufacturing. Also, the mean value of the power-law coefficient $\alpha$ is significantly greater for IMMSB on all dataset with stronger value on the strongest locally bursty networks, Network1 and Blogs.
+We report in table \ref{table:me_gofit} the value of the power-law goodness of fit as described earlier for a 10 random generated networks with the models fitted on all four dataset. This table shows that the IMMSB comply with the preferential attachment with a maximal pvalue for each datasets while ILFM obtain low pvalue for the networks that were less locally bursty with a value of 0.5 and 0.3 for respectively Network4 and Manufacturing. Also, the mean value of the power-law coefficient $\alpha$ is significantly greater for IMMSB on all dataset with stronger value on the strongest locally bursty networks, Network1 and Blogs.
 
-The figure \ref{fig:me_local} illustrate the local preferential attachments by plotting the averaged local degree distribution of the generated networks. We shows that the shape of local degree distribution appears more bursty for IMMSB and with more fluctuation for ILFM.
-
-
+The figure \ref{fig:me_local} illustrate the local preferential attachments by plotting the averaged local degree distribution of the generated networks. It shows that the shape of local degree distribution appears more bursty for IMMSB and with more fluctuation for ILFM.
 
 
 \begin{table}[t]
@@ -166,7 +159,7 @@ The figure \ref{fig:me_local} illustrate the local preferential attachments by p
 \end{figure}
 
 
-In figure \ref{fig:auc} we report the AUC-ROC evaluation The two upper roc curves show a typically experiment for a bursty network (Network1) and a non bursty (Network 4). The figures show that IMMSB dominate ILFM on the first and is being dominated on the second. The bottom figure illustrate the relative performance of both models on each datasets for different ratio of the training size.The relative performance  is defined as the difference of the AUC value between IMMSB abd ILFM. The x-axis is the following ratio $\frac{testset size}{training size}$. Hence the number of training data decrease in this graph. We shows that for bursty network the prediction relative performance of IMMSB increase when the quantity of training data decrease. For the non-bursty networks, the results is the opposite the relative performance of ILFM increase when the size the training data decrease. This is particularly visible for Network4. For manufacturing this is more contrasted probably due to the fact that the size of this networks is quite small which make the comparison more difficult.
+In figure \ref{fig:auc} we report the AUC-ROC evaluation The two upper roc curves show a typical experiment for a bursty network (Network1) and a non bursty (Network 4). The figures show that IMMSB dominate ILFM on the first and is being dominated on the second. The bottom figure illustrate the relative performance of both models on each datasets for different ratio of the training size. The relative performance  is defined as the difference of the AUC value between IMMSB abd ILFM. The x-axis represents the following ratio $\frac{testset\ size}{training\ size}$. Hence the number of training data decrease in this graph. We shows that for bursty network, the relative performance of the prediction for IMMSB increase when the quantity of training data decrease. For non-bursty networks, the results is the opposite, the relative performance of ILFM increase when the size the training data decrease. This is particularly visible for Network4. For manufacturing this is more contrasted, probably due to the fact that the size of this networks is quite small which make the comparison more difficult.
 
 
 \begin{figure}[h]
