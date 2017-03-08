@@ -11,9 +11,9 @@ The measures considered to evaluate the preferential attachment rely on a goodne
 
 
 \begin{itemize}
-	\item Estimate the parameters $\alpha$ and $x_\text{min}$ of the power law model. $\alpha$ is the scaling parameter of the law and $x_\text{min}$, the lower bound for the tail,  has been fix in our experiments, to the smallest value observed in the distributions evaluated, to allow their comparisons.
+	\item Estimate the parameters $\alpha$ and $x_\text{min}$ of the power law model. $\alpha$ is the scaling parameter of the law and $x_\text{min}$, the lower bound for the tail. It has been fixed to the smallest value observed in the distributions evaluated, in our experiments to allow their comparisons.
 	\item  Using the Kolmogorov-Smirnov (KS) statistic, compute the distance $KS_{obs}$  between the degree distribution obtained on the network with the theoretical distribution corresponding to the power law with the estimated parameters.
-	\item Sample $S$ synthetic datasets from the power law with the estimated parameters. For each sample s, using the Kolmogorov-Smirnov statistic, compute the distance $KS_{s}$ between the distribution obtained on this synthetic dataset drawn from the power law with the corresponding theoretical distribution. According to  \cite{clauset2009power}, the number of samples $S$ is chosen such that $S = \frac{1}{4}\epsilon^{-2}$, with a precision  $\epsilon = 3^{-2}$. 
+	\item Sample $S$ synthetic datasets from the power law with the estimated parameters. For each sample s, using the Kolmogorov-Smirnov statistic, compute the distance $KS_{s}$ between the distribution obtained on this synthetic dataset drawn from the power law with the corresponding theoretical distribution. According to  \cite{clauset2009power}, the number of samples $S$ is chosen such that $S = \frac{1}{4}\epsilon^{-2}$, with a precision  $\epsilon = 3^{-2}$ \textbf{a revoir}. 
     \item  The p-value is defined as the fraction of  the resulting statistics $KS_s, s \in \{1,...,S\}$ obtained on the samples larger than the value $KS_{obs}$ computed on the network distribution.  
 \end{itemize}
 
@@ -22,15 +22,17 @@ The measures considered to evaluate the preferential attachment rely on a goodne
 
 
 \paragraph{Local burstiness : }
-In the context of latent models, while there is no ambiguity in computing the overall degree distribution, it is less obvious for the local case. We explain here the computation of the local degree distribution for each models according to section \ref{sec:burstiness} :
+%In the context of latent models, while there is no ambiguity in computing the overall degree distribution, it is less obvious for the local case. We explain here the computation of the local degree distribution for each models according to section \ref{sec:burstiness} :
+The computation of the local degree distribution for each model defined according to section \ref{sec:burstiness} is detailed below: 
 \begin{itemize}
-        \item for IMMSB, each network has an associated membership tensor $Z$, that indicates the membership of nodes for each  interactions. In order to draw the local degree distribution for a block $c$, we reduce the adjacency matrix in order to retain only the links that occurs inside a block $c$. The local degree distribution is thus computed on the reduce adjacency matrix defines as follows $Y^c =\{ y_{ij}^c=1 \ \textrm{if}\ y_{ij}=1 , z_{i\rightarrow j}=c, z_{i\leftarrow j}=c\}$.
-        \item for ILFM, each node is associated with a fix feature vector; the local degree distribution for the block $c$ is obtain by taking only the contribution of the features $c$ on the adjacency matrix. Thus, the local degree degree distribution is computed on the reduce adjacency matrix defined by $Y^c =\{ y_{ij}^c=1 \ \textrm{if}\ y_{ij}=1 , f_{ic}=1, f_{jc}=1\}$
+        \item For each network learned with IMMSB, the tensor $Z$ indicates the membership of the nodes for each  interaction. In order to draw the local degree distribution for a factor $k$, we reduce the adjacency matrix in order to retain only the links that occur for the factor $k$. The local degree distribution is thus computed on the reduced adjacency matrix  $Y^k =\{ y_{ij}^k=1 \ \textrm{if}\ y_{ij}=1 , z_{i\rightarrow j}=k, z_{i\leftarrow j}=k\}$. \textbf{termes a 0}
+        \item for ILFM, each node $i$ is associated with a fix feature vector $\mat{f}_{i}$ ; the local degree distribution for the factor $k$ is obtained by taking into account only the contribution of this feature $k$ on the adjacency matrix. Thus, the local degree degree distribution is computed on the reduced adjacency matrix defined by $Y^c =\{ y_{ij}^c=1 \ \textrm{if}\ y_{ij}=1 , f_{ic}=1, f_{jc}=1\ }$. \textbf{termes a 0}
 \end{itemize}
 
 \subsection{Homophily Measures}
 
-For the homophily property, defined in section \ref{sec:homophily}, we measured the distribution of both similarity, natural and latent for the links and the non-links. The links or non-links are obtained by running the models in a generative mode. For each models we aggregated  the similarity of each couple of nodes as well as link prediction (links or non-links). The distributions of similarities are then represented on a boxplot that shows how the they are spread according to links and non-links.
+For the homophily property, defined in section \ref{sec:homophily}, we represent using a boxplot, for each model and each data set, the distributions of the similarity natural $s_n(i,j)$ and latent $s_l(i,j)$ computed respectively on linked and non-linked pairs of nodes for 10 networks generated with the model learned on the dataset.
+% The links or non-links are obtained by running the models in a generative mode. For each models we aggregated  the similarity of each couple of nodes as well as link prediction (links or non-links). The distributions of similarities are then represented on a boxplot that shows how the they are spread according to links and non-links.
 
 \subsection{Prediction performance evaluation}
 The prediction problem is equivalent to a binary prediction problem in two classes since it consists to decide for each pair of nodes if there is an edge or not between them. 
