@@ -11,10 +11,10 @@ The measures considered to evaluate the preferential attachment rely on a goodne
 
 
 \begin{itemize}
-	\item Estimate the parameters $\alpha$ and $x_\text{min}$ of the power law model. $\alpha$ is the scaling parameter of the law and $x_\text{min}$, the lower bound for the tail. It has been fixed to the smallest value observed in the distributions evaluated, in our experiments to allow their comparisons.
+	\item Estimate the parameters $\alpha$ and $x_\text{min}$ of the power law model. $\alpha$ is the scaling parameter of the law and $x_\text{min}$, the lower bound for the tail. This last one has been fixed to the smallest value observed in the distributions evaluated, in our experiments to allow their comparisons.
 	\item  Using the Kolmogorov-Smirnov (KS) statistic, compute the distance $KS_{obs}$  between the degree distribution obtained on the network with the theoretical distribution corresponding to the power law with the estimated parameters.
 	\item Sample $S$ synthetic datasets from the power law with the estimated parameters. For each sample s, using the Kolmogorov-Smirnov statistic, compute the distance $KS_{s}$ between the distribution obtained on this synthetic dataset drawn from the power law with the corresponding theoretical distribution. According to  \cite{clauset2009power}, the number of samples $S$ is chosen such that $S = \frac{1}{4}\epsilon^{-2}$, with a precision  $\epsilon = 3^{-2}$ \textbf{a revoir}. 
-    \item  The p-value is defined as the fraction of  the resulting statistics $KS_s, s \in \{1,...,S\}$ obtained on the samples larger than the value $KS_{obs}$ computed on the network distribution.  
+    \item  The p-value is defined as the fraction of  the resulting statistics $KS_s, s \in \{1,...,S\}$  larger than the value $KS_{obs}$.  
 \end{itemize}
 
  If  p-value is large (close to 1), then the difference between the data and the model can be attributed to statistical fluctuations alone; if it is small, the model is not a plausible fit for the data and we can not conclude that there is an evidence for the preferential attachment in the network. 
@@ -26,16 +26,18 @@ The measures considered to evaluate the preferential attachment rely on a goodne
 The computation of the local degree distribution for each model defined according to section \ref{sec:burstiness} is detailed below: 
 \begin{itemize}
         \item For each network learned with IMMSB, the tensor $Z$ indicates the membership of the nodes for each  interaction. In order to draw the local degree distribution for a factor $k$, we reduce the adjacency matrix in order to retain only the links that occur for the factor $k$. The local degree distribution is thus computed on the reduced adjacency matrix  $Y^k =\{ y_{ij}^k=1 \ \textrm{if}\ y_{ij}=1 , z_{i\rightarrow j}=k, z_{i\leftarrow j}=k\}$. \textbf{termes a 0}
-        \item for ILFM, each node $i$ is associated with a fix feature vector $\mat{f}_{i}$ ; the local degree distribution for the factor $k$ is obtained by taking into account only the contribution of this feature $k$ on the adjacency matrix. Thus, the local degree degree distribution is computed on the reduced adjacency matrix defined by $Y^c =\{ y_{ij}^c=1 \ \textrm{if}\ y_{ij}=1 , f_{ic}=1, f_{jc}=1\ }$. \textbf{termes a 0}
+       \item for ILFM, each node $i$ is associated with a fix feature vector $\mat{f}_{i}$ ; the local degree distribution for the factor $k$ is obtained by taking into account only the contribution of this feature $k$ on the adjacency matrix. Thus, the local degree degree distribution is computed on the reduced adjacency matrix defined by $Y^c =\{ y_{ij}^c=1 \ \textrm{if}\ y_{ij}=1 , f_{ic}=1, f_{jc}=1\}$. \textbf{termes a 0}
 \end{itemize}
 
 \subsection{Homophily Measures}
 
+
 For the homophily property, defined in section \ref{sec:homophily}, we represent using a boxplot, for each model and each data set, the distributions of the similarity natural $s_n(i,j)$ and latent $s_l(i,j)$ computed respectively on linked and non-linked pairs of nodes for 10 networks generated with the model learned on the dataset.
 % The links or non-links are obtained by running the models in a generative mode. For each models we aggregated  the similarity of each couple of nodes as well as link prediction (links or non-links). The distributions of similarities are then represented on a boxplot that shows how the they are spread according to links and non-links.
 
+
 \subsection{Prediction performance evaluation}
-The prediction problem is equivalent to a binary prediction problem in two classes since it consists to decide for each pair of nodes if there is an edge or not between them. 
+The prediction problem is equivalent to a binary prediction problem within two classes since it consists to decide for each pair of nodes if there is an edge or not between them. 
 Thus, the performance of the models can be evaluated with usual AUC-ROC measures: Receiver operating characteristic curves allow to graphically compare the predictive performance of the models on each datasets.
 
 \subsection{Training Datasets}
@@ -87,9 +89,9 @@ The inference procedure was run with these settings for the four datasets networ
 
 All our experimental platform is available online \footnote{https://github.com/dtrckd/pymake}. It is an ongoing development in order to provide a flexible way to design and share and make experiments data analysis.
 
-We report in table \ref{table:me_gofit} the value of the power-law goodness of fit as described earlier for a 10 random generated networks with the models fitted on all four dataset. This table shows that the IMMSB comply with the preferential attachment with a maximal pvalue for each datasets while ILFM obtain low pvalue for the networks that were less locally bursty with a value of 0.5 and 0.3 for respectively Network4 and Manufacturing. Also, the mean value of the power-law coefficient $\alpha$ is significantly greater for IMMSB on all dataset with stronger value on the strongest locally bursty networks, Network1 and Blogs.
+We report in table \ref{table:me_gofit} the value of the power-law goodness of fit as described earlier for a 10 random generated networks with the models fitted on all four dataset. This table shows that the IMMSB comply with the preferential attachment with a maximal pvalue for each datasets while ILFM obtained low pvalue for the networks that were less locally bursty with a value of 0.5 and 0.3 for respectively Network4 and Manufacturing. Also, the mean value of the power-law coefficient $\alpha$ is significantly greater for IMMSB on all dataset with stronger value on the strongest locally bursty networks, Network1 and Blogs.
 
-The figure \ref{fig:me_local} illustrate the local preferential attachments by plotting the averaged local degree distribution of the generated networks. It shows that the shape of local degree distribution appears more bursty for IMMSB and with more fluctuation for ILFM.
+The figure \ref{fig:me_local} illustrate the local preferential attachments by plotting the averaged local degree distribution of the generated networks. It shows that the shape of local degree distribution appears more bursty for IMMSB and with more fluctuation for ILFM which can be explain by the defiency of ILFM to comply with local preferential attachment property.
 
 
 \begin{table}[t]
@@ -156,12 +158,12 @@ The figure \ref{fig:me_local} illustrate the local preferential attachments by p
         \begin{minipage}{0.4\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/testset_max_20_roc_evolution.png}
         \end{minipage}
-        \caption{The two upper top figures represent AUC-ROC curves that compares ILFM and IMMSB on network 1 and network4. The bottom figure is the relative AUC values when the size of the traning set vary. } 
+        \caption{The two upper top figures represent AUC-ROC curves that compares ILFM and IMMSB on network 1 and network4. The bottom figure is the relative AUC values when the size of the traning set vary from 10 to 95 percent. } 
 	\label{fig:auc}
 \end{figure}
 
 
-In figure \ref{fig:auc} we report the AUC-ROC evaluation The two upper roc curves show a typical experiment for a bursty network (Network1) and a non bursty (Network 4). The figures show that IMMSB dominate ILFM on the first and is being dominated on the second. The bottom figure illustrate the relative performance of both models on each datasets for different ratio of the training size. The relative performance  is defined as the difference of the AUC value between IMMSB abd ILFM. The x-axis represents the following ratio $\frac{testset\ size}{training\ size}$. Hence the number of training data decrease in this graph. We shows that for bursty network, the relative performance of the prediction for IMMSB increase when the quantity of training data decrease. For non-bursty networks, the results is the opposite, the relative performance of ILFM increase when the size the training data decrease. This is particularly visible for Network4. For manufacturing this is more contrasted, probably due to the fact that the size of this networks is quite small which make the comparison more difficult.
+In figure \ref{fig:auc}, we report the AUC-ROC evaluations. The two upper roc curves show a typical experiment for a bursty network (Network1) and a non bursty (Network 4). The figures show that IMMSB dominate ILFM on the first and is being dominated on the second. The bottom figure illustrate the evolution of the relative performance of both models on each datasets for different ratio of the training size. The relative performance  is defined as the difference of the AUC value between IMMSB abd ILFM. The x-axis represents the following ratio $\frac{testset\ size}{training\ size}$. Hence the number of training data decrease with the x-axis. We show that for bursty network, the relative performance of the prediction for IMMSB increase when the quantity of training data decrease. For non-bursty networks, the results are the opposite, the relative performance of ILFM increase when the size the training data decrease. This is particularly visible for Network4. For manufacturing, it is more contrasted, probably due to the fact that the size of this network is quite small which make the comparison more difficult.
 
 
 \begin{figure}[h]
@@ -172,9 +174,9 @@ In figure \ref{fig:auc} we report the AUC-ROC evaluation The two upper roc curve
         \begin{minipage}{0.24\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/homo_mustach_ilfm}
         \end{minipage}
-        \caption{Box plot for IMMSB (left) and ILFM (left) of the distribution for natural and latent similarity on the overall datasets. }
+        \caption{Box plot for IMMSB (left) and ILFM (left) of the distributions for natural and latent similarities on the overall datasets. }
         \label{fig:homo_mustach}
 \end{figure}
 
-In figure \ref{fig:homo_mustach} we report the homophily measure. The left and right figures represent respectively the distribution of similarities for IMMSB and ILFM. It confirms that the natural similarities are statistically higher for the links than the non-links for both models but for IMMSB non-links similarities are more concentrated around zeros which is an interesting insight of the bursty behavior of IMMSB. For the latent similarity we see that there is no evidence of correlation the similarities with either  the links and non-links. 
+In figure \ref{fig:homo_mustach} we report the homophily measures. The left and right figures represent respectively the distribution of similarities for IMMSB and ILFM. It confirms that the natural similarity is statistically higher for the links than for the non-links for both models. However, we notice that for IMMSB, the non-links similarities are more concentrated around zeros which is an interesting insight of the bursty behavior of IMMSB. For the latent similarity we see that there is no evidence of ac correlation between similarities of links and non-links.
 

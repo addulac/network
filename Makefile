@@ -10,7 +10,9 @@ dvi: ${SRC}.tex
 	${CC} ${SRC}.tex
 
 long:
-	pdflatex long_version/${SRC}.tex
+	cd long_version
+	pdflatex ${SRC}.tex
+	cd -
 
 short:
 	cd short_version
@@ -19,7 +21,13 @@ short:
 	cd -
 
 expe:
-	pdflatex long_version/expe_dev.tex
+	cd long_version
+	pdflatex expe_dev.tex
+	cd -
+
+pymake:
+	# roc evolution
+	#echo -e "20\n100" | para --env OMP_NUM_THREADS ./scripts/generate.py roc_evolution testset max {}  PNAS2 -c pnas_short   --repeat 2 3 4 5 6 --testset-ratio 5 10 15 20 25 30 35 40 45 50 55  60 65  70 75  80 85  90 95 -w
 
 bib:
 	bibtex *.aux
