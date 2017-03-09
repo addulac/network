@@ -20,6 +20,13 @@ short:
 	pdflatex PNAS-main.tex
 	cd -
 
+short_fig:
+	cp -v img/corpus/homo_mustach_ilfm.png img/corpus/homo_mustach_immsb.png \
+	img/corpus/network1_1.png img/corpus/network4_1.png img/corpus/manufacturing_1.png img/corpus/blogs_1.png \
+	img/corpus/network1_dd.png img/corpus/network4_dd.png img/corpus/manufacturing_dd.png img/corpus/blogs_dd.png img/corpus/ilfm_blogs_1.png img/corpus/ilfm_manufacturing_1.png img/corpus/ilfm_network1_1.png img/corpus/ilfm_network4_1.png img/corpus/immsb_blogs_1.png img/corpus/immsb_network1_1.png img/corpus/immsb_network4_1.png img/corpus/immsb_manufacturing_1.png \
+	short_version/img/corpus
+
+
 expe:
 	cd long_version
 	pdflatex expe_dev.tex
@@ -47,4 +54,6 @@ clean:
 	find -name "*.fls" -delete
 	find -name "*.synctex.gz" -delete
 	find -name "*.fdb_latexmk" -delete
+
+
 
