@@ -161,12 +161,12 @@ Figure \ref{fig:homo_mustach} presents box plots describing  the distributions o
         \begin{minipage}{0.4\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/testset_max_20_roc_evolution.png}
         \end{minipage}
-        \caption{The two upper top figures represent AUC-ROC curves that compares ILFM and IMMSB on network 1 and network4. The bottom figure is the relative AUC values when the size of the traning set vary from 10 to 95 percent. } 
+        \caption{The two upper top figures represent AUC-ROC curves that compares ILFM and IMMSB on network 1 and network4. The bottom figure is the relative AUC values when the size of the traning set decrease. The x-axis label indicates the number precentage of sampled removed from the training set and used for the testing set. } 
 	\label{fig:auc}
 \end{figure}
 
 
-Figure \ref{fig:auc}, compares the performances of the models on the different datasets in function of  the training set size. Indeed, in this Figure, the y-axis gives the relative performance defined as the difference of the AUC values obtained for IMMSB and ILFM: $AUC_{IMMSB} - AUC_{ILFM}$ and the x-axis represents the following ratio $\frac{testset\ size}{training\ size}$. Hence the number of training data decreases with the x-axis and a positive value on the y-axis indicates that IMMSB outperforms ILFM. 
+Figure \ref{fig:auc}, compares the performances of the models on the different datasets in function of  the training set size. Indeed, in this Figure, the y-axis gives the relative performance defined as the difference of the AUC values obtained for IMMSB and ILFM: $AUC_{IMMSB} - AUC_{ILFM}$. Notethat the x-axis are labelled by the percentage of data (links) randomly removed from the datasets which is used the testing set for the corresponfing AUC-ROC measures. Hence the number of training data decreases with the x-axis and a positive value on the y-axis indicates that IMMSB outperforms ILFM. 
 
 For the artificial networks Network1 and Network 4, it is clear that IMMSB dominates ILFM on the first one, which is bursty, and is being dominated on the second one, which is not bursty.
 
