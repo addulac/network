@@ -18,7 +18,7 @@ The measures considered to evaluate the preferential attachment rely on a goodne
 \end{itemize}
 
  If  p-value is large (close to 1), then the difference between the data and the model can be attributed to statistical fluctuations alone; if it is small, the model is not a plausible fit for the data and we can not conclude that there is an evidence for the preferential attachment in the network. 
-\textbf{arevoir je suggère de ne pas mettre la suite}However, as mentioned in \cite{clauset2009power} high value of the $p$-value should be considered with caution for at least two reasons. First, there may be other distribution that match the data equally or better. Second, a small number of samples of the data may lead to high p-value and reflect the fact that is hard to rule out a hypothesis in such a case.
+\textbf{arevoir}However, as mentioned in \cite{clauset2009power} high value of the $p$-value should be considered with caution for at least two reasons. First, there may be other distribution that match the data equally or better. Second, a small number of samples of the data may lead to high p-value and reflect the fact that is hard to rule out a hypothesis in such a case.
 
 
 \paragraph{Local burstiness : }
@@ -93,7 +93,7 @@ The inference procedure was run with these settings for the four datasets previo
 Table \ref{table:me_gofit} reports the value of the power-law goodness of fit for IMMSB and ILFM in the global case (right) and in the local case (left). It appears that for the both models, the global preferential attachment is only verified in the generated networks learned from datasets where the property was verified, namely in Network 1 with p-value equals to 0.9 for IMMSB and 1 for ILFM, and in Blogs with a p-value equals to 1 for the both models whereas the property is not verified in Network 4 and in Manufacturing (p-value = 0). This is in accordance with Proposition 2.1  according which both ILFM and IMMSB do not satisfy global preferential attachment. However these models are able to capture this property if it exists in the learning dataset.  Moreover we can observed that, in the local case, IMMSB complies with the preferential attachment with a maximal p-value for the four networks while ILFM obtained low p-values for the networks that were less locally bursty with a value of 0.5 and 0.3 respectively for Network4 and Manufacturing. Also, the mean value of the power-law coefficient $\alpha$ is significantly greater for IMMSB than for ILFM and specially for the networks Network1 and Blogs.
 
 \textbf{pbl legende et texte et figure}
-The figure \ref{fig:me_local} illustrates the local preferential attachment by plotting the average local degree distributions for the artificial networks \textbf{average pas trrivial ?}  Network1 (left) and Network4 (right) learned with IMMSB (top) and ILFM (bottom). The shape of local degree distribution appears more linear for IMMSB and with more fluctuations for ILFM. This illustrates the unability   of ILFM to capture local preferential attachment property,  as stated in Proposition 2.2. 
+The figure \ref{fig:me_local} illustrates the local preferential attachment by plotting the average local degree distributions for the artificial networks \textbf{average pas trrivial ?}  Network1 (left) and Network4 (right) learned with IMMSB (top) and ILFM (bottom). The shape of local degree distribution appears more linear for IMMSB and with more fluctuations for ILFM. This illustrates the unability  of ILFM to capture local preferential attachment property,  as stated in Proposition 2.2. 
  
 
 \begin{table}[t]
@@ -148,8 +148,8 @@ The figure \ref{fig:me_local} illustrates the local preferential attachment by p
 	\label{fig:me_local}
 \end{figure}
 
-Figure \ref{fig:homo_mustach} presents box plots describing  the distributions of the similarity natural $s_n(i,j)$ and latent $s_l(i,j)$ computed respectively on linked and non-linked pairs of nodes for 10 networks generated with IMMSB (left) and ILFM (right). We aggretated the results for all four datasets.  It confirms that the natural similarity is  higher for  pairs of nodes which are connected than between nodes which are not linked for both models. However, we can noticed that for IMMSB, the similarities computed on the non linked pairs are more concentrated around zero which is an interesting insight of the bursty behavior of this model. For the latent similarity,  there is no difference between the linked and not linked pairs, and consequently, we can not say that similar nodes are more likely to be connected. These experimental results are in accordance with our theoretical results presented in Section \textbf{ref} which states that both ILFM and IMMSB are homophilic with respect to the natural similarity $s_n(i,j)$ and are not homophilic for the latent similarity $s_l(i,j)$ .
-
+Figure \ref{fig:homo_mustach} presents box plots describing  the distributions of the similarity natural $s_n(i,j)$ and latent $s_l(i,j)$ computed respectively on linked and non-linked pairs of nodes for 10 networks generated with IMMSB (left) and ILFM (right). The results have been aggregated over the four datasets.  \textbf{ a clarifier} It confirms that the natural similarity is  higher for  pairs of nodes which are connected than between nodes which are not linked for both models. However, we can noticed that for IMMSB, the similarities computed on the non linked pairs are more concentrated around zero which provides an interesting insight of the bursty behavior of this model. For the latent similarity,  there is no difference between the linked and not linked pairs, and consequently, we can not say that similar nodes are more likely to be connected. These experimental results are in accordance with our theoretical results presented in Section \ref{sec:homophily} which state that both ILFM and IMMSB are homophilic with respect to the natural similarity $s_n(i,j)$ and are not homophilic for the latent similarity $s_l(i,j)$ .
+\textbf{trait noir ?}
 \begin{figure}[h]
     \centering
         \begin{minipage}{0.24\textwidth}
@@ -166,11 +166,12 @@ Figure \ref{fig:homo_mustach} presents box plots describing  the distributions o
 \end{figure}
 
 
-Figure \ref{fig:auc}, compares the performances of the models on the different datasets in function of  the training set size. Indeed, in this Figure, the y-axis gives the relative performance defined as the difference of the AUC values obtained for IMMSB and ILFM: $AUC_{IMMSB} - AUC_{ILFM}$. Notethat the x-axis are labelled by the percentage of data (links) randomly removed from the datasets which is used the testing set for the corresponfing AUC-ROC measures. Hence the number of training data decreases with the x-axis and a positive value on the y-axis indicates that IMMSB outperforms ILFM. 
+Figure \ref{fig:auc} compares the performances of the models on the different datasets in function of  the training set size. Indeed, in the bottom Figure, the y-axis gives the relative performance defined as the difference of the AUC values obtained for IMMSB and ILFM: $AUC_{IMMSB} - AUC_{ILFM}$ whereas the x-axis indicates by the percentage of data (links) randomly removed from the datasets and  used as  testing set. Hence the number of training data decreases with the x-axis and a positive value on the y-axis indicates that IMMSB outperforms ILFM. 
 
-For the artificial networks Network1 and Network 4, it is clear that IMMSB dominates ILFM on the first one, which is bursty, and is being dominated on the second one, which is not bursty.
+For the artificial networks Network1 and Network 4 (respectively right and left on the top of the figure), it is clear that IMMSB dominates ILFM on the first one, which is bursty, and is being dominated on the second one, which is not bursty.
 
-More generally, it seems that for bursty networks, the predictive performance of IMMSB increases when the quantity of training data decreases whereas for non-bursty networks, the results are the opposite: the performance of ILFM increases when the size of the learning data decreases. This is particularly visible for Network4. For manufacturing, it is more contrasted, probably due to the fact that the size of this network is quite small which makes the comparison more difficult.
+More generally, it seems that for bursty networks, the predictive performance of IMMSB increases when the quantity of training data decreases whereas for non-bursty networks, the results are the opposite: the performance of ILFM increases when the size of the learning data decreases. This is particularly visible for Network4, more contrasted for Manufacturing,  probably due to the small size of this last network which makes the comparison more difficult.
+
 
 
 \begin{figure}[h]
