@@ -52,8 +52,8 @@ In our experiments, we consider two artificial networks and two real networks.  
         \hline
         \textbf{Networks} &   nodes &   edges &   density \\
         \hline
-        Network 1 &    1000 &    3507 &     0.007 \\
-        Network 4 &    1000 &   31000 &     0.062 \\
+        Network1 &    1000 &    3507 &     0.007 \\
+        Network2 &    1000 &   31000 &     0.062 \\
         Blogs         &    1490 &   20512 &     0.009 \\
         Manufacturing &     167 &    5950 &     0.215 \\
     \hline
@@ -61,22 +61,24 @@ In our experiments, we consider two artificial networks and two real networks.  
 	\label{table:networks_measures}
 \end{table}
 
-The artificial networks (Network1 and Network4) \textbf{Revoir Network 4 en Network 2} have been generated with DANCer-Generator \cite{largeron2015}. This generator has been chosen because it allows to build an attributed graph having a community structure  and  the known properties of real-world networks such as preferential attachment and homophily.
-Moreover, by modifying the parameters, these properties can be weakened. Finally, DANC-Generator is available under the terms of the GNU Public License and the parameters can be shared for experiments reproducibility. \textcolor{red}{Heeere, words about my platform (pymake) to share and reproduce and create new experiments}.
+The non-oriented artificial networks (Network1 and Network2) have been generated with DANCer-Generator \cite{largeron2015}. This generator has been chosen because it allows to build an attributed graph having a community structure  and  the known properties of real-world networks such as preferential attachment and homophily.
+Moreover, by modifying the parameters, these properties can be weakened. Finally, DANC-Generator is available under the terms of the GNU Public License and the parameters can be shared for experiments reproducibility. Furthermore, we share our experimental platform that we used for our experiments which is available online  \footnote{https://github.com/dtrckd/pymake} .
+
+
+%\textbf{mettre ailleurs}Our experimental platform is available online \footnote{https://github.com/dtrckd/pymake}. \textbf{pas clair}It is an ongoing development in order to provide a flexible way to design, make and share and experiments for data analysis in order to improve the ability of the community to do reproducible research.
+
 
 We evaluated also the models on two real world networks.
 The first one, denoted Blogs \footnote{available at: http://moreno.ss.uci.edu/data.html\#blogs}, contains front-page hyperlinks between blogs in the context of the 2004 US election. A node represents a blog and an edge represents a hyperlink between two blogs.
-The second one, denoted Manufacturing \footnote{available at: https://www.ii.pwr.edu.pl/~michalski/index.php?content=datasets\#manufacturing}, is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated  to an employee and an \textbf{supprimer oriented ?} oriented link represents like previously a sent email. We can noticed that the second network is specific since it is a firm's network where the relationships between the employees are constrained. 
+The second one, denoted Manufacturing \footnote{available at: https://www.ii.pwr.edu.pl/~michalski/index.php?content=datasets\#manufacturing}, is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated  to an employee and an oriented link represents like previously a sent email. We can noticed that the second network is specific since it is a firm's network where the relationships between the employees are constrained. 
 
 
 The adjacency matrices and global degree distributions of these networks are presented in Figure \ref{fig:corpuses} whereas Figure \ref{fig:synt_graph_local} represents the local degree distribution. In this last figure, the inner degree distribution (edges inside a community) and outer degree distribution (edges between community) are plotted separately for each network. The first section of Table \ref{table:me_gofit} (Empirical) reports the resulting $p$-value of the KS test as well as the value estimated for the parameter  $\alpha$ in the global case (right) and in the local case (left). As the ground truth is not available for the real networks (Blogs and Manufacturing), communities have been determined with Louvain algorithm \cite{Blondel2008} and, the local distribution defined according to the obtained communities. 
 
 These networks present  different affinity with the preferential attachment effect.
-Indeed, As shown Figure \ref{fig:corpuses}, Network1 and Blogs verify the  global preferential attachment whereas it is not the case for Network4 and Manufacturing. The results of the KS test given in Table \ref{table:me_gofit} confirm this analysis since the $p$-value equals 1 for Network1 and Manufacturing whereas it is null for Network4, and Manufacturing.
+Indeed, As shown Figure \ref{fig:corpuses}, Network1 and Blogs verify the  global preferential attachment whereas it is not the case for Network2 and Manufacturing. The results of the KS test given in Table \ref{table:me_gofit} confirm this analysis since the $p$-value equals 1 for Network1 and Manufacturing whereas it is null for Network2, and Manufacturing.
 
-The local degree distributions per classes, presented in Figure \ref{fig:synt_graph_local}, and the average results (and standard deviation) for the p-value computed over the communities reported, in Table \ref{table:me_gofit}, lead to the same conclusion concerning the local preferential attachment which is well verified for Network 1 and Blogs with a p-value equals to 1 but in a lesser extend for Network 4 and Manufacturing with respectively a p-value equals to 0.6 and 0.5. We notably observe that there is a high variance of the $p$-value for Network4 and Manufacturing, which indicates that the property varies among the classes for those networks. Thus, for the preferential attachment, global and local, we can distinguish Network 1 and Blogs which satisfy the preferential attachment and Network4 and Manufacturing which do not exhibit the property
-
-\textbf{quid homophily?}
+The local degree distributions per classes, presented in Figure \ref{fig:synt_graph_local}, and the average results (and standard deviation) for the p-value computed over the communities reported, in Table \ref{table:me_gofit}, lead to the same conclusion concerning the local preferential attachment which is well verified for Network1 and Blogs with a p-value equals to 1 but in a lesser extend for Network2 and Manufacturing with respectively a p-value equals to 0.6 and 0.5. We notably observe that there is a high variance of the $p$-value for Network2 and Manufacturing, which indicates that the property varies among the classes for those networks. Thus, for the preferential attachment, global and local, we can distinguish Network1 and Blogs which satisfy the preferential attachment and Network2 and Manufacturing which do not exhibit the property
 
 \input{\lpath/t/a.tex}
 \input{\lpath/t/b.tex}
@@ -84,16 +86,13 @@ The local degree distributions per classes, presented in Figure \ref{fig:synt_gr
 
 
 \subsection{Model Evaluation}
-For each dataset described earlier, we run a MCMC inference consisting of 200 iterations to learn the posterior distribution for the IMMSB and ILFM  models described in section \ref{sec:models}. For IMMSB, the concentration parameters of HDP were optimized according to \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameters for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. 
+For each dataset described earlier, we run a MCMC inference consisting of 200 iterations to learn the posterior distribution for the IMMSB and ILFM  models described in section \ref{sec:intro}. For IMMSB, the concentration parameters of HDP were optimized according to \cite{HDP} using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$. The parameters for the matrix weights were fixed to $\lambda_0=\lambda_1=0.1$. For ILFM, the IBP hyper-parameter was fixed to $\alpha=0.5$ and the weights hyper-parameter to $\sigma_w = 1$. 
 
 The inference procedure was run with these settings for the four datasets previously described and we present hereafter the averaged results (and standard deviations) computed on ten networks generated with the model fitted for each dataset.
 
-\textbf{mettre ailleurs}Our experimental platform is available online \footnote{https://github.com/dtrckd/pymake}. \textbf{pas clair}It is an ongoing development in order to provide a flexible way to design, make and share and experiments for data analysis in order to improve the ability of the community to do reproducible research.
+Table \ref{table:me_gofit} reports the value of the power-law goodness of fit for IMMSB and ILFM in the global case (left) and in the local case (right). It appears that for the both models, the global preferential attachment is only verified in the generated networks learned from datasets where the property was verified, namely in Network1 with p-value equals to 0.9 for IMMSB and 1 for ILFM, and in Blogs with a p-value equals to 1 for the both models whereas the property is not verified in Network2 and in Manufacturing (p-value = 0). This is in accordance with Proposition 2.1  according which both ILFM and IMMSB do not satisfy global preferential attachment. However these models are able to capture this property if it exists in the learning dataset.  Moreover we can observed that, in the local case, IMMSB complies with the preferential attachment with a maximal p-value for the four networks while ILFM obtained low p-values for the networks that were less locally bursty with a value of 0.5 and 0.3 respectively for Network2 and Manufacturing. Also, the mean value of the power-law coefficient $\alpha$ is significantly greater for IMMSB than for ILFM and specially for the networks Network1 and Blogs.
 
-Table \ref{table:me_gofit} reports the value of the power-law goodness of fit for IMMSB and ILFM in the global case (right) and in the local case (left). It appears that for the both models, the global preferential attachment is only verified in the generated networks learned from datasets where the property was verified, namely in Network 1 with p-value equals to 0.9 for IMMSB and 1 for ILFM, and in Blogs with a p-value equals to 1 for the both models whereas the property is not verified in Network 4 and in Manufacturing (p-value = 0). This is in accordance with Proposition 2.1  according which both ILFM and IMMSB do not satisfy global preferential attachment. However these models are able to capture this property if it exists in the learning dataset.  Moreover we can observed that, in the local case, IMMSB complies with the preferential attachment with a maximal p-value for the four networks while ILFM obtained low p-values for the networks that were less locally bursty with a value of 0.5 and 0.3 respectively for Network4 and Manufacturing. Also, the mean value of the power-law coefficient $\alpha$ is significantly greater for IMMSB than for ILFM and specially for the networks Network1 and Blogs.
-
-\textbf{pbl legende et texte et figure}
-The figure \ref{fig:me_local} illustrates the local preferential attachment by plotting the average local degree distributions for the artificial networks \textbf{average pas trrivial ?}  Network1 (left) and Network4 (right) learned with IMMSB (top) and ILFM (bottom). The shape of local degree distribution appears more linear for IMMSB and with more fluctuations for ILFM. This illustrates the unability  of ILFM to capture local preferential attachment property,  as stated in Proposition 2.2. 
+The figure \ref{fig:me_local} illustrates the local preferential attachment by plotting the local degree distributions for the artificial networks Network1 (top) and Network2 (bottom) learned with IMMSB (left) and ILFM (right). The shape of local degree distribution appears more linear for IMMSB and with more fluctuations for ILFM. This illustrates the unability  of ILFM to capture local preferential attachment property,  as stated in Proposition 2.2. 
  
 
 \begin{table}[t]
@@ -105,24 +104,24 @@ The figure \ref{fig:me_local} illustrates the local preferential attachment by p
       \cmidrule(r){2-3} \cmidrule(l){4-5}
       &   $p$-value &   $\alpha$   & $p$-value & $\alpha$   \\
   	\hline
-    Network 1     &    1.0 &   2.4 & 1.0 $\pm$ 0.0  &  2.4 $\pm$ 0.5  \\
-    Network 4     &    0.0 &   1.3 & 0.6 $\pm$ 0.5  &  1.5 $\pm$ 0.2 \\
+    Network1     &    1.0 &   2.4 & 1.0 $\pm$ 0.0  &  2.4 $\pm$ 0.5  \\
+    Network2     &    0.0 &   1.3 & 0.6 $\pm$ 0.5  &  1.5 $\pm$ 0.2 \\
     Blogs         &    1.0 &   1.5 & 1.0 $\pm$ 0.   &  1.7 $\pm$ 0.3 \\
     Manufacturing &    0.0 &   1.4 & 0.5 $\pm$ 0.2  &  1.4 $\pm$ 0.1 \\
   	\hline
 
       \ \textbf{IMMSB} &&&& \\
   	\hline
-    Network 1     & 0.9 \(\pm\) 0.1   & 1.4 \(\pm\) 0.0 & 1.0 \(\pm\) 0.0   & 2.9 \(\pm\) 1.4 \\
-    Network 4     & 0.0 \(\pm\) 0.0   & 1.3 \(\pm\) 0.1 & 1.0 \(\pm\) 0.0   & 1.8 \(\pm\) 0.2 \\
+    Network1     & 0.9 \(\pm\) 0.1   & 1.4 \(\pm\) 0.0 & 1.0 \(\pm\) 0.0   & 2.9 \(\pm\) 1.4 \\
+    Network2     & 0.0 \(\pm\) 0.0   & 1.3 \(\pm\) 0.1 & 1.0 \(\pm\) 0.0   & 1.8 \(\pm\) 0.2 \\
     Blogs         & 1.0 \(\pm\) 0.0   & 1.3 \(\pm\) 0.0 & 1.0 \(\pm\) 0.0   & 4.5 \(\pm\) 0.9 \\
     Manufacturing & 0.0 \(\pm\) 0.1   & 1.2 \(\pm\) 0.0 & 1.0 \(\pm\) 0.1   & 1.8 \(\pm\) 0.2 \\
   	\hline
 
       \ \textbf{ILFM} &&&& \\
   	\hline
-    Network 1     & 1.0 \(\pm\) 0.0 & 1.4 \(\pm\) 0.0 & 1.0 \(\pm\) 0.0 & 1.8 \(\pm\) 0.3 \\
-    Network 4     & 0.0 \(\pm\) 0.0 & 1.2 \(\pm\) 0.0 & 0.5 \(\pm\) 0.5 & 1.3 \(\pm\) 0.1 \\
+    Network1     & 1.0 \(\pm\) 0.0 & 1.4 \(\pm\) 0.0 & 1.0 \(\pm\) 0.0 & 1.8 \(\pm\) 0.3 \\
+    Network2     & 0.0 \(\pm\) 0.0 & 1.2 \(\pm\) 0.0 & 0.5 \(\pm\) 0.5 & 1.3 \(\pm\) 0.1 \\
     Blogs         & 1.0 \(\pm\) 0.0 & 1.3 \(\pm\) 0.0 & 1.0 \(\pm\) 0.0 & 1.5 \(\pm\) 0.1 \\
     Manufacturing & 0.0 \(\pm\) 0.0 & 1.2 \(\pm\) 0.0 & 0.3 \(\pm\) 0.3 & 1.3 \(\pm\) 0.0 \\
   	\hline
@@ -144,12 +143,11 @@ The figure \ref{fig:me_local} illustrates the local preferential attachment by p
         \begin{minipage}{0.24\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/ilfm_network4_1}
         \end{minipage}
-        \caption {Local degree distribution for of fitted models for Network 1 (first column) and Network 4 (second column) learned by IMMSB (row 1) and ILFM (row 2).} 
+        \caption {Local degree distribution for of fitted models for Network1 (top row) and Network2 (bottom row) learned by IMMSB (first column) and ILFM (second column).} 
 	\label{fig:me_local}
 \end{figure}
 
-Figure \ref{fig:homo_mustach} presents box plots describing  the distributions of the similarity natural $s_n(i,j)$ and latent $s_l(i,j)$ computed respectively on linked and non-linked pairs of nodes for 10 networks generated with IMMSB (left) and ILFM (right). The results have been aggregated over the four datasets.  \textbf{ a clarifier} It confirms that the natural similarity is  higher for  pairs of nodes which are connected than between nodes which are not linked for both models. However, we can noticed that for IMMSB, the similarities computed on the non linked pairs are more concentrated around zero which provides an interesting insight of the bursty behavior of this model. For the latent similarity,  there is no difference between the linked and not linked pairs, and consequently, we can not say that similar nodes are more likely to be connected. These experimental results are in accordance with our theoretical results presented in Section \ref{sec:homophily} which state that both ILFM and IMMSB are homophilic with respect to the natural similarity $s_n(i,j)$ and are not homophilic for the latent similarity $s_l(i,j)$ .
-\textbf{trait noir ?}
+Figure \ref{fig:homo_mustach} presents box plots describing  the distributions of the similarity natural $s_n(i,j)$ and latent $s_l(i,j)$ computed respectively on linked and non-linked pairs of nodes for 10 networks generated with IMMSB (left) and ILFM (right). The results have been aggregated over the four datasets.  It confirms that the natural similarity is  higher for  pairs of nodes which are connected than between nodes which are not linked for both models. However, we can noticed that for IMMSB, the similarities computed on the non linked pairs are more concentrated around zero which provides an interesting insight of the bursty behavior of this model. For the latent similarity,  there is no difference between the linked and not linked pairs, and consequently, we can not say that similar nodes are more likely to be connected. These experimental results are in accordance with our theoretical results presented in Section \ref{sec:homophily} which state that both ILFM and IMMSB are homophilic with respect to the natural similarity $s_n(i,j)$ and are not homophilic for the latent similarity $s_l(i,j)$ .
 \begin{figure}[h]
     \centering
         \begin{minipage}{0.24\textwidth}
@@ -161,16 +159,16 @@ Figure \ref{fig:homo_mustach} presents box plots describing  the distributions o
         \begin{minipage}{0.4\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/testset_max_20_roc_evolution.png}
         \end{minipage}
-        \caption{The two upper top figures represent AUC-ROC curves that compares ILFM and IMMSB on network 1 and network4. The bottom figure is the relative AUC values when the size of the traning set decrease. The x-axis label indicates the number precentage of sampled removed from the training set and used for the testing set. } 
+        \caption{The two upper top figures represent AUC-ROC curves that compares ILFM and IMMSB on Network1 and Network2. The bottom figure is the relative AUC values when the size of the traning set decrease. The x-axis label indicates the number precentage of sampled removed from the training set and used for the testing set. } 
 	\label{fig:auc}
 \end{figure}
 
 
 Figure \ref{fig:auc} compares the performances of the models on the different datasets in function of  the training set size. Indeed, in the bottom Figure, the y-axis gives the relative performance defined as the difference of the AUC values obtained for IMMSB and ILFM: $AUC_{IMMSB} - AUC_{ILFM}$ whereas the x-axis indicates by the percentage of data (links) randomly removed from the datasets and  used as  testing set. Hence the number of training data decreases with the x-axis and a positive value on the y-axis indicates that IMMSB outperforms ILFM. 
 
-For the artificial networks Network1 and Network 4 (respectively right and left on the top of the figure), it is clear that IMMSB dominates ILFM on the first one, which is bursty, and is being dominated on the second one, which is not bursty.
+For the artificial networks Network1 and Network2 (respectively right and left on the top of the figure), it is clear that IMMSB dominates ILFM on the first one, which is bursty, and is being dominated on the second one, which is not bursty.
 
-More generally, it seems that for bursty networks, the predictive performance of IMMSB increases when the quantity of training data decreases whereas for non-bursty networks, the results are the opposite: the performance of ILFM increases when the size of the learning data decreases. This is particularly visible for Network4, more contrasted for Manufacturing,  probably due to the small size of this last network which makes the comparison more difficult.
+More generally, it seems that for bursty networks, the predictive performance of IMMSB increases when the quantity of training data decreases whereas for non-bursty networks, the results are the opposite: the performance of ILFM increases when the size of the learning data decreases. This is particularly visible for Network2, more contrasted for Manufacturing,  probably due to the small size of this last network which makes the comparison more difficult.
 
 
 

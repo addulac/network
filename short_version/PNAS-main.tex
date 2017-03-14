@@ -95,6 +95,8 @@ In this article, we assess whether standard stochastic mixed membership models a
 \thispagestyle{firststyle}
 \ifthenelse{\boolean{shortarticle}}{\ifthenelse{\boolean{singlecolumn}}{\abscontentformatted}{\abscontent}}{}
 
+\label{sec:intro}
+
 Several powerful relational learning models have been proposed to solve the problem commonly referred to as \textit{link prediction} that consists in predicting the likelihood of a future association between two nodes in a network \cite{Liben-Nowell07, HassanZaki11}. Among such models, the class of stochastic mixed membership models has received much attention as such models can be used to discover hidden properties and infer new links in social networks. Two main models in this class have been proposed and studied in the literature: the latent feature model \cite{BMF} and its non-parametric extension \cite{ILFRM}, and the mixed-membership stochastic block model \cite{MMSB}, and its non parametric extension \cite{iMMSB,diMMSB}.
 
 Nevertheless, although drawn from a wide range of domains, real world social networks exhibit general properties that have been put forward in different studies. In this work, we focus on two important properties, namely \textit{homophily} and \textit{preferential attachment} \cite{Newman2010, Barabasi2003}, and assess to which extent link prediction models as the ones mentioned above comply with such properties.
@@ -161,7 +163,7 @@ Finally, experiments done on real and artificial networks have been presented to
 
 % In this paper we study two fundamentals properties that arise in social networks in the spectrum of Bayesian models. We proposed a probabilistic formalization of those properties and analyze how models comply with it. We showed how two families of models characterized by they prior on some latent features can conduct either to comply or not with the local preferential attachment as well as the behavior of the homophily within two appropriate similarities. This results give insight on the relation between the quality of a link prediction models and properties arising in social networks (Preferential attachment and homophily). To conclude, we think take one can take advantage of this study to better choose and design models depending on prior knwoledge on the data.
 
-\bibliographystyle{unsrt}
+%\bibliographystyle{unsrt}
 \bibliography{./pnas}
 
 \end{document}
