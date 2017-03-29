@@ -44,7 +44,7 @@ pnas:
 	# roc
 	$(PMK) exec PNAS2 -c generator7 generator4  --script roc -m ilfm_cgs immsb_cgs -n all  -k 10 --testset-ratio 20 --refdir debug111111 --format _null -w
 	# roc_evolution
-	$(PMK) exec PNAS2 -c pnas_short --script roc_evolution testset max 100 --repeat 2 3 4 5 6 --testset-ratio $(seq 5 5 95) -w
+	$(PMK) exec PNAS2 -c pnas_short --script roc_evolution testset max 100 --repeat 0 1 2 3 4 5 6 7 8 9 --testset-ratio $(seq 5 5 95) -w
 	# mustach
 	$(PMK) exec PNAS2 -c pnas_short --script homo_mustach -m ilfm_cgs immsb_cgs -n all -k 10 --testset-ratio 20 --refdir debug111111 --format _null --epoch 2 -w
 
