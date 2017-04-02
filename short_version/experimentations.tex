@@ -1,38 +1,21 @@
 \section{Illustration}
 %\section{Experimentations}
 
-To illustrate our theoretical results, we evaluate the predictive performance and the ability of the models to capture homophily and preferential attachment on artificial and real networks. In the sequel, we first describe the measures used to evaluate the properties of interest and the predictive performance, then the datasets used in our experiments. Afterwards, we detail the evaluation protocol and we present the experimental results.
+our experimental platform that we have used for our experiments which is available online. Notes that it makes our experiments easily fully reproducible \footnote{https://github.com/dtrckd/pymake}.
 
-\subsection{Homophily Measures}
+To illustrate our theoretical results, we evaluate the predictive performance and the ability of the models to capture homophily and preferential attachment on artificial and real networks. For homophily, we simply compare the distributions of the natural and latent similarities on linked and non-linked pairs of nodes. For global preferential attachment, we plot (as done in \cite{???}) the degree distribution and its corresponding best fitted line in the log-log scale. In addition, we use the measure developed in \cite{clauset2009power} for assessing whether empirical data behaves according to a power law (as mentioned before, power laws are the standard bursty distributions in social networks \cite{barabasi1999emergence}). This framework combines maximum-likelihood methods with goodness-of-fit tests based on the Kolmogorov-Smirnov statistic to compute a $p$-value. If the obtained $p$-value is large (close to 1), then the data is likely to be distributed according to a power law and the associated network displays preferential attachment;  on the other hand, if it is small, the data is likely not distributed according to a power law and the associated network does not display preferential attachment.
 
-For the homophily property, defined in section \ref{sec:homophily}, we represent using boxplots, the distributions of the similarity natural $s_n(i,j)$ and latent $s_l(i,j)$ computed respectively on linked and non-linked pairs of nodes. Note that for all the models the values are aggregated on the datasets and reported as final results.
-% The links or non-links are obtained by running the models in a generative mode. For each models we aggregated  the similarity of each couple of nodes as well as link prediction (links or non-links). The distributions of similarities are then represented on a boxplot that shows how the they are spread according to links and non-links.
-
-
-\subsection{Preferential attachment Measures}
-\label{sec:experiments-burst}
-
-The measures considered to evaluate the preferential attachment rely on a goodness of fit. Indeed, it has been reported that preferential attachment leads to networks characterized by a degree distribution with heavy tail drawn from a power law. A graphical method, most often used to verify that the observations are consistent with this law  consists in constructing the histogram representing the degree distribution and if the plot on doubly logarithmic axes approximately falls on a straight line, then one can assume that the distribution follows a power law. Thus, the comparison of the degree distribution in the log-log scale with a linear function gives us a qualitative measure for the preferential attachment. To obtain a second evaluation of the power law hypothesis for the degree distribution, we follow the statistical framework, introduced by \cite{clauset2009power}, for discerning and quantifying power-law behavior in empirical data. This framework combines maximum-likelihood fitting methods with goodness-of-fit tests based on the Kolmogorov-Smirnov statistic to compute $p$-value.
-
-If  $p$-value is large (close to 1), then the difference between the data and the model can be attributed to statistical fluctuations alone; if it is small, the model is not a plausible fit for the data and we can not conclude that there is an evidence for the preferential attachment in the network. 
-
-
-%In the context of latent models, while there is no ambiguity in computing the overall degree distribution, it is less obvious for the local case. We explain here the computation of the local degree distribution for each models according to section \ref{sec:burstiness} :
-Concerning the local preferential attachment, 
-the computation of the local degree distributions for each model is detailed below: 
+For local preferential attachment, we follow the same approach as before to compute the $p$-value, the only difference being that the empirical data does not correspond any longer to the global adjacency matrix, but to reduced matrices for each class. The computation of the reduced adjacency matrices varies from one model to the other:
+%
 \begin{itemize}
-    \item For each network learned with IMMSB, the tensor $Z$ indicates the membership of the nodes for each  interaction. In order to draw the local degree distribution for a class $k$, we reduce the adjacency matrix in order to retain only the links that occur for the class $k$. The local degree distribution is thus computed on the reduced adjacency matrix  $Y^k =\{ y_{ij}^k=1 \ \textrm{if}\ y_{ij}=1 , z_{i\rightarrow j}=k, z_{i\leftarrow j}=k; 0 \ \textrm{otherwise} \}$.
-        \item For ILFM, each node $i$ is associated with a feature vector $\mat{f}_{i}$. The local degree distribution for the class $k$ is obtained by taking into account only the contribution of this feature $k$ on the adjacency matrix. Thus, the local degree degree distribution is computed on the reduced adjacency matrix defined by $Y^k =\{ y_{ij}^k=1 \ \textrm{if}\ y_{ij}=1 , f_{ik}=1, f_{jk}=1; 0 \ \textrm{otherwise}\}$.
+    \item For IMMSB, for a given class $k$, the reduced adjacency matrix $Y^k$ is defined by: $y_{ij}^k=1$ if $y_{ij}=1, z_{i\rightarrow j}=z_{i\leftarrow j}=k$ and $0$ otherwise.
+        \item For ILFM, the reduced adjacency matrix $Y^k$ is defined by:$ y_{ij}^k=1$ if $y_{ij}=1 , f_{ik}=f_{jk}=1$ and $0$ otherwise.
 \end{itemize}
+%
 
+\subsection{Datasets and model parameters}
 
-\subsection{Prediction performance evaluation}
-The prediction problem is equivalent to a binary prediction problem which consists to decide for each pair of nodes if there is an edge or not between them. 
-Thus, the performance of the models can be evaluated with usual AUC-ROC measures and curves which allow to graphically compare the predictive performance of the models on each dataset.
-
-\subsection{Training Datasets}
-
-In our experiments, we consider two artificial networks and two real networks.  Main topological characteristics of these networks are summarized in Table \ref{table:networks_measures} and we describe those networks in the sequel.
+To illustrate the above developments, we consider two artificial and two real networks, the characteristics of which are summarized in Table~\ref{table:networks_measures}.
 
 \begin{table}[h] 
 	\centering
@@ -51,16 +34,13 @@ In our experiments, we consider two artificial networks and two real networks.  
 	\label{table:networks_measures}
 \end{table}
 
-The non-oriented artificial networks (Network1 and Network2) have been generated with DANCer-Generator \cite{largeron2015}. This generator has been chosen because it allows to build an attributed graph having a community structure  and  the known properties of real-world networks such as preferential attachment and homophily.
-Moreover, by modifying the parameters, these properties can be weakened. Finally, DANCer-Generator is available under the terms of the GNU Public License and the parameters can be shared for experiments reproducibility. Furthermore, we share our experimental platform that we have used for our experiments which is available online. Notes that it makes our experiments easily fully reproducible \footnote{https://github.com/dtrckd/pymake}.
+The non-oriented artificial networks (Network1 and Network2) have been generated with the DANCer-Generator \cite{largeron2015}. This generator has been chosen because it allows one to build an attributed graph having a community structure as well as known properties of real-world networks such as preferential attachment and homophily. Moreover, by modifying the parameters, these properties can be weakened.
 
+The first real network, denoted Blogs \footnote{available at: http://moreno.ss.uci.edu/data.html\#blogs}, contains front-page hyperlinks between blogs in the context of the 2004 US election. A node represents a blog and an edge represents a hyperlink between two blogs. The second one, denoted Manufacturing \footnote{available at: https://www.ii.pwr.edu.pl/~michalski/index.php?content=datasets\#manufacturing}, is an internal email communication network between employees of a mid-sized manufacturing company. Each node is associated to an employee and an oriented link represents an email sent between the two employees. One can notice that the second network is specific since it is an enterprise network in which the relationships between the employees are (professionally) constrained. This means that this network is less likely to display some of the properties that occur in unconstrianed social networks.
 
-We evaluated also the models on two real world networks.
-The first one, denoted Blogs \footnote{available at: http://moreno.ss.uci.edu/data.html\#blogs}, contains front-page hyperlinks between blogs in the context of the 2004 US election. A node represents a blog and an edge represents a hyperlink between two blogs.
-The second one, denoted Manufacturing \footnote{available at: https://www.ii.pwr.edu.pl/~michalski/index.php?content=datasets\#manufacturing}, is an internal email communication network between employees of a mid-sized manufacturing company. Each vertex is associated  to an employee and an oriented link represents like previously a sent email. We can noticed that the second network is specific since it is a firm's network where the relationships between the employees are constrained. 
+The adjacency matrices and global degree distributions of these networks are presented in Figure \ref{fig:corpuses}. The adjacency matrices enable us to visualize some characteristics of the networks such as their density and their clustering patterns: as one can note, the two artificial networks and Blogs have a clear community structure, corresponding to the blocks associated with the white dots, whereas Manufacturing does not have such a structure. The global degrees, ???
 
-
-The adjacency matrices and global degree distributions of these networks are presented in Figure \ref{fig:corpuses}. The adjacency matrices enable us to visualize some characteristics of the networks such as their density and their clustering patterns. In Figure \ref{fig:synt_graph_local}, we represent the local degree distributions for all networks. Each curve within those plots represents a local degree distribution associated to the different classes. As the ground truth is not available for the real networks (Blogs and Manufacturing), classes have been determined with Louvain algorithm \cite{Blondel2008} and, the local distribution defined according to the obtained classes. 
+In Figure \ref{fig:synt_graph_local}, we represent the local degree distributions for all networks. Each curve within those plots represents a local degree distribution associated to the different classes. As the ground truth is not available for the real networks (Blogs and Manufacturing), classes have been determined with Louvain algorithm \cite{Blondel2008} and the local distribution defined according to the obtained classes.
 
 The networks present different affinity with the preferential attachment effect.  As shown in Figure \ref{fig:corpuses}, Network1 and Blogs verify the  global preferential attachment whereas it is not the case for Network2 and Manufacturing.
 

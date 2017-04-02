@@ -11,6 +11,7 @@
 \newcommand*{\lpath}{./}%
 %\usepackage[cmex10]{amsmath, mathtools}
 \usepackage{amsmath,amssymb,amsbsy,amsfonts,amsthm}
+\usepackage{mathtools}
 \usepackage{multirow}
 \usepackage{bm}
 \usepackage{enumerate}
@@ -128,29 +129,27 @@ and (b) generate a link with probability:
 %
 where $\phi_{kk'}$ denotes the element of $\mat{\Phi}$ at row $k$, column $k'$.
 %
-A graphical representation of these models is given in Figure~\ref{fig:ilfrm}.
-
-\begin{figure}[t]
-	\centering
-	\minipage{0.25\textwidth}\vspace{1cm}
-	\scalebox{0.77}{
-	\input{./img/ilfrm2.tex}}
-	\endminipage
-	\minipage{0.25\textwidth}
-	\scalebox{0.77}{
-    \input{./img/mmsb2.tex}}
-	\endminipage
-	\caption{The two graphical representations of (left) the infinite latent feature model and (right) the infinite mixed-membership stochastic block model.}
-%	The difference between the two models lies in the way representations are associated to nodes: a fixed representation is used in the case of the latent feature model, whereas the representation in the stochastic block model varies according to the link considered.}
-	\label{fig:ilfrm}
-\end{figure}
+%A graphical representation of these models is given in Figure~\ref{fig:ilfrm}.
+%
+%\begin{figure}[t]
+%	\centering
+%	\minipage{0.25\textwidth}\vspace{1cm}
+%	\scalebox{0.77}{
+%	\input{./img/ilfrm2.tex}}
+%	\endminipage
+%	\minipage{0.25\textwidth}
+%	\scalebox{0.77}{
+%    \input{./img/mmsb2.tex}}
+%	\endminipage
+%	\caption{The two graphical representations of (left) the infinite latent feature model and (right) the infinite mixed-membership stochastic block model.}
+%%	The difference between the two models lies in the way representations are associated to nodes: a fixed representation is used in the case of the latent feature model, whereas the representation in the stochastic block model varies according to the link considered.}
+%	\label{fig:ilfrm}
+%\end{figure}
 
 In the typical use of the above models for link prediction, some observations (\textit{i.e.} an existing network, observed till a certain time) are available and are used to estimate $\mat{F}$ and $\mat{\Phi}$, from which new links are predicted. In the remainder, we denote by $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ the estimates of $\mat{F}$ and $\mat{\Phi}$, that are usually obtained through standard (collapsed) Gibbs sampling and Metropolis-Hastings algorithms \cite{ILFRM,IBP,HDP,diMMSB}. We furthermore denote by $\mathcal{M}_e$ the version of both \ifm\ and \imb\ in which $\mat{F}$ and $\mat{\Phi}$ are assumed known and fixed to $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$. We now investigate whether, from the learned parameters $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, the new links generated produce a network that comply with homophily and preferential attachement.
 
 \input{homophily.tex}
 \input{preferential-attachment.tex}
-
-%\section{Illustration}
 \input{experimentations}
 
 \section{Conclusion}

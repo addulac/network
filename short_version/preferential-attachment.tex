@@ -25,9 +25,13 @@ For global preferential attachment, the degree $d_i$ directly corresponds to the
 = 1 - \prod_{j \notin \mathcal{V}(i)} (1 - P(y_{ij} = 1 \mid d_{i} \ge n, \mathcal{M}_e)) \nonumber
 \end{align}
 %
-where $\mathcal{V}(i)$ denotes the set of nodes connected to node $i$. Hence $\pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e)$ and $P(y_{ij} = 1 \mid d_{i} \ge n, \mathcal{M}_e)$ vary in the same direction. 
-
-For \ifm, one has: $\pr(y_{ij}=1 | d_i \ge n, \mathcal{M}_e) = \sigma(\mat{\hat{f}}_i \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top)$, which is independent of $n$. Similarly, for \imb, one has, by marginalizing over the $z$ variables: $\pr(y_{ij}=1 | d_i \ge n, \mathcal{M}_e) = \mat{\hat{f}}_i \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top$, which is also independent of $n$. We thus have the following property:
+where $\mathcal{V}(i)$ denotes the set of nodes connected to node $i$. Let $c=\min_j  (1-P(y_{ij} = 1 \mid d_{i} \ge n, \mathcal{M}_e))$ (where the minimum is taken over all nodes $j$). One has:
+%
+\[
+0 \le \pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) \le (1 - c^{N-n}) \xrightarrow[n \rightarrow N]{} 0
+\]
+%
+which shows that $\pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e)$ does not increase with $n$. We thus have the following property:
 %
 \begin{proposition}[]
 \label{pref-attch-glob}
@@ -41,12 +45,12 @@ For local preferential attachment, the situation is slightly more complex:
 \imb\ satisfies local preferential attachment whereas \ifm\ does not.
 \end{proposition}
 %
-\noindent \textbf{Proof} Let $y_{ij,k}$ be the binary random variable that is $1$ if nodes $i$ and $j$ are linked through the latent factor $k$ and $0$ otherwise. Then, $d_{i,k} = \sum_{j \in \mathcal{V}(i)} \pr(y_{ij,k} =1 | \mathcal{M}_e)$. For \imb, this leads to $d_{i,k} = \sum_{j \in \mathcal{V}(i)} \hat{f}_{ik} \hat{\Phi}_{kk} \hat{f}_{jk} = \hat{f}_{ik} \sum_{j \in \mathcal{V}(i)} \hat{\Phi}_{kk} \hat{f}_{jk}$. The positive reinforcement effect of the Dirichlet Process \cite{teh2006hierarchical} at the basis of \imb\ corresponds to a burstiness phenomenon and directly translates, for any $i$ and any $k$, as: $\pr(\hat{f}_{ik} \ge x'+\epsilon' \mid \hat{f}_{ik} \ge x',\mathcal{M}_e)$ increases with $x'$ (for all $\epsilon'$ and $x'$ chosen in accordance with the domain of definition of $\hat{f}_{ik}$). Setting $x=x'(\sum_{j \in \mathcal{V}(i)} \hat{\Phi}_{kk} \hat{f}_{jk})$ and $\epsilon = \epsilon'(\sum_{j \in \mathcal{V}(i)} \hat{\Phi}_{kk} \hat{f}_{jk})$ and exploiting the fact that $\sum_{j \in \mathcal{V}(i)} \hat{\Phi}_{kk} \hat{f}_{jk}$ is positive and independent of $i$ leads to: $\pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x$, which proves that \imb\ satisfies the local preferential attachment effect. For \ifm, as $\hat{f}_{ik}$ is binary, there is no positive reinforcement effect associated to it and the above reasoning does not hold (all the more so that $\hat{\Phi}_{kk}$ can be negative). As the factor matrix is binary, one has:
+\noindent \textbf{Proof} Let $y_{ij,k}$ be the binary random variable that is $1$ if nodes $i$ and $j$ are linked through the latent factor $k$ and $0$ otherwise. Then, $d_{i,k} = \sum_{j} \pr(y_{ij,k} =1 | \mathcal{M}_e)$. For \imb, this leads to $d_{i,k} = \sum_{j} \hat{f}_{ik} \hat{\Phi}_{kk} \hat{f}_{jk} = \hat{f}_{ik} \sum_{j \in \mathcal{V}(i)} \hat{\Phi}_{kk} \hat{f}_{jk}$. The positive reinforcement effect of the Dirichlet Process \cite{teh2006hierarchical} at the basis of \imb\ corresponds to a burstiness phenomenon and directly translates, for any $i$ and any $k$, as: $\pr(\hat{f}_{ik} \ge x'+\epsilon' \mid \hat{f}_{ik} \ge x',\mathcal{M}_e)$ increases with $x'$ (for all $\epsilon'$ and $x'$ chosen according to the domain of definition of $\hat{f}_{ik}$). Setting $x=x'(\sum_{j} \hat{\Phi}_{kk} \hat{f}_{jk})$ and $\epsilon = \epsilon'(\sum_{j} \hat{\Phi}_{kk} \hat{f}_{jk})$ and exploiting the fact that $\sum_{j} \hat{\Phi}_{kk} \hat{f}_{jk}$ is positive and independent of $i$ leads to: $\pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x$, which proves that \imb\ satisfies the local preferential attachment effect. For \ifm, as $\hat{f}_{ik}$ is binary, there is no positive reinforcement effect and the above reasoning does not hold. Let $C_{i,j} = |\{j, \hat{f}_{jk} = \hat{f}_{ik} = 1\}|$, where $|.|$ denotes the cardinal of a set ($C_{i,j} = 0$ if $\hat{f}_{ik} =0$). As the factor matrix is binary, one has:
 %
 \[ 
-d_{i,k} = \sum_{j \in \mathcal{V}_i} \sigma(\hat{f}_{ik} \hat{\Phi}_{kk} \hat{f}_{jk}) =  \sigma(\hat{\Phi}_{kk}) |\{j \in \mathcal{V}(i), \hat{f}_{jk} =1\}|
+d_{i,k} = \sum_{j} \sigma(\hat{f}_{ik} \hat{\Phi}_{kk} \hat{f}_{jk}) =  C_{i,j} (\sigma(\hat{\Phi}_{kk}-0.5) + \frac{N}{2}
 \]
 %
-where $|.|$ denotes the cardinal of a set. The local degree for \ifm\ thus amounts to the number of nodes connected to $i$ that belong to latent factor $k$, weighted by $\sigma(\hat{\Phi}_{kk})$. As $\sigma(\hat{\Phi}_{kk})$ is strictly positive,  $\pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e) = \pr(|\{j \in \mathcal{V}(i), \hat{f}_{jk} =1\}| \ge (x+\epsilon)/ \sigma(\hat{\Phi}_{kk}) \mid |\{j \in \mathcal{V}(i), \hat{f}_{jk} =1\}| \ge x/\sigma(\hat{\Phi}_{kk}), \mathcal{M}_e)$. The reasoning for global preferential attachement thus applies here, showing that \ifm\ does not satisfy the local preferential attachment effect. \hspace{7.1cm} $\Box$
+which equals $\frac{N}{2}$ when $\hat{\Phi}_{kk} = 0$. The local degree is thus constant is this case, which shows that \ifm\ does not satisfy local preferential attachment. \hspace{4.7cm} $\Box$
 
 The above propositions show that both models are deficient in the sense that they do not guarantee that the networks they generate will comply to the global (and local in case of \ifm) preferential attachment phenomena, which are inherent properties of the probability distributions underlying the models. This does not mean however that \ifm\ and \imb\ are not able to model well social networks during the learning phase, even according to the underlying degree distribution. Indeed, the Gibbs updates for both models will assign higher weight to nodes and factors that have been used during the learning phase. Provided there is enough training data, both models will likely reproduce the degree distributions observed in the training data. We will observe that in the following section, devoted to the illustration of the properties we have established.
