@@ -218,7 +218,7 @@ For local preferential attachment, the situation is slightly more complex:
 \imb\ satisfies local preferential attachment whereas \ifm\ does not.
 \end{proposition}
 %
-\noindent \textbf{Proof (sketch)} Let $y_{ij,k}$ be the binary random variable that is $1$ if nodes $i$ and $j$ are linked through the latent factor $k$ and $0$ otherwise. Then, $d_{i,k} = \sum_{j} \pr(y_{ij,k} =1 | \mathcal{M}_e)$. For \imb, this leads to $d_{i,k} = \sum_{j} \hat{f}_{ik} \hat{\Phi}_{kk} \hat{f}_{jk} = \hat{f}_{ik} \sum_{j \in \mathcal{V}(i)} \hat{\Phi}_{kk} \hat{f}_{jk}$. The positive reinforcement effect of the Dirichlet Process \cite{teh2006hierarchical} at the basis of \imb\ corresponds to a burstiness phenomenon and directly translates, for any $i$ and any $k$, as: $\pr(\hat{f}_{ik} \ge x'+\epsilon' \mid \hat{f}_{ik} \ge x',\mathcal{M}_e)$ increases with $x'$ (for all $\epsilon'$ and $x'$ chosen according to the domain of definition of $\hat{f}_{ik}$). Setting $x=x'(\sum_{j} \hat{\Phi}_{kk} \hat{f}_{jk})$ and $\epsilon = \epsilon'(\sum_{j} \hat{\Phi}_{kk} \hat{f}_{jk})$ and exploiting the fact that $\sum_{j} \hat{\Phi}_{kk} \hat{f}_{jk}$ is positive and independent of $i$ leads to: $\pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x$, which proves that \imb\ satisfies the local preferential attachment effect. For \ifm,  let $C^k_{i,j} = |\{j, \hat{f}_{jk} = \hat{f}_{ik} = 1\}|$, where $|.|$ denotes the cardinal of a set ($C^k_{i,j} = 0$ if $\hat{f}_{ik} =0$). As the factor matrix is binary, one has:
+\noindent \textbf{Proof (sketch)} Let $y_{ij,k}$ be the binary random variable that is $1$ if nodes $i$ and $j$ are linked through the latent factor $k$ and $0$ otherwise. Then, $d_{i,k} = \sum_{j} \pr(y_{ij,k} =1 | \mathcal{M}_e)$. For \imb, this leads to $d_{i,k} = \sum_{j} \hat{f}_{ik} \hat{\Phi}_{kk} \hat{f}_{jk} = \hat{f}_{ik} \sum_{j \in \mathcal{V}(i)} \hat{\Phi}_{kk} \hat{f}_{jk}$. The positive reinforcement effect of the Dirichlet Process \cite{HDP} at the basis of \imb\ corresponds to a burstiness phenomenon and directly translates, for any $i$ and any $k$, as: $\pr(\hat{f}_{ik} \ge x'+\epsilon' \mid \hat{f}_{ik} \ge x',\mathcal{M}_e)$ increases with $x'$ (for all $\epsilon'$ and $x'$ chosen according to the domain of definition of $\hat{f}_{ik}$). Setting $x=x'(\sum_{j} \hat{\Phi}_{kk} \hat{f}_{jk})$ and $\epsilon = \epsilon'(\sum_{j} \hat{\Phi}_{kk} \hat{f}_{jk})$ and exploiting the fact that $\sum_{j} \hat{\Phi}_{kk} \hat{f}_{jk}$ is positive and independent of $i$ leads to: $\pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x$, which proves that \imb\ satisfies the local preferential attachment effect. For \ifm,  let $C^k_{i,j} = |\{j, \hat{f}_{jk} = \hat{f}_{ik} = 1\}|$, where $|.|$ denotes the cardinal of a set ($C^k_{i,j} = 0$ if $\hat{f}_{ik} =0$). As the factor matrix is binary, one has:
 %
 \[ 
 d_{i,k} = \sum_{j} \sigma(\hat{f}_{ik} \hat{\Phi}_{kk} \hat{f}_{jk}) =  C^k_{i,j} (\sigma(\hat{\Phi}_{kk})-0.5) + \frac{N}{2}
@@ -271,17 +271,17 @@ Figure \ref{fig:synt_graph_local} represents the local degree distributions for 
 
 \begin{figure}[h]
         \begin{minipage}{0.24\textwidth}
-            \includegraphics[width=\textwidth]{img/corpus/network1_dd}
+            \includegraphics[width=1.1\textwidth]{img/corpus/network1_dd}
         \end{minipage}
         \begin{minipage}{0.24\textwidth}
-            \includegraphics[width=\textwidth]{img/corpus/network2_dd}
+            \includegraphics[width=1.1\textwidth]{img/corpus/network2_dd}
         \end{minipage}
         %\vskip\baselineskip
         \begin{minipage}{0.24\textwidth}
-            \includegraphics[width=\textwidth]{img/corpus/blogs_dd}
+            \includegraphics[width=1.1\textwidth]{img/corpus/blogs_dd}
         \end{minipage}
         \begin{minipage}{0.24\textwidth}
-            \includegraphics[width=\textwidth]{img/corpus/manufacturing_dd}
+            \includegraphics[width=1.1\textwidth]{img/corpus/manufacturing_dd}
         \end{minipage}
 	\caption{Adjacency matrices (left) and global degree distributions (right) for the four training datasets. In the adjacency matrices, a white dot corresponds to a 1 and a block dot to a 0.}
 	\label{fig:corpuses}
@@ -289,23 +289,23 @@ Figure \ref{fig:synt_graph_local} represents the local degree distributions for 
 
 \begin{figure}[h]
         \begin{minipage}{0.24\textwidth}
-            \includegraphics[width=\textwidth]{img/corpus/network1_1}
+            \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/network1_1}
         \end{minipage}
         \begin{minipage}{0.24\textwidth}
-            \includegraphics[width=\textwidth]{img/corpus/network2_1}
+            \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/network2_1}
         \end{minipage}
         \vskip\baselineskip
         \begin{minipage}{0.24\textwidth}
-            \includegraphics[width=\textwidth]{img/corpus/blogs_1}
+            \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/blogs_1}
         \end{minipage}
         \begin{minipage}{0.24\textwidth}
-            \includegraphics[width=\textwidth]{img/corpus/manufacturing_1}
+            \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/manufacturing_1}
         \end{minipage}
         \caption {Local degree distributions for the four training datasets. For Network1 and Network2 the classes come from ground-truth. For Blogs and Manufacturing we use classes found by the Louvain algorithm.} 
 	\label{fig:synt_graph_local}
 \end{figure}
 
-For each dataset, we estimate the model parameters through Markov Chain Monte Carlo inference consisting of 200 iterations. For \imb, the concentration parameters of HDP were optimized  using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$ following \cite{HDP}. The parameters for the matrix weights  $\lambda_0$ and $\lambda_1$ were fixed to 0.1. For \ifm, the hyperparameter  $\sigma_w$ was fixed to 1 and the IBP hyperparameter $\alpha$ to 0.5 in order to  have comparable number of classes with \imb. Once the models have been learned, they are used to generate links between the network nodes \textcolor{orange}{How many links?}. The whole procedure is repeated 10 times and the average values are reported as final results.
+For each dataset, we estimate the model parameters through Markov Chain Monte Carlo inference consisting of 200 iterations. For \imb, the concentration parameters of HDP were optimized  using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$ following \cite{HDP}. The parameters for the matrix weights  $\lambda_0$ and $\lambda_1$ were fixed to 0.1. For \ifm, the hyperparameter  $\sigma_w$ was fixed to 1 and the IBP hyperparameter $\alpha$ to 0.5 in order to  have comparable number of classes with \imb. Once the models have been learned, they are used to generate links (or non-links) between the entire set of network nodes. The whole procedure is repeated 10 times and the average values are reported as final results.
 
 \subsection{Homophily}
 
@@ -315,11 +315,11 @@ Figure \ref{fig:homo_mustach} presents boxplots describing the distributions of 
 \centering
     \begin{subfigure}
        	 \centering
-        	 \includegraphics[width=4.25cm,height=3.5cm]{img/corpus/homo_mustach_immsb}
+        	 \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/homo_mustach_immsb}
     \end{subfigure}
     \begin{subfigure}
         	 \centering
-          \includegraphics[width=4.25cm,height=3.5cm]{img/corpus/homo_mustach_ilfm}
+          \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/homo_mustach_ilfm}
     \end{subfigure}
     \caption{Natural and latent similarities aggregated over all datasets and computed on linked and non-linked pairs of nodes for \imb\ (left) and \ifm\ (right).}
     \label{fig:homo_mustach}
@@ -367,17 +367,17 @@ Manufacturing & 0 & 1.2 &   0.3 \(\pm\) 0.3  &  1.3 \(\pm\) 0.0 \\
 
 \begin{figure}[h]
     \begin{minipage}{0.24\textwidth}
-        \includegraphics[width=\textwidth]{img/corpus/immsb_network1_1}
+        \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/immsb_network1_1}
     \end{minipage}
     \begin{minipage}{0.24\textwidth}
-        \includegraphics[width=\textwidth]{img/corpus/ilfm_network1_1}
+        \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/ilfm_network1_1}
     \end{minipage}
     \vskip\baselineskip
     \begin{minipage}{0.24\textwidth}
-        \includegraphics[width=\textwidth]{img/corpus/immsb_network2_1}
+        \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/immsb_network2_1}
     \end{minipage}
     \begin{minipage}{0.24\textwidth}
-        \includegraphics[width=\textwidth]{img/corpus/ilfm_network2_1}
+        \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/ilfm_network2_1}
     \end{minipage}
     \caption {Local degree distributions for Network1 (top row) and Network2 (bottom row) generated with fitted models \imb\ (first column) and \ifm\ (second column).} 
 \label{fig:me_local}
@@ -386,10 +386,10 @@ Manufacturing & 0 & 1.2 &   0.3 \(\pm\) 0.3  &  1.3 \(\pm\) 0.0 \\
 \begin{figure}[h]
 \centering
     \begin{minipage}{0.24\textwidth}
-        \includegraphics[width=\textwidth]{img/corpus/roc_network1_20_f}
+        \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/roc_network1_20_f}
     \end{minipage}
     \begin{minipage}{0.24\textwidth}
-        \includegraphics[width=\textwidth]{img/corpus/roc_network2_20_f}
+        \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/roc_network2_20_f}
     \end{minipage}
     \begin{minipage}{0.4\textwidth}
         \includegraphics[width=\textwidth]{img/corpus/testset_max_20.png}
@@ -411,6 +411,7 @@ We have studied here whether stochastic mixed membership models, such as \ifm\ a
 These findings have been validated experimentally on two real and two artificial networks that have different degrees of global and local preferential attachment. An important, practical finding of our study is that \imb, usually considered of lesser "quality" than \ifm, can indeed yield better results on bursty networks (\textit{i.e.} networks with preferential attachment) when the number of training data is limited.
 % This study also paves the way to new models enforcing global preferential attachment through a strict adherence to the definition we have provided.
 
+\bibliographystyle{unsrt}
 \bibliography{./pnas}
 
 \end{document}

@@ -2,7 +2,7 @@
 SRC=main
 CC=latex
 CONV=dvipdf
-PMK = $(HOME)/Desktop/workInProgress/networkofgraphs/process/pymake/pymake/zymake.py
+PMK = ./zymake.py
 
 all: long short
 
@@ -35,20 +35,22 @@ short_figs:
 	img/corpus/roc_network1_20.png  img/corpus/roc_network2_20.png \
 	short_version/img/corpus
 
-pnas:
-	# _dd
-	$(PMK) exec -c generator7 generator4 --script zipf source -m ilfm_cgs -n all -k 10 -w
-	$(PMK) exec -c blogs manufacturing   --script zipf model  -m ilfm_cgs -n all -k 10 -w
+pnas_figs:
+	# adjacency matrix and empirical degree
+	cd $(HOME)/Desktop/workInProgress/networkofgraphs/process/pymake/pymake
+	$(PMK) exec -c generator7 generator4 --script zipf source -m ilfm_cgs -n all -k 10 -w -np
+	$(PMK) exec -c blogs manufacturing   --script zipf model  -m ilfm_cgs -n all -k 10 -w -np
 	# burstiness
-	$(PMK) exec PNAS2 -c pnas_short --script gennetwork burstiness local -m ilfm_cgs immsb_cgs -n all  -k 10 --testset-ratio 20 --refdir debug111111 --format _null --epoch 10 -w
+	$(PMK) exec PNAS2 -c pnas_short --script gennetwork burstiness local -m ilfm_cgs immsb_cgs -n all  -k 10 --testset-ratio 20 --refdir debug111111 --format _null --epoch 10 -w -np
 	# roc
-	$(PMK) exec PNAS2 -c generator7 generator4  --script roc -m ilfm_cgs immsb_cgs -n all  -k 10 --testset-ratio 20 --refdir debug111111 --format _null -w
+	$(PMK) exec PNAS2 -c generator7 generator4  --script roc -m ilfm_cgs immsb_cgs -n all  -k 10 --testset-ratio 20 --refdir debug111111 --format _null -w -np 
 	# roc_evolution
-	$(PMK) exec PNAS2 -c pnas_short --script roc_evolution testset max 20 --repeat $(seq 3 1 9) --testset-ratio $(seq 5 5 95) -w
+	$(PMK) exec PNAS2 -c pnas_short --script roc_evolution testset max 20 --repeat $(seq 3 1 9) --testset-ratio $(seq 5 5 80) -w -np
 	# mustach
-	$(PMK) exec PNAS2 -c pnas_short --script homo_mustach -m ilfm_cgs immsb_cgs -n all -k 10 --testset-ratio 20 --refdir debug111111 --format _null --epoch 2 -w
+	$(PMK) exec PNAS2 -c pnas_short --script homo_mustach -m ilfm_cgs immsb_cgs -n all -k 10 --testset-ratio 20 --refdir debug111111 --format _null --epoch 2 -w -np
+	cd ..
 
-pnas_fit:
+pnas_model:
 	$(PMK) exec  PNAS2 --script fit -c pnas_short   --repeat 2 3 4 5 6 --testset-ratio $(seq 5 5 95) -w
 
 expe:
