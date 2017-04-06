@@ -245,21 +245,7 @@ For local preferential attachment, we follow the same approach as before to comp
 
 To illustrate the above developments, we consider two artificial and two real networks, the characteristics of which are summarized in Table~\ref{table:networks_measures}.
 
-\begin{table}[h] 
-	\centering
-	\caption{Characteristics of artificial and real networks.}
-    \begin{tabular}{lrrr}
-        \hline
-        \textbf{Networks} &   nodes &   edges &   density \\
-        \hline
-        Network1 &    1000 &    3507 &     0.007 \\
-        Network2 &    1000 &   31000 &     0.062 \\
-        Blogs         &    1490 &   20512 &     0.009 \\
-        Manufacturing &     167 &    5950 &     0.215 \\
-    \hline
-    \end{tabular}
-	\label{table:networks_measures}
-\end{table}
+\input{table/net_measures}
 
 The non-oriented artificial networks (Network1 and Network2) have been generated with the DANCer-Generator \cite{largeron2015}. This generator has been chosen because it allows one to build an attributed graph having a community structure as well as known properties of real-world networks such as preferential attachment and homophily. In order to test link prediction models on different types of networks, Network1 was generated, by design, to comply with preferential attachment whereas Network2 was not.
 
@@ -331,40 +317,7 @@ Table \ref{table:me_gofit} reports the value of the power-law goodness of fit fo
 
 Figure \ref{fig:me_local} illustrates the local preferential attachment for Network1 (top) and Network2 (bottom) estimated with \imb\ (left) and \ifm\ (right). The shape of local degree distributions appears more linear for \imb\ and with more fluctuations for \ifm. This illustrates the fact that \ifm\ does not capture local preferential attachment whereas \imb\ does, as stated in Proposition 2.2. 
 
-\begin{table}[t]
-\caption{Preferential attachment measures for training datasets and networks generated with fitted models.}
-\centering
-\begin{tabular}{lrrrr}
-  \multirow{2}{*}{\textbf{Training Datasets}}  &
-  \multicolumn{2}{c}{Global} & \multicolumn{2}{c}{Local}\\
-  \cmidrule(r){2-3} \cmidrule(l){4-5}
-  &   $p$-value &   $\alpha$   & $p$-value & $\alpha$   \\
-\hline
-Network1       & 1 & 2.4 &   1.0 $\pm$ 0.0  &  1.8 $\pm$ 0.03  \\
-Network2       & 0 & 1.3 &   0.0 $\pm$ 0.0  &  1.2 $\pm$ 0.01 \\
-Blogs          & 1 & 1.5 &   1.0 $\pm$ 0.0  &  1.4 $\pm$ 0.03\\
-Manufacturing  & 0 & 1.4 &   0.4 $\pm$ 0.3  &  1.3 $\pm$ 0.05 \\
-\hline
-
-  \ \textbf{\imb} &&&& \\
-\hline
-Network1       & 0.9 & 1.4 &   1.0 \(\pm\) 0.0   &  3.5 \(\pm\) 0.7 \\
-Network2       & 0 & 1.3 &   0.9 \(\pm\) 0.0   &  1.6 \(\pm\) 0.2 \\
-Blogs          & 1 & 1.3 &   1.0 \(\pm\) 0.0   &  4.3 \(\pm\) 1.1 \\
-Manufacturing  & 0 & 1.2 &   0.9 \(\pm\) 0.01  &  1.6 \(\pm\) 0.1 \\
-\hline
-
-  \ \textbf{\ifm} &&&& \\
-\hline
-Network1      & 1 & 1.4 &   1.0 \(\pm\) 0.0  &  1.7 \(\pm\) 0.1 \\
-Network2      & 0 & 1.2 &   0.0 \(\pm\) 0.0 &  1.2 \(\pm\) 0.0 \\
-Blogs         & 1 & 1.3 &   0.9 \(\pm\) 0.2  &  1.5 \(\pm\) 0.1 \\
-Manufacturing & 0 & 1.2 &   0.3 \(\pm\) 0.3  &  1.3 \(\pm\) 0.0 \\
-\hline
-\end{tabular}
-\label{table:me_gofit}
-\end{table}
-
+\input{table/preferential_attachment}
 \begin{figure}[h]
     \begin{minipage}{0.24\textwidth}
         \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/immsb_network1_1}
@@ -386,10 +339,10 @@ Manufacturing & 0 & 1.2 &   0.3 \(\pm\) 0.3  &  1.3 \(\pm\) 0.0 \\
 \begin{figure}[h]
 \centering
     \begin{minipage}{0.24\textwidth}
-        \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/roc_network1_20_f}
+        \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/roc_network1_75_f}
     \end{minipage}
     \begin{minipage}{0.24\textwidth}
-        \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/roc_network2_20_f}
+        \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/roc_network2_75_f}
     \end{minipage}
     \begin{minipage}{0.4\textwidth}
         \includegraphics[width=\textwidth]{img/corpus/testset_max_20.png}
