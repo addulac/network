@@ -23,6 +23,6 @@
 *.out
 *.synctex.gz
 /*.pdf
-*_version/*.pdf
+/*/*.pdf
 __MACOSX/
 .session.vim
