@@ -1,4 +1,4 @@
-.ONESHELL:
+﻿.ONESHELL:
 SRC=main
 CC=latex
 CONV=dvipdf
@@ -13,7 +13,7 @@ dvi: ${SRC}.tex
 long:
 	cd long_version
 	pdflatex ${SRC}.tex
-	cd -
+	cd - 
 
 short:
 	cd short_version
