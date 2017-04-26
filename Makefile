@@ -1,4 +1,4 @@
-.ONESHELL:
+﻿.ONESHELL:
 SRC=main
 CC=latex
 CONV=dvipdf
