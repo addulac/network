@@ -12,11 +12,12 @@ dvi: ${SRC}.tex
 
 long:
 	cd long_version
+	bibtex *.aux
 	pdflatex ${SRC}.tex
 	cd -
 
 short:
-	cd short_version
+	cd PNAS
 	bibtex *.aux
 	pdflatex PNAS-main.tex
 	cd -
@@ -33,7 +34,7 @@ short_figs:
 	img/corpus/immsb_manufacturing_1.png \
 	img/corpus/testset_max_20.png \
 	img/corpus/roc_network1_75.png  img/corpus/roc_network2_75.png \
-	short_version/img/corpus
+	PNAS/img/corpus
 
 pnas_figs:
 	# adjacency matrix and empirical degree
@@ -43,12 +44,12 @@ pnas_figs:
 	# burstiness
 	$(PMK) exec PNAS2 -c pnas_short --script gennetwork burstiness local -m ilfm_cgs immsb_cgs -n all  -k 10 --testset-ratio 20 --refdir debug111111 --format _null --epoch 10 -w -np
 	# roc
-	#$(PMK) exec PNAS2 -c generator7 generator4  --script roc -m ilfm_cgs immsb_cgs -n all  -k 10 --testset-ratio 20 --refdir debug111111 --format _null -w -np 
+	#$(PMK) exec PNAS2 -c generator7 generator4 --script roc -m ilfm_cgs immsb_cgs -n all  -k 10 --testset-ratio 20 --refdir debug111111 --format _null -w -np 
 	$(PMK) exec PNAS2 -c generator7 generator4  --script roc testset 20 -m ilfm_cgs immsb_cgs -n all  -k 10 --testset-ratio 75  --repeat 3 -w  -np
 	# roc_evolution
-	$(PMK) exec PNAS2 -c pnas_short --script roc_evolution testset max 20 --repeat $(seq 3 1 9) --testset-ratio $(seq 5 5 80) -w -np
+	$(PMK) exec PNAS2 -c pnas_short             --script roc_evolution testset max 20 --repeat $(seq 3 1 9) --testset-ratio $(seq 5 5 80) -w -np
 	# mustach
-	$(PMK) exec PNAS2 -c pnas_short --script homo_mustach -m ilfm_cgs immsb_cgs -n all -k 10 --testset-ratio 20 --refdir debug111111 --format _null --epoch 2 -w -np
+	$(PMK) exec PNAS2 -c pnas_short             --script homo_mustach -m ilfm_cgs immsb_cgs -n all -k 10 --testset-ratio 20 --refdir debug111111 --format _null --epoch 2 -w -np
 	cd ..
 
 pnas_model:
