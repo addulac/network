@@ -12,8 +12,14 @@ dvi: ${SRC}.tex
 
 long:
 	cd long_version
-	bibtex *.aux
+	bibtex ${SRC}.aux
 	pdflatex ${SRC}.tex
+	cd -
+
+dmkd:
+	cd long_version
+	bibtex dmkd.aux
+	pdflatex dmkd.tex
 	cd -
 
 short:
