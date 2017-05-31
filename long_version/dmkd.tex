@@ -68,9 +68,9 @@
 
 \label{sec:intro}
 
-Several powerful relational learning models have been proposed to solve the problem commonly referred to as \textit{link prediction} that consists in predicting the likelihood of a future association between two nodes in a network \cite{Liben-Nowell07, HassanZaki11}. Among such models, the class of stochastic mixed membership models has received much attention as such models can be used to discover hidden properties and infer new links in social networks. Two main models in this class have been proposed and studied in the literature: the latent feature model \cite{BMF} and its non-parametric extension \cite{ILFRM}, and the mixed-membership stochastic block model \cite{MMSB}, and its non parametric extension \cite{iMMSB,diMMSB}.
+Several powerful relational learning models have been proposed to solve the problem commonly referred to as \textit{link prediction} that consists in predicting the likelihood of a future association between two nodes in a network \cite{LibenNowell07,HassanZaki11}. Among such models, the class of stochastic mixed membership models has received much attention as such models can be used to discover hidden properties and infer new links in social networks. Two main models in this class have been proposed and studied in the literature: the latent feature model \cite{BMF} and its non-parametric extension \cite{ILFRM}, and the mixed-membership stochastic block model \cite{MMSB}, and its non parametric extension \cite{iMMSB,diMMSB}.
 
-Although drawn from a wide range of domains, real world social networks exhibit general properties. In this work, we focus on two important such properties, namely \textit{homophily} and \textit{preferential attachment} \cite{Newman2010, Barabasi2003}, and assess to which extent link prediction models, as the ones mentioned above, comply with them.
+Although drawn from a wide range of domains, real world social networks exhibit general properties. In this work, we focus on two important such properties, namely \textit{homophily} and \textit{preferential attachment} \cite{Newman2010,Barabasi2003}, and assess to which extent link prediction models, as the ones mentioned above, comply with them.
 
 Stochastic mixed membership models are generative models that rely on latent factors (also called latent \textit{classes} or \textit{features}) that represent hidden properties of the nodes of the graph $G=(V,E)$ associated to the social network (each node of the graph represents an individual in the social network); in the remainder, we denote by $N$ the number of nodes in this graph ($N=|V|$). Stochastic mixed membership models are characterized by the fact that each node can "belong" to several latent factors, which reflects the fact that each individual usually has several properties, for example can belong to several communities\footnote{As mentioned in \cite{goldenberg2010survey}, the reader should however bear in mind that the notion of latent factors is of stochastic nature and is an approximation of the notions of communities and shared properties.}. The relation between a node $i$ and the latent factors is encoded in a vector denoted $\mat{f}_{i}$, of finite dimension $K$ in standard versions of the models, and of infinite dimension in  non-parametric versions. The collection of all vectors $\mat{f}_{i}$ ($1 \le i \le N$) constitutes the factor matrix $\mat{F}$. Furthermore, a weight matrix $\mat{\Phi}$ is used to encode correlations between the latent factors.
 
@@ -120,6 +120,17 @@ In the typical use of the above models for link prediction, some observations (\
 	\label{fig:mmm}
 \end{figure}
 
+
+\section{Related Work}
+
+%Burstiness on topic model:
+%Modeling Word Burstiness Using the Dirichlet Distribution (DCM)
+%Accounting for Burstiness in Topic Models (DCMLDA)
+%Proposal of a-MMSB in : Scalable Inference of Overlapping Communities with high diagonal only...
+
+%to read: Stochastic blockmodels and community structure in networks
+
+Recently, the MMSB \cite{MMSB} and ILFM \cite{ILFRM} models have been successfully used for link predictions and structure discovery in social networks. Several extensions, has been proposed. In \cite{AMMSB}, they proposed a adaptation of a MMSB model that scale well using stochastic variational inference and use it for the discovery of overlapping communities in big networks (millions of nodes). They constrained the weight matrix to have weights in the diagonal and a fixed small value elsewhere and named it a-MMSB where "a" stand for assortative. The MMSB model has also been extended to a nonparametric dynamic version to handle temporal networks \cite{fan2015dynamic}. ILFM has also been extended in several way; to handle non-negative weights in \cite{IMRM} and within a more subtle latent feature structure in \cite{ILAM}. Nevertheless the characterization of models with regards to the properties for networks remains to be explored \cite{jacobs2014unified}. Theoretical results on the structure of random graph under exchangeability assumptions are however well reported in \cite{orbanz2015bayesian}, although the characterization of social networks properties within a Bayesian framework is not covered. In \cite{hoff2008modeling}, the role of exchangeability was first pointed out and its relation to the data representation where they provide a comparative study of the homophily and structural equivalence in different model settings, but without a formal definition of both. An other important mention of the exchangeability assumptions, was done in \cite{bickel2009nonparametric} where they characterize the asymptotic comportment of the likelihood in the blockmodel settings, showing that the inference of the likelihood lead to a consistent estimation of the community structure. But they only cover the case a single membership.
 
 
 \section{Homophily: \emph{"Birds of a feather flock together"}}
