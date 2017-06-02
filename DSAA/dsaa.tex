@@ -1,4 +1,4 @@
-\documentclass{llncs}
+\documentclass[journal]{IEEEtran}
 
 
 \newcommand*{\lpath}{./}%
@@ -43,10 +43,11 @@
 \newcommand{\mat}[1]{\mathbf{#1}}
 \newcommand{\unit}{1\!\!1}
 
-%\newtheorem{definition}{Definition}[section]
-%\newtheorem{proposition}{Proposition}[section]
-%\newtheorem{theorem}{Theorem}[section]
-%\newtheorem{corollary}{Corollary}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proof}{Proof}[section]
 
 
 \title{Stochastic mixed membership models and link prediction: a study of homophily and preferential attachment in social networks}
@@ -56,28 +57,57 @@
 
 %\keywords{Stochastic mixed membership models $|$ Social networks $|$ Homophily $|$ Preferential attachment} 
 
-%\begin{abstract}
-%We assess here whether standard stochastic mixed membership models are adapted for link prediction in social networks by studying how they handle homophily and preferential attachment. To do so, we first introduce formal definitions of these phenomena; we then study how stochastic mixed membership models relate to these definitions. Our theoretical analysis reveals that standard stochastic mixed membership models comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachment, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft, and in the latter case on whether the underlying latent factor distribution is bursty or not. We illustrate these elements on synthetic and real networks.
-%\end{abstract}
 
 
 \begin{document}
 
 
 \maketitle
+\begin{abstract}
+We assess here whether standard stochastic mixed membership models are adapted for link prediction in social networks by studying how they handle homophily and preferential attachment. To do so, we first introduce formal definitions of these phenomena; we then study how stochastic mixed membership models relate to these definitions. Our theoretical analysis reveals that standard stochastic mixed membership models comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachment, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft, and in the latter case on whether the underlying latent factor distribution is bursty or not. We illustrate these elements on synthetic and real networks in a classical true scenario.
+\end{abstract}
 
+\IEEEpeerreviewmaketitle
+
+\section{Introduction}
 \label{sec:intro}
 
 Several powerful relational learning models have been proposed to solve the problem commonly referred to as \textit{link prediction} that consists in predicting the likelihood of a future association between two nodes in a network \cite{LibenNowell07,HassanZaki11}. Among such models, the class of stochastic mixed membership models has received much attention as such models can be used to discover hidden properties and infer new links in social networks. Two main models in this class have been proposed and studied in the literature: the latent feature model \cite{BMF} and its non-parametric extension \cite{ILFRM}, and the mixed-membership stochastic block model \cite{MMSB}, and its non parametric extension \cite{iMMSB,diMMSB}.
 
 Although drawn from a wide range of domains, real world social networks exhibit general properties. In this work, we focus on two important such properties, namely \textit{homophily} and \textit{preferential attachment} \cite{Newman2010,Barabasi2003}, and assess to which extent link prediction models, as the ones mentioned above, comply with them.
 
+\section{Related Work}
+
+%Burstiness on topic model:
+%Modeling Word Burstiness Using the Dirichlet Distribution (DCM)
+%Accounting for Burstiness in Topic Models (DCMLDA)
+%Proposal of a-MMSB in : Scalable Inference of Overlapping Communities with high diagonal only...
+
+%to read: Stochastic blockmodels and community structure in networks
+
+Recently,  several extensions of \imb ~and \ifm  ~have been proposed. In \cite{AMMSB}, the authors  proposes an adaptation of \imb, called a-MMSB where "a" stands for assortative,  and they used it for discovering overlapping communities in large size networks having millions of nodes since a-MMSB  scales well using stochastic variational inference. They constrained the weight matrix to have weights in the diagonal and a fixed small value elsewhere. A non parametric dynamic version of MMSB model has also been introduced to  handle temporal networks \cite{fan2015dynamic}. ILFM has also been extended in several way, to handle non-negative weights in \cite{IMRM} and within a more subtle latent feature structure in \cite{ILAM}. Nevertheless, the characterization of these models with regards to the properties of networks remains to be explored \cite{jacobs2014unified}.
+
+Indeed, Although drawn from a wide range of domains, real world social networks exhibit general properties.
+For instance, we can mentioned the small world property which implies that most vertices can be reached from every other through a small number of edges or the community structure which appears when vertices are grouped in a way such that vertices in a group are more connected to vertices belonging to the same group compared to other vertices.
+ In this work, we focus on two other important properties, namely \textit{homophily} and \textit{preferential attachment} \cite{Newman2010, Barabasi2003}. Homophily is verified in a network when similar vertices according to their properties tend to be more connected than dissimilar vertices.  Preferential attachment states that a vertex is more likely to create connections with vertices having a high degree. The interest of these last properties has been widely emphasized in previous works notably for modeling and generating networks reflecting properties of real networks, like in the Barabási–Albert model \cite{albert2002statistical} or Buckley and Osthus model \cite{Buckley2001} which integrate a preferential attachment mechanism,  in the Multiplicative Attribute Graph (MAG) model \cite{Kim2012} which considers nodes affinities  or the Dancer model which takes in consideration both properties \cite{Largeron2017}.  They have also been exploited for improving the results obtained in classical tasks such as community detection \textbf{Ciglan2013,Zhang2016} or link prediction \textbf{Aiello2012,Zeng2016}. However, few works studied, in a theoretical way, in which extend the models comply these properties. Concerning the preferential attachment,  Lee \textit{et al.} \cite{Lee2015} analytically prove that their random model preserves the power law behavior and, they also  show that it satisfies the small world property whereas  Orbanz and Royhowever pointed out that models belonging to the family of infinitely exchangeable Bayesian graph models cannot generate power law degree distributions among the vertices \cite{orbanz2015bayesian}.  Concerning the homophily effect, \cite{Hoff2008} pointed out that the latent eigen model can model both homophily and stochastic equivalence in undirected graphs but without providing a formal definitions of these properties. Furthermore, according to Wu \textit{et al.}, the latent eigen model for directed graphs, MLFM, fails to model homophily in networks and, for enhancing homophily modeling
+in MLFM, these last ones designed the  GLFM model \cite{Li11}.
+In this article,  we study in a theoretical way, how the non-parametric versions \ifm and  \imb of these classical stochastic mixed membership models handle homophily and preferential attachment. For this purpose, we introduce formal definitions of these phenomena and then study how the models relate to these definitions.
+
+
+%Theoretical results on the structure of random graph under exchangeability assumptions are however well reported in \cite{orbanz2015bayesian}, although the characterization of social networks properties within a Bayesian framework is not covered. In \cite{hoff2008modeling}, the role of exchangeability was first pointed out and its relation to the data representation where they provide a comparative study of the homophily and structural equivalence in different model settings, but without a formal definition of both. An other important mention of the exchangeability assumptions, was done in \cite{bickel2009nonparametric} where they characterize the asymptotic comportment of the likelihood in the blockmodel settings, showing that the inference of the likelihood lead to a consistent estimation of the community structure. But they only cover the case a single membership.
+%
+
+The rest of this paper is organised as follows; In the second section we introduce the background models in the mixed-membership familly. In the third and fourth section we introduce formal definitions of the compliance of probabilistic link prediction models to homophily and preferential attachment in social networks, and show that standard stochastic mixed membership models \ref{fig:mmm} comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachment, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft, and in the latter case on whether the underlying latent factor distribution is bursty or not. In the fifth section we illustrate our findings on 2 synthetic networks and 2 real word networks. Finally, we conclude in the last section.
+
+\section{Backround Models}
+
 Stochastic mixed membership models are generative models that rely on latent factors (also called latent \textit{classes} or \textit{features}) that represent hidden properties of the nodes of the graph $G=(V,E)$ associated to the social network (each node of the graph represents an individual in the social network); in the remainder, we denote by $N$ the number of nodes in this graph ($N=|V|$). Stochastic mixed membership models are characterized by the fact that each node can "belong" to several latent factors, which reflects the fact that each individual usually has several properties, for example can belong to several communities\footnote{As mentioned in \cite{goldenberg2010survey}, the reader should however bear in mind that the notion of latent factors is of stochastic nature and is an approximation of the notions of communities and shared properties.}. The relation between a node $i$ and the latent factors is encoded in a vector denoted $\mat{f}_{i}$, of finite dimension $K$ in standard versions of the models, and of infinite dimension in  non-parametric versions. The collection of all vectors $\mat{f}_{i}$ ($1 \le i \le N$) constitutes the factor matrix $\mat{F}$. Furthermore, a weight matrix $\mat{\Phi}$ is used to encode correlations between the latent factors.
 
 
-Stochastic mixed membership models differ on the way the vectors $\mat{f}_{i}$ ($1 \le i \le N$) and the matrix $\mat{\Phi}$ are generated. As mentioned before, and to be as general as possible, we consider here the non-parametric versions of the latent feature model \cite{ILFRM}, referred to as \ifm, and of the mixed-membership stochastic block model \cite{iMMSB,diMMSB}, referred to as \imb. All our results are nevertheless also valid for the finite versions of these models.
+Stochastic mixed membership models differ on the way the vectors $\mat{f}_{i}$ ($1 \le i \le N$) and the matrix $\mat{\Phi}$ are generated. As mentioned before, and to be as general as possible, we consider here the non-parametric versions of the latent feature model \cite{ILFRM}, referred to as \ifm, and of the mixed-membership stochastic block model \cite{iMMSB,diMMSB}, referred to as \imb. This leads to a dynamic number of classes that allows the dimensions of the models to grow with the complexity of the data. This is done in practice by the use of non-parametric prior, respectively the Indian Buffet Process and the Hierachical Dirichlet Process for \ifm and \imb. All our results are nevertheless also valid for the finite versions of these models.
 
-In \ifm, the factor matrix $\mat{F}$ is generated by an Indian Buffet Process, and each element of the matrix $\mat{\Phi}$ is generated according to a normal distribution with 0 mean and fixed, common variance. The Indian Buffet Process yields binary vectors; the $k^{th}$ coordinate of the vector $\mat{f}_{i}$, denoted $f_{ik}$, is thus either $1$ or $0$, meaning that node $i$ belongs or not to the $k^{\mbox{th}}$ latent factor. In \imb, the factor matrix $\mat{F}$ is obtained with a Hierarchical  Dirichlet Process, and each element of the matrix $\mat{\Phi}$ is generated according to a Beta distribution with fixed, common parameters. The Hierarchical  Dirichlet Process yields this time membership probabilities; $f_{ik}$ directly encodes the probability that node $i$ belongs to the $k^{th}$ latent factor. We refer the interested reader to \cite{ILFRM} and \cite{iMMSB} for more details on these processes.
+
+In \ifm, the factor matrix $\mat{F}$ is generated by an Indian Buffet Process (IBP), and each element of the matrix $\mat{\Phi}$ is generated according to a normal distribution with 0 mean and fixed, common variance. The Indian Buffet Process yields binary vectors; the $k^{th}$ coordinate of the vector $\mat{f}_{i}$, denoted $f_{ik}$, is thus either $1$ or $0$, meaning that node $i$ belongs or not to the $k^{\mbox{th}}$ latent factor. In \imb, the factor matrix $\mat{F}$ is obtained with a Hierarchical  Dirichlet Process, and each element of the matrix $\mat{\Phi}$ is generated according to a Beta distribution with fixed, common parameters. The Hierarchical  Dirichlet Process yields this time membership probabilities; $f_{ik}$ directly encodes the probability that node $i$ belongs to the $k^{th}$ latent factor. We refer the interested reader to \cite{ILFRM} and \cite{iMMSB} for more details on these processes.
 
 Once the factor and weight matrices have been generated, the probability to generate a link between any two nodes $i$ and $j$ for \ifm\ is given by:
 %
@@ -86,7 +116,10 @@ P(y_{ij}=1|\mat{F},\mat{\Phi}) = \sigma(\mat{f}_{i} \mat{\Phi} \mat{f}_{j}^\top)
 \label{eq:ilfm}
 \end{align}
 %
-where $\sigma()$ is the sigmoid function and $\top$ denotes the transpose. In \imb, one has first to select two latent factors from $\mat{f}_i$ and $\mat{f}_j$, and then generate or not a link between $i$ and $j$. This amounts to: (a) choose a class from the class membership distributions according to a categorical distribution:
+where $\sigma()$ is the sigmoid function and $\top$ denotes the transpose.
+
+
+In \imb, one has first to select two latent factors from $\mat{f}_i$ and $\mat{f}_j$, and then generate or not a link between $i$ and $j$. This amounts to: (a) choose a class from the class membership distributions according to a categorical distribution:
 %
 \begin{align}
  z_{i \rightarrow j} &\sim \mbox{Cat}(\mat{f}_i) \nonumber \\
@@ -104,33 +137,20 @@ where $\phi_{kk'}$ denotes the element of $\mat{\Phi}$ at row $k$, column $k'$.
 
 In the typical use of the above models for link prediction, some observations (\textit{i.e.} an existing network, observed till a certain time) are available and are used to estimate $\mat{F}$ and $\mat{\Phi}$, from which new links are predicted. In the remainder, we denote by $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ the estimates of $\mat{F}$ and $\mat{\Phi}$, that are usually obtained through standard (collapsed) Gibbs sampling and Metropolis-Hastings algorithms \cite{ILFRM,IBP,HDP,diMMSB}. We furthermore denote by $\mathcal{M}_e$ the version of both \ifm\ and \imb\ models in which $\mat{F}$ and $\mat{\Phi}$ are assumed known and fixed to $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$. We now investigate whether, from the learned parameters $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, the new links generated produce a network that comply with homophily and preferential attachment.
 
-\paragraph{\underline{Significant Statement}}We introduce formal definitions of the compliance of probabilistic link prediction models to homophily and preferential attachment in social networks, and show that standard stochastic mixed membership models \ref{fig:mmm} comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachment, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft, and in the latter case on whether the underlying latent factor distribution is bursty or not.
 
 \begin{figure}[t]
 	\centering
-	\minipage{0.45\textwidth}\vspace{1cm}
+	\minipage{0.25\textwidth}\vspace{1cm}
 	\scalebox{0.88}{
 	\input{\lpath/img/ilfrm2.tex}}
 	\endminipage
-	\minipage{0.45\textwidth}
+	\minipage{0.25\textwidth}
 	\scalebox{0.88}{
 		\input{\lpath/img/mmsb2.tex}}
 	\endminipage
 	\caption{The two graphical representations of (left) the latent feature model and (right) the latent class model. The difference between the two models lies in the way representations are associated to nodes: a fixed representation is used in the case of the latent feature model, whereas the representation in the latent class model varies according to the link considered.}
 	\label{fig:mmm}
 \end{figure}
-
-
-\section{Related Work}
-
-%Burstiness on topic model:
-%Modeling Word Burstiness Using the Dirichlet Distribution (DCM)
-%Accounting for Burstiness in Topic Models (DCMLDA)
-%Proposal of a-MMSB in : Scalable Inference of Overlapping Communities with high diagonal only...
-
-%to read: Stochastic blockmodels and community structure in networks
-
-Recently, the MMSB \cite{MMSB} and ILFM \cite{ILFRM} models have been successfully used for link predictions and structure discovery in social networks. Several extensions, has been proposed. In \cite{AMMSB}, they proposed a adaptation of a MMSB model that scale well using stochastic variational inference and use it for the discovery of overlapping communities in big networks (millions of nodes). They constrained the weight matrix to have weights in the diagonal and a fixed small value elsewhere and named it a-MMSB where "a" stand for assortative. The MMSB model has also been extended to a nonparametric dynamic version to handle temporal networks \cite{fan2015dynamic}. ILFM has also been extended in several way; to handle non-negative weights in \cite{IMRM} and within a more subtle latent feature structure in \cite{ILAM}. Nevertheless the characterization of models with regards to the properties for networks remains to be explored \cite{jacobs2014unified}. Theoretical results on the structure of random graph under exchangeability assumptions are however well reported in \cite{orbanz2015bayesian}, although the characterization of social networks properties within a Bayesian framework is not covered. In \cite{hoff2008modeling}, the role of exchangeability was first pointed out and its relation to the data representation where they provide a comparative study of the homophily and structural equivalence in different model settings, but without a formal definition of both. An other important mention of the exchangeability assumptions, was done in \cite{bickel2009nonparametric} where they characterize the asymptotic comportment of the likelihood in the blockmodel settings, showing that the inference of the likelihood lead to a consistent estimation of the community structure. But they only cover the case a single membership.
 
 
 \section{Homophily: \emph{"Birds of a feather flock together"}}
@@ -232,232 +252,6 @@ As $\hat{f}_{ik}$ is binary, there is no positive reinforcement effect: $C_{i,k}
 The above propositions show that both models are deficient in the sense that they do not guarantee that the networks they generate will comply to the global (and local in case of \ifm) preferential attachment phenomena, which are inherent properties of the probability distributions underlying the models. This does not mean however that \ifm\ and \imb\ are not able to well model social networks during the learning phase, even according to the underlying degree distribution. Indeed, the Gibbs updates for both models will assign higher weight to nodes and factors that have been encountered more often during the learning phase. Provided there is enough training data, both models will likely reproduce the degree distributions observed in the training data. We will observe that in the following section, devoted to the illustration of the properties we have established.
 
 
-\section{Preferential Attachments: Extensions and generalization}
-In this section we provide an extension of the study of the preferential attachment in two directions :
-\begin{itemize}
-    \item Recall the representation theorem \cite{orbanz2015bayesian} about exchangeable sequence and arrays and it's consequences on random networks.%Show the relation between exchangeable sequence (jointly exchangeable adjacency matrix) and the burstiness phenomenon associated to the sum over realization of the exchangeable sequence,
-    \item Characterizing the burstiness phenomenon over the size of the classes that the models produce in their generative process (feature burstiness). 
-    \item Specifying the limitation of studying the preferential attachment in the $M_e$ context by specifying it's relation with $M_g$. The $M_g$ context represents the models seen from it's hyper-parameters while $M_e = (\hat F, \hat \Phi)$ represents the model seen from an estimated model (with a inference procedure like a MCMC or a variational inference).
-\end{itemize}
-
-\subsubsection{Recall of Definitions and Theorems on Exchangeability}~\\
-
-An exchangeable sequence is a sequence $X := (X_1 \in A_1, X_2 \in A_2,...)$ of random variables whose joint distribution satisfies :
-\begin{equation}\label{eq:exch}
-P(X_1 \in A_1, X_2 \in A_2,...) = P(X_{\pi(1)} \in A_1, X_{\pi(2)} \in A_2,...)
-\end{equation}
-
-for every permutation $\pi$  of integers and collection $A_1, A_2,...$ of measurable sets. Following the notation in \cite{orbanz2015bayesian} we can express \eqref{eq:exch} by $P(X_n) = P(X_{\pi(n)})$. In order to characterize the adjacency matrix underlying a social network, we can extend the definition of sequence by denoting a random matrix as $(X_{ij})_{i,j \in \mathbb{N}}$. Thus we says that the random matrix $X$ is jointly exchangeable if it satisfies :
-	\begin{equation}
-	P(X_{ij}) = P(X_{\pi(i)\pi(j)})
-	\end{equation}
-	
-The Aldous-Hoover theorem generalizes the representation theorem for exchangeable sequence of De-Finetti for exchangeable matrix. It states that a random matrix $(X_{ij})$ is a jointly exchangeable matrix if and only if it can be represented as follows : There is a random measurable function $F:[0,1]^3 \rightarrow X$ such that : 
-\begin{equation}
-X_{ij} \sim F(U_i, U_j, U_{\{\{i,j\}\}})
-\end{equation}
-
-where $(U_i)_{i\in \mathbb(N)}$ and $(U_{\{\{i,j\}\}})_{i, j\in \mathbb(N)}$ are, respectively, a sequence and matrix of i.i.d. Uniform[0,1] random variables.
-
-A important consequence of the Aldous-Hoover theorem is that an exchangeable graph is either empty or dense. It means that if the graph is not empty, the number of edges $n$ will be lower bounded by $cn^2$ with $c$ a constant. This  come from the the fact that edge proportion is independent of $N$ and can be computed as follows $\epsilon = \int_{[0,1]^3} F(x, y, z)dxdydz$.
-
-~\\
-We illustrate this results for (i)MMSB model (for the nonparametric version, note that the support of $k$, and $\bm\alpha$ is theoretically infinite and in the latter drawn from a stick breaking process  $\bm \alpha \sim SB(\gamma)$), by marginalizing over the model parameters, we can compute the expected proportion of edges in the graph $G$ :
-
-\begin{align*}
-&p(y_{ij}=1| \bm{\alpha}, \bm{\lambda}) = \int_{f_i} \int_{f_j} \int_{\Phi} p(f_i| \alpha ) p(f_j| \alpha)p(\Phi| \lambda) \\
-&\times \sum_{k,k'} p(y_{ij} \mid \phi_{kk'})\ p(k\mid f_i)p(k'\mid f_j)df_i df_j d\Phi \\
-&=  \sum_{k,k'} \int_{\Phi} \phi_{kk'} p(\Phi| \lambda) d\Phi \int_{f_i} f_{ik} p(f_i| \alpha )df_i \int_{f_j} f_{jk}  p(f_j| \alpha ) df_j \\
-&= \sum_{k,k'} \E[B(\lambda_1, \lambda_0)] \E_k[Dir(\mat{\alpha} )] \E_{k'}[Dir(\mat{\alpha})] \\
-&= \frac{\lambda_1}{\lambda_0+\lambda_1}\frac{\sum_{k,k'} \alpha_k\alpha_k'}{(\sum_k \alpha_k)^2} = \epsilon
-\end{align*}
-
-It follows that this expectation do not depend on the number of vertex $n$, and the expected number of edges for an undirected graph is $\dbinom{n}{2} \epsilon = O(n^2)$.
-
-Note that for ILFM, the expected proportion of edges in the graph don't take a closed form expression since the (kernel) likelihood is not conjugate with the Indian Buffet Process :
-
-\begin{equation}
-P(y_{ij}=1 | \alpha, \sigma) = \int_\Phi \sum_F p(y_{ij}=1 | \Phi, F)P(F | \alpha) P(\Phi|\sigma) d\Phi
-\end{equation}
-
-There is no closed form for this expression due to it's non-conjugacy.
-
-Here is the different component of this previous equation for completeness \cite{griffiths2011indian} :
-\begin{equation}
-p(y_{ij}=1 | \Phi, F) = \sigma(f_i\Phi f_j^T)
-\end{equation}
-
-\begin{equation}
-p(\Phi|\sigma) = \prod_{k, k'} P(\phi_{k,k'}|\sigma) \qquad \mathrm{with} \quad P(\phi_{k,k'}|\sigma) = N(0, \sigma)
-\end{equation}
-
-\begin{equation}
-P(F \mid \alpha) = \frac{\alpha^{K_+}}{\prod_{i=1}^N K_1^{(i)} } \exp(-\alpha H_N) \prod_{k=1}^{K_+} \frac{(N - m_k)!(m_k - 1)!}{N!}
-\end{equation}
-
-Where $H_N = \sum_{j=1}^N \frac{1}{j}$ is the Nth harmonic number, $m_k$ the number of observations containing feature $k$ and $K_+=K-K_0$ is the number of represented features where $K_0$ is the number of observation for which $m_k=0$.
-
-
-
-\subsubsection{Feature burstiness}~\\
-
-We propose a third definition for the study of the preferential attachment in social networks. It concerns the preference that an individuals would have to join a class given the current number of actual members. Thus the quantity we study here correspond to the size of the classes : thus we add the following third definition to the previous section : 
-
-To pursue this definition, one need to precise what precisely means the "size of a class". Depending on what is the definition of the membership within a class that we consider, the notion of size will differs.
-
-We consider the two following cases, which defined the relative size $N_k^i$ for any node $i$. It represents the size of class from a node point a view and can be interpreted as the potential number of nodes that a given node $i$ can bind to :
-\begin{itemize}
-    \item Soft membership - IMMSB : In this case, nodes belongs to every classes in different proportion. The size of class refers in this case to the number of relation (linked or non-linked) within a class who depends on the random tensor $Z$ : $N_k^i = \sum_{j \in V} \delta(z_{i\rightarrow j}=k)\delta(z_{j\rightarrow i}=k)$,
-    \item Hard membership - ILFM : This case correspond to the number of nodes falling joitly in a class since the membership is in the binary set \{ \emph{belongs} or \emph{not belongs} \}, which depends on the random matrix $F$ : $N_k^i = \sum_{j\in V} f_{ik}f_{jk}$.
-\end{itemize}
-
-From that definition, one can compute the size of a class as $N_k = \sum_{i\in V} N_k^i$ and the following upper bounds hold for an undirected network model with self loop: $N_k^i \leq N$ and $N_k \leq \dbinom{N}{2}$.
-
-The question that arise is how are distributed the $N_{1:k}$ random variables and what is their bursty dynamic.
-
-\begin{definition}[Preferential attachment (for class size)]
-Let $k$ be a class in a social network and let $N_k$ denote its size. 
-\begin{description}
-    \item[(3)] \emph{feature preferential attachment}: we say that a probabilistic link prediction model $M_g$ satisfies the feature preferential attachment iff, for any latent class $k$, the model satisfy the following , $\pr(N_k \ge n+1 \mid N_k \ge n, \mathcal{M}_g)$ increases with $n \in [0,\dbinom{N}{2}]$.
-\end{description}
-\label{def:burst-soc-net2}
-\end{definition}
-
-
-\begin{proposition}
-Both ILFM and IMMSB respect the feature preferential attachment (with regularities conditions on hyperparameters for IMMSB).	
-\end{proposition}
-
-\begin{proof}[sketch]
-	
-For ILFM:
-
-From node exchangeability on can write :
-\begin{equation} \label{eq:feat_ex}
-P(N_k=n) = \dbinom{N}{n}P(f_{1k}=1,..,f_{nk}=1,f_{(n+1)k}=0,..,f_{Nk}=0)
-\end{equation}
-
-It follows from the burstiness definition and Bayes' rule :
-\begin{equation}
-\frac{P(N_k=n+1)}{P(N_k=n)} = \frac{N-n}{n+1}P(f_{ik}=1 | F_{.k}^{-ik})
-\end{equation} 
-
-Here, the node index $i$ is a free variable since the sequence in equation \eqref{eq:feat_ex} is exchangeable, who can choose any nodes.
-
-As $F$ is drawn from an Indian Buffet Process, we have $P(f_{ik}=1 | F_{.k}^{-i}) = \frac{n}{N}$.\\
-
-
-For IMMSB: 
-
-Remark: note if $N_k^i$ is bursty, it implies that $N_k$ is also busrty from its definition because the sum conserve the inequality. And in the former case the burstiness is then stronger than the second.
-
-From the node exchangeability, one can write :
-
-\begin{align*}
-P(N_k^i=n) &= \dbinom{N}{n}P(z_{i\rightarrow 1}=k,z_{i\leftarrow 1}=k,..,z_{i\rightarrow n}=k, z_{i\leftarrow n}=k, \\
- &z_{i\rightarrow n+1}\neq k, z_{i\leftarrow n}\neq k,..,  z_{i\rightarrow N}\neq k, z_{i\leftarrow N}\neq k)
-\end{align*}
-
-Again, it follows from the burstiness definition and Bayes' rule :
-\begin{equation} \label{eq:memb_ex}
-\frac{P(N_k^i=n+1)}{P(N_k^i=n)} = \frac{N-n}{n+1}P(z_{i\rightarrow j}=k,z_{i\leftarrow j}=k | Z_{i\rightarrow}^{-j}, Z_{i\leftarrow}^{-j})	
-\end{equation}
-
-The right part of equation \eqref{eq:memb_ex} has known closed form similar to the collaped Gibbs update for the membership assignment of IMMSB (see annexe). The burstiness equation reduce to :
-
-\begin{align*}
-\frac{P(N_k^i=n+1)}{P(N_k^i=n)} &= \frac{N-n}{n+1}P(z_{i\rightarrow j}=k | Z_{i\rightarrow}^{-j},) P(z_{i\leftarrow j}=k |  Z_{i\leftarrow}^{-j}) \\
-&=  \frac{N-n}{n+1} \left( \frac{n + \alpha_k}{N + \alpha_{\bm{.}}}\right)^2
-\end{align*}
-
-\textcolor{red}{Here, there is this polynom of order 2 to solve to find the constraint on $\alpha$ to satisfy the burstiness, I skip it to win some times for now...}
-
-\end{proof}
-
-
-\subsubsection{Local preferential attachment - General case}~\\
-
-In the previous part we studied the preferential attachment in a context where we fit the model parameters. We showed that according to the type of prior (hard vs soft), it impacted the preferential attachment properties on the random network. To highlight this property we only needed to focus our analysis on the distribution conditioned on what we called $M_e$, which is actually an estimation of the parameters $F$ and $\Phi$ noted $\hat F$ and $\hat \Phi$. Those learned parameters are drawn from an approximate posterior noted $\hat P(F, \phi | Y, M_g) \propto P(Y|F, \Phi)P(F|M_g)P(F|M_g)$ which came from the inference process such that $M_e = (\hat F, \hat \Phi) \sim \hat P(F, \phi | Y, M_g)$. Thus which approximates the true posterior and provide the following generative equations :
-
-\begin{equation}
-    p(Y | \hat F, \hat \Phi) = \prod_{i<j} f_i \Phi f_j^T
-\end{equation}
-
-We define the expected degree as :
-
-\begin{equation}
-d_{i}^{M_g} = \sum_{j\in V} p(y_{ij}=1 | M_g)
-\end{equation}
-
-It is straightforward that the expected (global) degree is constant for any nodes in the networks for exchangeable models since  the expected link prediction is constant with $N$, and so on for IMMSB and ILFM. 
-
-Nevertheless one can ask about the  expected (local) degree inside a class. The expected local degrees ($M_g$ case) given a class, is trivially given from the graphical models and correspond the following quantities  :
-\begin{itemize}
-	\item $\sum_{j\in V} p(y_{ij}=1  | z_{ij, ij}=k, M_g) = N \lambda_1 / (\lambda_1 + \lambda_0)$ for IMMSB,
-	\item $\sum_{j\in V} p(y_{ij}=1  | f_{ik, jk}=1, M_g)$  for ILFM. Note that we can't compute it in a closed form expression for the same reason that previously of non-conjugacy.
-\end{itemize}
-
-In the general case, if we don't know the class a priori, the local degree expectation take the following form :
-
-\begin{itemize}
-\item  $d_{i,k}^{M_g} = \sum_{j\in V} p(y_{ij}=1, z_{ij, ij}=k | M_g)$ for IMMSB,
-\item  $d_{i,k}^{M_g} = \sum_{j\in V} p(y_{ij}=1, f_{ik, jk}=1| M_g)$ for ILFM.
-\end{itemize}
-
-Note that it is easy to show we use this definition to define the degree in the $M_e$ context :
-\begin{align*}
- d_{i,k}^{M_e} &= \sum_{j\in V} p(y_{ij}=1, z{i\rightarrow j}=k, z_{i\leftarrow j =k} | M_e) \\
-  &= L(\phi_{kk} f_{ik} f{jk})
- \end{align*}
- 
-With the function $L()$ being the sigmoid for ILFM and the identity for IMMSB.
-
-In turns out that again, this expected local degree have a closed form for (i)MMSB, and not for ILFM. For IMMSB we have the following :
-
-\begin{align*}
-p(y_{ij}=1, z_{ij, ij}=k | M_g) &= p(y_{ij}=1 |  z_{ij, ij}=k, M_g) p( z_{ij, ij}=k | M_g) \\
- &=E_{\phi_{kk}}[ p(y_{ij}=1 |  z_{ij, ij}=k, \phi_{kk}, M_g) ] E_{f_i}[ p( z_{ij}=k | f_i, M_g)] E_{f_j}[ p( z_{ji}=k | f_j, M_g)] \\
- &= \frac{\lambda_1}{\lambda_0+\lambda_1}\frac{ \alpha_k\alpha_k'}{ (\sum_k \alpha_k)^2}
-\end{align*}
-
-Note that from our definitions we have $d_i^{M_g} = \sum_k d_{i,k}^{M_g}$.
-
-
-\paragraph{}
-\textcolor{red}{Remark on the definition of the burstiness in the $M_g$ mode (expected degree):
-\hrulefill
-\hrulefill
-~\\
-}
-
-for the burstiness in the "$M_g$" with de degree local defined as $d_{i,k}^{M_g}$  is trivially bursty, but makes no so much sense for the following reason :
-
-The burstiness equation in this context can be written as :
-
-\begin{equation}
-b_n = \frac{p(d_{i,k}^{M_g} = n+1)}{p(d_{i,k}^{M_g} = n)}  \nearrow_? n 
-\end{equation}
-
-We know that $d_{i,k}^{M_g} = N \epsilon_k$ which is equivalent to says that $p(d_{i,k}^{M_g})$ is a Dirac distribution noted $\delta (N\epsilon_k)$. It means that the burstiness equation is only definite for $n = N\epsilon_k$, (otherwise the denominator is null), and hence its derivative is not defined.
-
-
-\textcolor{red}{End fo Remark
-\hrulefill
-\hrulefill
-~\\
-}
-
-The question of the local burstiness we should ask instead, is by seeking what are the sequence that underly a random variable that we want to analyze Here $d_{i,k}$ should not been seen as the sum over independent marginal probability, but as the joint probability of every draw concerned. 
-
-In a first approach, let's assume we know the relative size of the class $k$ noted $N_i^k$:
-
-\begin{align*}
-P(d_{i,k}=n | M_g) &= \dbinom{N}{n} P(\{y_{ij}=1, z_{\{ij,ji\}}=k, j\in [1,n]\}, \\ & \{y_{ij}=0, z_{\{ij,ji\}}=k, j\in [1,N_i^k-n]\}, \\
-&  \{\ z_{\{ij,ji\}}\neq k, j\in [1,N-N_i^k]\}) \\
-\end{align*}
-
-
-\textcolor{red}{Iam not sure about the number of combination here, I need to think about it.}
 
 \section{Illustration}
 \label{sec:exps}
@@ -487,17 +281,17 @@ The adjacency matrices and global degree distributions of these networks are pre
 Figure \ref{fig:synt_graph_local} represents the local degree distributions for all networks, each curve in each plot being associated to a different class. As the ground truth is not available for the real networks (Blogs and Manufacturing), classes have been determined with Louvain algorithm \cite{Blondel2008} and the local distribution defined according to the obtained classes. As one can note, the plots for Network1 and Blogs are linear for the most frequent degrees, whereas the plots for Network2 and Manufacturing do not display any clear linearity, suggesting that Network1 and Blogs satisfy, at least partly, local preferential attachment whereas Network2 and Manufacturing do not. This is confirmed by the $p$-values reported in Table~\ref{table:me_gofit}: the $p$-value equals  $1$ for Network1 and Blogs,  $0$ for Network2 and $0.4$ for Manufacturing.
 
 \begin{figure}[h]
-        \begin{minipage}{0.45\textwidth}
+        \begin{minipage}{0.24\textwidth}
             \includegraphics[width=1.1\textwidth]{img/corpus/network1_dd}
         \end{minipage}
-        \begin{minipage}{0.45\textwidth}
+        \begin{minipage}{0.24\textwidth}
             \includegraphics[width=1.1\textwidth]{img/corpus/network2_dd}
         \end{minipage}
         %\vskip\baselineskip
-        \begin{minipage}{0.45\textwidth}
+        \begin{minipage}{0.24\textwidth}
             \includegraphics[width=1.1\textwidth]{img/corpus/blogs_dd}
         \end{minipage}
-        \begin{minipage}{0.45\textwidth}
+        \begin{minipage}{0.24\textwidth}
             \includegraphics[width=1.1\textwidth]{img/corpus/manufacturing_dd}
         \end{minipage}
 	\caption{Adjacency matrices (left) and global degree distributions (right) for the four training datasets. In the adjacency matrices, a white dot corresponds to a 1 and a block dot to a 0.}
@@ -505,17 +299,17 @@ Figure \ref{fig:synt_graph_local} represents the local degree distributions for 
 \end{figure}
 
 \begin{figure}[h]
-        \begin{minipage}{0.45\textwidth}
+        \begin{minipage}{0.24\textwidth}
             \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/network1_1}
         \end{minipage}
-        \begin{minipage}{0.45\textwidth}
+        \begin{minipage}{0.24\textwidth}
             \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/network2_1}
         \end{minipage}
         \vskip\baselineskip
-        \begin{minipage}{0.45\textwidth}
+        \begin{minipage}{0.24\textwidth}
             \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/blogs_1}
         \end{minipage}
-        \begin{minipage}{0.45\textwidth}
+        \begin{minipage}{0.24\textwidth}
             \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/manufacturing_1}
         \end{minipage}
         \caption {Local degree distributions for the four training datasets. For Network1 and Network2 the classes come from ground-truth. For Blogs and Manufacturing, classes are obtained by Louvain algorithm.} 
@@ -551,17 +345,17 @@ Figure \ref{fig:me_local} illustrates the local preferential attachment for Netw
 \input{table/preferential_attachment}
 
 \begin{figure}[h]
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.24\textwidth}
         \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/immsb_network1_1}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.24\textwidth}
         \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/ilfm_network1_1}
     \end{minipage}
     \vskip\baselineskip
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.24\textwidth}
         \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/immsb_network2_1}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.24\textwidth}
         \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/ilfm_network2_1}
     \end{minipage}
     \caption {Local degree distributions for Network1 (top row) and Network2 (bottom row) generated with fitted models \imb\ (first column) and \ifm\ (second column).} 
@@ -570,10 +364,10 @@ Figure \ref{fig:me_local} illustrates the local preferential attachment for Netw
 
 \begin{figure}[h]
 \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.24\textwidth}
         \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/roc_network1_75_f}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.24\textwidth}
         \includegraphics[width=4.22cm,height=3.5cm]{img/corpus/roc_network2_75_f}
     \end{minipage}
     \begin{minipage}{0.4\textwidth}
@@ -589,7 +383,6 @@ In general, as shown in the bottom plot, \ifm\ obtains better performance than \
 
 The above behavior can be explained by the fact that \imb\ satisfies the local preferential attachment whereas \ifm\ does not: as links are randomly removed, one is more likely to remove links from large classes than from small ones; a model that enforces local preferential attachment on bursty networks is thus more likely to reconstruct those removed links. This is what is happening on Network1 and Blogs for \imb. On the contrary, for non-bursty networks, a model enforcing local preferential attachment is penalized.
 
-
 \section{Conclusion}
 
 We have studied whether stochastic mixed membership models, such as \ifm\ and \imb\, can generate new links while satisfying properties frequently verified in real  social networks, namely homophily and preferential attachment. To do so, we have introduced formal definitions of these properties and have analyzed how these models behave according to those definitions. We have shown, in particular, that both models are \textit{homophilic} with the natural similarity that underlies them. Concerning preferential attachment, we have shown that stochastic mixed membership models do not comply with global preferential attachment. The situation is however more contrasted when the property is considered at the local level: \imb\ enforces local preferential attachment whereas \ifm\ does not.
@@ -600,75 +393,5 @@ These findings have been validated experimentally on two real and two artificial
 \bibliographystyle{unsrt}
 \bibliography{./a}
 
-\appendix
-\section{Appendix}
-\label{sec:append}
-\subsection{Collapsed Gibbs sampling updates for IMMSB}
-
-We provide here the derivation of the updates of the IMMSB model, described in Section~\ref{sec:models}.
-
-%From the definition of the model, one has: $\pr(z_{ij} = k \mid \mat{f}_i) = f_{ik}$.
-
-%\textcolor{red}{Adrien, peux-tu donner la d\'erivation ? La forme actuelle n'est valable que pour MMSB.} 
-
-%heeeere \alpha is \alpha_0
-
-Inference for the IMMSB model by using the Collapse Gibbs sampler gives updates for class assignment $Z \in N\times N \times 2$ for each interactions $Y \in N\times N$. Thus for all pair of interaction (i,j) we jointly sample the classes $(z_{ij}, z_{ji})$ who implicitly, take the values $(k,k')$ :
-\begin{align} \label{eq:cgs}
-&\pr(z_{ij}, z_{ji} \mid Z^-, Y,  \mat{\beta}, \alpha, \mat{\lambda} )  \\
-&\propto\pr(z_{ij}, z_{ji} \mid Z^-, \alpha,\mat{\beta}) \pr(y_{ij} \mid Y^{-ij},  Z^-,z_{ij}, z_{ji},  \mat{\lambda} ) \nonumber
-\end{align}
-The term $Z^-$ denote that both $z_{ij}$ and $z_{ji}$ are exclude from $Z$. We now treat the first term of equation \ref{eq:cgs}.  
-\begin{align}
-&\pr(z_{ij}, z_{ji} \mid Z^-, \alpha,\mat{\beta})\\
-&\propto \pr(z_{i\rightarrow j} \mid \{z_{i\rightarrow j'}\}_{j'\neq j}, \{z_{j'\leftarrow i}\}_{j'=1}^N, \alpha,\mat{\beta}) \\
-& \quad .  \pr(z_{i\leftarrow j} \mid \{z_{i'\leftarrow j}\}_{i'\neq i}, \{z_{j\leftarrow i'}\}_{i'=1}^N, \alpha,\mat{\beta}) \nonumber
-\end{align}
-Let's consider the density of $z_{i\rightarrow j}$:
-\begin{align}
-&\propto \pr(z_{i\rightarrow j} \mid \{z_{i\rightarrow j'}\}_{j'\neq j}, \{z_{j'\leftarrow i}\}_{j'=1}^N, \alpha,\mat{\beta})  \\
-&\propto \int_{f_i} \pr(f_i \mid \mat{\beta}, \alpha) \pr(z_{ij} \mid f_i) \prod_{j'\neq j} \pr(z_{ij'} \mid f_i) \prod_{j' =  1}^N  \pr(z_{j' i} \mid f_i)  df_i \nonumber
-\end{align}
-
-
-Due to the an augmented representation of the Chinese Restaurant Franchise (CRF) with the Stick Breaking Process \cite{HDP}, the density of the features can be approximated by the following Dirichlet distribution;
-\begin{equation}
-f_i \mid \mat{\beta}, \alpha \sim Dir(\alpha \beta_1,..,\alpha\beta_K, \alpha\beta_{new})
-\end{equation}
-Where $\alpha\beta_{new}$ represent the contribution for sampling a new class. Since $\pr(z_{ij} \mid f_i)$ is drawn from a multinomial, the model is said to be conjugate and reduce to a simple closed form expression:
-\begin{enumerate}
-	\item If the class $k$ has already been observed:
-	\begin{align}
-	\pr(z_{ij} =k \mid .) &\propto N_{ik}^{-ij} + \alpha_0 \beta_k
-	\label{eq:update-immsb}
-	\end{align}
-	\item In case of a new class $k_{new}$:
-	\begin{align}
-	\pr(z_{ij} =k_{new} \mid.) &\propto \alpha_0 \beta_{new} \nonumber   
-	\end{align}
-\end{enumerate}
-Where  $N_{ik}$ is the count for node $i$ being assigned to class $k$. As we show that the equations are symmetric, sampling for $z_{ji}$ is straightforward.
-
-~\\
-Again, referring the CRF, the sampling of the tables configuration $\mat{m}$ is given by: 
-\begin{equation}
-\pr(m_{ik} \mid Z, \bm{m}^{-ik}, \mat{\beta} ) = \frac{\Gamma(\alpha_0 \beta_k)}{\Gamma(\alpha_0 \beta_k + n_{j\bm{.   }k})} s(n_{j\bm{.}k}, m) (\alpha_0 \beta_k)^m
-\end{equation}
-And, finnaly  $\mat{\beta}$ is obtained by:
-\begin{equation}
-\mat{\beta} \sim Dir(m_1,.., m_K, \gamma)  
-\end{equation}
-Where $s(n,m)$ is the unsigned Stirling number of the first kind.
-
-
-~\\
-Finally, when the markov chain reach the stationnary distribution, the models parameters $\M = \{\mat{\Phi}, \mat{F}\}$ can be recovered by averaging the topics assignement counts for each membership and each relation:
-\begin{align}
-&\hat f_{ik} =\frac{ N_{ik} + \alpha\beta_k}{ N + \sum_k\alpha_k }\\
-&\hat \phi_c  = \frac{M_{c1} + \lambda_1}{M_{c\bm{.}} + \lambda_0 + \lambda_1}
-\end{align}
-
-
-The count for node $i$ being assigned to membership $k$ is $N_{ik}$. And the count of for all couple of classes $c=(k,k')$ being associated to relation $r$ is $M_{cr}$. Note that in our case, the relation $r$ take values in (0,1) accounting for link or non-link between two node.
 
 \end{document}
