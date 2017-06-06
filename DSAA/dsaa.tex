@@ -1,9 +1,6 @@
 \documentclass[journal]{IEEEtran}
 
-
-\newcommand*{\lpath}{./}%
-%\usepackage[cmex10]{amsmath, mathtools}
-%\usepackage{amsmath,amssymb,amsbsy,amsfonts,amsthm}
+\newcommand*{\lpath}{./}
 \usepackage{amsmath,amssymb,amsbsy,amsfonts}
 \usepackage{mathtools}
 \usepackage{booktabs}
@@ -11,7 +8,6 @@
 \usepackage{bm}
 \usepackage{enumerate}
 \usepackage{url}
-%\usepackage[ruled,vlined]{algorithm2e}
 \usepackage{fancyvrb}
 \usepackage{yfonts}
 \usepackage{wrapfig}
@@ -22,9 +18,6 @@
 \usepackage{calc}%    For the \widthof macro
 \usepackage{xparse}%  For \NewDocumentCommand
 
-
-%\input{./header.tex}
-%%%%%%%%%% Math
 \renewcommand{\text}{\textnormal}
 \newcommand{\ifm}{\texttt{ILFM}}
 \newcommand{\imb}{\texttt{IMMSB}}
@@ -49,20 +42,12 @@
 \newtheorem{corollary}{Corollary}[section]
 \newtheorem{proof}{Proof}[section]
 
-
-\title{Stochastic mixed membership models and link prediction: a study of homophily and preferential attachment in social networks}
-
-
-
-
-%\keywords{Stochastic mixed membership models $|$ Social networks $|$ Homophily $|$ Preferential attachment} 
-
-
+\title{A study of stochastic mixed membership models for link prediction in social networks}
 
 \begin{document}
 
-
 \maketitle
+
 \begin{abstract}
 We assess here whether standard stochastic mixed membership models are adapted for link prediction in social networks by studying how they handle homophily and preferential attachment. To do so, we first introduce formal definitions of these phenomena; we then study how stochastic mixed membership models relate to these definitions. Our theoretical analysis reveals that standard stochastic mixed membership models comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachment, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft, and in the latter case on whether the underlying latent factor distribution is bursty or not. We illustrate these elements on synthetic and real networks by using the generative properties of Bayesian model.
 \end{abstract}
@@ -74,46 +59,29 @@ We assess here whether standard stochastic mixed membership models are adapted f
 
 Several powerful relational learning models have been proposed to solve the problem commonly referred to as \textit{link prediction} that consists in predicting the likelihood of a future association between two nodes in a network \cite{LibenNowell07,HassanZaki11}. Among such models, the class of stochastic mixed membership models has received much attention as such models can be used to discover hidden properties and infer new links in social networks. Two main models in this class have been proposed and studied in the literature: the latent feature model \cite{BMF} and its non-parametric extension \cite{ILFRM}, and the mixed-membership stochastic block model \cite{MMSB}, and its non parametric extension \cite{iMMSB,diMMSB}. More generally, these models fall in the category of mixed-membership models who establish a common theoretical framework that encompass a wide range of models (such as admixture and topic model) that are able to  learn complex pattern from structured data \cite{airoldi2014handbook}.
 
-Nevertheless, although drawn from a wide range of domains, real world social networks exhibit general properties and one can wonder if these models are able to capture these properties. For instance, we can mentioned the small world property which implies that most vertices can be reached from every other through a small number of edges or the community structure which appears when vertices are grouped in a way such that vertices in a group are more connected to vertices belonging to the same group compared to other vertices.
- In this work, we focus on two other important properties, namely \textit{homophily} and \textit{preferential attachment} \cite{Newman2010, Barabasi2003} and assess to which extent link prediction models, as the ones mentioned above, comply them.
-Homophily is verified in a network when similar vertices according to their properties tend to be more connected than dissimilar vertices.  Preferential attachment states that a vertex is more likely to create connections with vertices having a high degree. In Graph theory, the preferential attachment is used to explain the emergence of scale-free networks. They are characterised by a power-law degree distribution who are ubiquitous in real world data.
+Nevertheless, although drawn from a wide range of domains, real world social networks exhibit general properties and one can wonder if these models are able to capture these properties. In this work, we focus on two important properties, namely \textit{homophily} and \textit{preferential attachment} \cite{Newman2010, Barabasi2003} and assess to which extent link prediction models, as the ones mentioned above, comply with them. Homophily is verified in a network when similar vertices tend to be more connected than dissimilar ones. On the other hand, preferential attachment states that a vertex is more likely to create connections with vertices having a high degree. In graph theory, preferential attachment is used to explain the emergence of scale-free networks that are characterized by a power-law degree distribution.
 
-
-The rest of this paper is organized as follows: in the next section, related works are presented and in the third section we introduce the  background of the stochastic mixed membership models. In the fourth and fifth sections we introduce formal definitions of the compliance of the models to homophily and preferential attachment in social networks, and we study how the models comply or not with those properties. In the sixth section, we illustrate our propositions on 2 synthetic networks and 2 real world networks. Finally, we conclude in the last section.
-
-
+The remainder of the paper is organized as follows: in the next section (Section~\ref{sec:rel-work}), we present the related work. In Section~\ref{sec:background}, we describe the main stochastic mixed membership models used for link prediction in social networks, relying on their non-parametric version that generalizes the parametric one. In Sections~\ref{sec:homophily} and \ref{sec:burstiness}, we introduce formal definitions of homophily and preferential attachment and study how stochastic mixed membership models relate to them. In Section~\ref{sec:exps}, we illustrate our theoretical development on two synthetic networks and two real networks, prior to restate our conclusions in Section~\ref{sec:concl}.
 
 \section{Related Work}
+\label{sec:rel-work}
 
-%Burstiness on topic model:
-%Modeling Word Burstiness Using the Dirichlet Distribution (DCM)
-%Accounting for Burstiness in Topic Models (DCMLDA)
-%Proposal of a-MMSB in : Scalable Inference of Overlapping Communities with high diagonal only...
+Recently,  the class of stochastic mixed membership models have been successfully used for link prediction and structure discovery in social networks.  In \cite{AMMSB}, the authors  propose an adaptation of mixed-membership stochastic block model (MMSB), called a-MMSB where "a" stands for assortative, and they used it for discovering overlapping communities in large size networks having millions of nodes since a-MMSB  scales well using stochastic variational inference. They constrained the weight matrix to have weights in the diagonal and a fixed small value elsewhere. A non parametric dynamic version of MMSB model has also been introduced to  handle temporal networks \cite{fan2015dynamic}. The latent feature model (LFM) has also been extended in several way, to handle non-negative weights in \cite{IMRM} and with a more subtle latent feature structure in \cite{ILAM}. Nevertheless, the characterization of these models with regards to the properties of the networks remains to be explored \cite{jacobs2014unified}.
 
-%to read: Stochastic blockmodels and community structure in networks
-Recently,  the class of stochastic mixed membership models have been successfully used for link prediction and structure discovery in social networks.  In \cite{AMMSB}, the authors  proposes an adaptation of \imb, called a-MMSB where "a" stands for assortative,  and they used it for discovering overlapping communities in large size networks having millions of nodes since a-MMSB  scales well using stochastic variational inference. They constrained the weight matrix to have weights in the diagonal and a fixed small value elsewhere. A non parametric dynamic version of MMSB model has also been introduced to  handle temporal networks \cite{fan2015dynamic}. \ifm ~has also been extended in several way, to handle non-negative weights in \cite{IMRM} and with a more subtle latent feature structure in \cite{ILAM}. Nevertheless, the characterization of these models with regards to the properties of the networks remains to be explored \cite{jacobs2014unified}.
+In this article, we focus on two properties:  \textit{homophily} and \textit{preferential attachment} \cite{Newman2010, Barabasi2003}. The interest of these properties has been widely emphasized in previous works notably for modeling and generating networks reflecting properties of real networks, as in the Barab\`asi-Albert model \cite{albert2002statistical} or Buckley and Osthus model \cite{Buckley2001} that integrate a preferential attachment mechanism, in the Multiplicative Attribute Graph (MAG) model \cite{Kim2012} that considers node affinities, or in the Dancer model that takes into consideration both properties \cite{Largeron2017}. However, these models do not belong to the family of Bayesian models considered in the present study. Homophily and preferential attachment have also  been exploited for improving the results obtained in classical tasks such as community detection \cite{Ciglan2013,Zhang2016} or link prediction \cite{Aiello2012,Zeng2016}. That said, few theoretical works have been done to study to what extent models comply with these properties.
 
-In this article, we focus on two properties:  \textit{homophily} and \textit{preferential attachment} \cite{Newman2010, Barabasi2003}. The interest of these properties has been widely emphasized in previous works notably for modeling and generating networks reflecting properties of real networks, like in the Barab\`asi-Albert model \cite{albert2002statistical} or Buckley and Osthus model \cite{Buckley2001} which integrate a preferential attachment mechanism, in the Multiplicative Attribute Graph (MAG) model \cite{Kim2012} which considers nodes affinities  or the Dancer model which takes in consideration both properties \cite{Largeron2017} but these models do not belong to the family of Bayesian models considered in this article.  These properties have also  been exploited for improving the results obtained in classical tasks such as community detection \cite{Ciglan2013,Zhang2016} or link prediction \cite{Aiello2012,Zeng2016}. However, few theoretical works have been done to study to what extend the models comply these properties.
+Concerning preferential attachment, Orbanz and Roy \cite{orbanz2015bayesian} pointed out that models belonging to the family of infinitely exchangeable Bayesian graph models cannot generate sparse networks and are thus less compatible with power law degree distributions. Consequently, Lee \textit{et al.} \cite{Lee2015} proposed a random network model in order to capture the power law typical of the degree distribution in social networks. However the model remains challenging to use in practice, especially for link prediction, due to the relaxation of the exchangeability assumption.
 
+Concerning the homophily effect, \cite{hoff2008modeling} pointed out that the latent eigen model (called MLFM, an extension of LFM) can comply with both homophily and stochastic equivalence in undirected graphs but without providing a formal definitions of these properties. Furthermore, Li \textit{et al.}, suggest that the latent eigen model  MLFM fails to model homophily  for directed graphs and, for correcting that, designed the GLFM model \cite{Li11}.
 
-Concerning the preferential attachment, Orbanz and Royhowever pointed out that models belonging to the family of infinitely exchangeable Bayesian graph models cannot generate sparse networks which not compatible with power law degree distribution among the vertices \cite{orbanz2015bayesian}. Consequently, Lee \textit{et al.} \cite{Lee2015} proposed a random network model in order to capture the power law behavior along with the small world property. However the model remains challenging to use in practice, especially for link prediction, due to the relaxation of the exchangeability assumptions.
-
-Concerning the homophily effect, \cite{hoff2008modeling} pointed out that the latent eigen model can comply both homophily and stochastic equivalence in undirected graphs but without providing a formal definitions of these properties. Furthermore, Li \textit{et al.}, suggest that the latent eigen model  MLFM fails to model homophily  for directed graphs and, for enhancing homophily modeling in MLFM, they designed the  GLFM model \cite{Li11}.
-
-Following these previous studies, we study in a theoretical way, how the non-parametric versions \ifm ~ and  \imb ~ of these classical stochastic mixed membership models handle homophily and preferential attachment. For this purpose, we introduce formal definitions of these phenomena and then study how the models behave with respect  to these definitions.
-
-%Theoretical results on the structure of random graph under exchangeability assumptions are however well reported in \cite{orbanz2015bayesian}, although the characterization of social networks properties within a Bayesian framework is not covered. In \cite{hoff2008modeling}, the role of exchangeability was first pointed out and its relation to the data representation where they provide a comparative study of the homophily and structural equivalence in different model settings, but without a formal definition of both. An other important mention of the exchangeability assumptions, was done in \cite{bickel2009nonparametric} where they characterize the asymptotic comportment of the likelihood in the blockmodel settings, showing that the inference of the likelihood lead to a consistent estimation of the community structure. But they only cover the case a single membership.
-%
-
-
+Following these previous studies, we study, in a theoretical way, how the non-parametric versions of the classical stochastic mixed membership models handle homophily and preferential attachment. For this purpose, we introduce formal definitions of these phenomena and then study how the models behave with respect  to these definitions.
 
 \section{Backround Models}
+\label{sec:background}
 
 Stochastic mixed membership models are generative models that rely on latent factors (also called latent \textit{classes} or \textit{features}) that represent hidden properties of the nodes of the graph $G=(V,E)$ associated to the social network (each node of the graph represents an individual in the social network); in the remainder, we denote by $N$ the number of nodes in this graph ($N=|V|$). Stochastic mixed membership models are characterized by the fact that each node can "belong" to several latent factors, which reflects the fact that each individual usually has several properties, for example can belong to several communities\footnote{As mentioned in \cite{goldenberg2010survey}, the reader should however bear in mind that the notion of latent factors is of stochastic nature and is an approximation of the notions of communities and shared properties.}. The relation between a node $i$ and the latent factors is encoded in a vector denoted $\mat{f}_{i}$, of finite dimension $K$ in standard versions of the models, and of infinite dimension in  non-parametric versions. The collection of all vectors $\mat{f}_{i}$ ($1 \le i \le N$) constitutes the factor matrix $\mat{F}$. Furthermore, a weight matrix $\mat{\Phi}$ is used to encode correlations between the latent factors.
 
-
 Stochastic mixed membership models differ on the way the vectors $\mat{f}_{i}$ ($1 \le i \le N$) and the matrix $\mat{\Phi}$ are generated. As mentioned before, and to be as general as possible, we consider here the non-parametric versions of the latent feature model \cite{ILFRM}, referred to as \ifm, and of the mixed-membership stochastic block model \cite{iMMSB,diMMSB}, referred to as \imb. This leads to a dynamic number of classes that allows the dimensions of the models to grow with the complexity of the data. This is done in practice by the use of non-parametric prior, respectively the Indian Buffet Process and the Hierachical Dirichlet Process for \ifm\ and \imb. All our results are nevertheless also valid for the finite versions of these models.
-
 
 In the latent feature model, each node is represented by a finite vector of binary features. The probability of linking two nodes is then based on a weighted similarity between their feature vectors, the weight matrix being generated according to a normal distribution. In its non-parametric version \ifm, the feature vectors are now generated according to an IBP, leading to feature vectors of infinite dimensions (even though for a finite number of nodes, only a finite number of dimensions is actually active). The following steps summarize this process:
 %
@@ -131,11 +99,9 @@ y_{ij} \sim \mathrm{Bern}(\sigma(\mat{f}_{i} \mat{\Phi} \mat{f}_{j}^\top))
 %
 where $\top$ dentotes the transpose and  $\sigma()$ is the sigmoid function, mapping $[-\infty, +\infty]$ values to [0,1], and where $y_{ij}$ is a binary variable indicating that a link has been generated ($y_{ij}=1$) or not ($y_{ij}=0$). We will denote by $\mat{Y}$ the $N \times N$ matrix with elements $y_{ij}$. Finally, $\mat{f}_{i}$ denotes the row feature vector corresponding to the $i^{th}$ row of $\mat{F}$.
 
-This model makes use of two real hyper-parameters, one for the IBP process ($\alpha$), and one for the variance of the normal distribution underlying the weight matrix ($\sigma_w$). In the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated. Lastly, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. In practice however, one always deal with a finite number of latent features. A graphical representation of this model is given in Figure~\ref{fig:ilfrm} (left).
-
+This model makes use of two real hyper-parameters, one for the IBP process ($\alpha$), and one for the variance of the normal distribution underlying the weight matrix ($\sigma_w$). In the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated. Lastly, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. In practice however, one always deal with a finite number of latent features. A graphical representation of this model is given in Figure~\ref{fig:mmm} (left).
 
 Standard Gibbs sampling and Metropolis-Hastings algorithms can be used for inference in this model. We do not detail them here and refer the interested reader to \cite{ILFRM} and \cite{IBP}.
-
 
 The MMSB model generates class membership distributions per node on the basis of a Dirichlet distribution. Then, for each connection between two nodes, a particular class for each node is first sampled from the class membership distribution, and the probability of connecting the two nodes is, as in the previous model, based on a Bernoulli distribution integrating the weight of the two classes. 
 
@@ -165,7 +131,6 @@ The inference for this model can be performed via collapsed Gibbs sampling updat
 
 In the typical use of the above models for link prediction, some observations (\textit{i.e.} an existing network, observed till a certain time) are available and are used to estimate $\mat{F}$ and $\mat{\Phi}$, from which new links are predicted. In the remainder, we denote by $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ the estimates of $\mat{F}$ and $\mat{\Phi}$, that are usually obtained through standard (collapsed) Gibbs sampling and Metropolis-Hastings algorithms \cite{ILFRM,IBP,HDP,diMMSB}. We furthermore denote by $\mathcal{M}_e$ the version of both \ifm\ and \imb\ models in which $\mat{F}$ and $\mat{\Phi}$ are assumed known and fixed to $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$. We now investigate whether, from the learned parameters $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, the new links generated produce a network that comply with homophily and preferential attachment.
 
-
 \begin{figure}[t]
 	\centering
 	\minipage{0.25\textwidth}\vspace{1cm}
@@ -179,7 +144,6 @@ In the typical use of the above models for link prediction, some observations (\
 	\caption{The two graphical representations of (left) the latent feature model and (right) the latent class model. The difference between the two models lies in the way representations are associated to nodes: a fixed representation is used in the case of the latent feature model, whereas the representation in the latent class model varies according to the link considered.}
 	\label{fig:mmm}
 \end{figure}
-
 
 \section{Homophily: \emph{"Birds of a feather flock together"}}
 \label{sec:homophily}
@@ -205,7 +169,7 @@ Different similarities can be considered, as long as they are based on the proxi
 s_n(i,j) = \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top \nonumber
 \end{equation}
 %
-It is straightforward that both \ifm\ and \imb\ in the setting $\mathcal{M}_e$ are homophilic with respect to $s_n$. Indeed, $\pr(y_{ij}=1 \mid \mathcal{M}_e)$ increases with $s_n$ for \ifm\ as the sigmoid function is strictly increasing (Eq.~\ref{eq:ilfm}). Furthermore, marginalizing over the $z$ variables in \imb\ leads to:
+It is straightforward that both \ifm\ and \imb\ in the setting $\mathcal{M}_e$ are homophilic with respect to $s_n$. Indeed, $\pr(y_{ij}=1 \mid \mathcal{M}_e)$ increases with $s_n$ for \ifm\ as the sigmoid function is strictly increasing (Eq.~\ref{eq:link-ilfm}). Furthermore, marginalizing over the $z$ variables in \imb\ leads to:
 %
 \begin{align}
 &\pr(y_{ij} =1 \mid \mathcal{M}_e) \nonumber \\
@@ -236,7 +200,7 @@ In the context of social networks, the notion of preferential attachment amounts
 Let $i$ be a node in a social network and let $d_i$ denote its degree. 
 \begin{description}
  \item[(1)] \emph{Global Preferential Attachment}: we say that a probabilistic link prediction model $\mathcal{M}_e$ satisfies the global preferential attachment iff, for any node $i$, $\pr(d_i \ge n+1 \mid d_i \ge n, \mathcal{M}_e)$ increases with $n \in \mathbb{N}$;
- \item[(2)] \emph{Local Preferential Attachment}: we say that a probabilistic link prediction model $\mathcal{M}_e$ satisfies the local preferential attachment iff, for any node $i$, denoting $d_{i,k}$ the degree of node $i$ in class $k$, $\forall \epsilon \in [0,1], \, \pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x \in [0,N-1]$. Furthermore, $d_{i,k}$ is defined as the expectation, over all nodes in the network, of forming a link through latent factor $k$.
+ \item[(2)] \emph{Local Preferential Attachment}: we say that a probabilistic link prediction model $\mathcal{M}_e$ satisfies the local preferential attachment iff, for any node $i$, denoting $d_{i,k}$ the degree of node $i$ in class $k$, $\forall \epsilon \in [0,1], \, \pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x \in [0,N-1]$. Furthermore, $d_{i,k}$ is defined as the sum of the expectations, over all nodes in the network, of forming a link through latent factor $k$.
 \end{description}
 \label{def:burst-soc-net}
 \end{definition}
@@ -254,10 +218,10 @@ For global preferential attachment, the degree $d_i$ directly corresponds to the
 where $\mathcal{V}(i)$ denotes the set of nodes connected to node $i$. Let $c=\min_{j \in V}  (1-p(y_{ij} = 1 \mid d_{i} \ge n, \mathcal{M}_e))$. One has:
 %
 \[
-0 \le \pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) \le (1 - c^{N-n}) \xrightarrow[n \rightarrow N]{} 0
+0 \le \pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) \le (1 - c^{N-n})
 \]
 %
-which shows that $\pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e)$ does not increase with $n$. We thus have the following property:
+As $c < 1$,  $(1 - c^{N-n})$ decreases with $n$ and is $0$ when $n=N$. We thus have the following property:
 %
 \begin{proposition}[]
 \label{pref-attch-glob}
@@ -280,8 +244,6 @@ d_{i,k} = \sum_{j\in V} \sigma(\hat{f}_{ik} \hat{\Phi}_{kk} \hat{f}_{jk}) =  C_{
 As $\hat{f}_{ik}$ is binary, there is no positive reinforcement effect: $C_{i,k}$ does not increase if $\hat{f}_{ik}=1$, thus \ifm\ does not satisfy local preferential attachment. \hspace{4.69cm} $\Box$
 
 The above propositions show that both models are deficient in the sense that they do not guarantee that the networks they generate will comply to the global (and local in case of \ifm) preferential attachment phenomena, which are inherent properties of the probability distributions underlying the models. This does not mean however that \ifm\ and \imb\ are not able to well model social networks during the learning phase, even according to the underlying degree distribution. Indeed, the Gibbs updates for both models will assign higher weight to nodes and factors that have been encountered more often during the learning phase. Provided there is enough training data, both models will likely reproduce the degree distributions observed in the training data. We will observe that in the following section, devoted to the illustration of the properties we have established.
-
-
 
 \section{Illustration}
 \label{sec:exps}
@@ -414,14 +376,13 @@ In general, as shown in the bottom plot, \ifm\ obtains better performance than \
 The above behavior can be explained by the fact that \imb\ satisfies the local preferential attachment whereas \ifm\ does not: as links are randomly removed, one is more likely to remove links from large classes than from small ones; a model that enforces local preferential attachment on bursty networks is thus more likely to reconstruct those removed links. This is what is happening on Network1 and Blogs for \imb. On the contrary, for non-bursty networks, a model enforcing local preferential attachment is penalized.
 
 \section{Conclusion}
+\label{sec:concl}
 
 We have studied whether stochastic mixed membership models, such as \ifm\ and \imb\, can generate new links while satisfying properties frequently verified in real  social networks, namely homophily and preferential attachment. To do so, we have introduced formal definitions of these properties and have analyzed how these models behave according to those definitions. We have shown, in particular, that both models are \textit{homophilic} with the natural similarity that underlies them. Concerning preferential attachment, we have shown that stochastic mixed membership models do not comply with global preferential attachment. The situation is however more contrasted when the property is considered at the local level: \imb\ enforces local preferential attachment whereas \ifm\ does not.
 
 These findings have been validated experimentally on two real and two artificial networks that have different degrees of global and local preferential attachment. An important, practical finding of our study is that \imb, usually considered of lesser "quality" than \ifm, can indeed yield better results on bursty networks (\textit{i.e.} networks with preferential attachment) when the number of training data is limited.
-% This study also paves the way to new models enforcing global preferential attachment through a strict adherence to the definition we have provided.
 
 \bibliographystyle{unsrt}
 \bibliography{./a}
-
 
 \end{document}
