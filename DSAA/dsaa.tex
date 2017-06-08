@@ -50,13 +50,13 @@
 
 \title{A study of stochastic mixed membership models for link prediction in social networks}
 
-\author{\IEEEauthorblockN{Adrien Dulac\IEEEauthorrefmark{1}, Eric Gaussier\IEEEauthorrefmark{1} and Christine Largeron \IEEEauthorrefmark{2}}
-\IEEEauthorblockA{\IEEEauthorrefmark{1}
-Univ. Grenoble Alpes, CNRS, Grenoble INP, LIG - F-38000 Grenoble\\
-Email: \{adrien.dulac, eric.gaussier\}@imag.fr}
-\IEEEauthorblockA{\IEEEauthorrefmark{2}
-Universit\'e Jean Monnet, Laboratoire Hubert Curien - F-42000 Saint-Etienne\\
-Email: christine.largeron@univ-st-etienne.fr}}
+%\author{\IEEEauthorblockN{Adrien Dulac\IEEEauthorrefmark{1}, Eric Gaussier\IEEEauthorrefmark{1} and Christine Largeron \IEEEauthorrefmark{2}}
+%\IEEEauthorblockA{\IEEEauthorrefmark{1}
+%Univ. Grenoble Alpes, CNRS, Grenoble INP, LIG - F-38000 Grenoble\\
+%Email: \{adrien.dulac, eric.gaussier\}@imag.fr}
+%\IEEEauthorblockA{\IEEEauthorrefmark{2}
+%Universit\'e Jean Monnet, Laboratoire Hubert Curien - F-42000 Saint-Etienne\\
+%Email: christine.largeron@univ-st-etienne.fr}}
 
 
 \maketitle
@@ -400,7 +400,9 @@ We have studied whether stochastic mixed membership models, such as \ifm\ and \i
 
 These findings have been validated experimentally on two real and two artificial networks that have different degrees of global and local preferential attachment. An important, practical finding of our study is that \imb, usually considered of lesser "quality" than \ifm, can indeed yield better results on bursty networks (\textit{i.e.} networks with preferential attachment) when the number of training data is limited.~\\
 
-There are many directions to extend this work with the motivation of improving our theoretical understanding of graphical models for link prediction in complex networks. A straightforward extension is to examine the relation between the local preferential attachment and the dynamic of the latent classes. For example, some special value of the hyperparameters, of the non-parametric priors, could lead to a very large number of classes or, at the opposite, just one class. Between these two extremes, that goes from a vanishing local aspect of the degree distribution to a number of classes that overfit the data, on can ask how this parameter affect the global and the local degree distribution of a random graph. Furthermore, a fundamental result is the Aldous-Hoover theorem, which implies that exchangeable random graphs cannot be sparse \cite{orbanz2015bayesian}. It seems that the sparsity is related in some way to the preferential attachment in a network. Thus, the following question arises: would it be realistic to assume the exchangeability hypothesis for the local case but not for the global case, and how this fact impacts the burstiness of the global degree distribution and the sparsity of the graph.
+There are many directions to extend this work with the motivation of improving our theoretical understanding of graphical models for link prediction in complex networks. A straightforward extension is to examine the relation between the local preferential attachment and the dynamic of the latent classes.  
+%For example, some special value of the hyperparameters, of the non-parametric priors, could lead to a very large number of classes or, at the opposite, just one class. Between these two extremes, that goes from a vanishing local aspect of the degree distribution to a number of classes that overfit the data, on can ask how this parameter affect the global and the local degree distribution of a random graph.  
+For instance, a fundamental result is the Aldous-Hoover theorem, which implies that exchangeable random graphs cannot be sparse \cite{orbanz2015bayesian}. It seems that the sparsity is related in some way to the preferential attachment in a network. Thus, the following question arises: would it be realistic to assume the exchangeability hypothesis for the local case but not for the global case, and how this fact impacts the burstiness of the global degree distribution and the sparsity of the graph.
 
 We believe that answering to those questions open a way to  developing and designing Bayesian models able to better capture the fundamental properties of  real social networks.
 
