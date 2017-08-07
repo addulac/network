@@ -1,0 +1,139 @@
+%%&latex
+\documentclass[12pt]{article}
+\usepackage{graphicx,psfrag,epsf}
+\usepackage{graphicx}
+\usepackage{natbib}
+
+%\pdfminorversion=4
+% NOTE: To produce blinded version, replace "0" with "1" below.
+\newcommand{\blind}{0}
+
+\setlength{\textheight}{24 cm}
+
+% DON'T change margins - should be 1 inch all around.
+\addtolength{\oddsidemargin}{-.5in}%
+\addtolength{\evensidemargin}{-.5in}%
+\addtolength{\textwidth}{1in}%
+\addtolength{\textheight}{-.3in}%
+\addtolength{\topmargin}{-.8in}%
+
+
+
+\newcommand*{\lpath}{./}%
+%\usepackage[cmex10]{amsmath, mathtools}
+%\usepackage{amsmath,amssymb,amsbsy,amsfonts,amsthm}
+\usepackage{amsmath,amssymb,amsbsy,amsfonts}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{url}
+%\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{fancyvrb}
+\usepackage{yfonts}
+\usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{tikz}
+\usetikzlibrary{bayesnet}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+\usepackage{calc}%    For the \widthof macro
+\usepackage{xparse}%  For \NewDocumentCommand
+
+
+%\input{./header.tex}
+%%%%%%%%%% Math
+\renewcommand{\text}{\textnormal}
+\newcommand{\ifm}{\texttt{ILFM}}
+\newcommand{\imb}{\texttt{IMMSB}}
+\newcommand{\pr}{P}
+\newcommand{\p}{P}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\divkk}{\mathbb{K}}
+\newcommand{\entropy}{\mathbb{H}}
+\newcommand{\gem}{\mathrm{GEM}}
+\newcommand{\Mult}{\mathrm{Mult}}
+\newcommand{\DP}{\mathrm{DP}}
+\newcommand{\IBP}{\mathrm{IBP}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\unit}{1\!\!1}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proof}{Proof}[section]
+
+
+
+\begin{document}
+
+\def\spacingset#1{\renewcommand{\baselinestretch}%
+{#1}\small\normalsize} \spacingset{1}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\if1\blind
+{
+  \title{\bf A study of stochastic mixed membership models for link prediction in social networks}
+  \author{Author 1\thanks{
+    The authors gratefully acknowledge \textit{please remember to list all relevant funding sources in the unblinded version}}\hspace{.2cm}\\
+    Department of YYY, University of XXX\\
+    and \\
+    Author 2 \\
+    Department of ZZZ, University of WWW}
+  \maketitle
+} \fi
+
+\if0\blind
+{
+  \bigskip
+  \bigskip
+  \bigskip
+  \begin{center}
+    {\LARGE\bf A study of stochastic mixed membership models for link prediction in social networks}
+\end{center}
+  \medskip
+} \fi
+
+\bigskip
+\begin{abstract}
+We assess here whether standard stochastic mixed membership models are adapted for link prediction in social networks by studying how they handle homophily and preferential attachment. To do so, we first introduce formal definitions of these phenomena; we then study how stochastic mixed membership models relate to these definitions. Our theoretical analysis reveals that standard stochastic mixed membership models comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachment, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft, and in the latter case on whether the underlying latent factor distribution is bursty or not. We illustrate these elements on synthetic and real networks by using the generative properties of Bayesian model.
+\end{abstract}
+
+\noindent%
+{\it Keywords:}  Hierarchical Bayesian Models, Random Graph, Machine Learning.
+\vfill
+
+\newpage
+\spacingset{1.45} % DON'T change the spacing!
+
+\input{content/intro}
+\input{content/models}
+\input{content/inference_context}
+\input{content/preferential}
+%\section{Predictive Context -- $M_e$}
+%    \input{content/me_homophily}
+%    \input{content/me_burstiness}
+%    \input{content/me_illustration}
+%\section{Generative Context -- $M_g$}
+%    \input{content/mg_extension} % burtisness only
+%    \input{content/mg_illustration}
+%\input{content/concl.tex}
+
+~\\
+
+
+\bibliographystyle{chicago}
+%\bibliographystyle{unsrt}
+\bibliography{./a}
+
+\appendix
+\input{appendix}
+
+\end{document}

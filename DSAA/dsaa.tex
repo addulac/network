@@ -50,13 +50,13 @@
 
 \title{A study of stochastic mixed membership models for link prediction in social networks}
 
-%\author{\IEEEauthorblockN{Adrien Dulac\IEEEauthorrefmark{1}, Eric Gaussier\IEEEauthorrefmark{1} and Christine Largeron \IEEEauthorrefmark{2}}
-%\IEEEauthorblockA{\IEEEauthorrefmark{1}
-%Univ. Grenoble Alpes, CNRS, Grenoble INP, LIG - F-38000 Grenoble\\
-%Email: \{adrien.dulac, eric.gaussier\}@imag.fr}
-%\IEEEauthorblockA{\IEEEauthorrefmark{2}
-%Universit\'e Jean Monnet, Laboratoire Hubert Curien - F-42000 Saint-Etienne\\
-%Email: christine.largeron@univ-st-etienne.fr}}
+\author{\IEEEauthorblockN{Adrien Dulac\IEEEauthorrefmark{1}, Eric Gaussier\IEEEauthorrefmark{1} and Christine Largeron \IEEEauthorrefmark{2}}
+\IEEEauthorblockA{\IEEEauthorrefmark{1}
+Univ. Grenoble Alpes, CNRS, Grenoble INP, LIG - F-38000 Grenoble\\
+Email: \{adrien.dulac, eric.gaussier\}@imag.fr}
+\IEEEauthorblockA{\IEEEauthorrefmark{2}
+Universit\'e Jean Monnet, Laboratoire Hubert Curien - F-42000 Saint-Etienne\\
+Email: christine.largeron@univ-st-etienne.fr}}
 
 
 \maketitle
@@ -92,7 +92,7 @@ Following these previous studies, we study, in a theoretical way, how the non-pa
 \section{Backround Models}
 \label{sec:background}
 
-Stochastic mixed membership models are generative models that rely on latent factors (also called latent \textit{classes} or \textit{features}) that represent hidden properties of the nodes of the graph $G=(V,E)$ associated to the social network (each node of the graph represents an individual in the social network); in the remainder, we denote by $N$ the number of nodes in this graph ($N=|V|$). Stochastic mixed membership models are characterized by the fact that each node can "belong" to several latent factors, which reflects the fact that each individual usually has several properties, for example can belong to several communities\footnote{As mentioned in \cite{goldenberg2010survey}, the reader should however bear in mind that the notion of latent factors is of stochastic nature and is an approximation of the notions of communities and shared properties.}. The relation between a node $i$ and the latent factors is encoded in a vector denoted $\mat{f}_{i}$, of finite dimension $K$ in standard versions of the models, and of infinite dimension in  non-parametric versions. The collection of all vectors $\mat{f}_{i}$ ($1 \le i \le N$) constitutes the factor matrix $\mat{F}$. Furthermore, a weight matrix $\mat{\Phi}$ is used to encode correlations between the latent factors.
+Stochastic mixed membership models are generative models that rely on latent factors (also called latent \textit{classes} or \textit{features}) that represent hidden properties of the nodes of the graph $G=(V,E)$ associated to the social network (each node of the graph represents an individual in the social network); in the remainder, we denote by $N$ the number of nodes in this graph ($N=|V|$). Stochastic mixed membership models are characterized by the fact that each node can "belong" to several latent factors, which reflects the fact that each individual usually has several properties, for example can belong to several communities\footnote{As mentioned in \cite{goldenberg2010survey}, the reader should however bear in mind that the notion of latent factors is of stochastic nature and is an approximation of the notions of communities and shared properties.}. The relation between a node $i$ and the latent factors is encoded in a vector denoted $\mat{f}_{i}$, of finite dimension $K$ in standard versions of the models, and of infinite dimension in  non-parametric versions. The collection of all vectors $\mat{f}_{i}$ ($1 \le i \le N$) constitutes the factor matrix $\mat{F}$. Furthermore, a weight matrix $\mat{\Phi}$ is used to encode correlations between the latent factors.~\\
 
 Stochastic mixed membership models differ on the way the vectors $\mat{f}_{i}$ ($1 \le i \le N$) and the matrix $\mat{\Phi}$ are generated. As mentioned before, and to be as general as possible, we consider here the non-parametric versions of the latent feature model \cite{ILFRM}, referred to as \ifm, and of the mixed-membership stochastic block model \cite{iMMSB,fan2015dynamic}, referred to as \imb. This leads to a dynamic number of classes that allows the dimensions of the models to grow with the complexity of the data. This is done in practice by the use of non-parametric prior,  the Indian Buffet Process (IBP) for \ifm\ and the Hierachical Dirichlet Process (HDP)  for \imb. All our results are nevertheless also valid for the finite versions of these models.~\\
 
@@ -104,15 +104,15 @@ In the latent feature model, each node is represented by a finite vector of bina
  $\mat{\phi}_{mn} \sim N(0, \sigma_w), \, m,n \in \mathbb{N}^{+*}$
 \item Generate or not a link between any node $i$ and any node $j$ according to: 
 %
-\begin{equation}
+\begin{equation*}
 y_{ij} \sim \mathrm{Bern}(\sigma(\mat{f}_{i} \mat{\Phi} \mat{f}_{j}^\top))
 \label{eq:link-ilfm}
-\end{equation}
+\end{equation*}
 \end{enumerate}
 %
 where $\top$ dentotes the transpose and  $\sigma()$ is the sigmoid function, mapping $[-\infty, +\infty]$ values to [0,1], and where $y_{ij}$ is a binary variable indicating that a link has been generated ($y_{ij}=1$) or not ($y_{ij}=0$). We will denote by $\mat{Y}$ the $N \times N$ matrix with elements $y_{ij}$. Finally, $\mat{f}_{i}$ denotes the row feature vector corresponding to the $i^{th}$ row of $\mat{F}$.
 
-This model makes use of two real hyper-parameters, one for the IBP process ($\alpha$), and one for the variance of the normal distribution underlying the weight matrix ($\sigma_w$). In the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated. Lastly, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. In practice however, one always deal with a finite number of latent features. A graphical representation of this model is given in Figure~\ref{fig:mmm} (left).
+This model makes use of two real hyper-parameters, one for the IBP process ($\alpha$), and one for the variance of the normal distribution underlying the weight matrix ($\sigma_w$). In the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated. Lastly, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. In practice however, one always deal with a finite number of latent features. A graphical representation of this model is given in Figure~\ref{fig:mmm} (left).~\\
 
 
 The MMSB model generates class membership distributions per node on the basis of a Dirichlet distribution. Then, for each connection between two nodes, a particular class for each node is first sampled from the class membership distribution, and the probability of connecting the two nodes is, as in the previous model, based on a Bernoulli distribution integrating the weight of the two classes. 
@@ -132,7 +132,7 @@ where $\gem$ denotes the Stick Breaking Process distribution over the set of nat
    \begin{align}
     z_{i \rightarrow j} &\sim \mbox{Cat}(\mat{f}_i) \nonumber \\
     z_{i \leftarrow j} &\sim \mbox{Cat}(\mat{f}_j) \nonumber \\
-    y_{ij} &\sim \mathrm{Bern}(\phi_{z_{i \rightarrow j}z_{i \leftarrow j}})
+    y_{ij} &\sim \mathrm{Bern}(\phi_{z_{i \rightarrow j}z_{i \leftarrow j}}) \nonumber
     \label{eq:link-immsb}
    \end{align}
 \end{enumerate}
@@ -211,8 +211,8 @@ In the context of social networks, the notion of preferential attachment amounts
 \begin{definition}[Preferential attachment]
 Let $i$ be a node in a social network and let $d_i$ denote its degree. 
 \begin{description}
- \item[(1)] \emph{Global Preferential Attachment}: we say that a probabilistic link prediction model $\mathcal{M}_e$ satisfies the global preferential attachment iff, for any node $i$, $\pr(d_i \ge n+1 \mid d_i \ge n, \mathcal{M}_e)$ increases with $n \in \mathbb{N}$;
- \item[(2)] \emph{Local Preferential Attachment}: we say that a probabilistic link prediction model $\mathcal{M}_e$ satisfies the local preferential attachment iff, for any node $i$, denoting $d_{i,k}$ the degree of node $i$ in class $k$, $\forall \epsilon \in [0,1], \, \pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x \in [0,N-1]$. Furthermore, $d_{i,k}$ is defined as the sum of the expectations, over all nodes in the network, of forming a link through latent factor $k$.
+    \item[(1)] \emph{Global Preferential Attachment}: we say that a probabilistic link prediction model $\mathcal{M}_e$ satisfies the global preferential attachment iff, for any node $i$, $\pr(d_i \ge n+1 \mid d_i \ge n, \mathcal{M}_e)$ increases with $n \in (0,..., N-1)$;
+ \item[(2)] \emph{Local Preferential Attachment}: we say that a probabilistic link prediction model $\mathcal{M}_e$ satisfies the local preferential attachment iff, for any node $i$, denoting $d_{i,k}$ the degree of node $i$ in class $k$, $\forall \epsilon \in [0,1], \, \pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x \in [0,N[$. Furthermore, $d_{i,k}$ is defined as the sum of the expectations, over all nodes in the network, of forming a link through latent factor $k$.
 \end{description}
 \label{def:burst-soc-net}
 \end{definition}~\\
@@ -231,10 +231,10 @@ For global preferential attachment, the degree $d_i$ directly corresponds to the
 where $\mathcal{V}(i)$ denotes the set of nodes connected to node $i$. Let $c=\min_{j \in V}  (1-p(y_{ij} = 1 \mid d_{i} \ge n, \mathcal{M}_e))$. One has:
 %
 \[
-0 \le \pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) \le (1 - c^{N-n})
+0 \le \pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) \le (1 - c^{N-1-n})
 \]
 %
-As $c < 1$,  $(1 - c^{N-n})$ decreases with $n$ and is $0$ when $n=N$. We thus have the following property:~\\
+As $c < 1$,  $(1 - c^{N-1-n})$ decreases with $n$ and is 0 wheno when $n=N-1$.
 
 %
 \begin{proposition}
