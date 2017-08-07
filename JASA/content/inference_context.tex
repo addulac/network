@@ -1,0 +1,58 @@
+\section{Inference Context}
+
+In a Bayesian context, the learning process consists in finding the posterior distribution of the random parameters $F$ and $\Phi$, given the observed data $Y$, such that : 
+
+\begin{equation}
+    \p(F, \Phi | Y, \M_g) = \frac{\p(Y|F,\Phi)\p(F|\M_g)\p(\Phi|\M,g)}{\p(Y|\M_g)}
+\end{equation}
+
+Where $\M_g$ is the set the hyperparamters of the current model.
+
+
+For mixed membership models the evidence $\p(Y|\M_g$ has no closed form solution which makes a direct MAP inference procedure infeasible. Thus the learning process rely on an approximate inference. It consists in a iterative procedure that updates the posterior through typically MCMC updates for true posterior recovery.
+
+Typically MCMC update consists in the following updates of parameters :  
+
+\begin{align}
+    \hat f_{ik} &\sim \p(f_{ik} | F^{-ik}, Y, \M_g) \\
+    \hat \phi_{kk'} &\sim \p(\phi_{kk'} | \Phi^{-kk'}, Y, F, \M_g)
+\end{align}
+
+At the end of the inference process, assuming that the MCMC has reached its  equilibrium, one can reconstruct the posterior parameters such that $\hat F = (\hat \phi_{ik})_{i,k \in V\times[0,.., K-1]}$ and $\hat \Phi = (\hat \phi_{kk'})_{k,k' \in [0,.., K-1]^2}$ and :
+
+\begin{equation}
+    \p(F, \Phi|Y, \M_g) \approx \p(\hat F) \p(\hat \Phi)
+\end{equation}
+
+Finally the prediction task consists of measuring an unobserved variable $y^{new}$ given that the information from the observed data was transferred to the posterior distribution : 
+
+\begin{align*}
+    \p(y^{new} | Y, \M_g) &= \int_F \int_\Phi \p(y^{new}|F,\Phi) \p(F,\Phi|\M_g) dF d\Phi \\
+                          &\approx \E_{\hat F, \hat \Phi} [y^{new} | \hat F, \hat \Phi] = \mathrm{Bern}(\mathcal{K}(f_i \Phi f_j^T)) \\
+                          &= \p(y^{new} | \M_e)
+\end{align*}
+
+Where $\mathcal{K}$ is an isomorphism used to map the support of the bilinear product to a probability space, wich is a sigmoid and the identity for respectively ILFM and IMMSB. Furthermore we denote the set of estimated parameters $\M_e = \{\hat F,  \hat \Phi \}$.
+
+
+In the rest of this paper, we will refers to both context in which we study a Bayesian model :
+\begin{itemize}
+    \item Predictive model $\M_e = \{\hat F, \hat \Phi\}$
+    \item Generative model $\M_g = \{\alpha_0, \alpha, \lambda \}$
+\end{itemize}
+
+\paragraph{Remark (Diaconis-Ylvisaker characterisation of conjugate priors.}~\\
+In the case of conjugate distribution, the Diaconis-Ylvisaker theorem give insight about the form of the predictive distribution $\p(y^{new} | \M_e)$ \cite{orbanz2009functional}.
+
+\begin{theorem}[Diaconis-Ylvisaker characterisation of conjugate priors]
+Let $P_x(.|\Theta)$ be a natural exponential family model dominated by Lebesgue measure, with open parameter space $\Omega_\theta \subset \mathbb{R}^d$.
+    Let $P_\theta$ b a prior on $\Theta$ which does not concentrate on a singleton. Then $P_\theta$ is a  conjugate prior of $P_X$  w.r.t Lebesgue measure on $\mathbb{R}^d$ if and only if :
+
+\begin{equation}
+    \E_{P_\Theta(\Theta|X_1=x_1,...,X_n=x_n)} [\E_{P_X(x|\Theta=\theta)}[X]] = \frac{y+n\hat x}{a+n}
+\end{equation}
+
+\end{theorem}
+
+That is, given observation $x_1,...,x_n$, the expected value of a new draw $x$ under unknown value of the parameter is linear in the sample average $\hat x = \frac{1}{n}\sum x_i$.
+

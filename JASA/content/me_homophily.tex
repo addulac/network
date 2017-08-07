@@ -1,0 +1,42 @@
+
+\subsection{Homophily: \emph{"Birds of a feather flock together"}}
+\label{sec:homophily}
+
+Homophily refers to the tendency of individuals to connect to similar others: two individuals (and thus their corresponding nodes in a social network) are more likely to be connected if they share common characteristics~\cite{mcpherson2001birds,lazarsfeld1954friendship}. The characteristics often considered are inherent to the individuals and may represent their social status, their preferences or their interests. A related notion is the one of {\it assortativity}, that is slightly more general as it applies to any network, and not just social networks, and refers to the tendency of nodes in networks to be connected to others that are similar in some way.~\\
+
+A definition of homophily has been proposed in~\cite{la2010randomization}. However, this definition, which relies on a single characteristic (like age or gender), does not allow one to assess whether latent models for link prediction capture the homophily effect or not. We thus introduce a new definition of homophily:~\\
+%
+\begin{definition}[Homophily] \label{def:homophily}
+	Let $\mathcal{M}_e$ be a probabilistic link prediction model and $s$ a similarity measure between nodes. We say that $\mathcal{M}_e$ is homophilic under the similarity $s$ iff, $\forall (i,j,i',j') \in V^4$:
+%
+\begin{equation}
+s(i,j) > s(i',j')  \implies \pr(y_{ij}=1 \mid \mathcal{M}_e) > \pr(y_{i'j'}=1  \mid \mathcal{M}_e) \nonumber
+\end{equation}
+%
+\end{definition}
+%
+\noindent As one can note, this definition directly captures the effect "if two nodes are more similar, then they are more likely to be connected". ~\\
+
+Different similarities can be considered, as long as they are based on the proximity of the properties of the nodes considered. In stochastic mixed membership models, these properties are encoded in the latent factors. Indeed, as mentioned before, the factor matrix $\mat{\hat{F}}$ aims at capturing some latent properties of the nodes, whereas the estimated matrix $\mat{\hat{\Phi}}$ captures the correlations between these latent properties. One can thus define, on their basis, a "natural" similarity between nodes as follows:
+%
+\begin{equation}
+s_n(i,j) = \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top \nonumber
+\end{equation}
+%
+It is straightforward that both \ifm\ and \imb\ in the setting $\mathcal{M}_e$ are homophilic with respect to $s_n$. Indeed, $\pr(y_{ij}=1 \mid \mathcal{M}_e)$ increases with $s_n$ for \ifm\ as the sigmoid function is strictly increasing (Eq.~\ref{eq:link-ilfm}). Furthermore, marginalizing over the $z$ variables in \imb\ leads to:
+%
+\begin{align}
+&\pr(y_{ij} =1 \mid \mathcal{M}_e) \nonumber \\
+& \quad = \sum_{k,k'} \hat{\phi}_{k,k'} \pr(z_{i \rightarrow j}=k | \mathcal{M}_e) \pr(z_{i \leftarrow j}=k' | \mathcal{M}_e) \nonumber \\
+& \quad= \sum_{k,k'} \hat{\phi}_{k,k'} \hat{f}_{ik} \hat{f}_{jk'} = \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top \nonumber
+\end{align}
+
+Dropping the correlation between latent factors in the natural similarity leads to a new similarity, solely based on the latent factors and defined by $s_l(i,j) = \mat{\hat{f}}_{i} \mat{\hat{f}}_j^\top \nonumber$ ($s_l$ stands for latent similarity). With this similarity, however, neither \ifm\  nor \imb\ are homophilic. Indeed, let us first assume that $\mat{\hat{\Phi}}$ is null on the diagonal, and strictly positive elsewhere (this can be obtained for both models). For \imb, one has:
+%
+\begin{align}
+\pr(y_{ij}=1 \mid \M_e) & = \sum_{k' \neq k} \hat{f}_{ik} \hat{\phi}_{kk'} \hat{f}_{jk'} \nonumber 
+\end{align}
+%
+as $\hat{\phi}_{kk} = 0$. Let us now consider $\mat{\hat{f}}_i=\mat{\hat{f}}_j=(0,1,0)$ and $\mat{\hat{f}}_{i'}=(0.5,0,0.5)$ and $\mat{\hat{f}}_{j'}=(0,1,0)$. Then, $s_l(i,j)=1$ and $s_l(i',j')=0$. However, $\pr(y_{ij}=1 \mid \M_e) = 0$ whereas $\pr(y_{i'j'}=1 \mid \M_e) > 0$. \imb\ is thus not homophilic under $s_l$. The same example, replacing $\mat{\hat{f}}_{i'}=(0.5,0,0.5)$ by $\mat{\hat{f}}_{i'}=(1,0,1)$, can be used to show that \ifm\ is neither homophilic under $s_l$.~\\
+
+This shows that, for a model to be homophilic, it should be designed according to the similarity at the basis of the proximity between individuals. Both \ifm\ and \imb\ have been designed on the basis of the natural similarity $s_n$, and directly encode the fact that similar nodes, according to $s_n$, are more likely to be connected.  It is furthermore possible to make these models homophilic under $s_l$ by imposing constraints on the weight matrix $\mat{\Phi}$ (and hence its estimate $\mat{\hat{\Phi}}$); for example, considering positive, diagonal matrices with equal values on the diagonal leads to homophilic models. In that case, the latent factors can be interpreted as community indicators, each community being of equal importance. This is in line with what is done in the study presented in \cite{AMMSB} to find overlapping communities through assortativity constraints in the mixed membership stochastic block model.

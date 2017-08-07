@@ -1,0 +1,96 @@
+\section{Appendix}
+
+\begin{proof}[Proof of proposition \ref{th:me2mg}]
+for a given distribution $P$ under a model $M_g$ one has : 
+if a distribution $P$ is bursty in $\M_g$ : one has
+\begin{equation*}
+    p(y \geq n+1 | y \geq n, \M_g) = \int_{\M_e} P(y \geq n+1 | y \geq, \M_e) P(\M_e) d\M_e
+\end{equation*}
+
+Let's denote the discrete derivate of a fonction $f$  as $\Delta_n f(n) = f(n+1) -f(n)$.
+
+Concerning the burstiness of $P$ one has : 
+\begin{equation}
+    \Delta_n P(y \geq n+1 | y \geq n, \M_g) = \int_{\M_e}\Delta_n P(y \geq n+1 | y \geq n, \M_e) P(\M_e)d\M_e
+\end{equation}
+
+As $P(\M_e)$ is stricly positive, the proposition is straitforward.
+\end{proof}
+
+
+
+\begin{proof}[Proof of proposition \ref{th:ldegree_exp_me}]
+For IMMSB : ~\\
+
+one as 
+$D_{ik} = \sum_{j\in\mathcal{V}} \hat f_{ik} \hat \phi_{kk} \hat f_{jk} = \hat f_{ik} \sum_{j\in\mathcal{V}} \hat \phi_{kk} \hat f_{jk}$
+
+And from $DP$ property on has
+$P(\hat f_{ik} \geq x' + \epsilon | \hat f_{ik} \geq x', \M_e)$ is increasing with $x'$
+
+Setting $x = x' (\sum_{j\in\mathcal{V}})$ one as that $P(D_{ik} \geq x + \epsilon | D_{ik} \geq x, \M_e)$ is increasing with $x$ since $\sum_{j\in \mathcal{V}} \hat \phi_{kk} \hat f_{jk}$ is positive and independat of $i$. (\textcolor{red}{but it depend on $k$ ?})
+
+
+For ILFM :~\\
+
+ let $C_{i,k} = |\{j \in V, \hat{f}_{jk} = \hat{f}_{ik} = 1\}|$. As the factor matrix is binary, one has:
+%
+\[ 
+d_{i,k} = \sum_{j\in V} \sigma(\hat{f}_{ik} \hat{\Phi}_{kk} \hat{f}_{jk}) =  C_{i,k} (\sigma(\hat{\Phi}_{kk})-0.5) + \frac{N}{2}
+\]
+%
+As $\hat{f}_{ik}$ is binary, there is no positive reinforcement effect: $C_{i,k}$ does not increase if $\hat{f}_{ik}=1$, thus ILFM does not satisfy local preferential attachment.
+\end{proof}
+
+
+
+\begin{proof}[Proof of proposition \ref{th:feature_exp_me}]
+
+For IMMS : ~\\
+
+one has $C_k = \sum_{i,j \in V^2} \hat f_{ik} \hat f_{jk}$
+From the reinforcement of the DP process $C_k$ is bursty over $\M_e$.
+
+For ILFM : ~\\
+
+one has $C_k = \sum_{i \in V} \hat f_{ik}$
+From the reinforcement of the IBP process $C_k$ is bursty over $\M_e$.
+\end{proof}
+
+\begin{proof}[Proof if proposition \ref{th:ldgree_mg}]
+Assumiong exchangeability in  $\M_g$ on and that the $c_k$ relation that occurs in the class $k$.
+
+\begin{equation}
+P(d_{ik}=n | \M_g) = P( \cup I_k, \cup I_r)
+\end{equation}
+
+where $I_k$ represent the union of all sequnce of relation in the class $k$ where $d_{ik} = n$, where $I_r$ represent the union of ial sequences of relation outside the class $k$. Given $c_k$ and the exchangeability asumptions one has : 
+
+\begin{equation}
+P(d_{ik}=n | \M_g) = p(\cup I_r) \dbinom{c_k}{n} P( (y_{i0, k}=1,..,  y_{in, k}=1, y_{i(n+1), k}=0,...,y_{i(c_k), k}=0) | \M_g)
+\end{equation}
+
+Applying product rule, one has the following : 
+\begin{equation}
+\frac{P(d_{ik} = n+1)}{P(d_{ik} = n)} = \frac{c_k - n}{n+1} p(y_{ij}=1 | Y_i^{-ij, \M_g})
+\end{equation}
+
+Finally from the bernoulli-beta kernem in IMMSN, one has : 
+\begin{equation}
+p(y_{ij}=1 | Y_i^{-ij, \M_g}) = \frac{n+ \lambda_1}{C_k + \lambda_1 + \lambda_0}
+\end{equation}
+
+By solviing the second order equation, one can find that burstiness is satisfy iif the two condition are true : 
+\begin{itemize}
+\item $ \lambda_1 < \frac{c_k-1}{c_k+1}$
+\item $ n < \frac{-3a + \sqrt{a(4c_k(a-b)+5a-4b)}}{2a}$
+\end{itemize}
+with $a = 1/(\lambda_1+\lambda_0)$ and $\lambda_1 / (\lambda_0+\lambda_0)$.
+
+\end{proof}
+
+
+\begin{proof}[Proof if proposition \label{th:feature_mg}]
+on paper, to complete.
+\end{proof}
+
