@@ -50,19 +50,19 @@
 
 \title{A study of stochastic mixed membership models for link prediction in social networks}
 
-\author{\IEEEauthorblockN{Adrien Dulac\IEEEauthorrefmark{1}, Eric Gaussier\IEEEauthorrefmark{1} and Christine Largeron \IEEEauthorrefmark{2}}
+\author{\IEEEauthorblockN{Adrien Dulac\IEEEauthorrefmark{1}, Eric Gaussier\IEEEauthorrefmark{1} and Christine Largeron \IEEEauthorrefmark{2}}\\
 \IEEEauthorblockA{\IEEEauthorrefmark{1}
 Univ. Grenoble Alpes, CNRS, Grenoble INP, LIG - F-38000 Grenoble\\
 Email: \{adrien.dulac, eric.gaussier\}@imag.fr}
 \IEEEauthorblockA{\IEEEauthorrefmark{2}
-Universit\'e Jean Monnet, Laboratoire Hubert Curien - F-42000 Saint-Etienne\\
+Univ Lyon, UJM-Saint-Etienne, CNRS, Institut d'Optique Graduate School,\\
+Laboratoire Hubert Curien UMR 5516, F-42023, SAINT-ETIENNE, France\\ 
 Email: christine.largeron@univ-st-etienne.fr}}
-
 
 \maketitle
 
 \begin{abstract}
-We assess here whether standard stochastic mixed membership models are adapted for link prediction in social networks by studying how they handle homophily and preferential attachment. To do so, we first introduce formal definitions of these phenomena; we then study how stochastic mixed membership models relate to these definitions. Our theoretical analysis reveals that standard stochastic mixed membership models comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachment, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft, and in the latter case on whether the underlying latent factor distribution is bursty or not. We illustrate these elements on synthetic and real networks by using the generative properties of Bayesian model.
+We assess here whether standard stochastic mixed membership models are adapted for link prediction in social networks by studying how they handle homophily and preferential attachment. According to the homophily hypothesis, two vertices are more likely to be connected if they share common characteristics whereas preferential attachment states that a vertex prefers to join the more connected nodes existing in the network. To study these properties, we first introduce formal definitions of these phenomena; we then study how stochastic mixed membership models relate to these definitions. Our theoretical analysis reveals that standard stochastic mixed membership models comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachment, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft, and in the latter case on whether the underlying latent factor distribution is bursty or not. We illustrate these elements on synthetic and real networks by using the generative properties of Bayesian model.
 \end{abstract}
 
 \IEEEpeerreviewmaketitle
@@ -72,7 +72,7 @@ We assess here whether standard stochastic mixed membership models are adapted f
 
 Several powerful relational learning models have been proposed to solve the problem commonly referred to as \textit{link prediction} that consists in predicting the likelihood of a future association between two nodes in a network \cite{LibenNowell07,HassanZaki11}. Among such models, the class of stochastic mixed membership models has received much attention as such models can be used to discover hidden properties and infer new links in social networks. Two main models in this class have been proposed and studied in the literature: the latent feature model \cite{BMF} and its non-parametric extension \cite{ILFRM}, and the mixed-membership stochastic block model \cite{MMSB}, and its non parametric extension \cite{iMMSB,fan2015dynamic}. More generally, these models fall in the category of mixed-membership models who establish a common theoretical framework that encompass a wide range of models (such as admixture and topic model) that are able to  learn complex pattern from structured data \cite{airoldi2014handbook}.~\\
 
-Nevertheless, although drawn from a wide range of domains, real world social networks exhibit general properties and one can wonder if these models are able to capture these properties. In this work, we focus on two important properties, namely \textit{homophily} and \textit{preferential attachment} \cite{Newman2010, Barabasi2003} and assess to which extent link prediction models, as the ones mentioned above, comply with them. Homophily is verified in a network when similar vertices tend to be more connected than dissimilar ones. On the other hand, preferential attachment states that a vertex is more likely to create connections with vertices having a high degree. In graph theory, preferential attachment is used to explain the emergence of scale-free networks that are characterized by a power-law degree distribution.~\\
+Nevertheless, although drawn from a wide range of domains, real world social networks exhibit general properties and one can wonder if these models are able to capture these properties. In this work, we focus on two important properties, namely \textit{homophily} and \textit{preferential attachment} \cite{Newman2010, Barabasi2003} and assess to which extent link prediction models, as the ones mentioned above, comply with them. Homophily is verified in a network when similar vertices tend to be more connected than dissimilar ones. On the other hand, preferential attachment states that a vertex is more likely to create connections with vertices having a high degree. In graph theory, preferential attachment is used to explain the emergence of scale-free networks that are characterized by a power-law degree distribution. In social network analysis, the interest of these properties has been widely emphasized notably for modeling networks but also for improving the results obtained in classical tasks such as community detection or link prediction. ~\\
 
 The remainder of the paper is organized as follows: in the next section (Section~\ref{sec:rel-work}), we present the related work. In Section~\ref{sec:background}, we describe the main stochastic mixed membership models used for link prediction in social networks, relying on their non-parametric version that generalizes the parametric one. In Sections~\ref{sec:homophily} and \ref{sec:burstiness}, we introduce formal definitions of homophily and preferential attachment and study how stochastic mixed membership models relate to them. In Section~\ref{sec:exps}, we illustrate our theoretical development on two synthetic networks and two real networks, prior to restate our conclusions in Section~\ref{sec:concl}.
 
@@ -211,7 +211,7 @@ In the context of social networks, the notion of preferential attachment amounts
 \begin{definition}[Preferential attachment]
 Let $i$ be a node in a social network and let $d_i$ denote its degree. 
 \begin{description}
-    \item[(1)] \emph{Global Preferential Attachment}: we say that a probabilistic link prediction model $\mathcal{M}_e$ satisfies the global preferential attachment iff, for any node $i$, $\pr(d_i \ge n+1 \mid d_i \ge n, \mathcal{M}_e)$ increases with $n \in (0,..., N-1)$;
+    \item[(1)] \emph{Global Preferential Attachment}: we say that a probabilistic link prediction model $\mathcal{M}_e$ satisfies the global preferential attachment iff, for any node $i$, $\pr(d_i \ge n+1 \mid d_i \ge n, \mathcal{M}_e)$ increases with $n \in \{0,..., N-1\}$;
  \item[(2)] \emph{Local Preferential Attachment}: we say that a probabilistic link prediction model $\mathcal{M}_e$ satisfies the local preferential attachment iff, for any node $i$, denoting $d_{i,k}$ the degree of node $i$ in class $k$, $\forall \epsilon \in [0,1], \, \pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x \in [0,N[$. Furthermore, $d_{i,k}$ is defined as the sum of the expectations, over all nodes in the network, of forming a link through latent factor $k$.
 \end{description}
 \label{def:burst-soc-net}
@@ -234,7 +234,8 @@ where $\mathcal{V}(i)$ denotes the set of nodes connected to node $i$. Let $c=\m
 0 \le \pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) \le (1 - c^{N-1-n})
 \]
 %
-As $c < 1$,  $(1 - c^{N-1-n})$ decreases with $n$ and is 0 wheno when $n=N-1$.
+As $c < 1$,  $(1 - c^{N-1-n})$ decreases with $n$ and is 0 when $n=N-1$.
+We thus have the following property.
 
 %
 \begin{proposition}
@@ -405,6 +406,9 @@ There are many directions to extend this work with the motivation of improving o
 For instance, a fundamental result is the Aldous-Hoover theorem, which implies that exchangeable random graphs cannot be sparse \cite{orbanz2015bayesian}. It seems that the sparsity is related in some way to the preferential attachment in a network. Thus, the following question arises: would it be realistic to assume the exchangeability hypothesis for the local case but not for the global case, and how this fact impacts the burstiness of the global degree distribution and the sparsity of the graph.
 
 We believe that answering to those questions open a way to develop and design Bayesian models able to better capture the fundamental properties of  real social networks.
+
+\section{Acknowledgments}
+This work was partially supported  by the Région Rhône-Alpes. 
 
 ~\\
 
