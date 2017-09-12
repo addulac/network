@@ -22,7 +22,10 @@
 *.mtc1
 *.out
 *.synctex.gz
+
 /*.pdf
 /*/*.pdf
+from_*/*.pdf
+
 __MACOSX/
 .session.vim
