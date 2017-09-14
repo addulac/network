@@ -1,3 +1,121 @@
+\documentclass[french]{hermes-journal}
+
+\ria{2014}{28}{2-3}
+
+\usepackage{textcomp}
+
+%\usepackage{lmodern}
+\usepackage{fontspec}%% load unicode fonts for xelatex
+
+%\DeclareUnicodeCharacter{00A0}{~}
+%\DeclareUnicodeCharacter{00DF}{\ss}
+%\DeclareUnicodeCharacter{00E4}{\"a}
+
+% pagination
+\firstpagenumber{1}
+
+\newcommand*{\lpath}{./}
+%\usepackage[cmex10]{amsmath, mathtools}
+%\usepackage{amsmath,amssymb,amsbsy,amsfonts,amsthm}
+%\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{amsmath,amssymb,amsbsy,amsfonts}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{url}
+\usepackage{fancyvrb}
+\usepackage{yfonts}
+\usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{tikz}
+\usetikzlibrary{bayesnet}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+\usepackage{calc}%    For the \widthof macro
+\usepackage{xparse}%  For \NewDocumentCommand
+\usepackage{adjustbox}
+
+
+%\input{./header.tex}
+%%%%%%%%%% Math
+\renewcommand{\text}{\textnormal}
+\newcommand{\ilfm}{\texttt{ILFM}}
+\newcommand{\immsb}{\texttt{IMMSB}}
+\newcommand{\mmm}{\texttt{Mixed-Membership}~}
+\newcommand{\pr}{p}
+\newcommand{\p}{p}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\divkk}{\mathbb{K}}
+\newcommand{\entropy}{\mathbb{H}}
+\newcommand{\gem}{\mathrm{GEM}}
+\newcommand{\Mult}{\mathrm{Mult}}
+\newcommand{\DP}{\mathrm{DP}}
+\newcommand{\IBP}{\mathrm{IBP}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\mat}[1]{\bm{#1}}
+\newcommand{\unit}{1\!\!1}
+
+%\newtheorem{definition}{Definition}[section]
+%\newtheorem{proposition}{Proposition}[section]
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{corollary}{Corollary}[section]
+
+
+%\title[short header title]{title}
+\title[]{Une Etude des Modèles Mixed-Membership pour la Prédiction de Liens dans les Réseaux Sociaux}
+
+%\author[1]{Adrien}{Dulac}
+%\author[2]{first name 2}{last name 2}
+%
+%% addresses are automatically numbered
+%\address{...\\...\\
+%         ..., country}
+%        {e-mail 1}
+%\address{...\\...\\
+%         ..., country}
+%        {e-mail 1}
+
+%\author{\IEEEauthorblockN{Adrien Dulac\IEEEauthorrefmark{1}, Eric Gaussier\IEEEauthorrefmark{1} and Christine Largeron \IEEEauthorrefmark{2}}\\
+%\IEEEauthorblockA{\IEEEauthorrefmark{1}
+%Univ. Grenoble Alpes, CNRS, Grenoble INP, LIG - F-38000 Grenoble\\
+%Email: \{adrien.dulac, eric.gaussier\}@imag.fr}
+%\IEEEauthorblockA{\IEEEauthorrefmark{2}
+%Univ Lyon, UJM-Saint-Etienne, CNRS, Institut d'Optique Graduate School,\\
+%Laboratoire Hubert Curien UMR 5516, F-42023, SAINT-ETIENNE, France\\ 
+%Email: christine.largeron@univ-st-etienne.fr}}
+
+\abstract{We assess here whether standard stochastic mixed membership models are adapted for link prediction in social networks by studying how they handle homophily and preferential attachment. To study these properties, we first introduce formal definitions of these phenomena; we then study how stochastic mixed membership models relate to these definitions. Our theoretical analysis reveals that standard stochastic mixed membership models comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachment, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft, and in the latter case on whether the underlying latent factor distribution is bursty or not. We illustrate these elements on synthetic and real networks by using the generative properties of Bayesian model.}
+
+\resume{Nous évaluons dans ce papier si la classe de modèle, dit mixed-membership, est adaptée pour la prédiction de liens dans les réseaux sociaux en étudiant leurs comportements vis-à-vis de l'homophilie et de l'attachement préférentiel. Pour étudier ces propriétés, nous introduisons les définitions de ces phénomènes, après quoi nous étudierons comment ces modèles sont reliés à ces définitions. Notre étude théorique révèle que les modèles mixed-membership satisfont l'homophilie avec la similarité naturelle qui les sous-tend. Pour l'attachement préférentiel la situation est plus contrastée: ces modèles ne satisfont pas l'attachement préférentiel global. En revanche, le respect de l'attachement préférentiel local est possible selon que l'appartenance aux classes latentes est strict ou partielle. Et dans ce dernier cas si la distribution sur les classes latentes est bursty ou pas. Nous illustrons ces éléments sur des réseaux réels et synthétiques grâce aux propriétés génératives des modèles Bayésiens.}
+
+\keywords{Hierachical baysian Models, Random Graph, Machine Learning, Social Networks}
+
+\motscles{Modèle Bayesian Hérarchique, Graphe aléatoire, Apprentissage Automatique, Réseaux Sociaux}
+
+
+%
+%
+%
+%  Is better abstract ?
+%
+%
+%\significancestatement{We introduce formal definitions of the compliance of probabilistic link prediction models to homophily and preferential attachment in social networks, and show that standard stochastic mixed membership models comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachment, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft, and in the latter case on whether the underlying latent factor distribution is bursty or not.}
+
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+
+
+
+
+
 \section{Introduction}
 
 \label{sec:intro}
@@ -213,3 +331,19 @@ La figure \ref{fig:auc} propose une comparaison des modèles en fonction de la t
 Nous avons étudié si les modèles \mmm, tel que \immsb~ et \ilfm, peuvent prédire des parties d'un réseau tout en satisfaisant les propriétés fréquemment observées dans les réseaux réels, à savoir l'attachement préférentiel et l'homophilie. Pour ce faire, nous avons introduit des définitions formelles de ces propriétés dans un cadre probabiliste et nous avons analysé comment se comportait ces modèles au travers de ces définitions. Nous avons montré en particulier comment \immsb~ satisfait un attachement préférentiel local. Cette trouvaille a été validée expérimentalement sur des réseaux réels et synthétiques et permet de mettre en avant l'importance des propriétés inhérentes aux données pour choisir un modèle performant.
 
 \acknowledgements{Ce travail a été partiellement supporté par la Région Rhône-Alpes.}
+
+
+
+
+
+
+
+
+
+
+
+
+%\bibliographystyle{unsrt}
+\bibliography{./a}
+
+\end{document}
