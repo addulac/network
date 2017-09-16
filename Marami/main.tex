@@ -125,7 +125,7 @@ Parmi ces modèles, la classe des modèles \mmm a reçu une attention particuli�
 Deux instances principales de cette classe ont été proposées et étudiées  dans la littérature : le modèle à composition mixte de bloc (MMSB) \cite{MMSB} et son extension non-paramétrique \cite{iMMSB, fan2015dynamic} d'un côté et le modèle à attributs latents (ILFM) \cite{BMF} et son extension non-paramétrique \cite{ILFRM} de l'autre. 
 
 
-Les modèles probabilistes, tel que ceux considérés sont usuellement évalués empiriquement. Néanmoins, les réseaux sociaux réels exhibent des propriétés générales qui permettent de les caractériser. Dans cette étude, nous traitons deux propriétés importantes, \textit{l'homophilie} et \textit{l'attachement préférentiel} \cite{Newman2010, Barabasi2003}. Nous étudions dans quelle mesure les modèles de prédictions de liens, de la classe mentionné, s'y conforment.
+Les modèles probabilistes, tel que ceux considérés sont usuellement évalués empiriquement. Néanmoins, les réseaux sociaux réels exhibent des propriétés générales qui permettent de les caractériser. Dans cette étude, nous traitons deux propriétés importantes, \textit{l'homophilie} et \textit{l'attachement préférentiel} \cite{ Barabasi2003}. Nous étudions dans quelle mesure les modèles de prédictions de liens, de la classe mentionné, s'y conforment.
 
 L'homophilie est une propriété qui correspond à l'idée que la probabilité que deux noeuds du réseau soient liés augmente avec leurs similarités et qui est communément suggérer par la locution \emph{"qui se ressemble s'assemble"}.
 
@@ -140,11 +140,11 @@ Les modèles \mmm sont des modèles génératifs basés sur des facteurs latents
 
 Les modèles de la classe des \mmm diffèrent dans la manière dont les matrices $\mat{F}$ et $\mat{\Phi}$ sont générées. Afin de rester dans un cadre le plus général possible, nous considérons ici les versions non-paramétriques du modèle de caractéristiques latentes \cite{ILFRM}, dénoté \ilfm, et du modèle de composition mixte bloc  \cite{iMMSB,fan2015dynamic}, dénoté \immsb. Cela conduit à un nombre de facteurs latents dynamique qui permet à la dimension du modèle de s'adapter à la complexité des données. En pratique, cela est réalisé par l'utilisation de prior non-paramétrique, le processus de Dirichlet Hiérarchique (HDP) pour \immsb\ et le processus du Buffet Indien (IBP) for \ilfm.~\\
 
-Concernant \ilfm, chaque noeud du réseau est représenté par un vecteur de caractéristique binaire. La probabilité de créer un lien entre deux noeuds dépend alors uniquement de la matrice de caractéristique latente et de la matrice  de poids, où chaque entrée est générée par une distribution normale. La matrice de caractéristique est générée via un IBP, conduisant à un nombre de caractéristiques théoriquement infini, bien que pour un nombre fini d'observation (de liens), seulement un nombre fini de caractéristiques sont active). Le processus génératif se résume ainsi :
+Concernant \ilfm, chaque noeud du réseau est représenté par un vecteur de caractéristique binaire. La probabilité de créer un lien entre deux noeuds dépend alors uniquement de la matrice de caractéristique latente et de la matrice  de poids, où chaque entrée est générée par une distribution normale. La matrice de caractéristique est générée via un IBP, conduisant à un nombre de caractéristiques théoriquement infini, bien que pour un nombre fini d'observation (de liens), seulement un nombre fini de caractéristiques sont actives. Le processus génératif se résume ainsi :
 \begin{enumerate}
-\item Géneration d'une matrice de caractéristiques $\mat{F}_{N \times \infty}$ : $\mat{F} \sim \IBP(\alpha)$
-\item Géneration d'une matrice de poids : $\mat{\phi}_{mn} \sim N(0, \sigma_w), \, m,n \in \mathbb{N}^{+*}$
-\item Géneration d'un lien (ou non lien) pour chaque couple de noeuds $(i,j)$ : 
+\item génération d'une matrice de caractéristiques $\mat{F}_{N \times \infty}$ : $\mat{F} \sim \IBP(\alpha)$
+\item génération d'une matrice de poids : $\mat{\phi}_{mn} \sim N(0, \sigma_w), \, m,n \in \mathbb{N}^{+*}$
+\item génération d'un lien (ou non lien) pour chaque couple de noeuds $(i,j)$ : 
 \begin{equation*}
 y_{ij} \sim \mathrm{Bern}(\sigma(\mat{f}_{i} \mat{\Phi} \mat{f}_{j}^\top))
 \label{eq:link-ilfm}
@@ -152,17 +152,17 @@ y_{ij} \sim \mathrm{Bern}(\sigma(\mat{f}_{i} \mat{\Phi} \mat{f}_{j}^\top))
 \end{enumerate}
 %
 
-Ou $\top$ représente la transposée et $\sigma$ la fonction sigmoïde permettant de passer d'un ensemble $[-\infty, +\infty]$ vers un ensemble de probabilité $[0,1]$.  $\mat{f}_{i}$ dénote la i-ème ligne de la matrice $F$ comme le vecteur de caractéristique latent du noeud $i$. Finalement, ce modèle définit deux hyper-paramètres, l'un étant le paramètre de concentration $\alpha$ de IPB, et l'autre pour la variance de la distribution normale des poids $\sigma_w$. Dans le cas d'un réseau dirigé, les matrices $\mat{Y}$ et $\mat{\Phi}$ sont symétriques et uniquement leurs parties diagonal supérieur (ou inférieur) sont générées. ~\\
+Ou $\top$ représente la transposée et $\sigma$ la fonction sigmoïde permettant de passer d'un ensemble $[-\infty, +\infty]$ vers un ensemble de probabilité $[0,1]$.  $\mat{f}_{i}$ dénote la i-ème ligne de la matrice $F$ comme le vecteur de caractéristique latent du noeud $i$. Finalement, ce modèle définit deux hyper-paramètres, l'un étant le paramètre de concentration $\alpha$ de IPB, et l'autre la variance de la distribution normale des poids $\sigma_w$. \footnote{Dans le cas d'un réseau dirigé, les matrices $\mat{Y}$ et $\mat{\Phi}$ sont symétriques et uniquement leurs parties diagonales supérieures ou inférieures) sont générées}. ~\\
 
 
 Le modèle \immsb~ quand à lui, génère les distributions d'appartenance aux classes latentes à partir d'un processus (hiérarchique) de Dirichlet. Après quoi, une appartenance à une classe latente par noeud est tirée pour chaque couple de noeuds. Finalement, la probabilité de connecter deux liens est tirée en fonction du poids encodant la corrélation entre ces deux classes, se résumant au processus génératif suivant :
 \begin{enumerate}
-\item Géneration des distributions des classes d'appartenances $\mat{F}_{N \times \infty}$:
+\item génération des distributions des classes d'appartenances $\mat{F}_{N \times \infty}$:
    \begin{align}
        \bm{\beta} &\sim \gem(\gamma) \nonumber \\
     \mat{f}_i &\sim \DP(\alpha_0, \beta) \quad\text{ for }  i \in \{1, .., N\} \nonumber
-   \end{align}  Ou $\gem$ dénote le processus Stick-Breaking Process qui est une distribution sur la ligne réel et $\DP$ un processus de Dirichlet \cite{HDP}.
-\item Géneration de la matrice de poids depuis une distribution Beta :\\
+   \end{align}  Ou $\gem$ dénote le processus Stick-Breaking qui est une distribution sur la ligne réel et $\DP$ un processus de Dirichlet \cite{HDP}.
+\item génération de la matrice de poids depuis une distribution Beta :\\
 \[ \phi_{mn} \sim \mathrm{Beta}(\lambda_0,\lambda_1), \, m,n \in \mathbb{N}^{+} \]
 \item Génération de classes d'appartenances pour la dyade pour chaque couple de noeuds $(i,j)$ tirés d'un loi multinomiale et génération d'un lien (ou non-lien) : 
    \begin{align}
@@ -173,7 +173,7 @@ Le modèle \immsb~ quand à lui, génère les distributions d'appartenance aux c
 \end{enumerate}
 
 
-Ce modèle contient quatre hyper-paramètres, $(\gamma, \alpha_0)$ pour le HDP et $(\lambda_0, \lambda_1)$ pour la distribution des poids. La remarque précèdente concernant les réseaux dirigés s'applique ici aussi.
+Ce modèle contient quatre hyper-paramètres, $(\gamma, \alpha_0)$ pour le HDP et $(\lambda_0, \lambda_1)$ pour la distribution des poids. \footnote{La remarque précèdente concernant les réseaux dirigés s'applique ici aussi.}
 
 Dans l'usage classique des modèles décrits pour la prédiction de liens, des observations (liens) sont disponibles et sont utilisées pour estimer  $\mat{F}$ et $\mat{\Phi}$, à partir desquels de nouveaux liens peuvent être prédits. Dans la suite de ce papier, nous dénoterons par $\mat{\hat{F}}$ et $\mat{\hat{\Phi}}$ les estimations (ie paramètres inférés) de $\mat{F}$ et $\mat{\Phi}$, qui peuvent être obtenues à partir d'algorithmes inférences approximés tels que le (collapsed) Gibbs sampling et Metropolis-Hastings ou encore à l'aide d'inférence variationnelle Nous ne les détaillons pas ici et renvoyons le lecteur intéressé à \cite{ILFRM,IBP,HDP,fan2015dynamic}.
 
@@ -223,7 +223,7 @@ Cela montre que, pour qu'un modèle soit homophilique, il devrait être conçu e
 \label{sec:burstiness}
 
 
-L'attachement préférentiel est une propriété d'un réseau selon laquelle la probabilité qu'un noeud créer un lien avec un autre augmente avec le nombre de liens déja établis de ce dernier (son degré). Cette propriété est lié à un phénomène plus général appelé \textit{burstiness} \footnote{A.L. Barab\'asi, par exemple, utilise ce terme\textit{attachement préférentiel} in \cite{barabasi1999emergence}, et \textit{burstiness} dans \cite{barabasi_burst}.} qui décrit le fait que certains évènements apparaissent en "rafale", c'est à dire qu'une fois qu'ils apparaissent ils ont plus de chance d'apparaître encore. La burstiness a été étudiée dans différents domaines, notamment en traitement automatique du langage et en recherche d'information afin de caractériser l'occurrence des mots \cite{church1995poisson}. Des définitions simples du burstiness ont été proposés \cite{clinchant2008bnb,clinchant2010information}, pour les distributions continues et discrètes, qui capturent le fait que la probabilité de nouvelles occurrences d'un évènement augmente avec le nombre d'occurrences de cet évènement. Nous adaptons ici ces définitions pour l'attachement préférentiel dans les réseaux. De plus, le phénomène peut apparaître à différent niveaux du réseaux : (a) l'attachement préférentiel global traite du degré sur l'ensemble des noeud et (b) l'attachement préférentiel local traite le degré au sein d'un classe : 
+L'attachement préférentiel est une propriété d'un réseau selon laquelle la probabilité qu'un noeud créer un lien avec un autre augmente avec le nombre de liens déja établis de ce dernier (son degré). Cette propriété est lié à un phénomène plus général appelé \textit{burstiness} \footnote{A.L. Barab\'asi, par exemple, utilise ce terme\textit{attachement préférentiel} in \cite{barabasi1999emergence}, et \textit{burstiness} dans \cite{barabasi_burst}.} qui décrit le fait que certains évènements apparaissent en "rafale", c'est à dire qu'une fois qu'ils apparaissent ils ont plus de chance d'apparaître encore. La burstiness a été étudiée dans différents domaines, notamment en traitement automatique du langage et en recherche d'information afin de caractériser l'occurrence des mots \cite{church1995poisson}. Des définitions simples du burstiness ont été proposés \cite{clinchant2008bnb,clinchant2010information}, pour les distributions continues et discrètes, qui capturent le fait que la probabilité de nouvelles occurrences d'un évènement augmente avec le nombre d'occurrences de cet évènement. Nous adaptons ici ces définitions pour l'attachement préférentiel dans les réseaux. De plus, le phénomène peut apparaître à différent niveaux du réseaux : (a) l'attachement préférentiel global traite du degré sur l'ensemble des noeud et (b) l'attachement préférentiel local traite le degré au sein d'une classe : 
 
 
 \begin{definition}[Attachement préférentiel]
@@ -249,10 +249,10 @@ Pour l'attachement préférentiel global, le degré $d_i$ corresponds au nombre 
 Ou $\mathcal{V}(i)$ dénote l'ensemble des noeuds connectés à $i$. Soit $c=\min_{j \in V}  (1-p(y_{ij} = 1 \mid d_{i} \ge n, \mathcal{M}_e))$. Nous avons:
 
 \[
-0 \le \pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) \le (1 - c^{N-n}) \xrightarrow[n \rightarrow N]{} 0
+0 \le \pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) \le (1 - c^{N-1-n})
 \]
 
-Cela montre que $\pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e)$ n'augmente pas avec $n$. Nous avons donc la propriété suivante:
+Comme $c < 1$ et, $1- C^{N-1-n}$ décroit est vaut zéros pour $n=N-1$. Nous avons donc la propriété suivante:
 
 \begin{proposition}[]
 \label{pref-attch-glob}
@@ -266,7 +266,7 @@ Concernant l'attachement préférentiel local, la situation est plus complexe :
 \immsb\ satisfait l'attachement préférentiel local alors que \ilfm\ ne le satisfait pas.
 \end{proposition}
 
-\noindent \textbf{Preuve (esquisse)} Soit $y_{ij,k}$ une variable aléatoire binaire qui est à 1 si le noeud $i$ et $j$ on une connection au travers de classe latente $k$ et 0 autrement.
+\noindent \textbf{Preuve (esquisse)} Soit $y_{ij,k}$ une variable aléatoire binaire qui est à 1 si le noeud $i$ et $j$ on une connections au travers de classe latente $k$ et 0 autrement.
 Alors $d_{i,k} = \sum_{j \in V} \pr(y_{ij,k} =1 | \mathcal{M}_e)$.
 Pour \immsb, cela conduit à $d_{i,k} = \sum_{j \in V} \hat{f}_{ik} \hat{\Phi}_{kk} \hat{f}_{jk} = \hat{f}_{ik} \sum_{j \in V} \hat{\Phi}_{kk} \hat{f}_{jk}$.
 L'effet de renforcement positif du processus de Dirichlet \cite{HDP} à la base de \immsb\ corresponds à un phénomène bursty et se traduit, pour chaque $i$ et $k$, comme: $\pr(\hat{f}_{ik} \ge x'+\epsilon' \mid \hat{f}_{ik} \ge x',\mathcal{M}_e)$ augmente avec  $x'$ (pour tout $\epsilon'$ et $x'$ choisit en fonction du domaine définition de  $\hat{f}_{ik}$).
@@ -291,21 +291,21 @@ Afin d'illustrer nos résultats théoriques, nous évaluons la performance préd
 \input{table/net_measures}
 
 L'illustration des propriétés de ces réseaux est réalisé via d'un part sur les distribution des degrés globaux, accompagné de leurs matrice d'adjacence en figure \ref{fig:corpuses}. D'autre part nous avons mesuré l'attachement préférentiel global et local à l'aide de tests statistiques de qualité d'ajustement en figure \ref{table:me_gofit} (Training Datasets). La procédure consiste à évaluer la qualité des distributions des degrés (global et local) par rapport à une loi de puissance, qui est le modèle de référence pour ce type de distribution. Cette mesure fournit une $p$-value par distribution comprise entre 0 et 1. La variable $\alpha$ représente le paramètre de la loi de puissance. Un valeurs élevé de la $p$-value tend à confirmer l'hypothèse (loi de puissance), et une faible valeurs à rejeter l'hypothèse. La procédure complète est décrite dans \cite{clauset2009power}.
-Nous avons utilisé cette même mesure pour évaluer la qualité des distribution générées par les modèles \immsb~ et \ilfm.
+Nous avons utilisé cette même mesure pour évaluer la qualité des distributions générées par les modèles \immsb~ et \ilfm.
 
 
 \begin{figure}[h] {Matrices d'adjacences (gauche) et distribution des degrés local (droite) pour les 4 jeux d'entrainements. (les liens sont noir et les non-liens blanc.)}
-        \begin{minipage}{0.4\textwidth}
+        \begin{minipage}{0.35\textwidth}
             \includegraphics[width=1.1\textwidth]{img/corpus/network1_dd}
         \end{minipage}
-        \begin{minipage}{0.4\textwidth}
+        \begin{minipage}{0.35\textwidth}
             \includegraphics[width=1.1\textwidth]{img/corpus/network2_dd}
         \end{minipage}
         %\vskip\baselineskip
-        \begin{minipage}{0.4\textwidth}
+        \begin{minipage}{0.35\textwidth}
             \includegraphics[width=1.1\textwidth]{img/corpus/blogs_dd}
         \end{minipage}
-        \begin{minipage}{0.4\textwidth}
+        \begin{minipage}{0.35\textwidth}
             \includegraphics[width=1.1\textwidth]{img/corpus/manufacturing_dd}
         \end{minipage}
 	\label{fig:corpuses}
@@ -324,7 +324,7 @@ Il apparait que pour les modèles, l'attachement préférentiel global est uniqu
 \label{fig:auc}
 \end{figure}
 
-La figure \ref{fig:auc} propose une comparaison des modèles en fonction de la taille du réseaux d'apprentissage, la comparaison correspond à la différence des valeurs AUC des deux modèles. Une ordonnée à 1 signifie que les deux modèles ont des performances identique, et la zone au-dessus du 1 correspond à un avantage de \immsb~ sur ~\ilfm. Les abscisses correspondent à la proportion du nombre de liens non observés durant l'inférence. En général \ilfm~ obtiens de meilleurs résultats que \immsb, néanmoins la performance relative de ce dernier augmente quand le nombre de données d'apprentissage réduit sur les réseaux bursty, jusqu'a dépasser \ilfm. Alors que pour les réseaux non bursty c'est l'effet inverse qui est observé. Ce comportement illustre bien le fait que \immsb~ satisfait l'attachement préférentiel local et \ilfm~ non: quand les liens sont retirés aléatoirement, on a plus de chance de retirer des liens des classes les plus grosses que des petites; un modéle qui satisfait l'attachement préférentiel local à ainsi de meilleurs chance de reconstruire ces classes altérées. A l'opposé, si la propriété n'est pas présente dans le réseau, un modèle qui la respecte seras pénalisé.
+La figure \ref{fig:auc} propose une comparaison des modèles en fonction de la taille du réseaux d'apprentissage en mesurant différence des valeurs AUC des deux modèles. Une ordonnée à 1 signifie que les deux modèles ont des performances identiques, et la zone au-dessus du 1 correspond à un avantage de \immsb~ sur ~\ilfm. Les abscisses correspondent à la proportion du nombre de liens non observés durant l'inférence. En général \ilfm~ obtient de meilleurs résultats que \immsb, néanmoins la performance relative de ce dernier augmente quand le nombre de données d'apprentissage réduit sur les réseaux bursty, jusqu'a dépasser \ilfm. Alors que pour les réseaux non bursty c'est l'effet inverse qui est observé. Ce comportement illustre bien le fait que \immsb~ satisfait l'attachement préférentiel local et \ilfm~ non: quand les liens sont retirés aléatoirement, on a plus de chance de retirer des liens des classes les plus grosses que des petites; un modèle qui satisfait l'attachement préférentiel local à ainsi de meilleurs chance de reconstruire ces classes altérées. A l'opposé, si la propriété n'est pas présente dans le réseau, un modèle qui la respecte seras pénalisé.
 
 \section{Conclusion}
 
