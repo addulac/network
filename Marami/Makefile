@@ -1,5 +1,5 @@
 .ONESHELL:
-SRC = main
+SRC = marami
 OPTS = --halt-on-error
 
 default: xe
