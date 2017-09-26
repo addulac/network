@@ -227,7 +227,7 @@ As one can note, these definitions directly translate the fact that "the more co
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-For global preferential attachment, the degree $d_i$ directly corresponds to the number of edges of node $i$. Let's denote $V(i)^{(n)}$ the set of edges connected to $i$ for $d_i = n$. By Exploiting the fact that the observations are independent given $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, one has:
+For global preferential attachment, the degree $d_i$ directly corresponds to the number of edges of the node $i$. Let's denote $V(i)^{(n)}$ the set of edges connected to $i$ for $d_i = n$. By Exploiting the fact that the observations are independent given $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, one has:
 %
 \begin{align*}
     P(d_i \geq n+1 | d_i \geq n) &= 1 - P(d_i < n+1 | d_i \geq n) \\
@@ -235,7 +235,7 @@ For global preferential attachment, the degree $d_i$ directly corresponds to the
 \end{align*}
 
 
-Here, the link probability and its complementary $P(y_{ij}=0 | \mathcal{M}_e)$ are fixed and know for all $j\in V$. One can see that when $n$ increase, the set $j\notin V(i)^{(n)}$ decrease, and because  $P(y_{ij}=0 | \mathcal{M}_e) < 1$, one has: 
+Here, the link probability and its complementary $P(y_{ij}=0 | \mathcal{M}_e)$ are fixed and known for all $j\in V$. One can see that when $n$ increase, the set $j\notin V(i)^{(n)}$ decrease, and because  $P(y_{ij}=0 | \mathcal{M}_e) < 1$, one has: 
 
 \begin{equation*}
     P(d_i \geq n+1 | d_i \geq n) -  P(d_i \geq n | d_i \geq n-1) < 0
