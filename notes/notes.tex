@@ -1,0 +1,131 @@
+\documentclass{article}
+
+\input{header2.tex}
+
+\title{ %\vspace{2cm}
+    \Large{Global Preferential attachment disambiguation (Me + Mg)}\\--\\ }
+
+\author{Adrien Dulac}
+%\date{avril 2015}
+
+\newcommand{\pr}{P}
+\newcommand{\p}{P}
+\newcommand{\mg}{\mathcal{M}_g}
+\newcommand{\me}{\mathcal{M}_e}
+
+\begin{document}
+
+\maketitle
+
+\section{Abstract}
+
+I try to write simply and clearly here, some results about the global preferential attachment for the two probabilistic model paradigm denoted $\me$ and $\mg$. \\
+
+
+The purpose of this draft is to expose why I am doubtfully about one result we wrote and to provide an alternative.
+
+\section{Definition}
+
+I recall briefly some definitions : \\
+
+
+First let us consider a graph $G=(V,E)$, where $V$ is a set of vertex (or nodes) and $E$ a set of edges (or links) between those vertex. We represents its adjacency matrix $(Y_{ij})_{(ij) \in E} \in \mathcal{Y}$. The number of vertex is denoted $N = |V|$. \\
+
+In this paper, we restrict to binary graph where $\mathcal{Y} = \{0,1\}$ to account for the presence of a link ($y_{ij}=1$) or a non-link ($y_{ij}=0$). Furthermore we restrict undirected graph without self-loop and we denote by $\mathcal{R}$ the set of all possible interactions (ie links or non-links) between nodes pairs $(i,j)$, such that $|\mathcal{R}| = \frac{N(N-1)}{2}$. \\
+
+
+We focus our work on the class of Mixed-membership models. We are particularly interested in two exchangeable random graph models in this class, says IMMSB and ILFM, that defines random priors over a graph $G$ \cite{orbanz2015bayesian}. Let's now referencing any of these two models by $\mathcal{M}$. We defined two objects to characterize them : 
+
+\begin{itemize}
+    \item $\mg$ that represents the set of hyperprameters of $\mathcal{M}$, such that the random graph $G$ is exchangeable, thus for any permutation $\pi$ on integers, one has: \[ P((y_{ij})_{i,j\in \mathcal{R}} | \mg) = P((y_{\pi(i)\pi(j)})_{i,j\in \mathcal{R}} | \mg) \]
+    \item $\me$ that represents the set of random elements ($\bm{F}$ and $\bm{\Phi}$) of $\mathcal{M}$ such that interactions are conditionally i.i.d:  \[P((y_{ij})_{i,j\in \mathcal{R}} | \me) = \prod_{i,j\in \mathcal{R}} P(y_{ij} | \me)  \]
+\end{itemize}
+
+\textcolor{red}{Eric, j'aimerais attirer ton attention sur le fait que ce que dit le theorem d'Aldous-Hoover (qui generalise Definetti), est que les deux propositions au-dessus \textbf{sont équivalentes} ! }.
+
+Given the definitions of both models, (see Jasa version) we define the following random variables of the underlying random graph model:
+
+\begin{definition}[Global degree]
+    let $i$ be a vertex in $G$. We denote its degree $d_i$ as the number of edges connected to $i$ : 
+    \begin{equation}
+        d_i = |\{y_{ij}=1, j \in V, i \neq j\}|
+    \end{equation}
+\end{definition}
+
+I skip other definitions because, I want first a feedback about what I'll say for the global preferential attachment.
+%\begin{definition}[Local degree]
+%    let $i$ be a vertex of $G$ and $k$ be a (latent) class of the model. We denote its local degree $d_{ik}$ as the number of edges connected to $i$ whiten the class $k$ : 
+%    \begin{align}
+%        d_{ik} &= |\{y_{ij}=1, z_{i\rightarrow j}=z_{i\leftarrow j}=k,  j \in V\}| \qquad \textrm{for IMMSB} \\
+%        d_{ik} &= |\{y_{ij}=1, f_{ik}=f_{jk}=1,  j \in V\}| \qquad \textrm{for ILFM} \\
+%    \end{align}
+%\end{definition}
+%
+%\begin{definition}[Class concentration]
+%    let $k$ be a (latent) class of the model. We denote $c_k$ the concentration of the class $k$ as the number of times a class $k$ is assigned : 
+%    \begin{align}
+%        c_{k} &= |\{ z_{i\rightarrow j}=z_{i\leftarrow j}=k,  i, j \in V^2\}| \qquad \textrm{for IMMSB} \\
+%        c_{k} &= |\{ f_{ik}=1,  i \in V\}| \qquad \textrm{for ILFM} \\
+%    \end{align}
+%\end{definition}
+
+
+\section{Problem}
+
+The approach we follow in the previous work is resumed here : \\
+
+We Defined the global preferential attachment as an increase as the increasing of the "burstiness equation", thus :
+
+\[
+    P(d_i \geq n+1 | d_i \geq n) - P(d_i \geq n | d_i \geq n-1)  > 0
+\]
+
+Because the degree $d_i$ is defined on the support $(0,.., N-1)$, the above proposition should be true for $n \in (1,..,N-2)$ to account for the global preferential attachment.
+
+We now look at the global preferential attachment in $\me$. Let's denote by $V(i)$ the set of vertex that are connected to $i$, we have the following : 
+
+\begin{align}
+    P(d_i \geq n+1 | d_i \geq n) &= 1 - P(d_i < n+1 | d_i \geq n) \\
+                                 &= 1 - \prod_{j\notin V(i)} P(y_{ij}=0 | \me) \\
+                                 &\leq 1 - c^{N - 1 - n }
+\end{align}
+
+With $0 < c < 1$ and  $c = \min_j(P(y_{ij}=0 | \me)) = (1-\max_j(P(y_{ij}=1 | \me)))$ because $P(y_{ij}=1) = 1 - P(y_{ij}=0)$. \\
+
+It follows that the property is not true, because the distribution should be increasing for $n \in (1, N-2)$, and the upper bound is \textcolor{red}{never zeros} in this set. In the worse case for $n=N-2$, the upper bound is $1-c$
+
+
+\section{Solution}
+
+I have an alternative proof that consist in the following steps : 
+\begin{itemize}
+    \item Use the expected definition of the degree $D_i = \sum_j P(y_{ij}=1|\me)$ (similarly to the local pref proof),
+    \item then, show that $P(D_i|\mg)$ is not bursty (easy with the corollary of the Aldous-Hoover theorem that says that $P(y_{ij}=1|\mg)$ is constant.
+    \item finally, show that it implies that $P(D_i|\me)$ is not bursty.
+\end{itemize}
+
+
+\paragraph{Proof:}~\\
+
+
+First, One knows that one of the corollary of the Aldous-Hoover representation theorem \cite{orbanz2015bayesian} (page 22, top column 1), is that the expected number of edge in a graph is constant. On has $P(y_{ij}=1|\mg)=\epsilon$ with $\epsilon$ a constant. \\
+
+Thus one has $D_i = \sum_j p(y_{ij}|\mg) = (N-1)\epsilon$. It is straightforward to see that the global preferential attachment cannot be satisfied here.\\
+
+
+Finally one has the following properties from sum and product rules:
+
+\begin{align}
+    P(D_i \geq n+1 | D_i \geq n,  \mg) &= \int_{\bm{\Phi}, \bm{F}} P(D_i \geq n+1 | D_i\geq n, \bm{\Phi}, \bm{F}) P(\bm{\Phi},\bm{F}) d\bm{\Phi}d\bm{F} \\
+    &= \int_{\bm{\Phi}, \bm{F}} P(D_i \geq n+1 | D_i\geq n, \me) P(\bm{\Phi},\bm{F}) d\bm{\Phi}d\bm{F}
+\end{align}
+
+It shows that $P(D_i \geq n+1 | D_i \geq n,  \mg)$ and $P(D_i \geq n+1 | D_i \geq n,  \me)$ varies in the same direction. 
+
+
+\bibliographystyle{unsrt}
+\bibliography{a}
+
+\end{document}
+
+

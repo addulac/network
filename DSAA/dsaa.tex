@@ -216,28 +216,41 @@ Let $i$ be a node in a social network and let $d_i$ denote its degree.
 \end{description}
 \label{def:burst-soc-net}
 \end{definition}~\\
-%
-%
+
+
 As one can note, these definitions directly translate the fact that "the more connections a node has, the more likely it is to be connected to new nodes". The only difference between the local and global cases is that the degree is usually unknown in the local case, and is here estimated through its expectation.~\\
 
-For global preferential attachment, the degree $d_i$ directly corresponds to the number of outgoing links of node $i$. Exploiting the fact that the observations are independent given $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, one has:
-%
-\begin{align}
-&\pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) \nonumber \\
-& \quad= 1 - \prod_{j \notin \mathcal{V}(i)} p(y_{ij} = 0 \mid d_{i} \ge n, \mathcal{M}_e) \nonumber \\
-& \quad = 1 - \prod_{j \notin \mathcal{V}(i)} (1 - p(y_{ij} = 1 \mid d_{i} \ge n, \mathcal{M}_e)) \nonumber
-\end{align}
-%
-where $\mathcal{V}(i)$ denotes the set of nodes connected to node $i$. Let $c=\min_{j \in V}  (1-p(y_{ij} = 1 \mid d_{i} \ge n, \mathcal{M}_e))$. One has:
-%
-\[
-0 \le \pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) \le (1 - c^{N-1-n})
-\]
-%
-As $c < 1$,  $(1 - c^{N-1-n})$ decreases with $n$ and is 0 when $n=N-1$.
-We thus have the following property.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% <ERRATUM>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+For global preferential attachment, the degree $d_i$ directly corresponds to the number of edges of node $i$. Let's denote $V(i)^{(n)}$ the set of edges connected to $i$ for $d_i = n$. By Exploiting the fact that the observations are independent given $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, one has:
 %
+\begin{align*}
+    P(d_i \geq n+1 | d_i \geq n) &= 1 - P(d_i < n+1 | d_i \geq n) \\
+                                 &= 1 - \prod_{j\notin V(i)^{(n)}} P(y_{ij}=0 | \mathcal{M}_e)
+\end{align*}
+
+
+Here, the link probability and its complementary $P(y_{ij}=0 | \mathcal{M}_e)$ are fixed and know for all $j\in V$. One can see that when $n$ increase, the set $j\notin V(i)^{(n)}$ decrease, and because  $P(y_{ij}=0 | \mathcal{M}_e) < 1$, one has: 
+
+\begin{equation*}
+    P(d_i \geq n+1 | d_i \geq n) -  P(d_i \geq n | d_i \geq n-1) < 0
+\end{equation*}
+
+We thus have the following property: ~\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% <\ERRATUM>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 \begin{proposition}
 \label{pref-attch-glob}
 Both \ifm\ and \imb\ do not satisfy global preferential attachment.
