@@ -1,0 +1,193 @@
+\section{Preferential Attachment}
+Preferential attachment, sometimes referred to as the \textit{rich get richer} rule, is a mechanism according to which each node is connected to an existing node with a probability that increases with the number of links of the chosen node\footnote{This property is well captured by a power law distribution, hence the claim often made that preferential attachment translates as a power law for the node degrees distribution.}. However, as noted in Leskovec \textit{et al.}, usually, in social networks, entities do not have a global knowledge of the network. The preferential attachment model is thus more likely to be local, and to be specific to communities \cite{LeskovecBKT08}.~\\
+
+Preferential attachment relates to a general phenomenon known as \textit{burstiness}\footnote{A.L. Barab\'asi, for example, uses the term \textit{preferential attachment} in \cite{barabasi1999emergence}, and \textit{burstiness} in \cite{barabasi_burst}.} which describes the fact that some events appear in bursts, \textit{i.e.} once they appear, they are more likely to appear again. Burstiness has been studied in different fields, in particular in computational linguistics and information retrieval to characterize word occurrences \cite{church1995poisson}. In these domains, simple definitions of burstiness have been proposed \cite{clinchant2008bnb,clinchant2010information}, for both discrete and continuous probability distributions. They directly capture the fact that a probability distribution is bursty if the probability of generating a new occurrence of an event increases with the number of occurrences of this event. We adapt here these definitions for preferential attachment in social networks.~\\
+
+In the context of social networks, the notion of preferential attachment amounts to the fact that the more links a node has (\textit{i.e.} the higher its degree), the more likely it will be linked to new nodes. As mentioned before, this phenomenon however appears at different levels: 
+\begin{itemize}
+    \item globally for the whole network,
+    \item locally within classes,
+\end{itemize}
+
+Furthermore we introduce a third quantity that measure the burstiness at the feature level that expose the distribution of the number of nodes belonging to a class. Intuitively, it corresponds to burstiness phenomenon at the class level, that says, the more individual belong to one class, the more likely new individual will also belongs to this class. we will refer to this third level of burstiness as the {\large feature burstiness}. (@debug or "feature concentration") ~\\
+
+
+In the next subsection we will give formal definitions of those quantity as they arise in mixed membership networks. then in the two last subsection we will characterise the burstiness given those definition in respectively the predictive context $\me$ and the generative context $\mg$.
+
+\subsection{definitions}
+\label{sec:definitions}
+
+\begin{definition}[Global degree]
+    let $i$ be a node of social networks. We denote its degree $d_i$ as the number of edges connected to $i$ : 
+    \begin{equation}
+        d_i = |\{y_{ij}=1, j \in V\}|
+    \end{equation}
+\end{definition}
+
+\begin{definition}[Local degree]
+    let $i$ be a node of social networks and $k$ be a (latent) class of the model. We denote its local degree $d_{ik}$ as the number of edges connected to $i$ whiten the class $k$ : 
+    \begin{align}
+        d_{ik} &= |\{y_{ij}=1, z_{i\rightarrow j}=z_{i\leftarrow j}=k,  j \in V\}| \qquad \textrm{for IMMSB} \\
+        d_{ik} &= |\{y_{ij}=1, f_{ik}=f_{jk}=1,  j \in V\}| \qquad \textrm{for ILFM} \\
+    \end{align}
+\end{definition}
+
+\begin{definition}[Class concentration]
+    let $k$ be a (latent) class of the model. We denote $c_k$ the concentration of the class $k$ as the number of times a class $k$ is assigned : 
+    \begin{align}
+        c_{k} &= |\{ z_{i\rightarrow j}=z_{i\leftarrow j}=k,  i, j \in V^2\}| \qquad \textrm{for IMMSB} \\
+        c_{k} &= |\{ f_{ik}=1,  i \in V\}| \qquad \textrm{for ILFM} \\
+    \end{align}
+\end{definition}
+
+
+\newcommand{\M}{\mathcal{M}}
+
+Associated to those definitions, one can define the expected value of each quantity given a model $\M \in \{\me, \mg\}$ :
+
+\begin{lemma}[Expected global degree]
+    \begin{equation}
+        D_i = \E_\M[d_i | \M] = \sum_j \p(y_{ij}=1 | \M)
+    \end{equation}
+\end{lemma}
+
+\begin{lemma}[Expected local degree]
+    \begin{align}
+        D_{ik} &= \E_\M[d_{ik} | \M] = \sum_j \p(y_{ij}=1, z_{i\rightarrow j}=z_{i\leftarrow j}=k | \M) \qquad \textrm{for IMMSB} \\
+        D_{ik} &= \E_\M[d_{ik} | \M] = \sum_j \p(y_{ij}=1, f_{ik}=f_{jk}=1 | \M) \qquad \textrm{for ILFM}
+    \end{align}
+\end{lemma}
+
+\begin{lemma}[Expected class concentration]
+    \begin{align}
+        C_k &= \E_\M[c_{ik} | \M] = \sum_{i,j \in V^2} \p(z_{i\rightarrow j}=z_{i\leftarrow j}=k | \M) \qquad \textrm{for IMMSB} \\
+        C_k &= \E_\M[c_{ik} | \M] = \sum_{i \in V} \p(f_{ik}=1 | \M) \qquad \textrm{for ILFM}
+    \end{align}
+\end{lemma}
+
+For the different random variables defined, we want to characterise theirs "preferential attachment" effect. Depending if the variables are discrete or continuous, we have consider the two slightly different definitions of the burstiness, given a network $G=(V,E)$ contains $N$ nodes and its model $\M$  :
+
+\begin{definition}[Discrete burstiness] \label{discrete_burstiness}
+    A distribution $P$ over a discrete random variable $y$ is bursty on a support $(n_0, n_1) \in \mathbb{N}^2$ iff for $n \in (0,..., N-1)$ and $n_1 \geq  n \geq n_0$ and the following holds : 
+    \begin{equation}
+        P(y \geq n+2 | y \geq n+1, \M) - P(y \geq n+1 | y \geq n, \M) > 0
+    \end{equation}
+\end{definition}
+
+\begin{definition}[Continuous burstiness] \label{continious_burstiness}
+    A  distribution $P$ over a continuous random variable $y$ is bursty on a support $(n_0, n_1) \in \mathbb{R}^2$ iff for $x \in [0, N[$,  $n_1 \geq x \geq n_0, \forall \epsilon \in \mathbb{R^+}$ and the following holds : 
+    \begin{equation}
+        \frac{\partial}{\partial x}P(y \geq x+\epsilon | y \geq x, \M) > 0
+    \end{equation}
+\end{definition}
+
+Those definitions encodes the fact that the probability to draw new value from a random distribution increase with the number of the same value already drawn from the same distribution.
+
+\paragraph{Remark 1:}~\\
+The burstiness property \ref{continious_burstiness} and \ref{discrete_burstiness} can be expressed in term of the survival function. Under regularity  condition, it is equivalent to have the second derivative of the logarithm of the survival function strictly positive \cite{clinchant2010information} : 
+$ \frac{\partial^2}{\partial x^2} \log P(y>x) > 0$.
+
+\paragraph{Remark 2:}~\\ \label{eq:burst_mass}
+For discrete distribution, the burstiness property can be expressed with the probability mass distribution, and is equivalent to following condition $\frac{P(y = n+2)}{P(y=n+1)} - \frac{P(y = n+1)}{P(y=n)} > 0$.
+
+\subsection{Social networks terminology}
+
+In order to clarify our position to social networks properties and their relation to burstiness we assume the following definition of various level of preferential attachment here :
+\begin{itemize}
+    \item Global preferential attachment is verified if the distribution $d_i$ is bursty in $\M$,
+    \item Local preferential attachment is verified if the distribution $d_{ik}$ is bursty in $\M$,
+    \item Feature burstiness is verified if the distribution $c_k$ is bursty in $\M$.
+\end{itemize}
+
+Although the properties is associated to the model $\mg$ or $me$ that condition the distribution, we will clarify here the relation between the two mode.
+
+\subsection{Relation between $\me$ and $\mg$}
+
+\begin{proposition} \label{th:me2mg}
+    A distribution $P$ is bursty in the model $\mg$ only if it is bursty in the model $\me$.
+\end{proposition}
+
+In the next subsection, we will characterise the burstiness of the degrees and class concentration according to the probabilistic definitions in \ref{sec:definitions} suited to mixed membership models.
+
+\subsection{predictive context -- $\me$}
+
+For global preferential attachment, the degree $d_i$ directly corresponds to the number of edges of node $i$. Exploiting the fact that the observations are independent given $\me$, one has : 
+\begin{align*}
+    P(d_i \geq n+1 | d_i \geq n, \me) &= 1 - P(d_i < n+1 | d_i \geq n, \me) \\
+        &= 1 - \prod_{j \notin \mathcal{V}(i)} P(y_{ij} = 0 | \me) \\
+        &= 1 - \prod_{j \notin \mathcal{V}(i)}( 1 -  P(y_{ij} = 1 | \me) )
+\end{align*}
+
+Where $\mathcal{V}(i)$ denotes the set of nodes connected to node $i$. Let $c=\min_{j \in V}  (1-p(y_{ij} = 1 | \me))$. One has: 
+\begin{equation} \label{eq:me_upper_bound}
+    0 \le P(d_i \geq n+1 | d_i \geq n, \me) \leq (1 - c^{N-n})
+\end{equation}
+
+
+One can see here that if the distribution is bursty it can reach the upper bound before reaching the maximal capacity $N$.
+The same reasoning holds for the burstiness of the local degree distribution $d_{ik}$ and the class concentration $c_k$.~\\
+
+
+Furthermore, looking at the expected global degree $D_i$, local $D_{ik}$ and the expected class concentration $C_k$,  can give insight about the burstiness properties. As a sketch results, we have found the following results : 
+
+\begin{proposition}[Expected global degree $D_i$ burstiness under $me$]~\\
+    Can't conclude for me \textcolor{red}{(is the expected approach of burstiness right, the following let me sceptic ?)}
+
+    Is $P(D_i \geq x +\epsilon | D_i \geq x, \me)$ an increasing function of x ? 
+
+    We have that $D_i = \sum_j \sum_{kk'} f_{ik} \phi_{kk'} f_{jk'}$.  According to the reasoning below, one could says $P(f_{ik} \geq x' + \epsilon | f_{ik} \geq x')$, and is this case the proposition for \textcolor{red}{the global degree should be true, which is not correlated with experiment !? }
+\end{proposition}
+
+\begin{proposition}[Expected local degree $D_{ik}$ burstiness under $me$]\label{th:ldegree_exp_me}
+    IMMSB satisfy the burstiness effect for the  expected local degree while ILFM doesn't.
+\end{proposition}
+
+\begin{proposition}[Expected class concentration $C_k$ burstiness under $me$]\label{th:feature_exp_me}
+    Both IMMSB and ILFM satisfy the burstiness effect for their expected class concentration.
+\end{proposition}
+
+
+From a theoretically point of view the burstiness properties for the expected quantities $D_i$, $D_{ik}$ and $C_k$. are regarded as a very high level point of view within the $\me$ model which seems to give positive results for IMMSB expected local degree and expected class concentration. Those positive results directly arise from the reinforcement effect of nonparametric prior $DP$ and $IBP$.
+
+
+Thus from the upper bound given in \eqref{eq:me_upper_bound} one can see, that if the burstiness distribution is increasing,  depending on the rate of the first derivative, the limit will be reached.
+
+In order to find this limit, we will examined in the next subsection the burstiness distribution in the model $\mg$.
+
+\subsection{Generative context -- $\mg$}
+
+In the generative context $\mg$, we want to characterize the burstiness of global and local degree distribution as well as class concentration distribution. Those measures are defined as the cardinal over a set of fundamental events in networks such as the relation between nodes or the class membership of nodes(ILFM) or edges(IMMSB). The main intuition behind the characterization of distributions under $\mg$ rely the exchangeability assumptions of mixed membership models. Furthermore, as the burstiness in the discrete case can be expressed with the probability mass function \ref{eq:burst_mass}, it is possible to obtain closed form expression for the degree distributions.~\\
+
+
+\begin{proposition}[Global degree $d_i$ burstiness under $mg$]\label{th:gdegree_mg}
+    Neither IMMSB or ILFM statisfy the global preferential attachment.
+\end{proposition}
+
+\begin{proposition}[ Local degree $d_{ik}$ burstiness under $mg$]\label{th:ldegree_mg}
+    IMMSB satisfies local preferential attachment (1) wherea ILFM does not.
+
+    (1) under the following constraints :
+
+    to validate...
+    %\begin{itemize}
+    %\item $ \lambda_1 < \frac{c_k-1}{c_k+1}$
+    %\item $ n < n_1$
+    %\end{itemize}
+    %$n_1 = \frac{-3a + \sqrt{a(4c_k(a-b)+5a-4b)}}{2a}$
+    %with $a = 1/(\lambda_1+\lambda_0)$ and $\lambda_1 / (\lambda_0+\lambda_0)$.
+    
+\end{proposition}
+
+\begin{proposition}[Class concentration $c_k$ burstiness under $mg$]\label{th:feature_mg}
+    Both ILFM and IMMSB satisfy the feature burstiness, under the following constraint :
+    \begin{itemize}
+        \item (condition to complete on $N$ and $\alpha_k$, result on paper) for IMMSB
+        \item (condition to complete $N$, result on paper) for ILFM
+    \end{itemize}
+\item 
+\end{proposition}
+
+
+\subsection{Summarization}
+
+to do the table that summarize results.

@@ -227,18 +227,20 @@ As one can note, these definitions directly translate the fact that "the more co
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-For global preferential attachment, the degree $d_i$ directly corresponds to the number of edges of the node $i$. Let's denote $V(i)^{(n)}$ the set of edges connected to $i$ for $d_i = n$. By Exploiting the fact that the observations are independent given $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, one has:
+For global preferential attachment, the degree $d_i$ directly corresponds to the number of edges of the node $i$. Now, suppose that we draw successively edges from $p(y_{ij}|\mathcal{M}_e)$ for $j \in V^{\setminus i}$. If we draw $t$ times and get $n$ edges we consider the following distribution $P_t(d_i \geq n+1 | d_i \geq n, \mathcal{M}_e)$ 
+
+Furthermore, let's denote $V(i)^{(n)}$ the set of edges connected to $i$ for $d_i = n$. By exploiting the fact that the observations are independent given $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, one has:
 %
 \begin{align*}
-    P(d_i \geq n+1 | d_i \geq n) &= 1 - P(d_i < n+1 | d_i \geq n) \\
+    P_t(d_i \geq n+1 | d_i \geq n, \mathcal{M}_e) &= 1 - P_t(d_i < n+1 | d_i \geq n, \mathcal{M}_e) \\
                                  &= 1 - \prod_{j\notin V(i)^{(n)}} P(y_{ij}=0 | \mathcal{M}_e)
 \end{align*}
 
 
-Here, the link probability and its complementary $P(y_{ij}=0 | \mathcal{M}_e)$ are fixed and known for all $j\in V$. One can see that when $n$ increase, the set $j\notin V(i)^{(n)}$ decrease, and because  $P(y_{ij}=0 | \mathcal{M}_e) < 1$, one has: 
+Here, the link probability and its complementary $P(y_{ij}=0 | \mathcal{M}_e)$ are fixed and known for all $j\in V$. One can see that when $n$ increase, the set $j\notin V(i)^{(n)}$ decrease, and because  $P(y_{ij}=0 | \mathcal{M}_e) < 1$, one has, with respect to $\mathcal{M}_e$: 
 
 \begin{equation*}
-    P(d_i \geq n+1 | d_i \geq n) -  P(d_i \geq n | d_i \geq n-1) < 0
+    P_{t+1}(d_i \geq n+1 | d_i \geq n) -  P_{t}(d_i \geq n | d_i \geq n-1) < 0
 \end{equation*}
 
 We thus have the following property: ~\\

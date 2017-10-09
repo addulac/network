@@ -3,7 +3,7 @@
 \input{header2.tex}
 
 \title{ %\vspace{2cm}
-    \Large{Global Preferential attachment disambiguation (Me + Mg)}\\--\\ }
+    \Large{Preferential attachment disambiguation (Me / Mg dualité)}\\--\\ }
 
 \author{Adrien Dulac}
 %\date{avril 2015}
@@ -13,9 +13,12 @@
 \newcommand{\mg}{\mathcal{M}_g}
 \newcommand{\me}{\mathcal{M}_e}
 
-\begin{document}
 
+
+
+\begin{document}
 \maketitle
+%\tableofcontents
 
 \section{Abstract}
 
@@ -38,7 +41,7 @@ We focus our work on the class of Mixed-membership models. We are particularly i
 
 \begin{itemize}
     \item $\mg$ that represents the set of hyperprameters of $\mathcal{M}$, such that the random graph $G$ is exchangeable, thus for any permutation $\pi$ on integers, one has: \[ P((y_{ij})_{i,j\in \mathcal{R}} | \mg) = P((y_{\pi(i)\pi(j)})_{i,j\in \mathcal{R}} | \mg) \]
-    \item $\me$ that represents the set of random elements ($\bm{F}$ and $\bm{\Phi}$) of $\mathcal{M}$ such that interactions are conditionally i.i.d:  \[P((y_{ij})_{i,j\in \mathcal{R}} | \me) = \prod_{i,j\in \mathcal{R}} P(y_{ij} | \me)  \]
+    \item $\me$ that represents the set of random elements ($\bm{F}$ and $\bm{\Phi}$) of $\mathcal{M}$ such that interactions are conditionally independant:  \[P((y_{ij})_{i,j\in \mathcal{R}} | \me) = \prod_{i,j\in \mathcal{R}} P(y_{ij} | \me)  \]
 \end{itemize}
 
 \textcolor{red}{Eric, j'aimerais attirer ton attention sur le fait que ce que dit le theorem d'Aldous-Hoover (qui generalise Definetti), est que les deux propositions au-dessus \textbf{sont équivalentes} ! }.
@@ -48,7 +51,7 @@ Given the definitions of both models, (see Jasa version) we define the following
 \begin{definition}[Global degree]
     let $i$ be a vertex in $G$. We denote its degree $d_i$ as the number of edges connected to $i$ : 
     \begin{equation}
-        d_i = |\{y_{ij}=1, j \in V, i \neq j\}|
+        d_i = |\{y_{ij}=1, j \in V^{\setminus i}\}|
     \end{equation}
 \end{definition}
 
@@ -100,7 +103,7 @@ It follows that the property is not true, because the distribution should be inc
 I have an alternative proof that consist in the following steps : 
 \begin{itemize}
     \item Use the expected definition of the degree $D_i = \sum_j P(y_{ij}=1|\me)$ (similarly to the local pref proof),
-    \item then, show that $P(D_i|\mg)$ is not bursty (easy with the corollary of the Aldous-Hoover theorem that says that $P(y_{ij}=1|\mg)$ is constant.
+    \item then, show that $P(D_i|\mg)$ is not bursty ($P(y_{ij}=1|\mg)$ is constant).
     \item finally, show that it implies that $P(D_i|\me)$ is not bursty.
 \end{itemize}
 
@@ -121,6 +124,27 @@ Finally one has the following properties from sum and product rules:
 \end{align}
 
 It shows that $P(D_i \geq n+1 | D_i \geq n,  \mg)$ and $P(D_i \geq n+1 | D_i \geq n,  \me)$ varies in the same direction. 
+
+\section{Choosen Solution}
+
+After discussion with Eric, we decided to do not use the expected definition of the degree. The solution/proof is then obtained by reasonning on set and stochastic process (as is in DSSA erratum version): ~\\
+
+
+For global preferential attachment, the degree $d_i$ directly corresponds to the number of edges of the node $i$. Now, suppose that we draw successively edges from $p(y_{ij}|\mathcal{M}_e)$ for $j \in V^{\setminus i}$. If we draw $t$ times and get $n$ edges we consider the following distribution $P_t(d_i \geq n+1 | d_i \geq n, \mathcal{M}_e)$ 
+
+Furthermore, let's denote $V(i)^{(n)}$ the set of edges connected to $i$ for $d_i = n$. By exploiting the fact that the observations are independent given $\bm{\hat{F}}$ and $\bm{\hat{\Phi}}$, one has:
+%
+\begin{align*}
+    P_t(d_i \geq n+1 | d_i \geq n, \mathcal{M}_e) &= 1 - P_t(d_i < n+1 | d_i \geq n, \mathcal{M}_e) \\
+                                 &= 1 - \prod_{j\notin V(i)^{(n)}} P(y_{ij}=0 | \mathcal{M}_e)
+\end{align*}
+
+
+Here, the link probability and its complementary $P(y_{ij}=0 | \mathcal{M}_e)$ are fixed and known for all $j\in V$. One can see that when $n$ increase, the set $j\notin V(i)^{(n)}$ decrease, and because  $P(y_{ij}=0 | \mathcal{M}_e) < 1$, one has, with respect to $\mathcal{M}_e$: 
+
+\begin{equation*}
+    P_{t+1}(d_i \geq n+1 | d_i \geq n) -  P_{t}(d_i \geq n | d_i \geq n-1) < 0
+\end{equation*}
 
 
 \bibliographystyle{unsrt}

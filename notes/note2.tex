@@ -1,0 +1,176 @@
+
+\documentclass{article}
+
+\input{header2.tex}
+
+\title{ %\vspace{2cm}
+    \Large{Preferential attachment disambiguation (Me / Mg dualité)}\\--\\ }
+
+\author{Adrien Dulac}
+%\date{avril 2015}
+
+\newcommand{\pr}{P}
+\newcommand{\p}{P}
+\newcommand{\mg}{\mathcal{M}_g}
+\newcommand{\me}{\mathcal{M}_e}
+
+
+
+
+\begin{document}
+\maketitle
+%\tableofcontents
+%
+
+\section{Me Disambiguition (cont.)}
+
+
+%\subsection{Global attachement préférentiel}
+%
+%For global preferential attachment, the degree $d_i$ directly corresponds to the number of edges of the node $i$. Now, suppose that we draw successively edges from $p(y_{ij}|\mathcal{M}_e)$ for $j \in V^{\setminus i}$. If we draw $t$ times and get $n$ edges we consider the following distribution $P_t(d_i \geq n+1 | d_i \geq n, \mathcal{M}_e)$ 
+%
+%Furthermore, let's denote $V(i)^{(n)}$ the set of edges connected to $i$ for $d_i = n$. By exploiting the fact that the observations are independent given $\bm{\hat{F}}$ and $\bm{\hat{\Phi}}$, one has:
+%%
+%\begin{align*}
+%    P_t(d_i \geq n+1 | d_i \geq n, \mathcal{M}_e) &= 1 - P_t(d_i < n+1 | d_i \geq n, \mathcal{M}_e) \\
+%                                 &= 1 - \prod_{j\notin V(i)^{(n)}} P(y_{ij}=0 | \mathcal{M}_e)
+%\end{align*}
+%
+%
+%Here, the link probability and its complementary $P(y_{ij}=0 | \mathcal{M}_e)$ are fixed and known for all $j\in V$. One can see that when $n$ increase, the set $j\notin V(i)^{(n)}$ decrease, and because  $P(y_{ij}=0 | \mathcal{M}_e) < 1$, one has, with respect to $\mathcal{M}_e$: 
+%
+%\begin{equation*}
+%    P_{t+1}(d_i \geq n+1 | d_i \geq n) -  P_{t}(d_i \geq n | d_i \geq n-1) < 0
+%\end{equation*}
+%
+\subsection{Definitions recall}
+
+\begin{definition}[Global degree]
+    let $i$ be a node of social networks. We denote its degree $d_i$ as the number of edges connected to $i$ : 
+    \begin{equation}
+        d_i = |\{y_{ij}=1, j \in V^{\setminus i}\}|
+    \end{equation}
+\end{definition}
+
+\begin{definition}[Local degree]
+    let $i$ be a node of social networks and $k$ be a (latent) class of the model. We denote its local degree $d_{ik}$ as the number of edges connected to $i$ whiten the class $k$ : 
+    \begin{align}
+        d_{ik} &= |\{y_{ij}=1, z_{i\rightarrow j}=z_{i\leftarrow j}=k,  j \in V^{\setminus i}\}| \qquad \textrm{for IMMSB} \\
+        d_{ik} &= |\{y_{ij}=1, f_{ik}=f_{jk}=1,  j \in V^{\setminus i}\}| \qquad \textrm{for ILFM} \\
+    \end{align}
+\end{definition}
+
+\begin{definition}[Class concentration]
+    let $k$ be a (latent) class of the model. We denote $c_k$ the concentration of the class $k$ as the number of times a class $k$ is assigned : 
+    \begin{align}
+        c_{k} &= |\{ z_{i\rightarrow j}=z_{i\leftarrow j}=k,  i, j \in V^2\}| \qquad \textrm{for IMMSB} \\
+        c_{k} &= |\{ f_{ik}=1,  i \in V\}| \qquad \textrm{for ILFM} \\
+    \end{align}
+\end{definition}
+
+
+For the different random variables defined, we want to characterise theirs "preferential attachment" effect. To do so, we rely on the burstiness definition for discrete distribution. given a graph $G$ and its model $\mathcal{M}$  :
+
+\begin{definition}[Discrete burstiness] \label{discrete_burstiness}
+    A distribution $P$ over a discrete random variable $y$ is bursty on a support $(n_0, n_1) \in \mathbb{N}^2$ iff for $n \in (1,..., N-2)$ and $n_1 \geq  n \geq n_0$ and the following holds : 
+    \begin{equation}
+        P(y \geq n+1 | y \geq n, \mathcal{M}) - P(y \geq n | y \geq n-1, \mathcal{M}) > 0
+    \end{equation}
+\end{definition}
+
+Those definitions encodes the fact that the probability to draw new value from a random distribution increase with the number of the same value already drawn from the same distribution.
+
+\subsection{Global Preferential attachment}
+
+For global preferential attachment, the degree $d_i$ directly corresponds to the number of edges of the node $i$. Let's denote $V(i)^{(n)}$ the set of edges connected to $i$ for $d_i = n$. By Exploiting the fact that the observations are independent given $\bm{\hat{F}}$ and $\bm{\hat{\Phi}}$, one has:
+%
+\begin{align*}
+    P(d_i \geq n+1 | d_i \geq n,  \mathcal{M}_e) &= 1 - P(d_i < n+1 | d_i \geq n, \mathcal{M}_e) \\
+                                 &= 1 - \prod_{j\notin V(i)^{(n)}} P(y_{ij}=0 | \mathcal{M}_e)
+\end{align*}
+
+
+Here, the link probability and its complementary $P(y_{ij}=0 | \mathcal{M}_e)$ are fixed and know for all $j\in V$. One can see that when $n$ increase, the set $j\notin V(i)^{(n)}$ decrease, and because  $P(y_{ij}=0 | \mathcal{M}_e) < 1$, one has, with respect to $\me$: 
+
+\begin{equation*}
+    P(d_i \geq n+1 | d_i \geq n) -  P(d_i \geq n | d_i \geq n-1) < 0
+\end{equation*}
+
+Hence, the global preferential attachment is not satisfied.
+
+\subsection{Local attachement preferentiel}
+
+\subsubsection{IMMSB}
+
+Consider that we known the class concentration, in other word the size of the class $(c_k)_{k\in \{1,..,K\}}$. \footnote{We know from the HDP that the class concentration proportions are drawn from a stick breaking process $\bm{\beta} \sim gem(\gamma)$. Then each feature vectors $f_i$ for each nodes are draw from a DP as $f_i \sim DP(\alpha_0, \bm{\beta})$. The expectaction for each class proportion comes from the expextation of a DP which is the base measure, and we have  $E[f_{ik}] = \beta_k$. The expected class proprtion for each class is thus $|E| \beta_k$.}
+
+\newcommand{\C}{\mathcal{C}}
+
+Furthermore let's denote $\C_k$ the set of nodes that belongs to the class $k$ (at a  times $t$, or in other words, when $n$ edges has been generated in the class $k$ such that $d_{ik}=n$)  such that $|\C_k|=c_k$. One has:
+
+\begin{align*}
+    P(d_{i,k} \geq n+1 | d_{i,k} \geq n, \mathcal{M}_e, \C_k) &= 1 - P(d_{i,k} < n+1 | d_i \geq n, \mathcal{M}_e) \\
+                                 &= 1 - P( \{ y_{ij}=0, j\notin V(i)^{(n)}, j\in \C_k   \} | \mathcal{M}_e) \\
+                                 &= 1 - (1 - \phi_k)^{c_k -n}
+\end{align*}
+
+The "bursty" distribution is stricly decreasing. No local preferential attachment here.
+
+\textcolor{red}{meme en sommant sur toute les configuration de classe différente, le resulat ne change pas.}
+
+\subsection{ILFM}
+
+The devellopment is similar for ILFM, considering the hard membership assignement is straigthforward and given by $F$.
+
+\begin{align*}
+    P(d_{i,k} \geq n+1 | d_{i,k} \geq n, \mathcal{M}_e, \C_k) &= 1 - P(d_{i,k} < n+1 | d_i \geq n, \mathcal{M}_e) \\
+                                 &= 1 - P( \{ y_{ij}=0, j\notin V(i)^{(n)}, j\in F^{(k)} \} |\mathcal{M}_e) \\
+                                 &= 1 - \prod_{j\notin V(i)^{(n)}, j\in F_{(k)} }P( y_{ij}=0 |  \mathcal{M}_e) \\
+                                 &= 1 - \prod_{j\notin V(i)^{(n)}, j\in F_{(k)} }(1- \sigma(f_i\Phi f_j^T))|  \mathcal{M}_e)
+\end{align*}
+
+With $F^{(k)}$ the set of nodes that have the k-th feature active. Again stricly decreasing (with the approach used with the global preferential attachment.
+
+
+%it is even worse, if we says that, a feature if f_ik is zeros in F, then the bursty equation for d_ik for ILFM is zeros.
+
+
+\subsection{Que peut on dire ?}
+
+Tu m'avais suggerais de retirer l'indice t, car pas présent dans la définition. Mais ce qui se cache derrière et le fait que assumons que, pour la génération 'n+1' la configuration des sequences (les liens ou les classes) sont les même que précededment, or dans la définitoin de la distribution (pmf ou la bursty), il ne me semble pas que l'on soit dans un cadre processus stochastique. Nous laisson planer une ambuité forte entre la définition du burstiness qui est soit définie comme une probabilité/distribution, soit considéré comme un \textbf{process} d'ou l'indice t.
+
+Donc que peut on dire ? ~\\
+
+Si l'on veut formaliser ce que l'on mesure dans les expériences que j'ai conduite pour mesurer les degrés, alors il faudrait définir ce degré comme un mesure empirique, définit comme suit : 
+\begin{equation}
+    d_N(i) = \sum_{i\neq j} \delta_{y_{ij}=1} = \sum_{i\neq j } y_{ij}
+\end{equation}
+
+
+De la on peut peut-être définir la distribution empirique : 
+
+\begin{equation}
+    P(d_N(i)) = \frac{1}{N} d_N(i)
+\end{equation}
+
+Ou peut-etre raisonner sur l'esperance empirique : 
+
+\begin{equation}
+    E[d_N(i)] = \sum_{i\neq j} E[y_{ij}] = \sum_{i\neq j} p(y_{ij}=1 | \me)
+\end{equation}
+
+
+Et ensuite peut être existe t'il un therome de weak convergence pour les sequence indépante, lorsque $N$ tend vers l'infinie ?  (je n'ai rien trouvé d'évident à ce sujet)~\\
+
+
+En tout cas, après avoir tortillé les équations dans $M_e$ je me dit que dans ce cadre,  nous formulons mal le probléme/la question, la seule connaissance de $F$ et $\Phi$, et du support de $F$ (hard ou soft) ne suffit pas pour conclure sur les propriété d'un modéle bayésien, d'ailleurs qu'est ce qui m'empêche de choisir un $F$ et un $\Phi$ uniforme ?
+
+Il n'y a qu'un seul modéle il me semble, c'est $\mg$, et avec ce que l'on a appellé $M_e$ (une réalisation des paramètres latent en somme) on devrait raisonner avec un distribution empirique qui doit converger vers la vrai distributoin du modéle. (le 'vrai' modéle , c'est a dire le modéle complet, Mg, et dont les définitoin et propriété de la burstiness me semble être correct.)
+
+
+\bibliographystyle{unsrt}
+\bibliography{a}
+
+\end{document}
+
+

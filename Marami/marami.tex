@@ -68,16 +68,15 @@
 %\title[short header title]{title}
 \title[]{Une Etude des Modèles Mixed-Membership pour la Prédiction de Liens dans les Réseaux Sociaux}
 
-%\author[1]{Adrien}{Dulac}
-%\author[2]{first name 2}{last name 2}
-%
-%% addresses are automatically numbered
-%\address{...\\...\\
-%         ..., country}
-%        {e-mail 1}
-%\address{...\\...\\
-%         ..., country}
-%        {e-mail 1}
+\author[1]{Adrien}{Dulac}
+\author[1]{Eric}{Gaussier}
+\author[2]{Christine}{Largeron}
+
+% addresses are automatically numbered
+\address{Univ. Grenoble Alpes, CNRS, Grenoble INP, LIG - F-38000 Grenoble}
+        {{adrien.dulac, eric.gaussier}@imag.fr}
+\address{Univ Lyon, CNRS, UJM, LHC, UMR 5516, F-42023, Saint-Etienne}
+        {christine.largeron@univ-st-etienne.fr}
 
 %\author{\IEEEauthorblockN{Adrien Dulac\IEEEauthorrefmark{1}, Eric Gaussier\IEEEauthorrefmark{1} and Christine Largeron \IEEEauthorrefmark{2}}\\
 %\IEEEauthorblockA{\IEEEauthorrefmark{1}
@@ -88,13 +87,14 @@
 %Laboratoire Hubert Curien UMR 5516, F-42023, SAINT-ETIENNE, France\\ 
 %Email: christine.largeron@univ-st-etienne.fr}}
 
-\abstract{We assess here whether standard stochastic mixed membership models are adapted for link prediction in social networks by studying how they handle homophily and preferential attachment. To study these properties, we first introduce formal definitions of these phenomena; we then study how stochastic mixed membership models relate to these definitions. Our theoretical analysis reveals that standard stochastic mixed membership models comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachment, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft, and in the latter case on whether the underlying latent factor distribution is bursty or not. We illustrate these elements on synthetic and real networks by using the generative properties of Bayesian model.}
+\abstract{We assess whether standard stochastic mixed membership models are adapted for link prediction in social networks by studying how they handle homophily and preferential attachment. We first introduce formal definitions of these phenomena; we then study how stochastic mixed membership models relate to these definitions. Our theoretical analysis reveals that standard stochastic mixed membership models comply with homophily with the similarity that underlies them. For preferential attachment, the situation is more contrasted: if these models do not comply with global preferential attachment, their compliance to local preferential attachment depends on whether the memberships to latent factors are hard or soft, and in the latter case on whether the underlying latent factor distribution is bursty or not. We illustrate these elements on synthetic and real networks by using the generative properties of Bayesian model.}
 
-\resume{Nous évaluons dans ce papier si la classe de modèles, dits mixed-membership, est adaptée pour la prédiction de liens dans les réseaux sociaux en étudiant les comportements de ces modèles vis-à-vis de l'homophilie et de l'attachement préférentiel. Nous introduisons les définitions de ces phénomènes, puis analysons le comportement de  ces modèles. Notre étude théorique révèle que les modèles mixed-membership satisfont l'homophilie avec la similarité naturelle qui les sous-tend. Pour l'attachement préférentiel la situation est plus contrastée: ces modèles ne satisfont pas l'attachement préférentiel global. En revanche, le respect de l'attachement préférentiel local est possible selon que l'appartenance aux classes latentes est stricte ou partielle et, dans ce dernier cas si la distribution sur les classes latentes est bursty ou pas. Nous illustrons ces résultats par des expérimentations réalisées sur des réseaux réels et synthétiques.}
+\resume{Nous évaluons si la classe de modèles, dits mixed-membership, est adaptée pour la prédiction de liens dans les réseaux sociaux en étudiant les comportements de ces modèles vis-à-vis de l'homophilie et de l'attachement préférentiel. Nous introduisons les définitions de ces phénomènes, puis analysons le comportement de  ces modèles. Notre étude théorique révèle que les modèles mixed-membership satisfont l'homophilie avec la similarité naturelle qui les sous-tend. Pour l'attachement préférentiel la situation est plus contrastée: ces modèles ne satisfont pas l'attachement préférentiel global. En revanche, le respect de l'attachement préférentiel local est possible selon que l'appartenance aux classes latentes est stricte ou partielle et, dans ce dernier cas si la distribution sur les classes latentes est bursty ou pas. Nous illustrons ces résultats par des expérimentations réalisées sur des réseaux réels et synthétiques.}
 
-\keywords{Hierachical baysian Models, Random Graph, Machine Learning, Social Networks}
+%\keywords{Hierachical baysian Models, Random Graph, Machine Learning, Social Networks}
+\keywords{Baysian Models, Random Graph, Machine Learning, Social Networks}
 
-\motscles{Modèle Bayesian Hérarchique, Graphe aléatoire, Apprentissage Automatique, Réseaux Sociaux}
+\motscles{Graphe aléatoire, Apprentissage Automatique, Réseaux Sociaux}
 
 
 %
@@ -200,7 +200,7 @@ s(i,j) > s(i',j')  \implies \pr(y_{ij}=1 \mid \mathcal{M}_e) > \pr(y_{i'j'}=1  \
 
 \noindent Cette définition capture directement l'effet \emph{"plus deux n\oe{}uds sont similaires, plus ils ont une chance de se connecter"}. 
 
-Différentes similarités peuvent être considérées, tant qu'elles sont basées sur la mesure des propriétés des n\oe{}uds considérés.  Dans les modèles \mmm, ces propriétés ne sont pas directement observées, et sont encodées dans les caractéristique latentes. D'après les paramètres des modèles, nous défissons la notion de similarité naturelle comme étant $s_n(i,j) = \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top$.
+Différentes similarités peuvent être considérées, tant qu'elles sont basées sur la mesure des propriétés des n\oe{}uds considérés.  Dans les modèles \mmm, ces propriétés ne sont pas directement observées, et sont encodées dans les caractéristiques latentes. D'après les paramètres des modèles, nous défissons la notion de similarité naturelle comme étant $s_n(i,j) = \mat{\hat{f}}_{i} \mat{\hat{\Phi}} \mat{\hat{f}}_j^\top$.
 
 
 On peut voir que \ilfm~  et \immsb, dans le contexte $\mathcal{M}_e$ sont homophiliques avec le respect de $s_n$. En effet, $\pr(y_{ij}=1 \mid \mathcal{M}_e)$ augmente avec $s_n$  pour  \ilfm\ comme la fonction sigmoïde est strictement croissante. De plus, en marginalisant sur les paramètres $z$ dans \immsb\ on a :
@@ -239,21 +239,24 @@ Soit $i$ un n\oe{}ud dans un réseau social et soit $d_i$ son degré.
 
 Ces définitions traduisent directement le fait que plus un n\oe{}ud a de connections plus il aura de chance d'en avoir de nouvelles. La différence entre le cas global et local est que le degré est généralement inconnu dans le cas local, et est ici estimé par son espérance.
 
-Pour l'attachement préférentiel global, le degré $d_i$ correspond au nombre de liens du n\oe{}ud $i$. En exploitant le fait que les observations sont indépendantes étant donné $\mat{\hat{F}}$ et $\mat{\hat{\Phi}}$, nous avons:
 
 
-\begin{align}
-\pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) = 1 - \prod_{j \notin \mathcal{V}(i)} p(y_{ij} = 0 \mid d_{i} \ge n, \mathcal{M}_e) \nonumber \\
-= 1 - \prod_{j \notin \mathcal{V}(i)} (1 - p(y_{ij} = 1 \mid d_{i} \ge n, \mathcal{M}_e)) \nonumber
-\end{align}
+Pour l'attachement préférentiel global, le degré $d_i$ correspond au nombre de liens du n\oe{}ud $i$. En notant $V(i)^{(n)}$ l'ensemble des liens connecté à $i$ pour $d_i = n$ et en exploitant l'indépendance des liens, $\bm{\hat{F}}$ et $\bm{\hat{\Phi}}$ donnés, on a :
+%
+\begin{align*}
+    P(d_i \geq n+1 | d_i \geq n,  \mathcal{M}_e) &= 1 - P(d_i < n+1 | d_i \geq n, \mathcal{M}_e) \\
+                                 &= 1 - \prod_{j\notin V(i)^{(n)}} P(y_{ij}=0 | \mathcal{M}_e)
+\end{align*}
 
-Où $\mathcal{V}(i)$ désigne l'ensemble des n\oe{}uds connectés à $i$. Soit $c=\min_{j \in V}  (1-p(y_{ij} = 1 \mid d_{i} \ge n, \mathcal{M}_e))$. Nous avons:
+Les probabilités des liens et leurs complémentaires $P(y_{ij}=0 | \mathcal{M}_e)$ sont fixées pour tout $j\in V$. On voit que la taille de  l'ensemble $j\notin V(i)^{(n)}$ décroit avec $n$ et comme la probabilité est inférieur à 1, nous avons, avec le conditionnement à $\mathcal{M}_e$ implicite :
 
-\[
-0 \le \pr(d_{i} \ge n+1 \mid d_{i} \ge n, \mathcal{M}_e) \le (1 - c^{N-1-n})
-\]
+\begin{equation*}
+    P(d_i \geq n+1 | d_i \geq n) -  P(d_i \geq n | d_i \geq n-1) < 0
+\end{equation*}
 
-Comme $c < 1$ et, $1- C^{N-1-n}$ décroit est vaut zéro pour $n=N-1$. Nous avons donc la propriété suivante:
+Cela conduit à la proposition suivante :
+
+
 
 \begin{proposition}[]
 \label{pref-attch-glob}

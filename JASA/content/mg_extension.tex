@@ -5,7 +5,7 @@ In this section we provide an extension of the study of the preferential attachm
 \begin{itemize}
     \item Recall the representation theorem \cite{orbanz2015bayesian} about exchangeable sequence and arrays and it's consequences on random networks.%Show the relation between exchangeable sequence (jointly exchangeable adjacency matrix) and the burstiness phenomenon associated to the sum over realization of the exchangeable sequence,
     \item Characterizing the burstiness phenomenon over the size of the classes that the models produce in their generative process (feature burstiness). 
-    \item Specifying the limitation of studying the preferential attachment in the $M_e$ context by specifying it's relation with $M_g$. The $M_g$ context represents the models seen from it's hyper-parameters while $M_e = (\hat F, \hat \Phi)$ represents the model seen from an estimated model (with a inference procedure like a MCMC or a variational inference).
+    \item Specifying the limitation of studying the preferential attachment in the $me$ context by specifying it's relation with $mg$. The $mg$ context represents the models seen from it's hyper-parameters while $me = (\hat F, \hat \Phi)$ represents the model seen from an estimated model (with a inference procedure like a MCMC or a variational inference).
 \end{itemize}
 
 \subsubsection{Recall of Definitions and Theorems on Exchangeability}~\\
@@ -86,7 +86,7 @@ The question that arise is how are distributed the $N_{1:k}$ random variables an
 \begin{definition}[Preferential attachment (for class size)]
 Let $k$ be a class in a social network and let $N_k$ denote its size. 
 \begin{description}
-    \item[(3)] \emph{feature preferential attachment}: we say that a probabilistic link prediction model $M_g$ satisfies the feature preferential attachment iff, for any latent class $k$, the model satisfy the following , $\pr(N_k \ge n+1 \mid N_k \ge n, \mathcal{M}_g)$ increases with $n \in [0,\dbinom{N}{2}]$.
+    \item[(3)] \emph{feature preferential attachment}: we say that a probabilistic link prediction model $mg$ satisfies the feature preferential attachment iff, for any latent class $k$, the model satisfy the following , $\pr(N_k \ge n+1 \mid N_k \ge n, \mathcal{M}_g)$ increases with $n \in [0,\dbinom{N}{2}]$.
 \end{description}
 \label{def:burst-soc-net2}
 \end{definition}
@@ -145,7 +145,7 @@ The right part of equation \eqref{eq:memb_ex} has known closed form similar to t
 
 \subsubsection{Local preferential attachment - General case}~\\
 
-In the previous part we studied the preferential attachment in a context where we fit the model parameters. We showed that according to the type of prior (hard vs soft), it impacted the preferential attachment properties on the random network. To highlight this property we only needed to focus our analysis on the distribution conditioned on what we called $M_e$, which is actually an estimation of the parameters $F$ and $\Phi$ noted $\hat F$ and $\hat \Phi$. Those learned parameters are drawn from an approximate posterior noted $\hat P(F, \phi | Y, M_g) \propto P(Y|F, \Phi)P(F|M_g)P(F|M_g)$ which came from the inference process such that $M_e = (\hat F, \hat \Phi) \sim \hat P(F, \phi | Y, M_g)$. Thus which approximates the true posterior and provide the following generative equations :
+In the previous part we studied the preferential attachment in a context where we fit the model parameters. We showed that according to the type of prior (hard vs soft), it impacted the preferential attachment properties on the random network. To highlight this property we only needed to focus our analysis on the distribution conditioned on what we called $me$, which is actually an estimation of the parameters $F$ and $\Phi$ noted $\hat F$ and $\hat \Phi$. Those learned parameters are drawn from an approximate posterior noted $\hat P(F, \phi | Y, mg) \propto P(Y|F, \Phi)P(F|mg)P(F|mg)$ which came from the inference process such that $me = (\hat F, \hat \Phi) \sim \hat P(F, \phi | Y, mg)$. Thus which approximates the true posterior and provide the following generative equations :
 
 \begin{equation}
     p(Y | \hat F, \hat \Phi) = \prod_{i<j} f_i \Phi f_j^T
@@ -154,27 +154,27 @@ In the previous part we studied the preferential attachment in a context where w
 We define the expected degree as :
 
 \begin{equation}
-d_{i}^{M_g} = \sum_{j\in V} p(y_{ij}=1 | M_g)
+d_{i}^{mg} = \sum_{j\in V} p(y_{ij}=1 | mg)
 \end{equation}
 
 It is straightforward that the expected (global) degree is constant for any nodes in the networks for exchangeable models since  the expected link prediction is constant with $N$, and so on for IMMSB and ILFM. 
 
-Nevertheless one can ask about the  expected (local) degree inside a class. The expected local degrees ($M_g$ case) given a class, is trivially given from the graphical models and correspond the following quantities  :
+Nevertheless one can ask about the  expected (local) degree inside a class. The expected local degrees ($mg$ case) given a class, is trivially given from the graphical models and correspond the following quantities  :
 \begin{itemize}
-	\item $\sum_{j\in V} p(y_{ij}=1  | z_{ij, ij}=k, M_g) = N \lambda_1 / (\lambda_1 + \lambda_0)$ for IMMSB,
-	\item $\sum_{j\in V} p(y_{ij}=1  | f_{ik, jk}=1, M_g)$  for ILFM. Note that we can't compute it in a closed form expression for the same reason that previously of non-conjugacy.
+	\item $\sum_{j\in V} p(y_{ij}=1  | z_{ij, ij}=k, mg) = N \lambda_1 / (\lambda_1 + \lambda_0)$ for IMMSB,
+	\item $\sum_{j\in V} p(y_{ij}=1  | f_{ik, jk}=1, mg)$  for ILFM. Note that we can't compute it in a closed form expression for the same reason that previously of non-conjugacy.
 \end{itemize}
 
 In the general case, if we don't know the class a priori, the local degree expectation take the following form :
 
 \begin{itemize}
-\item  $d_{i,k}^{M_g} = \sum_{j\in V} p(y_{ij}=1, z_{ij, ij}=k | M_g)$ for IMMSB,
-\item  $d_{i,k}^{M_g} = \sum_{j\in V} p(y_{ij}=1, f_{ik, jk}=1| M_g)$ for ILFM.
+\item  $d_{i,k}^{mg} = \sum_{j\in V} p(y_{ij}=1, z_{ij, ij}=k | mg)$ for IMMSB,
+\item  $d_{i,k}^{mg} = \sum_{j\in V} p(y_{ij}=1, f_{ik, jk}=1| mg)$ for ILFM.
 \end{itemize}
 
-Note that it is easy to show we use this definition to define the degree in the $M_e$ context :
+Note that it is easy to show we use this definition to define the degree in the $me$ context :
 \begin{align*}
- d_{i,k}^{M_e} &= \sum_{j\in V} p(y_{ij}=1, z{i\rightarrow j}=k, z_{i\leftarrow j =k} | M_e) \\
+ d_{i,k}^{me} &= \sum_{j\in V} p(y_{ij}=1, z{i\rightarrow j}=k, z_{i\leftarrow j =k} | me) \\
   &= L(\phi_{kk} f_{ik} f{jk})
  \end{align*}
  
@@ -183,30 +183,30 @@ With the function $L()$ being the sigmoid for ILFM and the identity for IMMSB.
 In turns out that again, this expected local degree have a closed form for (i)MMSB, and not for ILFM. For IMMSB we have the following :
 
 \begin{align*}
-p(y_{ij}=1, z_{ij, ij}=k | M_g) &= p(y_{ij}=1 |  z_{ij, ij}=k, M_g) p( z_{ij, ij}=k | M_g) \\
- &=E_{\phi_{kk}}[ p(y_{ij}=1 |  z_{ij, ij}=k, \phi_{kk}, M_g) ] E_{f_i}[ p( z_{ij}=k | f_i, M_g)] E_{f_j}[ p( z_{ji}=k | f_j, M_g)] \\
+p(y_{ij}=1, z_{ij, ij}=k | mg) &= p(y_{ij}=1 |  z_{ij, ij}=k, mg) p( z_{ij, ij}=k | mg) \\
+ &=E_{\phi_{kk}}[ p(y_{ij}=1 |  z_{ij, ij}=k, \phi_{kk}, mg) ] E_{f_i}[ p( z_{ij}=k | f_i, mg)] E_{f_j}[ p( z_{ji}=k | f_j, mg)] \\
  &= \frac{\lambda_1}{\lambda_0+\lambda_1}\frac{ \alpha_k\alpha_k'}{ (\sum_k \alpha_k)^2}
 \end{align*}
 
-Note that from our definitions we have $d_i^{M_g} = \sum_k d_{i,k}^{M_g}$.
+Note that from our definitions we have $d_i^{mg} = \sum_k d_{i,k}^{mg}$.
 
 
 \paragraph{}
-\textcolor{red}{Remark on the definition of the burstiness in the $M_g$ mode (expected degree):
+\textcolor{red}{Remark on the definition of the burstiness in the $mg$ mode (expected degree):
 \hrulefill
 \hrulefill
 ~\\
 }
 
-for the burstiness in the "$M_g$" with de degree local defined as $d_{i,k}^{M_g}$  is trivially bursty, but makes no so much sense for the following reason :
+for the burstiness in the "$mg$" with de degree local defined as $d_{i,k}^{mg}$  is trivially bursty, but makes no so much sense for the following reason :
 
 The burstiness equation in this context can be written as :
 
 \begin{equation}
-b_n = \frac{p(d_{i,k}^{M_g} = n+1)}{p(d_{i,k}^{M_g} = n)}  \nearrow_? n 
+b_n = \frac{p(d_{i,k}^{mg} = n+1)}{p(d_{i,k}^{mg} = n)}  \nearrow_? n 
 \end{equation}
 
-We know that $d_{i,k}^{M_g} = N \epsilon_k$ which is equivalent to says that $p(d_{i,k}^{M_g})$ is a Dirac distribution noted $\delta (N\epsilon_k)$. It means that the burstiness equation is only definite for $n = N\epsilon_k$, (otherwise the denominator is null), and hence its derivative is not defined.
+We know that $d_{i,k}^{mg} = N \epsilon_k$ which is equivalent to says that $p(d_{i,k}^{mg})$ is a Dirac distribution noted $\delta (N\epsilon_k)$. It means that the burstiness equation is only definite for $n = N\epsilon_k$, (otherwise the denominator is null), and hence its derivative is not defined.
 
 
 \textcolor{red}{End fo Remark
@@ -220,7 +220,7 @@ The question of the local burstiness we should ask instead, is by seeking what a
 In a first approach, let's assume we know the relative size of the class $k$ noted $N_i^k$:
 
 \begin{align*}
-P(d_{i,k}=n | M_g) &= \dbinom{N}{n} P(\{y_{ij}=1, z_{\{ij,ji\}}=k, j\in [1,n]\}, \\ & \{y_{ij}=0, z_{\{ij,ji\}}=k, j\in [1,N_i^k-n]\}, \\
+P(d_{i,k}=n | mg) &= \dbinom{N}{n} P(\{y_{ij}=1, z_{\{ij,ji\}}=k, j\in [1,n]\}, \\ & \{y_{ij}=0, z_{\{ij,ji\}}=k, j\in [1,N_i^k-n]\}, \\
 &  \{\ z_{\{ij,ji\}}\neq k, j\in [1,N-N_i^k]\}) \\
 \end{align*}
 
