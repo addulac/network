@@ -1,0 +1,18 @@
+
+\begin{tikzpicture}[scale=.5]
+
+
+
+\node (y) [rectangle, fill=black!10, minimum height=2cm, minimum width=2cm] {$Y$};
+\node (eq) [right=0.1cm of y] {$\approx$};
+\node (p) [rectangle, fill=blue!40, minimum height=2cm, minimum width=1cm, right=0.1cm of eq] {$F$};
+\node (f) [rectangle, fill=green!40, minimum height=1cm, minimum width=1cm, yshift=0.5cm , right=0.3cm of p] {$\Phi$};
+\node (pt) [rectangle, fill=blue!40, minimum height=1cm, minimum width=2cm,  right=0.3cm of f] {$F^T$};
+
+\node[below of=y, yshift=-0.25cm] (Y) {$N \times N$};
+\node (F) [below of=p, yshift=-0.25cm] {$N \times K$};
+\node (P) [below of=f, yshift=0.1cm] {$K \times K$};
+
+
+\end{tikzpicture}
+
