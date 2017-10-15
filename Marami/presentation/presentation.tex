@@ -1,0 +1,192 @@
+%\documentclass[handout, xcolor={table, dvipsnames}]{beamer}
+\documentclass[9pt, xcolor={table, dvipsnames}]{beamer}
+
+\usepackage{fix-cm} % HUGE font size:\fontsize{50}{60}\selectfont
+\usetheme{Warsaw}
+%\usetheme{Frankfurt}
+%\usetheme{Rochester}
+%\usecolortheme{seagull}
+%\usecolortheme[RGB={205,173,0}]{structure} 
+
+%\usepackage{mathtools} %%% Conflict with xparse !!!!!!
+\usepackage{marvosym}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{bayesnet} 
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{subfigure}
+
+
+%%%%%%%%%%% Box 
+\usepackage{calc}%    For the \widthof macro
+\usepackage{xparse}%  For \NewDocumentCommand
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+\usecolortheme[named=OliveGreen]{structure} 
+\setbeamertemplate{items}[ball] 
+\setbeamertemplate{blocks}[rounded][shadow=true] 
+%\setbeamertemplate{headline}{} % no ToC on top of each slides
+\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line 
+\addtobeamertemplate{footline}{\hfill~~\insertframenumber/\inserttotalframenumber~~}
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line 
+
+%\useoutertheme{infolines} 
+\setbeamercolor{mini frame}{fg=darkred} % marche pas!!!
+
+\makeatletter
+\def\insertsubsectionnavigationhorizontal#1#2#3{%
+    \hbox to #1{{%
+        \usebeamerfont{subsection in head/foot}\usebeamercolor[fg]{subsection in head/foot}
+        \beamer@currentsubsection=0%
+        \def\sectionentry##1##2##3##4##5{}%
+        \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\c@section%
+      \ifnum##2>\beamer@currentsubsection%
+      \box\beamer@sectionbox\hskip1.875ex plus1fill%
+            \hbox to 0pt{%
+                    \global\beamer@section@min@dim\beamer@tempdim
+                        \beamer@link(##4){%
+                            \usebeamerfont{mini frame}%
+                            \ifnum\c@section=##1%
+                                \ifnum\c@subsection=##2%
+                                    \usebeamercolor[fg]{mini frame}%
+                                    \ifnum\c@subsectionslide=##3%
+                                        \usebeamertemplate{mini frame}%\beamer@minislidehilight%
+                                    \else%
+                                        \usebeamertemplate{mini frame in current subsection}%\beamer@minisliderowhilight%
+                                    \fi%
+                                \else%
+                                    \usebeamercolor{mini frame}%
+                                    %\color{fg!50!bg}%
+                                    \usebeamertemplate{mini frame in other subsection}%\beamer@minislide%
+                                \fi%
+                            \else%
+                                \usebeamercolor{mini frame}%
+                                                                %\color{fg!50!bg}%
+                                \usebeamertemplate{mini frame in other subsection}%\beamer@minislide%
+                            \fi%
+                        }%
+                \hskip-10cm plus 1fil%
+            }%
+            \fi\fi\fi\ignorespaces
+        }%
+        #2\hskip.3cm\setbox\beamer@sectionbox=\hbox{}%
+        \hskip-1.875ex plus-1fill\dohead%
+        \box\beamer@sectionbox\hfil\hskip.3cm%
+        #3
+    }}
+}
+\makeatother
+
+\setbeamertemplate{headline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.65ex,dp=1.5ex,right]{section in head/foot}%
+    \usebeamerfont{section in head/foot}\bfseries\insertsectionhead\hspace*{2ex}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.65ex,dp=1.5ex,left]{subsection in head/foot}%
+    \usebeamerfont{subsection in head/foot}\setbeamercolor{section in head/foot}{fg=black,bg=white}
+    \vspace*{.01cm}\insertsubsectionnavigationhorizontal{1cm}{\hskip-.1cm}{}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\setbeamertemplate{footline}
+{
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{author in head/foot}%
+            \usebeamerfont{author in head/foot}\insertshortauthor\hspace{2ex}~~%\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.588888\paperwidth,ht=2.25ex,dp=1ex,left]{title in head/foot}%
+            \hspace{2ex}\usebeamerfont{title in head/foot}\insertshorttitle
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.088888\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+            \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}~~
+    \end{beamercolorbox}}%
+    \vskip0pt%
+}
+
+%\usepackage[footheight=1em]{beamerthemeboxes}
+%\addfootboxtemplate{\color{black}}{\color{white}\hfill\insertframenumber/\inserttotalframenumber\hspace{2em}\null}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Summary}
+    \tableofcontents[currentsection, currentsubsection]
+  \end{frame}
+}
+
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Sommaire}
+    \tableofcontents[currentsection, currentsubsection]
+  \end{frame}
+}
+
+% Variable de compilation
+\newif\ifbeamer
+\beamertrue
+\newcommand{\beamer}[2]{\ifbeamer #1 \else #2 \fi}
+%%%
+
+   
+
+\makeatletter
+\NewDocumentCommand{\DrawBox}{s O{}}{%
+    \tikz[overlay,remember picture]{
+    \IfBooleanTF{#1}{%
+        \coordinate (RightPoint) at ($(left |- right)+(\linewidth-\labelsep-\labelwidth,0.0)$);
+    }{%
+        \coordinate (RightPoint) at (right.east);
+    }%
+    \draw[red,#2]
+      ($(left)+(-0.2em,0.9em)$) rectangle
+      ($(RightPoint)+(0.2em,-0.3em)$);}
+}
+
+\NewDocumentCommand{\DrawBoxWide}{s O{}}{%
+    \tikz[overlay,remember picture]{
+    \IfBooleanTF{#1}{%
+        \coordinate (RightPoint) at ($(left |- right)+(\linewidth-\labelsep-\labelwidth,0.0)$);
+    }{%
+        \coordinate (RightPoint) at (right.east);
+    }%
+    \draw[red,#2]
+      ($(left)+(-\labelwidth,0.9em)$) rectangle
+      ($(RightPoint)+(0.2em,-0.3em)$);}
+}
+\makeatother
+%%%%% ! Box
+
+
+\lstnewenvironment{C}[1]
+{\lstset{language=C,
+      frame=tBRl,
+      basicstyle=\ttfamily\scriptsize,stringstyle=\emph,showstringspaces=false,
+      numbers=left,numberstyle=\tiny,
+      breaklines=true, columns=flexible, title={#1}}
+}{}
+\lstnewenvironment{C1}[1]
+{\lstset{language=C,
+      frame=tBRl,
+      basicstyle=\ttfamily\scriptsize,stringstyle=\emph,showstringspaces=false,
+      breaklines=true, columns=flexible, title={#1}}
+}{}
+
+\lstset{language=C,
+  basicstyle=\ttfamily\tiny,%scriptsize,
+  columns=flexible}
+
+\newtheorem{Problemes}{Problèmes}
+\newtheorem{Avantages}{Avantages}
+\newtheorem{Inconvenients}{Inconvénients}
+
+\input{slide}
+
