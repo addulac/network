@@ -1,4 +1,7 @@
 *.swp
+*.nav
+*.snm
+*.run.xml
 *.aux
 *.glo
 *.idx
@@ -22,6 +25,7 @@
 *.mtc1
 *.out
 *.synctex.gz
+presentation.pdf
 
 /*.pdf
 /*/*.pdf
