@@ -61,7 +61,7 @@
     \hline
     Community & Modularity, Clustering Coefficient (Newman 2006) \\
     \hline
-    Homophily & Homophily Coefficient (McPherson 2001) \\
+    Homophily & Homophily Coefficient (McPherson 2001, Kleinberg 2010) \\
     \hline
     Preferential Attachment / Burstiness & Degree Distribution (Barab\'asi 1999) \\
     \hline
@@ -84,8 +84,8 @@
 
     \textit{\Large{We focus on two models in the class of Mixed-Membership Models: }}
     \begin{itemize}
-        \item IMMSB (infinite Mixed-Membership Stochastic Blockmodel)
-        \item ILFM (infinite Latent Feature Model) 
+        \item IMMSB (Infinite Mixed-Membership Stochastic Blockmodel)
+        \item ILFM (Infinite Latent Feature Model) 
     \end{itemize}
 
     \vspace{2em}
@@ -94,7 +94,7 @@
     \vspace{1em}
     \textit{\Large{homophily?}}\\
     \vspace{1em}
-    \textit{\Large{What is the impact on predictions?}}
+    \textit{\Large{What is the impact?}}
 
 
 \pause
@@ -281,7 +281,7 @@
 
 \begin{frame}[t]{Random Graph model}
 
-Given a Graph $G=(V,E)$, and $\textcolor{blue}{F}$ and $\textcolor{green}{\Phi}$ such that:
+Given a Graph $G=(V,E)$,  $\textcolor{blue}{F}$ and $\textcolor{green}{\Phi}$ such that:
 
 \begin{equation*}
     Y \sim P(Y | \textcolor{blue}{F}, \textcolor{green}{\Phi}) =h( \textcolor{blue}{F}\textcolor{green}{\Phi} \textcolor{blue}{F}^T )
@@ -290,8 +290,8 @@ Given a Graph $G=(V,E)$, and $\textcolor{blue}{F}$ and $\textcolor{green}{\Phi}$
 
 \begin{description}
 \setlength{\itemindent}{-2cm}
-\item[\textcolor{blue}{$F$}]: a latent feature matrix (describe the membership of nodes)
-\item[\textcolor{green}{$\Phi$}]: a latent weight matrix (describe the correlation between classes)
+\item[\textcolor{blue}{$F$}]: a latent feature matrix (describes the membership of nodes)
+\item[\textcolor{green}{$\Phi$}]: a latent weight matrix (describes the correlation between classes)
 \item[$h$]: a mapping function to a probability space.
 \end{description}
 
@@ -325,9 +325,9 @@ Given a Graph $G=(V,E)$, and $\textcolor{blue}{F}$ and $\textcolor{green}{\Phi}$
     The Stochastic Blockmodel \footfullcite{goldenberg2010survey}
 
     \begin{itemize}
-        \item We have $K$ blocks and,
-        \item Any node $i$ belongs to one block $c$:
-        \item Each weights $(\phi_{kl})_{k,l \in (1, .., K)^2}$ ,  encode the strength between two blocks.
+        \item We have $K$ blocks
+        \item Any node $i$ belongs to one block $c$
+        \item Each weight $(\phi_{kl})_{k,l \in (1, .., K)^2}$ ,  encodes the strength between two blocks.
     \end{itemize}
 
     \vspace{1em}
@@ -360,20 +360,20 @@ Given a Graph $G=(V,E)$, and $\textcolor{blue}{F}$ and $\textcolor{green}{\Phi}$
 
     Relax the single membership assumption (soft clustering).
 
-    \begin{block}{Binary features}
+    \begin{block}{Binary features (ILFM)}
         $f_i$ = \raisebox{-2pt}{\input{img/feature3}}
     \end{block}
-    Also relax the fixed number of features $K$ with an Indian Buffet Process (IBP). \\
+    ILFM relax the fixed number of features $K$ with an Indian Buffet Process (IBP). \\
     %And Gaussian weights...
 
     \vspace{0.2cm}
     \emph{or}
     \vspace{0.2cm}
 
-    \begin{block}{Proportion features}
+    \begin{block}{Proportion features (MMSB)}
         $f_i$ = \raisebox{-2pt}{\input{img/feature4}} \hspace{2em} $\sum f_i=1$
     \end{block}
-    Also relax the fixed number of features $K$ with a (Hierarchical) Dirichlet Process (DP). \\
+    IMMSB also relax the fixed number of features $K$ with a (Hierarchical) Dirichlet Process (DP). \\
     %And beta weights...
     
 \end{frame}
@@ -441,17 +441,18 @@ Given a Graph $G=(V,E)$, and $\textcolor{blue}{F}$ and $\textcolor{green}{\Phi}$
 
     \begin{itemize}
     \item Global degree : $d_i  = \sum_{j\neq i} y_{ij}$
-    \item Local degree :  $d_{ik}  = \sum_{j\neq i} y_{ij} \mathbbm{1}(i,j\in \mathcal{C}_k)$
-    \item Expected Local degree :  $D_{ik}  = \sum_{j\neq i} P(y_{ij}=1, i,j\in \mathcal{C}_k | \mathcal{M}_e) $
+    %\item Local degree :  $d_{ik}  = \sum_{j\neq i} y_{ij} \mathbbm{1}(i,j\in \mathcal{C}_k)$
+    %\item Expected Local degree :  $D_{ik}  = \sum_{j\neq i} P(y_{ij}=1, i,j\in \mathcal{C}_k | \mathcal{M}_e) $
+    \item  Local degree :  $d_{ik}  = \sum_{j\neq i} P(y_{ij}=1, i,j\in \mathcal{C}_k | \mathcal{M}_e) $
     \end{itemize}
     \end{definition}
 
+    %Note: In practice, class are not directly observed, thus we have to resort to the the expected local degree.
     %
-    % I don't like this assertin, still its incorecct, membership for ILFM are hard and
+    % I don't like this assertion, still its incorecct, membership for ILFM are hard and
     % Known given F. For MMSB, it can be says tough the membership are not direcly
     % observed stil it's an expection over the Z.
     %
-    %Note: In practice, class are not directly observed, thus we have to resort to the the expected local degree.
 
 
 
@@ -482,6 +483,22 @@ we say that  $\mathcal{M}_e$ satisfies the local preferential attachment iff, fo
 
 \end{frame}
 
+\begin{frame}
+
+\begin{block}{Proposition (Global preferential attachment)}
+Both IMMSB and ILFM  do not satisfy global preferential attachment.
+\end{block}
+%Clue =$>$ Exchangeability
+
+\vspace{1em}
+
+\begin{block}{Proposition (Local preferential attachment)}
+IMMSB satisfies local preferential attachment whereas ILFM does not.
+\end{block}
+%Clue =$>$ Conjugacy
+
+\end{frame}
+
 
 \begin{frame}[c]{Homophily}
 
@@ -501,6 +518,20 @@ We say that $\mathcal{M}_e$ is homophilic under the similarity $s$ iff, $\forall
     \item[Natural similariry] : $s_n = f_i \Phi f_j\top $
     \item[Latent similarity] \ : $s_l = f_i f_j^\top$
     \end{description} 
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Homophily (cont.)}
+
+\begin{block}{Proposition (Homophily with $s_n$)}
+Both IMMSB and ILFM are homophilic with respect to the natural similarity $s_n$.
+\end{block}
+
+\vspace{2em}
+
+\begin{block}{Proposition (Homophily with $s_l$)}
+Neither IMMSB nor ILFM are homophilic with respect to the latent similarity $s_l$.
 \end{block}
 
 \end{frame}
@@ -569,6 +600,23 @@ Manufacturing  & 0 & 1.4 &   0.4 $\pm$ 0.3  &  1.3 $\pm$ 0.05 \\
 
 \end{frame}
 
+\begin{frame}[c]{Empirical Results (Homophily)}
+    \begin{figure}[ht]
+    \caption{Natural and latent similarities aggregated over all datasets and computed on linked and non-linked pairs of nodes for IMMSB (left) and ILFM (right).}
+    \centering
+        \begin{subfigure}
+             \centering
+                 \includegraphics[width=0.4\textwidth]{img/homo_mustach_immsb}
+        \end{subfigure}
+        \begin{subfigure}
+                 \centering
+              \includegraphics[width=0.4\textwidth]{img/homo_mustach_ilfm}
+        \end{subfigure}
+        \label{fig:homo_mustach}
+    \end{figure}
+\end{frame}
+
+
 \begin{frame}[c]{Empirical Results (Preferential attachment I)}
 
     \vspace{-0.2cm}
@@ -600,29 +648,13 @@ Manufacturing  & 0 & 1.4 &   0.4 $\pm$ 0.3  &  1.3 $\pm$ 0.05 \\
 \end{frame}
 
 
-\begin{frame}[c]{Empirical Results (Homophily)}
-    \begin{figure}[ht]
-    \caption{Natural and latent similarities aggregated over all datasets and computed on linked and non-linked pairs of nodes for IMMSB (left) and ILFM (right).}
-    \centering
-        \begin{subfigure}
-             \centering
-                 \includegraphics[width=0.4\textwidth]{img/homo_mustach_immsb}
-        \end{subfigure}
-        \begin{subfigure}
-                 \centering
-              \includegraphics[width=0.4\textwidth]{img/homo_mustach_ilfm}
-        \end{subfigure}
-        \label{fig:homo_mustach}
-    \end{figure}
-\end{frame}
-
 
 \begin{frame}[c]{Conclusion}
     \begin{block}{Wrap up}
     \begin{itemize}
-        \item Formal Definition of social networks properties [Homophily and Preferential Attachments].
+        \item Formal definitions of social networks properties [Homophily and Preferential Attachments].
         \item Study of compliance of Mixed Membership Models with the properties.
-        \item Empirical implications on prediction performances.
+        \item Empirical implication on prediction performances.
     \end{itemize}
     \end{block}
 
