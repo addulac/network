@@ -443,7 +443,7 @@ Given a Graph $G=(V,E)$,  $\textcolor{blue}{F}$ and $\textcolor{green}{\Phi}$ su
     \item Global degree : $d_i  = \sum_{j\neq i} y_{ij}$
     %\item Local degree :  $d_{ik}  = \sum_{j\neq i} y_{ij} \mathbbm{1}(i,j\in \mathcal{C}_k)$
     %\item Expected Local degree :  $D_{ik}  = \sum_{j\neq i} P(y_{ij}=1, i,j\in \mathcal{C}_k | \mathcal{M}_e) $
-    \item  Local degree :  $d_{ik}  = \sum_{j\neq i} P(y_{ij}=1, i,j\in \mathcal{C}_k | \mathcal{M}_e) $
+    \item  Local degree :  $d_{i,k}  = \sum_{j\neq i} P(y_{ij}=1, i,j\in \mathcal{C}_k | \mathcal{M}_e) $
     \end{itemize}
     \end{definition}
 
@@ -478,7 +478,7 @@ we say that $\mathcal{M}_e$ satisfies the global preferential attachment iff, fo
 
 \begin{definition}[Local Preferential attachment]
 we say that  $\mathcal{M}_e$ satisfies the local preferential attachment iff, for any node $i$, 
-\[P(D_{i,k} \ge x+\epsilon \mid D_{i,k} \ge x, \mathcal{M}_e) \textrm{ increases with } x \in [0,N[ \]
+\[P(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e) \textrm{ increases with } x \in [0,N[ \]
 \end{definition}
 
 \end{frame}
