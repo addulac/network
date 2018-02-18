@@ -24,9 +24,6 @@ bib:
 
 $(SRC).aux: default
 
-
-
-
 clean:
 	find -name "*.dvi" -delete
 	find -name "*.log" -delete
