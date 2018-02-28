@@ -1,5 +1,5 @@
-
 \section{Preferential attachment}
+\label{sec:burstiness}
 
 The preferential attachment effect can be observed directly over the global network, or indirectly on latent classes.
 
@@ -8,9 +8,10 @@ The preferential attachment effect can be observed directly over the global netw
 Stochastic blockmodels lead to the following generative process for links \footnote{For simplicity in the notation, we consider that nodes can be linked to themselves. Excluding such links does not raise particular problems.} :
 
 \begin{align*}
-    &\textrm{For each node} i \in \{1, .., N\}  \\
-    &\qquad\textrm{For each node} j \in \{1, .., N\}; \textrm{generate a link}  \\
-    \qquad\textrm{between } i \textrm{ and } j \textrm{ with probability } P(y_{ij}=1 | \mathcal{M})
+    &\textrm{For each node } i \in \{1, .., N\}  \\
+    &\qquad\textrm{For each node } j \in \{1, .., N\}; \\
+    &\quad \qquad\textrm{generate a link between } i \textrm{ and } j \textrm{ with probability} \\
+    &\quad \qquad P(y_{ij}=1 | \mathcal{M})
 \end{align*}
 
 Where $\mathcal{M}$ is either $\mathcal{M}_e$ or $\mathcal{M}_g$.
@@ -106,6 +107,7 @@ P(d_{i,k}^{(N)} \geq n+1 | d_{i,k}^{(p)}=n,\M_e) \textrm{ increases with } n , 
 
 if $P(d_{i,k}^{(N)} \geq n+1 | d_{i,k}^{(p)}=n,\M_e)$ is independant of $n$, the model is said to be neutral wrt to the local preferential attachment effect.
 
+\end{definition}
 As before we have the following property.
 
 \begin{proposition}
@@ -125,7 +127,7 @@ gd_{ik}^{(p)} &= \E_{F,\Phi}[d_{i,k}^{(p)}] \\
 
 A notion of local preferential attachment for $\M_g$ can then be defined on the basis of this expected local degree.
 
-\begin{definition}[ILFM - local preferential attachment]
+\begin{definition}[ILFM - local preferential attachment, $\M_g$]
 We say that ILFM in $\M_g$ satisfies the local preferential attachment effect iff for any indexing, for any node $i$, $1 \leq i \leq N$, for any step $p$, $1 \leq p < N, \exists \epsilon \in ]0,1[$ s.t:
 
 \begin{equation*}
@@ -160,14 +162,14 @@ For IMMSB in $\M_e$, the situation is similar to the one of ILFM in $\M_g$ as we
 One can nevertheless define a local random variables $y_{ij,k}$ that are 1 if a link is generated between nodes $i$ and $j$ whithin class $k$ and 0 otherwise. One has:
 
 \begin{align*}
-P(y_{ij,k}=1 | \M_e = P(y_{ij}=1 | z_{i\rightarrow j} &= z_{i\leftarrow j}=k, \Phi) P(z_{i\rightarrow j}|F)P(z_{i\leftarrow j}|F) \\
+P(y_{ij,k}=1 | \M_e) &= P(y_{ij}=1 | z_{i\rightarrow j} = z_{i\leftarrow j}=k, \Phi) P(z_{i\rightarrow j}|F)P(z_{i\leftarrow j}|F) \\
     &= f_{ik} \phi_{kk} f_{jk}
 \end{align*}
 
 The local degree $d_{i,k}^{(p)}$ can then be defined as the expectation over the nodes $1,...,p$ of $y_{ij,k}$:
 \begin{align*}
-d_{i,k}^{(p)} = \sum_{j=1}^p P(y_{ij,k}=1 | \M_e)  \\
-    = \sum_{j=1}^p f_{ik} \phi_{kk} f_{jk}
+d_{i,k}^{(p)} &= \sum_{j=1}^p P(y_{ij,k}=1 | \M_e)  \\
+    &= \sum_{j=1}^p f_{ik} \phi_{kk} f_{jk}
 \end{align*}
 
 With this definition of the local degree, we can then used the same definition of the local preferential attachment, in $\M_e$, for IMMSB, than the one for ILFM. 
@@ -180,3 +182,7 @@ IMMSB satisfies the local preferential attachment in $\M_e$.
 The positive reinforcement effect of the Dirichlet Process \cite{HDP} at the basis of IMMSB corresponds to a burstiness phenomenon and directly translates, for any $i$ and any $k$, as: $\pr(\hat{f}_{ik} \ge x'+\epsilon' \mid \hat{f}_{ik} \ge x',\mathcal{M}_e)$ increases with $x'$ (for all $\epsilon'$ and $x'$ chosen according to the domain of definition of $\hat{f}_{ik}$). Setting $x=x'(\sum_{j\in V} \hat{\Phi}_{kk} \hat{f}_{jk})$ and $\epsilon = \epsilon'(\sum_{j\in V} \hat{\Phi}_{kk} \hat{f}_{jk})$ and exploiting the fact that $\sum_{j\in V} \hat{\Phi}_{kk} \hat{f}_{jk}$ is positive and independent of $i$ leads to: $\pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x$, which proves that IMMSB satisfies the local preferential attachment effect.
 
 \end{proof}
+
+
+\textcolor{red}{Devellopment for IMMSB in Mg...}
+

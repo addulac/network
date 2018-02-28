@@ -1,5 +1,5 @@
 .ONESHELL:
-SRC = jasa
+SRC = journal_version
 OPTS = --halt-on-error
 
 # pdf | xe | dvi
