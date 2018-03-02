@@ -2,11 +2,11 @@
 \section{Backround Models}
 \label{sec:background}
 
-Stochastic mixed membership models are generative models that rely on latent factors (also called latent \textit{classes} or \textit{features}) that represent hidden properties of the nodes of the graph $G$ associated to the social network (each node of the graph represents an individual.
+Stochastic mixed membership models are generative models that rely on latent factors (also called latent \textit{classes} or \textit{features}) that represent hidden properties of nodes ,corresponding to individuals, in the graph $G=(V,E)$ associated to the social network.
 
-A graph $G=(V,E)$, is a tuple containing a set of vertex (or nodes) $V$ and a set of of edges (or links) $E$ between those vertex. We represents its adjacency matrix $(Y_{ij})_{(ij) \in E} \in \mathcal{Y}$. The number of vertex is denoted $N = |V|$. 
-In this paper, we restrict to binary graph where $\mathcal{Y} = \{0,1\}$ to account for the presence of a link ($y_{ij}=1$) or a non-link ($y_{ij}=0$). Furthermore we restrict undirected graph without self-loop and we denote by $\mathcal{R}$ the set of all possible interactions (ie links or non-links) between nodes pairs $(i,j)$, such that $|\mathcal{R}| = \frac{N(N-1)}{2}$. \\
-
+In the remainder, we denote $N$ , the number of nodes in this graph ($N = |V|$) and $(Y_{ij})_{(ij) \in E} \in \mathcal{Y}$ its adjacency matrix.  We assume that $\mathcal{Y} = \{0,1\}$ to account for the presence of a link ($y_{ij}=1$) or a non-link ($y_{ij}=0$). Furthermore we suppose that the graph is undirected and without self-loop and we denote by $\mathcal{R}$ the set of all possible interactions (ie links or non-links) between nodes pairs $(i,j)$, such that $|\mathcal{R}| = \frac{N(N-1)}{2}$. \\
+\textbf{ CL : without loss of generality ?}\\
+\textbf{ AD : binary links + no self-loop, is I think a loss of generality.}
 
 Stochastic mixed membership models are characterized by the fact that each node can "belong" to several latent factors, which reflects the fact that each individual usually has several properties, for example can belong to several communities\footnote{As mentioned in \cite{goldenberg2010survey}, the reader should however bear in mind that the notion of latent factors is of stochastic nature and is an approximation of the notions of communities and shared properties.}. The relation between a node $i$ and the latent factors is encoded in a vector denoted $\mat{f}_{i}$, of finite dimension $K$ in standard versions of the models, and of infinite dimension in  non-parametric versions. The collection of all vectors $\mat{f}_{i}$ ($1 \le i \le N$) constitutes the factor matrix $\mat{F}$. Furthermore, a weight matrix $\mat{\Phi}$ is used to encode correlations between the latent factors.~\\
 
@@ -17,7 +17,7 @@ In the latent feature model, each node is represented by a finite vector of bina
 \begin{enumerate}
     \item Generate a feature matrix $\mat{F}_{N \times \infty}$ representing the feature vector of each node: \[\mat{F} \sim \IBP(\alpha)\]
 \item Generate a weight matrix for each latent feature:\\
-    \[\mat{\phi}_{mn} \sim N(0, \sigma_w), \, m,n \in \mathbb{N}^{+*}\]
+    \[\mat{\phi}_{mn} \sim N(0, \sigma_w), \, m,n \in \mathbb{N}^{+}\]
 \item Generate or not a link between any node $i$ and any node $j$ according to: 
 %
 \begin{equation*}
@@ -53,7 +53,7 @@ where $\gem$ denotes the Stick Breaking Process distribution over the set of nat
 We have this time four real hyper-parameters, two for the Hierarchical Dirichlet Process ($\gamma$ and $\alpha_0$) and two for the Beta distribution underlying the weight matrix ($\lambda_0$ and $\lambda_1$). As for the previous model, in the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated; as before again, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. A graphical representation of this model is given in Figure~\ref{fig:mmm}~(right).
 
 
-In the typical use of the above models for link prediction, some observations (\textit{i.e.} an existing network, observed till a certain time) are available and are used to estimate $\mat{F}$ and $\mat{\Phi}$, from which new links are predicted. In the remainder, we denote by $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ the estimates of $\mat{F}$ and $\mat{\Phi}$, that can be obtained through standard (collapsed) Gibbs sampling and Metropolis-Hastings algorithms. We do not detail them here and refer the interested reader to \cite{ILFRM,IBP,HDP,fan2015dynamic}. We furthermore denote by $\mathcal{M}_e$ the version of both \ifm\ and \imb\ models in which $\mat{F}$ and $\mat{\Phi}$ are assumed known and fixed to $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$. We now investigate whether, from the learned parameters $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, the new links generated produce a network that comply with homophily and preferential attachment.
+
 
 \begin{figure}[t]
 	\centering

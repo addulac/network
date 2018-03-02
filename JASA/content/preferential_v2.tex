@@ -16,35 +16,35 @@ Stochastic blockmodels lead to the following generative process for links \footn
 
 Where $\mathcal{M}$ is either $\mathcal{M}_e$ or $\mathcal{M}_g$.
 
-This processus, for any given node $i$, considers all nodes in turn, from node 1 to node $N$. The indexing, i.e. the mapping between nodes and integers in $[1..N]$, is however arbitrary and the results that follow are \textcolor{red}{indexed?} for every all possible indexing.
+This process, for any given node $i$, considers all nodes in turn, from node 1 to node $N$. The indexing, i.e. the mapping between nodes and integers in $[1..N]$, is however arbitrary and the results that follow are \textcolor{red}{indexed?} for every all possible indexing.
 
-For a given node $i$ at step $p$ fo the above process, $p$ nodes, from node 1 tp node $p$, have been considered and links from these nodes to node $i$ generated or not. We will denote by $d_i^{(p)}$ the degree atnode $i$, i.e. the number of links of node $i$, at the $p^{th}$ step of this process. By definition:
+For a given node $i$ at step $p$ of the above process, $p$ nodes, from node 1 to node $p$, have been considered and links from these nodes to node $i$ generated or not. We will denote by $d_i^{(p)}$ the degree of node $i$, i.e. the number of links of node $i$, at the $p^{th}$ step of this process. By definition:
 
-\begin{equation*}
-d_i^{(p)} = \sum_{j=1}^p yij
-\end{equation*}
+\begin{equation} \label{eq:degree_def}
+d_i^{(p)} = \sum_{j=1}^p y_{ij}
+\end{equation}
 
-The following definition \textcolor{red}{?} how a model $\M$ (as defined above) behaves with the global preferential preferential attachment.
+The following definition \textcolor{red}{?} how a model $\M$ (as defined above) behaves \textit{w.r.t.} the global preferential preferential attachment.
 
 \begin{definition}[global preferential attachment]
-Let $\M$ be a model as defined above. We say that $\M$ satisfies the globak preferential attachment effect iff for any indexing, for node $i$, $i \leq i \leq N$ and $p$, $1 \leq p < N$; 
+Let $\M$ be a model as defined above. We say that $\M$ satisfies the global preferential attachment effect iff for any indexing, for node $i$, $1 \leq i \leq N$ and $p$, $1 \leq p < N$; 
 $P(d_i^{(N)} \geq n+1 | d_i^{(p)} = n; \M)$ increases with $n$, $1 \leq n < p$.
 
-If $P(d_i^{(N)} \geq n+1 | d_i^{(p)} = n; \M)$ is independant of $n$, the model is said to be neutral wrt the global preferential attachment effect.
+If $P(d_i^{(N)} \geq n+1 | d_i^{(p)} = n; \M)$ is independent of $n$, the model is said to be neutral \textit{w.r.t.} the global preferential attachment effect.
 
 \end{definition}
 
-This definition direclty translates the fact that the more links a node $i$ has at some point in the process, the more mokely a new link will be created with that node. this is exactly the preferential attachment effect.
+This definition directly translates the fact that the more links a node $i$ has at some point in the process, the more likely a new link will be created with that node. This is exactly the preferential attachment effect.
 
-For both ILFM and IMMSB, in $\M_e$, the generation of links are independant of each other. The fact that $n$ links have been created after $p$ steps has no impact on the future links to given node. In $\M_g$, as one first needs to generate $F$ and $\Phi$ prior to generate all the links, a similar behavior is likely to be observed. Intuitively thus, both ILFM and IMMSB are neutral wrt the global preferential attachment effect. The following property formalises this intuition.
+For both ILFM and IMMSB, in $\M_e$, the generation of links are independent of each other. The fact that $n$ links have been created after $p$ steps has no impact on the future links to a given node. In $\M_g$, as one first needs to generate $F$ and $\Phi$ prior to generate all the links, a similar behavior is likely to be observed. Intuitively thus, both ILFM and IMMSB are neutral \textit{w.r.t.} the global preferential attachment effect. The following property formalizes this intuition.
 
 
 \begin{proposition}[Global preferential attachment] \label{th:mg_glob}
-Both ILFM and IMMSB, for both $\M_e$ and $\M_g$, are neutral wrt the global preferential attachment effect.
+Both ILFM and IMMSB, for both $\M_e$ and $\M_g$, are neutral \textit{w.r.t.} the global preferential attachment effect.
 \end{proposition}
 
 \begin{proof}
-We first consider model $\M_e$. Fix any indexing, a node $i$, $i \leq i \leq N$, and a step $p$, $1 \leq p < N$. One has, $\forall n, n \leq n < p$ :
+We first consider model $\M_e$. Fix any indexing, a node $i$, $i \leq i \leq N$, and a step $p$, $1 \leq p < N$. One has, $\forall n, 1 \leq n < p$ :
 
 \begin{align*}
 P(d_i^{(N)} \geq n+1 | d_i^{(p)}=n, \M_e) &= 1 - P(d_i^{(N)}=n | d_i^{(p)}=n, \M_e) \\
@@ -52,16 +52,16 @@ P(d_i^{(N)} \geq n+1 | d_i^{(p)}=n, \M_e) &= 1 - P(d_i^{(N)}=n | d_i^{(p)}=n, \
         &= 1 - \prod_{j=p+1}^N P(y_{ij}=0 | \M_e)
 \end{align*}
 
-where the last equality comes from the fact, in $\M_e$, the links are independantly generated.
+where the last equality comes from the fact that, in $\M_e$, links are independently generated.
 
 Similarly:
 
 \begin{align*}
-P(d_i^{(N)} \geq n+2 | d_i^{(p)=n+1, \M_e} &= 1 - \prod_{j=p+1}^N P(y_{ij}=0 | \M_e) \\
+P(d_i^{(N)} \geq n+2 | d_i^{(p)}=n+1, \M_e) &= 1 - \prod_{j=p+1}^N P(y_{ij}=0 | \M_e) \\
                     &=P(d_i^{(N)} \geq n+1 | d_i^{(p)}=n, \M_e)
 \end{align*}
 
-This complete the proof for $\M_e$.
+This completes the proof for $\M_e$.
 
 For $\M_g$, it suffices to observe that the observe result is true for any $F, \Phi$ and that:
 
@@ -77,48 +77,48 @@ P(d_i^{(N)} \geq n+2 | d_i^{(p)}=n+1, \M_g) = P(d_i^{(N)} \geq n+1 | d_i^{(p)}
 \end{proof}
 
 
-We now turn to local preferential attachment, as exemplified in \textcolor{red}{ADD ref to leskovek}
+We now turn to local preferential attachment, as exemplified in \cite{LeskovecBKT08}
 
 
 \subsection{Local preferential attachment}
 
 \subsubsection{ILFM}
 
-For ILFM, the situation wrt local preferential attachment is very similar to the one for global preferential attacment.
+For ILFM, the situation \textit{w.r.t.} to local preferential attachment is very similar to the one for global preferential attachment.
 This is due to the fact that, in $\M_e$ (i.e. given $F$ and $\Phi$), a local degree can be defined in the same way as the global degree above.
 
-Considering the same generative process as before, for $\M_e$ and ILFM, the local degree in class $k$, $1\leq k\leq K$, for a node $i$ such that $f_{ik}=1$ is defined by:
+Considering the same generative process as before, for $\M_e$ and ILFM, the local degree in class $k$, $0\leq k\leq K-1$, for a node $i$ such that $f_{ik}=1$ is defined by:
 
 \begin{equation*}
-d_{i,k}^{(p)} = \sum_{j=1, f_{ik}=1}^p y_{ij}
+d_{i,k}^{(p)} = \sum_{j=1, f_{jk}=1}^p y_{ij}
 \end{equation*}
 
 Note that if $f_{ik}=0$, $d_{i,k}^{(p)} = 0$ for all $p$.
 
-This then leads to the followin definition at the ocal preferential attachment for ILFM.
+This then leads to the following definition at the local preferential attachment for ILFM.
 
 \begin{definition}[ILFM - local preferential attachment, $\M_e$]
 
-We say that ILFM, in $\M_e$ statisfies the local preferential attachment iff for any indexing, for any node $i$, $1\leq i \leq N$ such that $f_{ik}=1$, and for any step $p$, $1\leq p < N$:
+We say that ILFM, in $\M_e$ satisfies the local preferential attachment iff for any indexing, for any node $i$, $1\leq i \leq N$ such that $f_{ik}=1$, and for any step $p$, $1\leq p < N$:
 
 \begin{equation*}
 P(d_{i,k}^{(N)} \geq n+1 | d_{i,k}^{(p)}=n,\M_e) \textrm{ increases with } n , 1\leq n < p
 \end{equation*}
 
-if $P(d_{i,k}^{(N)} \geq n+1 | d_{i,k}^{(p)}=n,\M_e)$ is independant of $n$, the model is said to be neutral wrt to the local preferential attachment effect.
+if $P(d_{i,k}^{(N)} \geq n+1 | d_{i,k}^{(p)}=n,\M_e)$ is independent of $n$, the model is said to be neutral \textit{w.r.t.} to the local preferential attachment effect.
 
 \end{definition}
 As before we have the following property.
 
 \begin{proposition}
-ILFM, for $\M_e$, is neutral wrt the preferential attachment effect.
+ILFM, for $\M_e$, is neutral \textit{w.r.t.} the local preferential attachment effect.
 \end{proposition}
 
 \begin{proof}
 The proof is identical to the first part of the proof for Property \ref{th:mg_glob}.
 \end{proof}
 
-The definition of the local degree we have used does not directly translate to $\M_g$ as it is based on th knwoledge of $F$. One can nevertheless define an expected local degree for $\M_g$ as:
+The definition of the local degree we have used does not directly translate to $\M_g$ as it is based on the knowledge of $F$. One can nevertheless define an expected local degree for $\M_g$ as:
 
 \begin{align*}
 gd_{ik}^{(p)} &= \E_{F,\Phi}[d_{i,k}^{(p)}] \\
@@ -136,22 +136,22 @@ P(gd_{i,k}^{(N)} \geq x + \epsilon | gd_{i,k}^{(p)} \geq x, \M_g) \textrm{ incre
 
 \end{definition}
 
-\textcolor{red}{Include a ref about Continous burstiness}
+\textcolor{red}{Include a ref about Continuous burstiness}
 
 One has $\forall \epsilon \in ]0,1[, x \in ]0,N[$ :
 \begin{align*}
 P(gd_{i,k}^{(N)} \geq x + \epsilon | gd_{i,k}^{(p)} \geq x, \M_g) &= 1 - P(gd_{i,k}^{(N)} =x | gd_{i,k}^{(p)} = x, \M_g) \\
-    &= 1 P(y_{ip+1}=0, ..., y_{iN}=0  | \M_g)
+    &= 1 - P(y_{ip+1}=0, ..., y_{iN}=0  | \M_g)
 \end{align*}
 
 Where the last equation derives from the definition of $gd_{i,k}^{(p)}$ ($gd_{i,k}^{(N)} = gd_{i,k}^{(p)}$ iff $y_{ip+1}=...=y_{iN}=0$).
 
-\textcolor{red}{But do you implicitly assume here, that $f_{jk}=1$ for $j \in (p+1,.., N)$ ? what if it not the case ?}
+\textcolor{red}{But do you implicitly assume here, that $f_{jk}=1$ for $j \in (p+1,.., N)$ ? what if it is not the case ? Why the number of 1 in the $j \geq p+1$ woudld not be dependent of $x$}
 
-The last quantity is independant of $x$, leading to:
+The last quantity is independent of $x$, leading to:
 
 \begin{proposition}
-ILFM with $\M_g$ is neutral wrt the local preferential attachment effect.
+ILFM with $\M_g$ is neutral \textit{w.r.t.} the local preferential attachment effect.
 
 \end{proposition}
 
@@ -159,10 +159,10 @@ ILFM with $\M_g$ is neutral wrt the local preferential attachment effect.
 
 For IMMSB in $\M_e$, the situation is similar to the one of ILFM in $\M_g$ as we do not have a direct access to classes, encoded in the $Z$ variables.
 
-One can nevertheless define a local random variables $y_{ij,k}$ that are 1 if a link is generated between nodes $i$ and $j$ whithin class $k$ and 0 otherwise. One has:
+One can nevertheless define  local random variables $y_{ij,k}$ that are 1 if a link is generated between nodes $i$ and $j$ within class $k$ and 0 otherwise. One has:
 
 \begin{align*}
-P(y_{ij,k}=1 | \M_e) &= P(y_{ij}=1 | z_{i\rightarrow j} = z_{i\leftarrow j}=k, \Phi) P(z_{i\rightarrow j}|F)P(z_{i\leftarrow j}|F) \\
+P(y_{ij,k}=1 | \M_e) &= P(y_{ij}=1 | z_{i\rightarrow j} = z_{i\leftarrow j}=k, \Phi) P(z_{i\rightarrow j}=k|F)P(z_{i\leftarrow j}=k|F) \\
     &= f_{ik} \phi_{kk} f_{jk}
 \end{align*}
 

@@ -1,15 +1,15 @@
 \section{Bayesian Context}
-
-In a Bayesian context, the learning process consists in finding the posterior distribution of the random parameters $F$ and $\Phi$, given the observed data $Y$, such that : 
+\label{sec:inference}
+In a Bayesian context, where the parameters underlying the model are known \textbf{AD: the models are hierarchical with latent("unknow") parameters and "known" hyper-parameters. What parameters are you refering to ?}, the learning process consists in finding the posterior distribution of the random parameters $F$ and $\Phi$, given the observed data $Y$, such that : 
 
 \begin{equation}
     \p(F, \Phi | Y, \mg) = \frac{\p(Y|F,\Phi)\p(F|\mg)\p(\Phi|\mg)}{\p(Y|\mg)}
 \end{equation}
 
-Where $\mg$ is the set the hyperparamters of the current model.
+Where $\mg$ is the set of the hyperparameters for the current model, respectively $\alpha$ and $\sigma_w$ for ILFM and $\gamma$,  $\alpha_0$, $\lambda_0$ and $\lambda_1$ for IMMSB.
 
 
-For mixed membership models the evidence $\p(Y|\mg)$ has no closed form solution which makes a direct MAP inference procedure infeasible. Thus the learning process rely on an approximate inference. It consists in a iterative procedure that updates the posterior through typically MCMC updates for true posterior recovery.
+For mixed membership models the evidence $\p(Y|\mg)$ has no closed form solution which makes a direct MAP inference procedure infeasible. Thus, the learning process relies on an approximate inference. It consists in a iterative procedure that updates the posterior through typically MCMC updates for true posterior recovery.
 
 Typically MCMC update consists in the following updates of parameters :  
 
@@ -18,7 +18,7 @@ Typically MCMC update consists in the following updates of parameters :
     \hat \phi_{kk'} &\sim \p(\phi_{kk'} | \Phi^{-kk'}, Y, F, \mg)
 \end{align}
 
-At the end of the inference process, assuming that the MCMC has reached its  equilibrium, one can reconstruct the posterior parameters such that $\hat F = (\hat \phi_{ik})_{i,k \in V\times[0,.., K-1]}$ and $\hat \Phi = (\hat \phi_{kk'})_{k,k' \in [0,.., K-1]^2}$ and :
+At the end of the inference process, assuming that the MCMC has reached its  equilibrium, one can reconstruct the posterior parameters such that $\hat F = (\hat f_{ik})_{i,k \in V\times[0,.., K-1]}$ and $\hat \Phi = (\hat \phi_{kk'})_{k,k' \in [0,.., K-1]^2}$ and :
 
 \begin{equation}
     \p(F, \Phi|Y, \mg) \approx \p(\hat F) \p(\hat \Phi)
@@ -34,11 +34,13 @@ Finally the prediction task consists of measuring an unobserved variable $y^{new
 
 Where $\mathcal{K}$ is an isomorphism used to map the support of the bilinear product to a probability space, wich is a sigmoid and the identity for respectively ILFM and IMMSB. Furthermore we denote the set of estimated parameters $\me = \{\hat F,  \hat \Phi \}$.
 
+In the typical use of the above models for link prediction, some observations (\textit{i.e.} an existing network, observed till a certain time) are available and are used to estimate $\mat{F}$ and $\mat{\Phi}$, from which new links are predicted. In the remainder, we denote by $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ the estimates of $\mat{F}$ and $\mat{\Phi}$, that can be obtained through standard (collapsed) Gibbs sampling and Metropolis-Hastings algorithms. We do not detail them here and refer the interested reader to \cite{ILFRM,IBP,HDP,fan2015dynamic}. We furthermore denote by $\mathcal{M}_e$ the version of both \ifm\ and \imb\ models in which $\mat{F}$ and $\mat{\Phi}$ are assumed known and fixed to $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$. We now investigate whether, from the learned parameters $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, the new links generated produce a network that comply with preferential attachment.
 
-In the rest of this paper, we will refers to both context in which we study a Bayesian model, and we recall here the fundemental property of each one :
+
+In the rest of this paper, we will refers to both context in which we study a Bayesian model, and we recall here the fundamental property of each one :
 \begin{itemize}
-    \item $\mg$ that represents the set of hyperprameters of $\mathcal{M}$, such that the random graph $G$ is exchangeable, thus for any permutation $\pi$ on integers, one has: \[ P((y_{ij})_{i,j\in \mathcal{R}} | \mg) = P((y_{\pi(i)\pi(j)})_{i,j\in \mathcal{R}} | \mg) \]
-    \item $\me$ that represents the set of elements ($\bm{F}$ and $\bm{\Phi}$) of $\mathcal{M}$ such that interactions are conditionally independant:  \[P((y_{ij})_{i,j\in \mathcal{R}} | \me) = \prod_{i,j\in \mathcal{R}} P(y_{ij} | \me)  \]
+    \item $\mg$ that represents the set of hyperparameters of $\mathcal{M}$, such that the random graph $G$ is exchangeable, thus for any permutation $\pi$ on integers, one has: \[ P((y_{ij})_{i,j\in \mathcal{R}} | \mg) = P((y_{\pi(i)\pi(j)})_{i,j\in \mathcal{R}} | \mg) \]
+    \item $\me$ that represents the set of elements ($\bm{F}$ and $\bm{\Phi}$) \textbf{ CL :  $\me = \{\hat F,  \hat \Phi \}$ ?} of $\mathcal{M}$ such that interactions are conditionally independent:  \[P((y_{ij})_{i,j\in \mathcal{R}} | \me) = \prod_{i,j\in \mathcal{R}} P(y_{ij} | \me)  \]
 \end{itemize}
 
 %

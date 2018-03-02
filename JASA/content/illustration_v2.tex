@@ -69,7 +69,7 @@ Figure \ref{fig:synt_graph_local} represents the local degree distributions for 
 For each dataset, we estimate the model parameters through Markov Chain Monte Carlo inference consisting of 200 iterations. For \imb, the concentration parameters of HDP were optimized  using vague gamma priors $\alpha_0 \sim \text{Gamma}(1,1)$ and $\gamma \sim \text{Gamma}(1,1)$ following \cite{HDP}. The parameters for the matrix weights  $\lambda_0$ and $\lambda_1$ were fixed to 0.1. For \ifm, the hyperparameter  $\sigma_w$ was fixed to 1 and the IBP hyperparameter $\alpha$ to 0.5 in order to  have comparable number of classes with \imb. Once the models have been learned, they are used to generate links (or non-links) between the entire set of network nodes. The whole procedure is repeated 10 times and the average values are reported as final results.
 
 
-\subsection{Preferential attachment}
+\subsection{Preferential attachment in $\M_e$}
 
 Table \ref{table:me_gofit} reports the value of the power-law goodness of fit for \imb\ and \ifm\ in the global case (left) and in the local case (right). It appears that for both models, the global preferential attachment is only verified for networks generated from datasets where the property was observed, namely in Network1 with p-value equal to 0.9 for \imb\ and 1 for \ifm, and in Blogs with a p-value equal to 1 for both models; the property is not verified in Network2 and in Manufacturing, where p-values are equal to 0. This is in accordance with Proposition 2.1 according to which both \ifm\ and \imb\ do not satisfy global preferential attachment. However, these models are able to capture this property if it exists in the training datasets.  Moreover, one can observe that, in the local case, \imb\ complies with the preferential attachment with $p$-values equal or close to 1 for the four networks, while \ifm\ obtained low p-values for the networks that were less locally bursty (respectively  0  for Network2 and 0.3 for Manufacturing). In addition, the power-law coefficients $\alpha$ are significantly greater for \imb\ than for \ifm, and specially for the bursty networks Network1 and Blogs.
 
@@ -116,3 +116,29 @@ Lastly, Figure \ref{fig:auc} compares the performance of the models for predicti
 In general, as shown in the bottom plot, \ifm\ obtains better performance than \imb. However, the relative predictive performance of \imb\  increases  when the quantity of training data decreases on bursty networks, whereas for non-bursty networks the results are the opposite: the performance of \ifm\ increases when the size of the learning dataset decreases. This is particularly visible for Network2. The results for Manufacturing are less marked, which is certainly due to the small size of this network, making the prediction less challenging.
 
 The above behavior can be explained by the fact that \imb\ satisfies the local preferential attachment whereas \ifm\ does not: as links are randomly removed, one is more likely to remove links from large classes than from small ones; a model that enforces local preferential attachment on bursty networks is thus more likely to reconstruct those removed links. This is what is happening on Network1 and Blogs for \imb. On the contrary, for non-bursty networks, a model enforcing local preferential attachment is penalized.
+
+
+\subsection{Preferential attachment in $\M_g$}
+
+Illustrations in the $\M_g$ case are based on the simulation of the models where the parameters $F$ and $\Phi$ have been marginalized out. In other words the degrees that we are going to observe are the expected degree for a large numbers (in the sense of the theory of large numbers) of generated parameters, given the hyper-parameters of the model. ~\\
+
+For all our experiments we set the hyper-parameters of the models in order to generate a random network of 200 nodes. We went trough the generative process 100 times or epochs. A significatif number of epoch is crucial to capture the generative property of the models when the latent parameters are marginalized-out, which simulate the $\M_g$ mode.~\\
+
+More precisely, to generate one random network, we first generate the random parameters $F, \Phi$, and then generate the adjacency matrix $Y$. Thus, each generation epoch consists in a triple $(Y, F, \Phi)$. Given this triple, we can compute the different degrees of the network's nodes defined in section \ref{sec:burstiness}.~\\
+
+An important note is that, to be able to compute the statistics for the local degree, the latent classes need to be aligned between the different epochs. But, the mixed membership models do not defined unique label over the latent classes. Consequently they are non-identifiable in principle. Nevertheless, the properties of the Dirichlet Process and the Indian Buffet Process, enable to identify the classes by ordering them with their size (or concentration). For example, the stick breaking process interpretation of the DP provides a natural class ordering by a descending (or ascending) order of the class representation. While the IBP generate a row-exchangeable feature matrix, it is possible to reorder the rows to obtain a $F$ matrix where the size of the classes keep the same descending (or ascending) order.~\\
+
+We chose comparative and standard values of hyper-parameters to setup the models. For both model we set $\lambda_0=\lambda_1=0.5$ and $\alpha=\alpha_0=1$, and for IMMSB, $\gamma=0.5$.~\\
+
+In figure \ref{fig:mg_deg}, we observe the global and local degree distributions for both IMMSB and ILFM. We see that the global degree distributions are not monotone, with several peaks, and that the range values of the outcome degrees are concentrated in a small segment determined by the hyper-parameters of the models. The shape of the global degree distributions show that the global preferential attachment is not satisfied. But for the local degree, one can see that, for IMMSB, the shape of the distributions are characteristic of the preferential attachment effect (linear decrease in a log-log space) while it is not the case for ILFM. % which confirm our statetment.
+~\\
+
+\input{img/0201/mg_deg}
+
+
+Figures \ref{fig:mg_process} gives a simulation of the evolution of the expected (global and local) degree during the sampling process according to the equation \eqref{eq:degree_def}. We will refer this process as the degree count process which basically is a cummulative count over the nodes of the link measure (eitheir the true link/non-link observation for ILFM or the likelihood of a link for IMMSB) . Because, we observe the degree count averaged on all the nodes, we also plot the variance over the nodes of those degree count process.
+Interestingly, one can show that for both models, the global and local expected degree count processes follow a linear increase, while the variance of the degree count processes are slightly convex. Furthermore, it is more pronounced for IMMSB for the global degree while it seems that concerning the local degree, the models are not differentiable. Nevertheless, if we look at the standard deviation of the variance for each local degree we see that for IMMSB it seems to be correlated to the variance (the more variance (over nodes) in a local degree count, the more this variance can deviate. In other words, the variance over the epoch increase too.). This is an interesting interpretation of the source of emergence of the local preferential attachment for IMMSB.
+
+\input{img/0201/mg_process}
+
+
