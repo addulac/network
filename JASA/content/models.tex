@@ -4,15 +4,13 @@
 
 Stochastic mixed membership models are generative models that rely on latent factors (also called latent \textit{classes} or \textit{features}) that represent hidden properties of nodes ,corresponding to individuals, in the graph $G=(V,E)$ associated to the social network.
 
-In the remainder, we denote $N$ , the number of nodes in this graph ($N = |V|$) and $(Y_{ij})_{(ij) \in E} \in \mathcal{Y}$ its adjacency matrix.  We assume that $\mathcal{Y} = \{0,1\}$ to account for the presence of a link ($y_{ij}=1$) or a non-link ($y_{ij}=0$). Furthermore we suppose that the graph is undirected and without self-loop and we denote by $\mathcal{R}$ the set of all possible interactions (ie links or non-links) between nodes pairs $(i,j)$, such that $|\mathcal{R}| = \frac{N(N-1)}{2}$. \\
-\textbf{ CL : without loss of generality ?}\\
-\textbf{ AD : binary links + no self-loop, is I think a loss of generality.}
+In the remainder, we denote by $N$ the number of nodes in this graph ($N = |V|$) and by $Y$ its adjacency matrix ($y_{ij}=1$ if there is a link between nodes $i$ and $j$, $1 \le i,j \le N$; $y_{ij} = 0$ otherwise). Without loss of generality, we assume that the graph is undirected, the directed case being a special case of the undirected one.
 
 Stochastic mixed membership models are characterized by the fact that each node can "belong" to several latent factors, which reflects the fact that each individual usually has several properties, for example can belong to several communities\footnote{As mentioned in \cite{goldenberg2010survey}, the reader should however bear in mind that the notion of latent factors is of stochastic nature and is an approximation of the notions of communities and shared properties.}. The relation between a node $i$ and the latent factors is encoded in a vector denoted $\mat{f}_{i}$, of finite dimension $K$ in standard versions of the models, and of infinite dimension in  non-parametric versions. The collection of all vectors $\mat{f}_{i}$ ($1 \le i \le N$) constitutes the factor matrix $\mat{F}$. Furthermore, a weight matrix $\mat{\Phi}$ is used to encode correlations between the latent factors.~\\
 
 Stochastic mixed membership models differ on the way the vectors $\mat{f}_{i}$ ($1 \le i \le N$) and the matrix $\mat{\Phi}$ are generated. As mentioned before, and to be as general as possible, we consider here the non-parametric versions of the latent feature model \cite{ILFRM}, referred to as \ifm, and of the mixed-membership stochastic block model \cite{iMMSB,fan2015dynamic}, referred to as \imb. This leads to a dynamic number of classes that allows the dimensions of the models to grow with the complexity of the data. This is done in practice by the use of non-parametric prior,  the Indian Buffet Process (IBP) for \ifm\ and the Hierachical Dirichlet Process (HDP)  for \imb. All our results are nevertheless also valid for the finite versions of these models.~\\
 
-In the latent feature model, each node is represented by a finite vector of binary features. The probability of linking two nodes is then based on a weighted similarity between their feature vectors, the weight matrix being generated according to a normal distribution. In its non-parametric version \ifm, the feature vectors are now generated according to an IBP, leading to feature vectors of infinite dimensions (even though for a finite number of nodes, only a finite number of dimensions is actually active). The following steps summarize this process:~\\
+In the latent feature model, each node is represented by a finite vector of binary features. The probability of linking two nodes is then based on a weighted similarity between their feature vectors, the weight matrix being generated according to a normal distribution. In its non-parametric version \ifm, the feature vectors are now generated according to an IBP, leading to feature vectors of infinite dimensions (even though only a finite number of dimensions is actually active). The following steps summarize this process:~\\
 %
 \begin{enumerate}
     \item Generate a feature matrix $\mat{F}_{N \times \infty}$ representing the feature vector of each node: \[\mat{F} \sim \IBP(\alpha)\]
@@ -25,10 +23,9 @@ y_{ij} \sim \mathrm{Bern}(\sigma(\mat{f}_{i} \mat{\Phi} \mat{f}_{j}^\top))
 \end{equation*}
 \end{enumerate}
 %
-where $\top$ dentotes the transpose and  $\sigma()$ is the sigmoid function, mapping $[-\infty, +\infty]$ values to [0,1], and where $y_{ij}$ is a binary variable indicating that a link has been generated ($y_{ij}=1$) or not ($y_{ij}=0$). We will denote by $\mat{Y}$ the $N \times N$ matrix with elements $y_{ij}$. Finally, $\mat{f}_{i}$ denotes the row feature vector corresponding to the $i^{th}$ row of $\mat{F}$.
+where $^\top$ dentotes the transpose and  $\sigma()$ is the sigmoid function, mapping $[-\infty, +\infty]$ values to [0,1], and where $y_{ij}$ is a binary variable indicating that a link has been generated ($y_{ij}=1$) or not ($y_{ij}=0$). We will denote by $\mat{Y}$ the $N \times N$ matrix with elements $y_{ij}$. Finally, $\mat{f}_{i}$ denotes the row feature vector corresponding to the $i^{th}$ row of $\mat{F}$.
 
 This model makes use of two real hyper-parameters, one for the IBP process ($\alpha$), and one for the variance of the normal distribution underlying the weight matrix ($\sigma_w$). In the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated. Lastly, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. In practice however, one always deal with a finite number of latent features. A graphical representation of this model is given in Figure~\ref{fig:mmm} (left).~\\
-
 
 The MMSB model generates class membership distributions per node on the basis of a Dirichlet distribution. Then, for each connection between two nodes, a particular class for each node is first sampled from the class membership distribution, and the probability of connecting the two nodes is, as in the previous model, based on a Bernoulli distribution integrating the weight of the two classes. 
 ~\\
@@ -40,7 +37,7 @@ The non-parametric version \imb\ parallels this development but considers, in li
        \bm{\beta} &\sim \gem(\gamma) \nonumber \\
     \mat{f}_i &\sim \DP(\alpha_0, \beta) \quad\text{ for }  i \in \{1, .., N\} \nonumber
    \end{align}
-where $\gem$ denotes the Stick Breaking Process distribution over the set of natural numbers and $\DP$ a Dirichlet Process  \cite{HDP}.
+where $\gem$ (named after Griffiths, Engen and McCloskey) denotes the Stick Breaking Process distribution over the set of natural numbers and $\DP$ a Dirichlet Process \cite{HDP};
 \item Generate a weight matrix for each latent class from i.i.d Beta distribution:\\
 \[ \phi_{mn} \sim \mathrm{Beta}(\lambda_0,\lambda_1), \, m,n \in \mathbb{N}^{+*} \]
 \item For any node $i$ and any node $j$, choose a class from their class membership distribution according to a Categorical distribution and generate or not a link according to a Bernoulli distribution:
@@ -51,9 +48,6 @@ where $\gem$ denotes the Stick Breaking Process distribution over the set of nat
 \end{enumerate}
 %
 We have this time four real hyper-parameters, two for the Hierarchical Dirichlet Process ($\gamma$ and $\alpha_0$) and two for the Beta distribution underlying the weight matrix ($\lambda_0$ and $\lambda_1$). As for the previous model, in the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated; as before again, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. A graphical representation of this model is given in Figure~\ref{fig:mmm}~(right).
-
-
-
 
 \begin{figure}[t]
 	\centering
