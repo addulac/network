@@ -2,7 +2,12 @@
 \subsection{Illustration}
 \label{sec:exps}
 
-To illustrate our theoretical results, we evaluate the predictive performance and the ability of the models to capture homophily and preferential attachment on artificial and real networks. For homophily, we simply compare the distributions of the natural and latent similarities on linked and non-linked pairs of nodes. For global preferential attachment, we use plots of the degree distribution and its corresponding best fitting line in log-log scale. In addition, we use the measure developed in \cite{clauset2009power} for assessing whether empirical data behaves according to a power law (as mentioned before, power laws are the standard bursty distributions in social networks \cite{barabasi1999emergence}). This framework combines maximum-likelihood methods with goodness-of-fit tests based on the Kolmogorov-Smirnov statistics to compute a $p$-value. If the obtained $p$-value is large (close to 1), then the data is likely to be distributed according to a power law and the associated network displays preferential attachment;  on the other hand, if it is small, the data is likely not distributed according to a power law and the associated network does not display preferential attachment.
+To illustrate our theoretical results, we evaluate the predictive performance and the ability of the models to capture the preferential attachment on artificial and real networks. In order to evaluate this property we used several measures.
+
+%We observed the degree distribution and its corresponding best fitting line in log-log scale. In addition, we use the measure developed in \cite{clauset2009power} for assessing whether empirical data behaves according to a power law.
+
+\input{content/pvalue}
+%This framework combines maximum-likelihood methods with goodness-of-fit tests based on the Kolmogorov-Smirnov statistics to compute a $p$-value. If the obtained $p$-value is large (close to 1), then the data is likely to be distributed according to a power law and the associated network displays preferential attachment;  on the other hand, if it is small, the data is likely not distributed according to a power law and the associated network does not display preferential attachment.
 
 For local preferential attachment, we follow the same approach as before to compute the $p$-value, the only difference being that the empirical data does not correspond any longer to the global adjacency matrix, but to reduced matrices for each class. The computation of the reduced adjacency matrices varies from one model to the other:
 %
@@ -117,6 +122,18 @@ In general, as shown in the bottom plot, \ifm\ obtains better performance than \
 
 The above behavior can be explained by the fact that \imb\ satisfies the local preferential attachment whereas \ifm\ does not: as links are randomly removed, one is more likely to remove links from large classes than from small ones; a model that enforces local preferential attachment on bursty networks is thus more likely to reconstruct those removed links. This is what is happening on Network1 and Blogs for \imb. On the contrary, for non-bursty networks, a model enforcing local preferential attachment is penalized.
 
+In figure \ref{fig:burst_immsb} and \ref{fig:burst_ilfm} we show respectively for IMMSB and ILFM the evolution of the local preferential attachment following the definition given in section \ref{sec:local_me}, for the networks Manufacturing and Networks1 and for two different values of the generating process step $p$ (for 85\% and 95\% of the number nodes $N$). For IMMSB one can show that the probability of generating new links increase with the degree (the degree in reported in the x-axis for each class grouped together.). However, for ILFM, one can observe some classes where the preferential attachment is no true such as class 3 in Manufacturing where the probability to generate new links decrease with the degree or contains some plateau. Thus in Networks1, one can also a observe a tendency of the probability of new links to increase with the degree because the model successfully fitted the data, but still, the increase contains plateau and locally decreasing parts.
+
+\begin{figure}[h]
+\centering
+\input{img/burst_mmsb}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\input{img/burst_ilfm}
+\end{figure}
+
 
 \subsection{Preferential attachment in $\M_g$}
 
@@ -136,9 +153,9 @@ In figure \ref{fig:mg_deg}, we observe the global and local degree distributions
 \input{img/0201/mg_deg}
 
 
-Figures \ref{fig:mg_process} gives a simulation of the evolution of the expected (global and local) degree during the sampling process according to the equation \eqref{eq:degree_def}. We will refer this process as the degree count process which basically is a cummulative count over the nodes of the link measure (eitheir the true link/non-link observation for ILFM or the likelihood of a link for IMMSB) . Because, we observe the degree count averaged on all the nodes, we also plot the variance over the nodes of those degree count process.
-Interestingly, one can show that for both models, the global and local expected degree count processes follow a linear increase, while the variance of the degree count processes are slightly convex. Furthermore, it is more pronounced for IMMSB for the global degree while it seems that concerning the local degree, the models are not differentiable. Nevertheless, if we look at the standard deviation of the variance for each local degree we see that for IMMSB it seems to be correlated to the variance (the more variance (over nodes) in a local degree count, the more this variance can deviate. In other words, the variance over the epoch increase too.). This is an interesting interpretation of the source of emergence of the local preferential attachment for IMMSB.
-
-\input{img/0201/mg_process}
+%Figures \ref{fig:mg_process} gives a simulation of the evolution of the expected (global and local) degree during the sampling process according to the equation \eqref{eq:degree_def}. We will refer this process as the degree count process which basically is a cummulative count over the nodes of the link measure (eitheir the true link/non-link observation for ILFM or the likelihood of a link for IMMSB) . Because, we observe the degree count averaged on all the nodes, we also plot the variance over the nodes of those degree count process.
+%Interestingly, one can show that for both models, the global and local expected degree count processes follow a linear increase, while the variance of the degree count processes are slightly convex. Furthermore, it is more pronounced for IMMSB for the global degree while it seems that concerning the local degree, the models are not differentiable. Nevertheless, if we look at the standard deviation of the variance for each local degree we see that for IMMSB it seems to be correlated to the variance (the more variance (over nodes) in a local degree count, the more this variance can deviate. In other words, the variance over the epoch increase too.). This is an interesting interpretation of the source of emergence of the local preferential attachment for IMMSB.
+%
+%\input{img/0201/mg_process}
 
 
