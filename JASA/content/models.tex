@@ -1,9 +1,9 @@
 \section{Stochastic Mixed Membership Models}
 \label{sec:background}
 
-Stochastic mixed membership models are generative models that rely on latent factors (also called latent \textit{classes} or \textit{features}) that represent hidden properties of nodes ,corresponding to individuals, in the graph $G=(V,E)$ associated to the social network.
+Stochastic mixed membership models are generative models that rely on latent factors (also called latent \textit{classes} or \textit{features}) for modeling relational data such as links in social networks represented by a graph $G=(V,E)$, where $V$ is a a set of nodes and $E$ a set of edges between these nodes.
 
-In the remainder, we denote by $N$ the number of nodes in this graph ($N = |V|$) and by $Y$ its adjacency matrix ($y_{ij}=1$ if there is a link between nodes $i$ and $j$, $1 \le i,j \le N$; $y_{ij} = 0$ otherwise). Without loss of generality, we assume that the graph is undirected, the directed case being a special case of the undirected one.
+In the remainder, we denote by $N$ the number of nodes in this graph ($N = |V|$) and by $Y$ the adjacency matrix of the graph $G$ ($y_{ij}=1$ if there is a link between nodes $i$ and $j$, $1 \le i,j \le N$; $y_{ij} = 0$ otherwise). Without loss of generality, we assume that the graph is undirected, the directed case being a special case of the undirected one.
 
 Stochastic mixed membership models are characterized by the fact that each node can "belong" to several latent factors, which reflects the fact that each individual usually has several properties, for example can belong to several communities\footnote{As mentioned in \cite{goldenberg2010survey}, the reader should however bear in mind that the notion of latent factors is of stochastic nature and is an approximation of the notions of communities and shared properties.}. The relation between a node $i$ and the latent factors is encoded in a vector denoted $\mat{f}_{i}$, of finite dimension $K$ in standard versions of the models, and of infinite dimension in  non-parametric versions. The collection of all vectors $\mat{f}_{i}$ ($1 \le i \le N$) constitutes the factor matrix $\mat{F}$. Furthermore, a weight matrix $\mat{\Phi}$ is used to encode the relations between the latent factors.
 
@@ -14,7 +14,7 @@ In the latent feature model, each node is represented by a finite vector of bina
 \begin{enumerate}
     \item Generate a feature matrix $\mat{F}_{N \times \infty}$ representing the feature vector of each node: \[\mat{F} \sim \IBP(\alpha)\]
 \item Generate a weight matrix for each latent feature:\\
-    \[\mat{\phi}_{mn} \sim N(0, \sigma_w), \, m,n \in \mathbb{N}^{+}\]
+    \[\mat{\phi}_{mn} \sim N(0, \sigma_w), \, m,n \in \mathbb{N}^{+*}\]
 \item Generate or not a link between any node $i$ and any node $j$ according to: 
 %
 \begin{equation*}
@@ -24,7 +24,7 @@ y_{ij} \sim \mathrm{Bern}(\sigma(\mat{f}_{i} \mat{\Phi} \mat{f}_{j}^\top))
 %
 where $^\top$ dentotes the transpose and  $\sigma()$ is the sigmoid function, mapping $[-\infty, +\infty]$ values to [0,1], and where $y_{ij}$ is a binary variable indicating that a link has been generated ($y_{ij}=1$) or not ($y_{ij}=0$). We will denote by $\mat{Y}$ the $N \times N$ matrix with elements $y_{ij}$. Finally, $\mat{f}_{i}$ denotes the row feature vector corresponding to the $i^{th}$ row of $\mat{F}$.
 
-This model makes use of two real hyper-parameters, one for the IBP process ($\alpha$), and one for the variance of the normal distribution underlying the weight matrix ($\sigma_w$). In the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated. Lastly, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. In practice however, one always deal with a finite number of latent features. A graphical representation of this model is given in Figure~\ref{fig:mmm} (left).~\\
+This model makes use of two real hyper-parameters, one for the IBP process ($\alpha$), and one for the variance of the normal distribution underlying the weight matrix ($\sigma_w$). In the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated. Lastly, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. In practice however, one always deals with a finite number of latent features. A graphical representation of this model is given in Figure~\ref{fig:mmm} (left).~\\
 
 The MMSB model generates class membership distributions per node on the basis of a Dirichlet distribution. Then, for each connection between two nodes, a particular class for each node is first sampled from the class membership distribution, and the probability of connecting the two nodes is, as in the previous model, based on a Bernoulli distribution integrating the weight of the two classes. 
 ~\\
