@@ -110,7 +110,7 @@ d_{i,k}^{(p)} = \sum_{j=1, f_{jk}=1}^p y_{ij}
 %
 Note that if $f_{ik}=0$, $d_{i,k}^{(p)} = 0$ for all $p$. This then leads to the following definition for local preferential attachment with \ifm.
 %
-\begin{definition}[\ifm\ - local preferential attachment, $\M_e$]
+\begin{definition}[\ifm\ - local preferential attachment, $\M_e$]\label{def:locdeg-discrete}
 We say that \ifm, in $\M_e$, satisfies the local preferential attachment effect iff for any indexing, for any node $i, \, 1\leq i \leq N$ such that $f_{ik}=1$, and for any step $p, \, 1\leq p < N$, $P(d_{i,k}^{(N)} \geq n+1 | d_{i,k}^{(p)}=n,\M_e)$ increases with $n$ ($1\leq n < p$). If $P(d_{i,k}^{(N)} \geq n+1 | d_{i,k}^{(p)}=n,\M_e)$ is independent of $n$, the model is said to be neutral wrt to the local preferential attachment effect.
 \end{definition}
 %
@@ -144,6 +144,7 @@ As one can note, such a local degree is not necessarily an integer and the defin
 We say that \imb, in $\M_e$, satisfies the local preferential attachment effect iff for any indexing, for any node $i, \, 1\leq i \leq N$ such that $f_{ik}=1$, for any step $p, \, 1\leq p < N$, and  for all $\epsilon$ compatible with the domain of definition of $d_{i,k}$ and $x$, $P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e)$ increases with $x$. If $P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e)$ is independent of $x$, the model is said to be neutral wrt to the local preferential attachment effect.
 \end{definition}
 %
+This definition, that extends the one proposed in \cite{clinchant:2010} by considering       , can be seen as the continuous counterpart of Definition~\ref{def:locdeg-discrete}. If $x$ or $\epsilon$ is too large, the probability is null and is independent on $x$, hence the compatibility requirement with the domain of definition of $x$ and $d_{i,k}$. As we show below, \imb\ does not satisfy the local preferential attachment defined above for all values of 
 
 \begin{proposition}
 \imb\ partly satisfies the local preferential attachment effect in $\M_e$.
