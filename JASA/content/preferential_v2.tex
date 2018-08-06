@@ -90,9 +90,10 @@ As the models are neutral with $(\mat{F},\mat{\Phi})$, $P(d_i^{(N)} \geq n+1 | 
 P(d_i^{(N)} \geq n+2 | d_i^{(p)}=n+1, \M_g) = P(d_i^{(N)} \geq n+1 | d_i^{(p)}=n, \M_g)
 \end{equation*}
 %
-which completes the proof. \hspace{11cm} $\Box$
+which completes the proof.
 \end{proof}
-%
+
+
 We now turn to local preferential attachment that deals with the fact that preferential attachment can be also observed within classes of nodes, as exemplified in \cite{LeskovecBKT08}. The classes we consider here are the latent classes of the stochastic mixed-membership models.
 
 \subsection{Local preferential attachment}
@@ -123,6 +124,7 @@ As before, we have the following property.
 \begin{proof}
 The proof is identical to the first part of the proof of Property \ref{th:mg_glob}.
 \end{proof}
+
 
 For \textbf{\imb} in $\M_e$, we do not have a direct access to classes, encoded in the $Z$ variables. One can nevertheless define  local random variables $y_{ij,k}$ that are 1 if a link is generated between nodes $i$ and $j$ within class $k$ and 0 otherwise. One has:
 %
