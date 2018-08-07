@@ -93,7 +93,7 @@ P(d_i^{(N)} \geq n+2 | d_i^{(p)}=n+1, \M_g) = P(d_i^{(N)} \geq n+1 | d_i^{(p)}
 which completes the proof.
 \end{proof}
 
-
+\vspace{0.1cm}
 We now turn to local preferential attachment that deals with the fact that preferential attachment can be also observed within classes of nodes, as exemplified in \cite{LeskovecBKT08}. The classes we consider here are the latent classes of the stochastic mixed-membership models.
 
 \subsection{Local preferential attachment}
@@ -125,7 +125,7 @@ As before, we have the following property.
 The proof is identical to the first part of the proof of Property \ref{th:mg_glob}.
 \end{proof}
 
-
+\vspace{0.1cm}
 For \textbf{\imb} in $\M_e$, we do not have a direct access to classes, encoded in the $Z$ variables. One can nevertheless define  local random variables $y_{ij,k}$ that are 1 if a link is generated between nodes $i$ and $j$ within class $k$ and 0 otherwise. One has:
 %
 \begin{align*}
@@ -135,25 +135,39 @@ P(y_{ij,k}=1 | \M_e) &= P(y_{ij}=1 | z_{i\rightarrow j} = z_{i\leftarrow j}=k,
 %
 The local degree $d_{i,k}^{(p)}$ can then be defined as the expectation of $y_{ij,k}$ over the nodes $1,...,p$:
 %
-\begin{align*}
-d_{i,k}^{(p)} &= \sum_{j=1}^p P(y_{ij,k}=1 | \M_e)  \\
+\begin{align}\label{def:locdegimb}
+d_{i,k}^{(p)} &= \sum_{j=1}^p P(y_{ij,k}=1 | \M_e)  \nonumber \\
     &= \sum_{j=1}^p f_{ik} \phi_{kk} f_{jk}
-\end{align*}
+\end{align}
 %
 As one can note, such a local degree is not necessarily an integer and the definition of the local preferential attachment has to be adapted accordingly. 
 %
 \begin{definition}[\imb\ - local preferential attachment, $\M_e$]
 We say that \imb, in $\M_e$, satisfies the local preferential attachment effect iff for any indexing, for any node $i, \, 1\leq i \leq N$ such that $f_{ik}=1$, for any step $p, \, 1\leq p < N$, and  for all $\epsilon$ compatible with the domain of definition of $d_{i,k}$ and $x$, $P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e)$ increases with $x$. If $P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e)$ is independent of $x$, the model is said to be neutral wrt to the local preferential attachment effect.
 \end{definition}
-%
-This definition, that extends the one proposed in \cite{clinchant:2010} by considering       , can be seen as the continuous counterpart of Definition~\ref{def:locdeg-discrete}. If $x$ or $\epsilon$ is too large, the probability is null and is independent on $x$, hence the compatibility requirement with the domain of definition of $x$ and $d_{i,k}$. As we show below, \imb\ does not satisfy the local preferential attachment defined above for all values of 
+
+This definition can be seen as the continuous counterpart of Definition~\ref{def:locdeg-discrete}. If $x$ or $\epsilon$ is too large, the probability is null and is independent on $x$, hence the compatibility requirement with the domain of definition of $x$ and $d_{i,k}$. The following property shows that \imb\ satisfies the local preferential attachment effect under the (mild) assumption that $\mat{\hat{F}}$ follows a power law distribution.
 
 \begin{proposition}
-\imb\ partly satisfies the local preferential attachment effect in $\M_e$.
+Let us assume that $\mat{\hat{F}}$ follows a power law distribution, \textit{i.e.} that for all $i$ and $k$, $P(\hat{f}_{ik} > x) \sim L(x) x^{- \alpha + 1}$ where $L(x)$ is a slow varying function and $\alpha > 1$. Then \imb\ satisfies the local preferential attachment effect in $\M_e$.
 \end{proposition}
 
 \begin{proof}
-The positive reinforcement effect of the Dirichlet Process \cite{HDP} at the basis of \imb\ corresponds to a burstiness phenomenon and directly translates, for any $i$ and any $k$, as: $\pr(\hat{f}_{ik} \ge x'+\epsilon' \mid \hat{f}_{ik} \ge x',\mathcal{M}_e)$ increases with $x'$ (for all $\epsilon'$ and $x'$ chosen according to the domain of definition of $\hat{f}_{ik}$). Setting $x=x'(\sum_{j\in V} \hat{\Phi}_{kk} \hat{f}_{jk})$ and $\epsilon = \epsilon'(\sum_{j\in V} \hat{\Phi}_{kk} \hat{f}_{jk})$ and exploiting the fact that $\sum_{j\in V} \hat{\Phi}_{kk} \hat{f}_{jk}$ is positive and independent of $i$ leads to: $\pr(d_{i,k} \ge x+\epsilon \mid d_{i,k} \ge x, \mathcal{M}_e)$ increases with $x$, which proves that \imb\ satisfies the local preferential attachment effect.
+Let $F_k^p \triangleq \sum_{j=1}^p \hat{f}_{jk}$. Using the definition of $d_{i,k}^{(p)}$ in Eq.~\ref{def:locdegimb} and the change of variables $x'=\frac{x}{F_k^p \phi_{kk}}$ and $\epsilon'=\frac{epsilon}{F_k^N \phi_{kk}}$, one gets:
+%
+\begin{align*}
+P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e) = P(\hat{f}_{ik} > \frac{F_k^p}{F_k^N} \geq x'+\epsilon' | \hat{f}_{ik} \geq x') = 
+\frac{P(\hat{f}_{ik} > \frac{F_k^p}{F_k^N} \geq x'+\epsilon')}{P(\hat{f}_{ik} \geq x')} & \\
+= (\frac{F_k^p}{F_k^N})^{1-\alpha} (1+\frac{\epsilon'}{x'}\frac{F_k^N}{F_k^p})^{1-\alpha} \simeq (\frac{F_k^p}{F_k^N})^{1-\alpha} (1+(1-\alpha)\frac{\epsilon'}{x'}\frac{F_k^N}{F_k^p})
+\end{align*}
+%
+where the last approximation is based on a first order Taylor expansion of the power law distribution of $\hat{f}_{ik}$. As $\alpha > 1$, the last term increases with $x'$, and hence with $x$, which concludes the proof.
 \end{proof}
+
+\vspace{0.1cm}
+The power law distribution assumed here for $\hat{f}_{ik}$ directly translates the positive reinforcement effect of the Dirichlet Process \cite{HDP} at the basis of \imb, that corresponds to a burstiness phenomenon. The definitions that we have considered for the (local and global) preferential attachment effects are extensions of the definitions for burstiness proposed in \cite{clinchant2010information}. Power law distributions have been often used to model bursty phenomena (\cite{barabasi_burst,clauset2009power} to cite but a few). It is easy to see, using the same development as the one we have used, that power distributions are bursty in the sense of \cite{clinchant2010information}.
+
+We now present an experimental illustration of the above theoretical results.
+
 
 
