@@ -149,7 +149,7 @@ We say that \imb, in $\M_e$, satisfies the local preferential attachment effect 
 This definition can be seen as the continuous counterpart of Definition~\ref{def:locdeg-discrete}. If $x$ or $\epsilon$ is too large, the probability is null and is independent on $x$, hence the compatibility requirement with the domain of definition of $x$ and $d_{i,k}$. The following property shows that \imb\ satisfies the local preferential attachment effect under the (mild) assumption that elements of $\mat{\hat{F}}$ follow a power law distribution.
 
 \begin{proposition}\label{prop:IMBlocal}
-Let us assume that elements of $\mat{\hat{F}}$ follow a power law distribution, \textit{i.e.} that for all $i$ and $k$, $\hat{f}_{ik} \sim L(x) x^{- \alpha + 1}$ where $L(x)$ is a slow varying function and $\alpha > 1$. Then \imb\ satisfies the local preferential attachment effect in $\M_e$.
+Let us assume that elements of $\mat{\hat{F}}$ follow a power law distribution, \textit{i.e.} that for all $i$ and $k$, $\hat{f}_{ik} \sim L(x) x^{- \alpha_{ik} + 1}$ where $L(x)$ is a slow varying function and $\alpha_{ik} > 1$. Then \imb\ satisfies the local preferential attachment effect in $\M_e$.
 \end{proposition}
 
 \begin{proof}
@@ -158,14 +158,14 @@ Let $F_k^p \triangleq \sum_{j=1}^p \hat{f}_{jk}$. Using the definition of $d_{i,
 \begin{align*}
 P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e) = P(\hat{f}_{ik} \geq \frac{F_k^p}{F_k^N} x'+\epsilon' | \hat{f}_{ik} \geq x') = 
 \frac{P(\hat{f}_{ik} \geq \frac{F_k^p}{F_k^N} x'+\epsilon')}{P(\hat{f}_{ik} \geq x')} & \\
-= (\frac{F_k^p}{F_k^N})^{1-\alpha} (1+\frac{\epsilon'}{x'}\frac{F_k^N}{F_k^p})^{1-\alpha} \simeq (\frac{F_k^p}{F_k^N})^{1-\alpha} (1+(1-\alpha)\frac{\epsilon'}{x'}\frac{F_k^N}{F_k^p})
+= (\frac{F_k^p}{F_k^N})^{1-\alpha_{ik}} (1+\frac{\epsilon'}{x'}\frac{F_k^N}{F_k^p})^{1-\alpha_{ik}} \simeq (\frac{F_k^p}{F_k^N})^{1-\alpha_{ik}} (1+(1-\alpha_{ik})\frac{\epsilon'}{x'}\frac{F_k^N}{F_k^p})
 \end{align*}
 %
-where the last approximation is based on a first order Taylor expansion of the power law distribution of $\hat{f}_{ik}$. As $\alpha > 1$, the last term increases with $x'$, and hence with $x$, which concludes the proof.
+where the last approximation is based on a first order Taylor expansion of the power law distribution of $\hat{f}_{ik}$. As $\alpha_{ik} > 1$, the last term increases with $x'$, and hence with $x$, which concludes the proof.
 \end{proof}
 
 \vspace{0.1cm}
-As one can note, the proof does not assume that all $\hat{f}_{ik}$ follow the same power law distribution. The power law distribution assumed here for $\hat{f}_{ik}$ directly translates the positive reinforcement effect of the Dirichlet Process \cite{HDP} at the basis of \imb, that corresponds to a burstiness phenomenon. The definitions that we have considered for the (local and global) preferential attachment effects are extensions of the definitions for burstiness proposed in \cite{clinchant2010information}. Power law distributions have been often used to model bursty phenomena (\cite{barabasi_burst,clauset2009power} to cite but a few). It is easy to see, using the same development as the one we have used, that power distributions are bursty in the sense of \cite{clinchant2010information}.
+ The power law distribution assumed here for $\hat{f}_{ik}$ directly translates the positive reinforcement effect of the Dirichlet Process \cite{HDP} at the basis of \imb, that corresponds to a burstiness phenomenon. The definitions that we have considered for the (local and global) preferential attachment effects are extensions of the definitions for burstiness proposed in \cite{clinchant2010information}. Power law distributions have been often used to model bursty phenomena (\cite{barabasi_burst,clauset2009power} to cite but a few). It is easy to see, using the same development as the one we have used, that power distributions are bursty in the sense of \cite{clinchant2010information}.
 
 We now present an experimental illustration of the above theoretical results.
 
