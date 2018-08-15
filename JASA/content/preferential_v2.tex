@@ -149,15 +149,15 @@ We say that \imb, in $\M_e$, satisfies the local preferential attachment effect 
 This definition can be seen as the continuous counterpart of Definition~\ref{def:locdeg-discrete}. If $x$ or $\epsilon$ is too large, the probability is null and is independent on $x$, hence the compatibility requirement with the domain of definition of $x$ and $d_{i,k}$. The following property shows that \imb\ satisfies the local preferential attachment effect under the (mild) assumption that $\mat{\hat{F}}$ follows a power law distribution.
 
 \begin{proposition}\label{prop:IMBlocal}
-Let us assume that $\mat{\hat{F}}$ follows a power law distribution, \textit{i.e.} that for all $i$ and $k$, $P(\hat{f}_{ik} > x) \sim L(x) x^{- \alpha + 1}$ where $L(x)$ is a slow varying function and $\alpha > 1$. Then \imb\ satisfies the local preferential attachment effect in $\M_e$.
+Let us assume that $\mat{\hat{F}}$ follows a power law distribution, \textit{i.e.} that for all $i$ and $k$, $\hat{f}_{ik} \sim L(x) x^{- \alpha + 1}$ where $L(x)$ is a slow varying function and $\alpha > 1$. Then \imb\ satisfies the local preferential attachment effect in $\M_e$.
 \end{proposition}
 
 \begin{proof}
-Let $F_k^p \triangleq \sum_{j=1}^p \hat{f}_{jk}$. Using the definition of $d_{i,k}^{(p)}$ in Eq.~\ref{def:locdegimb} and the change of variables $x'=\frac{x}{F_k^p \phi_{kk}}$ and $\epsilon'=\frac{epsilon}{F_k^N \phi_{kk}}$, one gets:
+Let $F_k^p \triangleq \sum_{j=1}^p \hat{f}_{jk}$. Using the definition of $d_{i,k}^{(p)}$ in Eq.~\ref{def:locdegimb} and the change of variables $x'=\frac{x}{F_k^p \phi_{kk}}$ and $\epsilon'=\frac{\epsilon}{F_k^N \phi_{kk}}$, one gets:
 %
 \begin{align*}
-P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e) = P(\hat{f}_{ik} > \frac{F_k^p}{F_k^N} \geq x'+\epsilon' | \hat{f}_{ik} \geq x') = 
-\frac{P(\hat{f}_{ik} > \frac{F_k^p}{F_k^N} \geq x'+\epsilon')}{P(\hat{f}_{ik} \geq x')} & \\
+P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e) = P(\hat{f}_{ik} \geq \frac{F_k^p}{F_k^N} x'+\epsilon' | \hat{f}_{ik} \geq x') = 
+\frac{P(\hat{f}_{ik} \geq \frac{F_k^p}{F_k^N} x'+\epsilon')}{P(\hat{f}_{ik} \geq x')} & \\
 = (\frac{F_k^p}{F_k^N})^{1-\alpha} (1+\frac{\epsilon'}{x'}\frac{F_k^N}{F_k^p})^{1-\alpha} \simeq (\frac{F_k^p}{F_k^N})^{1-\alpha} (1+(1-\alpha)\frac{\epsilon'}{x'}\frac{F_k^N}{F_k^p})
 \end{align*}
 %
