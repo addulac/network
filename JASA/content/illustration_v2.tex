@@ -53,17 +53,17 @@ Figure \ref{fig:synt_graph_local} represents the local degree distributions for 
 
 \begin{figure}[h]
     \centering
-        \begin{minipage}{0.4\textwidth}
+        \begin{minipage}{0.45\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/network1_1}
         \end{minipage}
-        \begin{minipage}{0.4\textwidth}
+        \begin{minipage}{0.45\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/network2_1}
         \end{minipage}
         \vskip\baselineskip
-        \begin{minipage}{0.4\textwidth}
+        \begin{minipage}{0.45\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/blogs_1}
         \end{minipage}
-        \begin{minipage}{0.4\textwidth}
+        \begin{minipage}{0.45\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/manufacturing_1}
         \end{minipage}
         \caption {Local degree distributions for the four training datasets. For Network1 and Network2 the classes come from ground-truth. For Blogs and Manufacturing, classes are obtained with a Louvain algorithm.} 
@@ -106,7 +106,7 @@ In figure \ref{fig:burst_immsb} and \ref{fig:burst_ilfm} we show respectively fo
 
 %% efficacy != efficiency
 
-Lastly, Figure \ref{fig:auc} compares the performance of the models for predicting new links using the Area Under the Curve (AUC) measure as a function of the training set size. In the bottom plot, the y-axis gives the relative performance defined as the difference of the AUC values for \imb\ and \ifm\ ($AUC_{\imb} - AUC_{\ifm}$) whereas the x-axis indicates the percentage of links randomly removed from the datasets and used as test examples. Hence, the number of training data decreases with the x-axis and a positive value on the y-axis indicates that \imb\ outperforms \ifm.  The relative performance corresponds to the difference of the best AUC values obtained for both models on the 10 inference experiences. The top plots illustrate a case where 75 percent of the data is used as test set and where \imb\ dominates \ifm\ on Network1 (left), and the opposite on Network2 (right).
+in Figure \ref{fig:auc}, we compare the performance of the models for predicting new links using the Area Under the Curve (AUC) measure as a function of the training set size. In the bottom plot, the y-axis gives the relative performance defined as the difference of the AUC values for \imb\ and \ifm\ ($AUC_{\imb} - AUC_{\ifm}$) whereas the x-axis indicates the percentage of links randomly removed from the datasets and used as test examples. Hence, the number of training data decreases with the x-axis and a positive value on the y-axis indicates that \imb\ outperforms \ifm.  The relative performance corresponds to the difference of the best AUC values obtained for both models on the 10 inference experiences. The top plots illustrate a case where 75 percent of the data is used as test set and where \imb\ dominates \ifm\ on Network1 (left), and the opposite on Network2 (right).
 
 In general, as shown in the bottom plot, \ifm\ obtains better performance than \imb. However, the relative predictive performance of \imb\  increases  when the quantity of training data decreases on bursty networks, whereas for non-bursty networks the results are the opposite: the performance of \ifm\ increases when the size of the learning dataset decreases. This is particularly visible for Network2. The results for Manufacturing are less marked, which is certainly due to the small size of this network, making the prediction less challenging.
 
@@ -114,10 +114,10 @@ The above behavior can be explained by the fact that \imb\ satisfies the local p
 
 \begin{figure}[ht]
 \centering
-    \begin{minipage}{0.4\textwidth}
+    \begin{minipage}{0.45\textwidth}
         \includegraphics[width=\textwidth]{img/corpus/roc_network1_75_f}
     \end{minipage}
-    \begin{minipage}{0.4\textwidth}
+    \begin{minipage}{0.45\textwidth}
         \includegraphics[width=\textwidth]{img/corpus/roc_network2_75_f}
     \end{minipage}
     \begin{minipage}{0.5\textwidth}
@@ -130,7 +130,7 @@ The above behavior can be explained by the fact that \imb\ satisfies the local p
 
 \subsection{Preferential attachment in $\M_g$}
 
-Illustrations in the $\M_g$ case are based on the simulation of the models where the parameters $F$ and $\Phi$ have been marginalized out. In other words the degrees that we are going to observe are the expected degree for a large numbers (in the sense of the theory of large numbers) of generated parameters, given the hyper-parameters of the model. In order to simulate this scenario, we generated a large number (100) of networks with a given set of hyper-parameters for the models. Then we reported the average global degree distribution in figure \ref{fig:mg_deg} (top).  For  this  experiments, fix the number of nodes to 1000. We went trough the generative process 100 times in order to simulate the $\M_g$ mode. In order to have a comparable number of classes for \ifm and \imb and block-block probability priors, we fix the hyper-parameters  $\lambda_0=\lambda_1=0.5$ for both models,  $\alpha=\alpha_0=1$ for \ifm, and  $\gamma=0.5$ for \imb.
+Illustrations in the $\M_g$ case are based on the simulation of the models where the parameters $F$ and $\Phi$ have been marginalized out. In other words the degrees that we are going to observe are the expected degree for a large numbers (in the sense of the theory of large numbers) of generated parameters, given the hyper-parameters of the model. In order to simulate this scenario, we generated a large number (100) of networks with a given set of hyper-parameters for the models. Then we reported the average global degree distribution in figure \ref{fig:mg_deg} (top).  For  this  experiments, fix the number of nodes to 1000. We went trough the generative process 100 times in order to simulate the $\M_g$ mode. In order to have a comparable number of classes for \ifm\ and \imb\ and block-block probability priors, we fix the hyper-parameters  $\lambda_0=\lambda_1=0.5$ for both models,  $\alpha=\alpha_0=1$ for \ifm, and  $\gamma=0.5$ for \imb.
 
 We see that the global degree distributions are not monotone, with several peaks, and that the range values of the outcome degrees are concentrated in a small segment determined by the hyper-parameters of the models. The shape of the global degree distributions shows that the global preferential attachment is not satisfied. 
 
