@@ -1,7 +1,7 @@
 \section{Preferential attachment}
 \label{sec:burstiness}
 
-As mentioned before, preferential attachement can be global, in which case nodes are connected across communities, and/or local to the network communities. We first study global preferential for the models \ifm\ and \imb\ in the two contexts defined by $\mathcal{M}_g$ and $\mathcal{M}_e$. We then turn our attention to local preferential attachment.
+As mentioned before, preferential attachement can be global, in which case nodes are connected across communities, and/or local to the network communities. Preferential attachment is reminiscent of a phenomenon called \textit{burstiness}, studied in different contexts (\cite{barabasi_burst}). We introduce here definitions for the local and global preferential attachment effects that are extensions of the definitions for burstiness proposed in \cite{clinchant2010information} for text collections. We will first study global preferential attachment for the models \ifm\ and \imb\ in the two contexts defined by $\mathcal{M}_g$ and $\mathcal{M}_e$. We will then turn our attention to local preferential attachment.
 %The preferential attachment effect can be observed directly over the global network, or indirectly on latent classes.
 
 \subsection{Global preferential attachment}
@@ -146,27 +146,32 @@ As one can note, such a local degree is not necessarily an integer and the defin
 We say that \imb, in $\M_e$, satisfies the local preferential attachment effect iff for any indexing, for any node $i, \, 1\leq i \leq N$ such that $f_{ik}=1$, for any step $p, \, 1\leq p < N$, and  for all $\epsilon$ compatible with the domain of definition of $d_{i,k}$ and $x$, $P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e)$ increases with $x$. If $P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e)$ is independent of $x$, the model is said to be neutral wrt to the local preferential attachment effect.
 \end{definition}
 
-This definition can be seen as the continuous counterpart of Definition~\ref{def:locdeg-discrete}. If $\epsilon$ is too large, the probability is null and is independent on $x$, hence the compatibility requirement with the domain of definition of $x$ and $d_{i,k}$. The following property shows that \imb\ satisfies the local preferential attachment effect under the assumption that elements of $\mat{\hat{F}}$ follow a power law distribution.
+This definition can be seen as the continuous counterpart of Definition~\ref{def:locdeg-discrete}. If $\epsilon$ is too large, the probability is null and is independent on $x$, hence the compatibility requirement with the domain of definition of $x$ and $d_{i,k}$. 
+
+Because of the Hierarchical Dirichlet Process underlying the \imb\ model, $\mat{f}_i$ follows a Dirichlet distribution: $\mat{f}_i \sim Dir(\alpha_0 + \beta_k + N_{ik}), \, 1 \le k \le K$, with $N_{ik}$ being the number of edges connecting node $i$ through class $k$ (see for example \cite{teh2006hierarchical}) and $K$ the number of latent classes obtained. The marginals $f_{ik}$ are thus distributed according to a Beta distribution: $f_{ik} \sim Beta(a_{ik}, b_{ik})$ with $a_{ik} = \alpha_0 + \beta_k + N_{ik}$ and $b_{ik} = \sum_{k'=1, k' \ne k}^{K} \alpha_0 + \beta_k' + N_{ik'}$.
+
+The following property displays a sufficient condition on $x$, $\epsilon$, $a_{ik}$ and $b_{ik}$ for \imb\ to satisfy the local preferential attachment.
 
 \begin{proposition}\label{prop:IMBlocal}
-Let us assume that elements of $\mat{\hat{F}}$ follow a power law distribution, \textit{i.e.} that for all $i$ and $k$, $pdf(\hat{f}_{ik}) \propto x^{- \alpha_{ik}}$ with $\alpha_{ik} > 1$ and where $pdf$ denotes the probability density function. Then \imb\ satisfies the local preferential attachment effect in $\M_e$.
+Let $F_k^p = \sum_{j=1}^p \hat{f}_{jk}$, $x'=\frac{x}{F_k^p \phi_{kk}}$ and $\epsilon'=\frac{\epsilon}{F_k^N \phi_{kk}}$. In the region where $x$ and $\epsilon$ are such that:
+%
+\[
+F_k^N a_{ik} x'^{a_{ik}-1} (1-\epsilon') > F_k^p a_{ik} x'^{a_{ik}} + b_{ik} F_k^p (1-x'^{a_{ik}}),
+\]
+%
+$P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e)$ increases with $x$.
 \end{proposition}
 
+As one can note, when $F_k^p$ is small (typically in the first steps of the process), then the above condition is likely to be met and \imb\ satisfies the preferential attachment effect. However, when $F_k^p$ gets closer to $F_k^N$ the above condition is no longer met.
+
 \begin{proof}
-First note that $P(\hat{f}_{ik} \geq x) \propto x^{- \alpha_{ik} + 1}$. Let $F_k^p \triangleq \sum_{j=1}^p \hat{f}_{jk}$. Using the definition of $d_{i,k}^{(p)}$ in Eq.~\ref{def:locdegimb} and the change of variables $x'=\frac{x}{F_k^p \phi_{kk}}$ and $\epsilon'=\frac{\epsilon}{F_k^N \phi_{kk}}$, one gets:
-%
-\begin{align*}
-P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e) = P(\hat{f}_{ik} \geq \frac{F_k^p}{F_k^N} x'+\epsilon' | \hat{f}_{ik} \geq x') = 
-\frac{P(\hat{f}_{ik} \geq \frac{F_k^p}{F_k^N} x'+\epsilon')}{P(\hat{f}_{ik} \geq x')} & \\
-= (\frac{F_k^p}{F_k^N})^{1-\alpha_{ik}} (1+\frac{\epsilon'}{x'}\frac{F_k^N}{F_k^p})^{1-\alpha_{ik}} \simeq (\frac{F_k^p}{F_k^N})^{1-\alpha_{ik}} (1+(1-\alpha_{ik})\frac{\epsilon'}{x'}\frac{F_k^N}{F_k^p})
-\end{align*}
-%
-where the last approximation is based on a first order Taylor expansion of the power law distribution of $\hat{f}_{ik}$. As $\alpha_{ik} > 1$, the last term increases with $x'$, and hence with $x$, which concludes the proof.
+
 \end{proof}
 
-\vspace{0.1cm}
- The power law distribution assumed here for $\hat{f}_{ik}$ directly translates the positive reinforcement effect of the Dirichlet Process \cite{HDP} at the basis of \imb, that corresponds to a burstiness phenomenon. The definitions that we have considered for the (local and global) preferential attachment effects are indeed extensions of the definitions for burst iness proposed in \cite{clinchant2010information}. Power law distributions have been often used to model bursty phenomena (\cite{barabasi_burst,clauset2009power} to cite but a few), and our assumption on $\hat{f}_{ik}$ reflects this usage.
- % It is easy to see, using the same development as the one we have used, that power distributions are bursty in the sense of \cite{clinchant2010information}.
+%\vspace{0.1cm}
+% %The power law distribution assumed here for $\hat{f}_{ik}$ directly translates the positive reinforcement effect of the Dirichlet Process \cite{HDP} at the basis of \imb, that corresponds to a burstiness phenomenon. 
+%The definitions that we have considered for the (local and global) preferential attachment effects are extensions of the definitions for burstiness proposed in \cite{clinchant2010information}. Power law distributions have been often used to model bursty phenomena (\cite{barabasi_burst,clauset2009power} to cite but a few), and our assumption on $\hat{f}_{ik}$ reflects this usage.
+% % It is easy to see, using the same development as the one we have used, that power distributions are bursty in the sense of \cite{clinchant2010information}.
 
 We now present an experimental illustration of the above theoretical results.
 
