@@ -5,7 +5,7 @@ The measures considered to evaluate the preferential attachment rely on a goodne
 	\item Estimate the parameters $\alpha$ and $x_\text{min}$ of the power law model. $\alpha$ is the scaling parameter of the law and $x_\text{min}$, the lower bound for the tail. It has been fixed to the smallest value observed in the distributions evaluated, in our experiments to allow their comparisons.
 	\item  Using the Kolmogorov-Smirnov (KS) statistic, compute the distance $KS_{obs}$  between the degree distribution obtained on the network with the theoretical distribution corresponding to the power law with the estimated parameters.
 	\item Sample $S$ synthetic datasets from the power law with the estimated parameters. For each sample  dataset $s \in S$, compute the distance $KS_{s}$ between the distribution obtained on this synthetic dataset, drawn from the power law, with the corresponding theoretical distribution using the Kolmogorov-Smirnov statistic. 
-    \item Decide how many sample dataset $S$ to use, with a rule of thumb, based on a worst-case performance analysis of the test \cite{clauset2009power}. To obtain a precision of the $p$-value about $\epsilon$, on should choose $S = \frac{1}{4}\epsilon^{-2}$.  
+    \item Decide how many sample dataset $S$ to use, with a rule of thumb, based on a worst-case performance analysis of the test \cite{clauset2009power}. To obtain a precision of the $p$-value about $\epsilon$, one should choose $S = \frac{1}{4}\epsilon^{-2}$.  
     \item  The p-value is defined as the fraction of the resulting statistics $KS_s, s \in \{1,...,S\}$ obtained on the samples larger than the value $KS_{obs}$ computed on the network distribution.  
 \end{itemize}
 

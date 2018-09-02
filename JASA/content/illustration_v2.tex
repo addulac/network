@@ -9,7 +9,7 @@ To illustrate our theoretical results, we evaluate the predictive performance an
 %This framework combines maximum-likelihood methods with goodness-of-fit tests based on the Kolmogorov-Smirnov statistics to compute a $p$-value. If the obtained $p$-value is large (close to 1), then the data is likely to be distributed according to a power law and the associated network displays preferential attachment;  on the other hand, if it is small, the data is likely not distributed according to a power law and the associated network does not display preferential attachment.
 
 For local preferential attachment, we follow the same approach as before to compute the $p$-value, the only difference being that the empirical data does not correspond any longer to the global adjacency matrix, but to reduced matrices for each class. The computation of the reduced adjacency matrices varies from one model to the other:
-%
+
 \begin{itemize}
     \item For \imb, for a given class $k$, the reduced adjacency matrix $Y^k$ is defined by:~$y_{ij,k}=1$ if $y_{ij}=1, z_{i\rightarrow j}=z_{i\leftarrow j}=k$ and $0$ otherwise.
     \item For \ifm, the reduced adjacency matrix $Y^k$ is defined by:~$ y_{ij,k}=1$ if $y_{ij}=1 , f_{ik}=f_{jk}=1$ and $0$ otherwise.
@@ -53,17 +53,17 @@ Figure \ref{fig:synt_graph_local} represents the local degree distributions for 
 
 \begin{figure}[h]
     \centering
-        \begin{minipage}{0.4\textwidth}
+        \begin{minipage}{0.45\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/network1_1}
         \end{minipage}
-        \begin{minipage}{0.4\textwidth}
+        \begin{minipage}{0.45\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/network2_1}
         \end{minipage}
         \vskip\baselineskip
-        \begin{minipage}{0.4\textwidth}
+        \begin{minipage}{0.45\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/blogs_1}
         \end{minipage}
-        \begin{minipage}{0.4\textwidth}
+        \begin{minipage}{0.45\textwidth}
             \includegraphics[width=\textwidth]{img/corpus/manufacturing_1}
         \end{minipage}
         \caption {Local degree distributions for the four training datasets. For Network1 and Network2 the classes come from ground-truth. For Blogs and Manufacturing, classes are obtained with a Louvain algorithm.} 
@@ -106,7 +106,7 @@ In figure \ref{fig:burst_immsb} and \ref{fig:burst_ilfm} we show respectively fo
 
 %% efficacy != efficiency
 
-Lastly, Figure \ref{fig:auc} compares the performance of the models for predicting new links using the Area Under the Curve (AUC) measure as a function of the training set size. In the bottom plot, the y-axis gives the relative performance defined as the difference of the AUC values for \imb\ and \ifm\ ($AUC_{\imb} - AUC_{\ifm}$) whereas the x-axis indicates the percentage of links randomly removed from the datasets and used as test examples. Hence, the number of training data decreases with the x-axis and a positive value on the y-axis indicates that \imb\ outperforms \ifm.  The relative performance corresponds to the difference of the best AUC values obtained for both models on the 10 inference experiences. The top plots illustrate a case where 75 percent of the data is used as test set and where \imb\ dominates \ifm\ on Network1 (left), and the opposite on Network2 (right).
+in Figure \ref{fig:auc}, we compare the performance of the models for predicting new links using the Area Under the Curve (AUC) measure as a function of the training set size. In the bottom plot, the y-axis gives the relative performance defined as the difference of the AUC values for \imb\ and \ifm\ ($AUC_{\imb} - AUC_{\ifm}$) whereas the x-axis indicates the percentage of links randomly removed from the datasets and used as test examples. Hence, the number of training data decreases with the x-axis and a positive value on the y-axis indicates that \imb\ outperforms \ifm.  The relative performance corresponds to the difference of the best AUC values obtained for both models on the 10 inference experiences. The top plots illustrate a case where 75 percent of the data is used as test set and where \imb\ dominates \ifm\ on Network1 (left), and the opposite on Network2 (right).
 
 In general, as shown in the bottom plot, \ifm\ obtains better performance than \imb. However, the relative predictive performance of \imb\  increases  when the quantity of training data decreases on bursty networks, whereas for non-bursty networks the results are the opposite: the performance of \ifm\ increases when the size of the learning dataset decreases. This is particularly visible for Network2. The results for Manufacturing are less marked, which is certainly due to the small size of this network, making the prediction less challenging.
 
@@ -114,10 +114,10 @@ The above behavior can be explained by the fact that \imb\ satisfies the local p
 
 \begin{figure}[ht]
 \centering
-    \begin{minipage}{0.4\textwidth}
+    \begin{minipage}{0.45\textwidth}
         \includegraphics[width=\textwidth]{img/corpus/roc_network1_75_f}
     \end{minipage}
-    \begin{minipage}{0.4\textwidth}
+    \begin{minipage}{0.45\textwidth}
         \includegraphics[width=\textwidth]{img/corpus/roc_network2_75_f}
     \end{minipage}
     \begin{minipage}{0.5\textwidth}
@@ -130,21 +130,21 @@ The above behavior can be explained by the fact that \imb\ satisfies the local p
 
 \subsection{Preferential attachment in $\M_g$}
 
-Illustrations in the $\M_g$ case are based on the simulation of the models where the parameters $F$ and $\Phi$ have been marginalized out. In other words the degrees that we are going to observe are the expected degree for a large numbers (in the sense of the theory of large numbers) of generated parameters, given the hyper-parameters of the model. In order to simulate this scenario, we generated a large number (100) of network with a given set of hyper-parameters for the models. Then we reported the average global degree distribution in figure \ref{fig:mg_deg} (top).  For  this  experiments, fix the number of nodes to 1000. We went trough the generative process 100 times in order to simulate the $\M_g$ mode. In order to have a comparable number of classes for \ifm and \imb and block-block probability priors, we fix the hyper-parameters  $\lambda_0=\lambda_1=0.5$ for both models,  $\alpha=\alpha_0=1$ for \ifm, and  $\gamma=0.5$ for \imb.
+Illustrations in the $\M_g$ case are based on the simulation of the models where the parameters $F$ and $\Phi$ have been marginalized out. In other words the degrees that we are going to observe are the expected degree for a large numbers (in the sense of the theory of large numbers) of generated parameters, given the hyper-parameters of the model. In order to simulate this scenario, we generated a large number (100) of networks with a given set of hyper-parameters for the models. Then we reported the average global degree distribution in figure \ref{fig:mg_deg} (top).  For  this  experiments, fix the number of nodes to 1000. We went trough the generative process 100 times in order to simulate the $\M_g$ mode. In order to have a comparable number of classes for \ifm\ and \imb\ and block-block probability priors, we fix the hyper-parameters  $\lambda_0=\lambda_1=0.5$ for both models,  $\alpha=\alpha_0=1$ for \ifm, and  $\gamma=0.5$ for \imb.
 
 We see that the global degree distributions are not monotone, with several peaks, and that the range values of the outcome degrees are concentrated in a small segment determined by the hyper-parameters of the models. The shape of the global degree distributions shows that the global preferential attachment is not satisfied. 
 
 
-In the figure \ref{fig:mg_deg} (bottom), we also reported a measure on the local preferential attachment in $\M_g$. An important note is that, to be able to compute the statistics for the local degree, the latent classes need to be aligned between the different epochs in order to report a average value of the local degree distributions. But, the mixed membership models do not defined unique labels over the latent classes. Thus, it is not straightforward to identify the common classes between the generations of the different network realizations. Actually, as the processes are exchangeable, they is no strict correspondence between classes in two independent generative process. Nevertheless, the property of the Dirichlet Process and the Indian Buffet Process, enable to identify the classes by ordering them with their size (or concentration). For example, the stick breaking process interpretation of the DP provides a natural class ordering with a descending (or ascending) order of the class representations. While the IBP generate a row-exchangeable feature matrix, it is possible to reorder the rows to obtain a $F$ matrix where the size of the classes keeps the same descending (or ascending) order.
+In the figure \ref{fig:mg_deg} (bottom), we also reported a measure on the local preferential attachment in $\M_g$. An important note is that, to be able to compute the statistics for the local degree, the latent classes need to be aligned between the different epochs in order to report average values of the local degree distributions. But, the mixed membership models do not defined unique labels over the latent classes. Thus, it is not straightforward to identify the common classes between the generations of the different network realizations. Actually, as the processes are exchangeable, they is no strict correspondence between classes in two independent generative process. Nevertheless, the property of the Dirichlet Process and the Indian Buffet Process, enable to identify the classes by ordering them with their size (or concentration). For example, the stick breaking process interpretation of the DP provides a natural class ordering with a descending (or ascending) order of the class representations. While the IBP generates a row-exchangeable feature matrix, it is possible to reorder the rows to obtain a $F$ matrix where the size of the classes keeps the same descending (or ascending) order.
 
-For the local degree, one can that, for IMMSB, the shape of the distributions is characteristic of the preferential attachment effect (linear decrease in a log-log space) while it is not the case for ILFM. This experiment is interesting as it show that, for \imb, the local preferential attachment property in $\M_e$ seems to holds also in $\M_g$.
+For the local degree, one can see that, for IMMSB, the shape of the distributions is characteristic of the preferential attachment effect (linear decrease in a log-log space) while it is not the case for ILFM. This experiment is interesting as it show that, for \imb, the local preferential attachment property in $\M_e$ seems to holds also in $\M_g$.
 
 \input{img/0201/mg_deg}
 
 
 %Figures \ref{fig:mg_process} gives a simulation of the evolution of the expected (global and local) degree during the sampling process according to the equation \eqref{eq:degree_def}. We will refer this process as the degree count process which basically is a cummulative count over the nodes of the link measure (eitheir the true link/non-link observation for ILFM or the likelihood of a link for IMMSB) . Because, we observe the degree count averaged on all the nodes, we also plot the variance over the nodes of those degree count process.
 %Interestingly, one can show that for both models, the global and local expected degree count processes follow a linear increase, while the variance of the degree count processes are slightly convex. Furthermore, it is more pronounced for IMMSB for the global degree while it seems that concerning the local degree, the models are not differentiable. Nevertheless, if we look at the standard deviation of the variance for each local degree we see that for IMMSB it seems to be correlated to the variance (the more variance (over nodes) in a local degree count, the more this variance can deviate. In other words, the variance over the epoch increase too.). This is an interesting interpretation of the source of emergence of the local preferential attachment for IMMSB.
-%
+
 %\input{img/0201/mg_process}
 
 
