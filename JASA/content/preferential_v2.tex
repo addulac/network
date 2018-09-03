@@ -9,9 +9,9 @@ As mentioned before, preferential attachement can be global, in which case nodes
 Probabilistic models naturally lead to the following generative process for creating links between nodes in a network\footnote{For simplicity in the notation, we consider that nodes can be linked to themselves. Excluding such links does not raise particular problems.}. This process considers all possible pairs of nodes in turn and generates or not a link between them:
 
 \begin{description}
- \item[1.] \textit{For each node $i \in \{1, .., N\}$},
+ \item[1.] \textit{For each node $i \in \{1, \dotsc, N\}$},
  \begin{description}
-    \item[2.] \textit{For each node $j \in \{1, .., N\}$},
+    \item[2.] \textit{For each node $j \in \{1, \dotsc, N\}$},
        \begin{description}
           \item[3.] \textit{Generate a link between $i$ and $j$ with probability $P(y_{ij}=1 | \mathcal{M})$ where $\mathcal{M}$ is either $\mathcal{M}_e$ or $\mathcal{M}_g$}.
        \end{description}
@@ -65,7 +65,7 @@ We first consider model $\M_e$. Fix any indexing, a node $i$, $i \leq i \leq N$,
 %
 \begin{align*}
 P(d_i^{(N)} \geq n+1 | d_i^{(p)}=n, \M_e) &= 1 - P(d_i^{(N)}=n | d_i^{(p)}=n, \M_e) \\
-        &= 1 -P(y_{i,p+1}=0, ...,y_{iN}=0 | \M_e ) \\
+        &= 1 -P(y_{i,p+1}=0, \dotsc,y_{iN}=0 | \M_e ) \\
         &= 1 - \prod_{j=p+1}^N P(y_{ij}=0 | \M_e)
 \end{align*}
 %
@@ -133,7 +133,7 @@ P(y_{ij,k}=1 | \M_e) &= P(y_{ij}=1 | z_{i\rightarrow j} = z_{i\leftarrow j}=k,
     &= f_{ik} \phi_{kk} f_{jk}
 \end{align*}
 %
-The local degree $d_{i,k}^{(p)}$ can then be defined as the expectation of $y_{ij,k}$ over the nodes $1,...,p$:
+The local degree $d_{i,k}^{(p)}$ can then be defined as the expectation of $y_{ij,k}$ over the nodes $1,\dotsc,p$:
 %
 \begin{align}\label{def:locdegimb}
 d_{i,k}^{(p)} &= \sum_{j=1}^p P(y_{ij,k}=1 | \M_e)  \nonumber \\
@@ -148,7 +148,7 @@ We say that \imb, in $\M_e$, satisfies the local preferential attachment effect 
 
 This definition can be seen as the continuous counterpart of Definition~\ref{def:locdeg-discrete}. If $\epsilon$ is too large, the probability is null and is independent on $x$, hence the compatibility requirement with the domain of definition of $x$ and $d_{i,k}$. 
 
-Because of the Hierarchical Dirichlet Process underlying the \imb\ model, $\mat{f}_i$ follows a Dirichlet distribution: $\mat{f}_i \sim Dir(\alpha_0 + \beta_k + N_{ik}), \, 1 \le k \le K$, with $N_{ik}$ being the number of edges connecting node $i$ through class $k$ (see for example \cite{teh2006hierarchical}) and $K$ the number of latent classes obtained. The marginals $f_{ik}$ are thus distributed according to a Beta distribution: $f_{ik} \sim Beta(a_{ik}, b_{ik})$ with $a_{ik} = \alpha_0 + \beta_k + N_{ik}$ and $b_{ik} = \sum_{k'=1, k' \ne k}^{K} \alpha_0 + \beta_k' + N_{ik'}$.
+Because of the Hierarchical Dirichlet Process underlying the \imb\ model, $\mat{f}_i$ follows a Dirichlet distribution: $\mat{f}_i \sim \Dir((\alpha_0 \beta_k + N_{ik})_{1 \le k \le K})$, with $\mat{\beta}\sim \gem(\gamma)$ and $N_{ik}$ being the number of edges connecting node $i$ through class $k$ (see for example \cite{teh2006hierarchical}) and $K$ the number of latent classes obtained. The marginals $f_{ik}$ are thus distributed according to a Beta distribution: $f_{ik} \sim \Beta(a_{ik}, b_{ik})$ with $a_{ik} = \alpha_0\beta_k + N_{ik}$ and $b_{ik} = \sum_{k'=1, k' \ne k}^{K} \alpha_0\beta_k' + N_{ik'}$.
 
 The following property displays a sufficient condition on $x$, $\epsilon$, $a_{ik}$ and $b_{ik}$ for \imb\ to satisfy the local preferential attachment.
 

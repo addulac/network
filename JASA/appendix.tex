@@ -98,8 +98,8 @@ Because we assume that $c_k$ is know, the size of the class $k$k is hold constan
     write : 
 
 \begin{equation}
-P(d_{ik}=n | \mg) = p(\cup I_r) \dbinom{c_k}{n} P( (y_{i0, k}=1,..,  y_{in, k}=1,
-    y_{i(n+1), k}=0,...,y_{i(c_k), k}=0) | \mg)
+P(d_{ik}=n | \mg) = p(\cup I_r) \dbinom{c_k}{n} P( (y_{i0, k}=1,\dotsc,  y_{in, k}=1,
+    y_{i(n+1), k}=0,\dotsc,y_{i(c_k), k}=0) | \mg)
 \end{equation}
 
 Applying product rule, one has the following for any node $j$ : 
@@ -108,7 +108,7 @@ Applying product rule, one has the following for any node $j$ :
     | Y_i^{-ij}, \mg)}{P(y_{ij,k}=0 | Y_i^{-ij}, \mg)}
 \end{equation}
 
-Where $Y^{-ij}$ denote any sequence of relations between node $i$ and nodes  in $j \in \{0,1,..,j-1, j+1, N-1\}$,
+Where $Y^{-ij}$ denote any sequence of relations between node $i$ and nodes  in $j \in \{0,1,\dotsc,j-1, j+1, N-1\}$,
 such that the sequence of relations contains $n$ edges in the class $k$.
 
 From the bernoulli-beta compound distribution in IMMSB, one has (it is the

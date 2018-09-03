@@ -18,7 +18,7 @@ Typically MCMC update consists in the following updates of parameters :
     \hat \phi_{kk'} &\sim \p(\phi_{kk'} | \Phi^{-kk'}, Y, F, \mg)
 \end{align}
 
-At the end of the inference process, assuming that the MCMC has reached its  equilibrium, one can reconstruct the posterior parameters such that $\hat F = (\hat f_{ik})_{i,k \in V\times[0,.., K-1]}$ and $\hat \Phi = (\hat \phi_{kk'})_{k,k' \in [0,.., K-1]^2}$ and :
+At the end of the inference process, assuming that the MCMC has reached its  equilibrium, one can reconstruct the posterior parameters such that $\hat F = (\hat f_{ik})_{i,k \in V\times[0,\dotsc, K-1]}$ and $\hat \Phi = (\hat \phi_{kk'})_{k,k' \in [0,\dotsc, K-1]^2}$ and :
 
 \begin{equation}
     \p(F, \Phi|Y, \mg) \approx \p(\hat F) \p(\hat \Phi)
