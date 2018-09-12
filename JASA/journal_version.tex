@@ -45,6 +45,7 @@
 \newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
 \usepackage{calc}%    For the \widthof macro
 \usepackage{xparse}%  For \NewDocumentCommand
+\usepackage{xspace} % special space after macro
 
 %\usepackage[notes]{biblatex-chicago}
 %\usepackage[authordate-trad,backend=biber]{biblatex-chicago}
@@ -55,9 +56,9 @@
 %\input{./header.tex}
 %%%%%%%%%% Math
 \renewcommand{\text}{\textnormal}
-\newcommand{\ifm}{\texttt{ILFM}}
-\newcommand{\ilfm}{\texttt{ILFM}}
-\newcommand{\imb}{\texttt{IMMSB}}
+\newcommand{\ifm}{\texttt{ILFM}\xspace}
+\newcommand{\ilfm}{\texttt{ILFM}\xspace}
+\newcommand{\imb}{\texttt{IMMSB}\xspace}
 \newcommand{\pr}{P}
 \newcommand{\p}{P}
 \newcommand{\E}{\mathbb{E}}
