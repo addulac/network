@@ -157,13 +157,13 @@ The following property displays a sufficient condition on $x$, $\epsilon$, $a_{i
 %\[ F_k^N a_{ik} x'^{a_{ik}-1} (1-\epsilon') > F_k^p a_{ik} x'^{a_{ik}} + b_{ik} F_k^p (1-x'^{a_{ik}}), \]
 Let $F_k^p = \sum_{j=1}^p \hat{f}_{jk}$ and $E_{d_{ik}}=\sum_{j=1}^N f_{ik}\phi_{kk}f_{jk}$. In the regions where $x$ and $\epsilon$ are such that
 \begin{equation*}
-x^{a_{ik}-1}\left(a_{ik}(1-\epsilon\frac{E_{d_{ik}}}{f_{ik}}) -x(a_{ik}-b_{ik})\frac{f_{ik}}{E_{d_{ik}}} \right) \geq \frac{b_{ik}}{F_k^N(F_k^p)^{a_{ik}-2}\phi_{kk}^{a_{ik}-1}}
+x^{a_{ik}-1}\frac{f_{ik}}{E_{d_{ik}}}\left(a_{ik}(1-\epsilon) -x(a_{ik}-b_{ik}) \right) \geq b_{ik}\frac{(F_k^p)^{a_{ik}}\phi_{kk}^{a_{ik}-1}}{F_k^N}
 \end{equation*}
 $P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e)$ increases with $x$.
 \end{proposition}
 
 %As one can note, when $F_k^p$ is small (typically in the first steps of the process), then the above condition is likely to be met and \imb\ satisfies the preferential attachment effect. However, when $F_k^p$ gets closer to $F_k^N$ the above condition is no longer met.
-As one can note, when $x$ is large, $\epsilon$ is small $b-a>0$ (which roughly means that the class $k$ concentrates less that than half of the capacaity of the network.) then the above condition is likely to be met and \imb satisfies the local preferential attachment effect. 
+As one can note, when $x$ is large and $\epsilon$ is small $b_{ik}-a_{ik}>0$ (which roughly means that the class $k$ concentrates less that than half of the capacaity of the network) then the above condition is likely to be met and \imb satisfies the local preferential attachment effect. 
 
 \begin{proof}
 
@@ -173,7 +173,7 @@ Using the change of variables $x=\frac{x'}{F_k^p \phi_{kk'}}$ and $\epsilon = \f
 p(d_{ik}^{(N)} > x'+\epsilon' | d_{ik}^{(p)} > x', \me) &= p(f_{ik} > qx+\epsilon | f_{ik} > x) \\
 &=\frac{P(\hat f_{ik} > qx+\epsilon)}{P(\hat f_{ik} > x)} = g(x)
 \end{align*}
-where $q=\frac{F_{ik}^p}{F_{ik}^N}$. The conditional distribution $g(x)$ is not trivially equal to one in the case where $qx+\epsilon > x \Leftrightarrow \epsilon > x(1-q)$. Further, the survival function of $\hat f_{ik}$ is $P(\hat f_{ik} >x) = 1-\int_0^x f(x)$ where $f(x)$ is the density of $\hat f_{ik}$. On can show that the marginal distribution of $\hat f_{ik}$ is a Beta  of the form $f(x)=\Beta(a_{ik}, b_{ik})$  where $a_{ik} = \alpha_0\beta_k + N_{ik}$ and $b_{ik} = \sum_{k'\neq k} \alpha_0\beta_{k'} + N_{ik'}$  (this is a consequence of the form of the posterior distribution of the DP). In the following we ommit the references to $i$ and $k$ for the parameters of the Beta, simply noting $\Beta(a, b)$ for short. The derivative og $g$ is
+where $q=\frac{F_{ik}^p}{F_{ik}^N}$. The conditional distribution $g(x)$ is not trivially equal to one in the case where $qx+\epsilon > x \Leftrightarrow \epsilon > x(1-q)$. Further, the survival function of $\hat f_{ik}$ is $P(\hat f_{ik} >x) = 1-\int_0^x f(x)$ where $f(x)$ is the density of $\hat f_{ik}$. One can show that the marginal distribution of $\hat f_{ik}$ is a Beta of the form $f(x)=\Beta(a_{ik}, b_{ik})$  where $a_{ik} = \alpha_0\beta_k + N_{ik}$ and $b_{ik} = \sum_{k'\neq k} \alpha_0\beta_{k'} + N_{ik'}$  (this is a consequence of the form of the posterior distribution of the DP). In the following we ommit the references to $i$ and $k$ for the parameters of the Beta, simply noting $\Beta(a, b)$ for short. The derivative of $g$ is
 \begin{equation*}
 g'(x) = \frac{-q (qx+\epsilon)^{a-1}(1-qx-\epsilon)^{b-1}\int_x^1t^{a-1} (1-t)^{b-1} dt + x^{a-1}(1-x)^{b-1}\int_{qx+\epsilon}^1 t^{a-1}(1-t)^{b-1} dt}{\left(\int_x^1t^{a-1}(1-t)^{b-1}dt\right)^2}
 \end{equation*}
@@ -197,7 +197,7 @@ with $C$ is a positive constant. Thus, A sufficient condition for $g$ to be incr
 \end{align*}
 Finally, let $E_{d_{ik}}=\sum_{j=1}^N f_{ik}\phi_{kk}f_{jk}$, by rolling back the variable changes,  one obtains
 \begin{equation*}
-x'^{a-1}\left(a(1-\epsilon'\frac{E_{d_{ik}}}{f_{ik}}) -x'(a-b)\frac{f_{ik}}{E_{d_{ik}}} \right) \geq \frac{b}{F_k^N(F_k^p)^{a-2}\phi_{kk}^{a-1}}
+x'^{a-1}\frac{f_{ik}}{E_{d_{ik}}}\left(a(1-\epsilon') -x'(a-b) \right) \geq b\frac{(F_k^p)^{a}\phi_{kk}^{a-1}}{F_k^N}
 \end{equation*}
 
 
