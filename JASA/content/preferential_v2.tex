@@ -168,36 +168,37 @@ As one can note, when $x$ is large and $\epsilon$ is small $b_{ik}-a_{ik}>0$ (wh
 \begin{proof}
 
 We consider IMMSB in $\me$. Let $F_k^P=\sum_{j=1}^p \hat f_{jk}$ and $F_k^N=\sum_{j=1}^N \hat f_{jk}$. 
-Using the change of variables $x=\frac{x'}{F_k^p \phi_{kk'}}$ and $\epsilon = \frac{\epsilon'}{F_k^N \phi_{kk'}}$, one gets
+Using the change of variables $x'=\frac{x}{F_k^p \phi_{kk'}}$ and $\epsilon' = \frac{\epsilon}{F_k^N \phi_{kk'}}$, one gets
 \begin{align*}
-p(d_{ik}^{(N)} > x'+\epsilon' | d_{ik}^{(p)} > x', \me) &= p(f_{ik} > qx+\epsilon | f_{ik} > x) \\
-&=\frac{P(\hat f_{ik} > qx+\epsilon)}{P(\hat f_{ik} > x)} = g(x)
+p(d_{ik}^{(N)} > x+\epsilon | d_{ik}^{(p)} > x, \me) &= p(f_{ik} > qx'+\epsilon' | f_{ik} > x') \\
+&=\frac{P(\hat f_{ik} > qx'+\epsilon')}{P(\hat f_{ik} > x')} = g(x')
 \end{align*}
-where $q=\frac{F_{ik}^p}{F_{ik}^N}$. The conditional distribution $g(x)$ is not trivially equal to one in the case where $qx+\epsilon > x \Leftrightarrow \epsilon > x(1-q)$. Further, the survival function of $\hat f_{ik}$ is $P(\hat f_{ik} >x) = 1-\int_0^x f(x)$ where $f(x)$ is the density of $\hat f_{ik}$. One can show that the marginal distribution of $\hat f_{ik}$ is a Beta of the form $f(x)=\Beta(a_{ik}, b_{ik})$  where $a_{ik} = \alpha_0\beta_k + N_{ik}$ and $b_{ik} = \sum_{k'\neq k} \alpha_0\beta_{k'} + N_{ik'}$  (this is a consequence of the form of the posterior distribution of the DP). In the following we ommit the references to $i$ and $k$ for the parameters of the Beta, simply noting $\Beta(a, b)$ for short. The derivative of $g$ is
+where $q=\frac{F_{ik}^p}{F_{ik}^N}$. The conditional distribution $g(x')$ is not trivially equal to one in the case where $qx'+\epsilon' > x' \Leftrightarrow \epsilon' > x'(1-q)$. Further, the survival function of $\hat f_{ik}$ is $P(\hat f_{ik} >x') = 1-\int_0^{x'} f(x')$ where $f(x')$ is the density of $\hat f_{ik}$. One can show that the marginal distribution of $\hat f_{ik}$ is a Beta of the form $f(x')=\Beta(a_{ik}, b_{ik})$  where $a_{ik} = \alpha_0\beta_k + N_{ik}$ and $b_{ik} = \sum_{k'\neq k} \alpha_0\beta_{k'} + N_{ik'}$  (this is a consequence of the form of the posterior distribution of the DP). In the following we ommit the references to $i$ and $k$ for the parameters of the Beta, simply noting $\Beta(a, b)$ for short. The derivative of $g$ is
 \begin{equation*}
-g'(x) = \frac{-q (qx+\epsilon)^{a-1}(1-qx-\epsilon)^{b-1}\int_x^1t^{a-1} (1-t)^{b-1} dt + x^{a-1}(1-x)^{b-1}\int_{qx+\epsilon}^1 t^{a-1}(1-t)^{b-1} dt}{\left(\int_x^1t^{a-1}(1-t)^{b-1}dt\right)^2}
+g'(x') = \frac{-q (qx'+\epsilon')^{a-1}(1-qx'-\epsilon')^{b-1}\int_{x'}^1t^{a-1} (1-t)^{b-1} dt + x'^{a-1}(1-x')^{b-1}\int_{qx'+\epsilon'}^1 t^{a-1}(1-t)^{b-1} dt}{\left(\int_{x'}^1t^{a-1}(1-t)^{b-1}dt\right)^2}
 \end{equation*}
 But one has
 \begin{equation*}
-\int_{qx+\epsilon}^1 t^{a-1}(1-t)^{b-1}dt \geq (qx+\epsilon)^{a-1}\int_{qx+\epsilon}^1 (1-t)^{b-1}dt = (qx+a)^{a-1}\frac{(1-qx-\epsilon)^b}{b}
+\int_{qx'+\epsilon'}^1 t^{a-1}(1-t)^{b-1}dt \geq (qx'+\epsilon')^{a-1}\int_{qx'+\epsilon'}^1 (1-t)^{b-1}dt = (qx'+a)^{a-1}\frac{(1-qx'-\epsilon')^b}{b}
 \end{equation*}
 and
 \begin{equation*}
-\int_x^1 t^{a-1}(1-t)^{b-1}dt \leq (1-x)^{b-1}\int_x^1 t^{a-1}dt = (1-x)^{b-1}\frac{(1-x^a)}{a}
+\int_{x'}^1 t^{a-1}(1-t)^{b-1}dt \leq (1-x')^{b-1}\int_{x'}^1 t^{a-1}dt = (1-x')^{b-1}\frac{(1-x'^a)}{a}
 \end{equation*}
 Thus one can show that
 \begin{align*}
-Cg'(x) &\geq x^{a-1} \frac{1-qx-\epsilon}{b} -q\frac{1-x^a}{a}  \\
-        &= \frac{1}{abF_k^N} \left[ ax^{a-1}(1-\epsilon)F_k^N + F_k^P (b(x^a-1) - ax^a) \right]
+Cg'(x') &\geq x'^{a-1} \frac{1-qx'-\epsilon'}{b} -q\frac{1-x'^a}{a}  \\
+        &= \frac{1}{abF_k^N} \left[ ax'^{a-1}(1-\epsilon')F_k^N + F_k^P (b(x'^a-1) - ax'^a) \right]
 \end{align*}
-with $C$ is a positive constant. Thus, A sufficient condition for $g$ to be increasing is that
+where $C=\frac{\left(\int_{x'}^1t^{a-1}(1-t)^{b-1}dt\right)^2}{(qx'+\epsilon')^{a-1}(1-qx'-\epsilon')^{b-1}(1-x')^{b-1}}$, is a positive constant. Thus, A sufficient condition for $g$ to be increasing is that
 \begin{align*}
-&F_k^N a_{ik} x'^{a_{ik}-1} (1-\epsilon') > F_k^p a_{ik} x'^{a_{ik}} + b_{ik} F_k^p (1-x'^{a_{ik}}) \\
-&\Leftrightarrow x^{a-1} \left(a(1-\epsilon) - x(a-b)\frac{F_k^p}{F_k^N} \right) \geq b \frac{F_k^p}{F_k^N}
+&F_k^N a x'^{a-1} (1-\epsilon') \geq F_k^p a x'^a + b F_k^p (1-x'^a) \\
+&\Leftrightarrow x'^{a-1} a(1-\epsilon') \geq \frac{F_k^p}{F_k^N} ( x'^a(a-b) + b) \\
+&\Leftrightarrow x'^{a-1} \left(a(1-\epsilon') - x'(a-b)\frac{F_k^p}{F_k^N} \right) \geq b \frac{F_k^p}{F_k^N}
 \end{align*}
-Finally, let $E_{d_{ik}}=\sum_{j=1}^N f_{ik}\phi_{kk}f_{jk}$, by rolling back the variable changes,  one obtains
+Finally, let $E_{d_{ik}}=\sum_{j=1}^N f_{ik}\phi_{kk}f_{jk}=f_{ik}\phi_{kk'}F_k^N$, by rolling back the variable changes,  one obtains
 \begin{equation*}
-x'^{a-1}\frac{f_{ik}}{E_{d_{ik}}}\left(a(1-\epsilon') -x'(a-b) \right) \geq b\frac{(F_k^p)^{a}\phi_{kk}^{a-1}}{F_k^N}
+x^{a-1}\frac{f_{ik}}{E_{d_{ik}}}\left(a(1-\epsilon) -x(a-b) \right) \geq b\frac{(F_k^p)^{a}\phi_{kk}^{a-1}}{F_k^N}
 \end{equation*}
 
 
