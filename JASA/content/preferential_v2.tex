@@ -155,10 +155,10 @@ The following property displays a sufficient condition on $x$, $\epsilon$, $a_{i
 \begin{proposition}\label{prop:IMBlocal}
 %Let $F_k^p = \sum_{j=1}^p \hat{f}_{jk}$, $x'=\frac{x}{F_k^p \phi_{kk}}$ and $\epsilon'=\frac{\epsilon}{F_k^N \phi_{kk}}$. In the region where $x$ and $\epsilon$ are such that:
 %\[ F_k^N a_{ik} x'^{a_{ik}-1} (1-\epsilon') > F_k^p a_{ik} x'^{a_{ik}} + b_{ik} F_k^p (1-x'^{a_{ik}}), \]
-Let $E_k^p = \sum_{j=1}^p \hat\phi_{kk} \hat{f}_{jk}$ . In the regions where $x$ and $\epsilon$ are such that
+Let $E_k^p = \sum_{j=1}^p \hat\phi_{kk} \hat{f}_{jk}$ . In the region where $x$ and $\epsilon$ are such that
 \begin{equation*}
 %x^{a_{ik}-1}\frac{f_{ik}}{E_{d_{ik}}}\left(a_{ik}(1-\epsilon) -x(a_{ik}-b_{ik}) \right) \geq b_{ik}\frac{(F_k^p)^{a_{ik}}\phi_{kk}^{a_{ik}-1}}{F_k^N}
-x^{a_{ik}-1}\left(a_{ik}(E_k^N-\epsilon) -x(a_{ik}-b_{ik}) \right) \geq b_{ik}(E_k^p)^{a_{ik}}
+x^{a_{ik}-1}\left(a_{ik}(E_k^N-\epsilon) + x(b_{ik} - a_{ik}) \right) \geq b_{ik}(E_k^p)^{a_{ik}}
 \end{equation*}
 $P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e)$ increases with $x$.
 \end{proposition}
@@ -197,7 +197,7 @@ where $C=\frac{\left(\int_{x'}^1t^{a-1}(1-t)^{b-1}dt\right)^2}{(qx'+\epsilon')^{
 \end{align*}
 Finally, let $E_k^l=\sum_{j=1}^l \phi_{kk}f_{jk}=\phi_{kk}F_k^l$, by rolling back the change of variables, one obtains
 \begin{equation*}
-x^{a-1}\left(a(E_k^N-\epsilon) -x(a-b) \right) \geq b (E_k^p)^a
+x^{a-1}\left(a(E_k^N-\epsilon) +x(b-a) \right) \geq b (E_k^p)^a
 \end{equation*}
 which concludes the proof.
 
