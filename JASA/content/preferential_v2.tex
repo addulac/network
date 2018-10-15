@@ -140,13 +140,13 @@ d_{i,k}^{(p)} &= \sum_{j=1}^p P(y_{ij,k}=1 | \M_e)  \nonumber \\
     &= \sum_{j=1}^p f_{ik} \phi_{kk} f_{jk}
 \end{align}
 %
-As one can note, such a local degree is not necessarily an integer and the definition of the local preferential attachment has to be adapted accordingly. 
+As one can note, such a local degree is not necessarily an integer and the definition of the local preferential attachment has to be adapted accordingly.
 %
 \begin{definition}[\imb\ - local preferential attachment, $\M_e$]
 We say that \imb, in $\M_e$, satisfies the local preferential attachment effect iff for any indexing, for any node $i, \, 1\leq i \leq N$ such that $f_{ik}>0$, for any step $p, \, 1\leq p < N$, and  for all $\epsilon$ compatible with the domain of definition of $d_{i,k}$ and $x$, $P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e)$ increases with $x$. If $P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e)$ is independent of $x$, the model is said to be neutral wrt to the local preferential attachment effect.
 \end{definition}
 
-This definition can be seen as the continuous counterpart of Definition~\ref{def:locdeg-discrete}. If $\epsilon$ is too large, the probability is null and is independent on $x$, hence the compatibility requirement with the domain of definition of $x$ and $d_{i,k}$. 
+This definition can be seen as the continuous counterpart of Definition~\ref{def:locdeg-discrete}. If $\epsilon$ is too large, the probability is null and is independent on $x$, hence the compatibility requirement with the domain of definition of $x$ and $d_{i,k}$.
 
 Because of the Hierarchical Dirichlet Process underlying the \imb\ model, $\mat{f}_i$ follows a Dirichlet distribution: $\mat{f}_i \sim \Dir((\alpha_0 \beta_k + N_{ik})_{1 \le k \le K})$, with $\mat{\beta}\sim \gem(\gamma)$ and $N_{ik}$ being the number of edges connecting node $i$ through class $k$ (see for example \cite{teh2006hierarchical}) and $K$ the number of latent classes obtained. The marginals $f_{ik}$ are thus distributed according to a Beta distribution: $f_{ik} \sim \Beta(a_{ik}, b_{ik})$ with $a_{ik} = \alpha_0\beta_k + N_{ik}$ and $b_{ik} = \sum_{k'=1, k' \ne k}^{K} \alpha_0\beta_k' + N_{ik'}$.
 
@@ -155,20 +155,19 @@ The following property displays a sufficient condition on $x$, $\epsilon$, $a_{i
 \begin{proposition}\label{prop:IMBlocal}
 %Let $F_k^p = \sum_{j=1}^p \hat{f}_{jk}$, $x'=\frac{x}{F_k^p \phi_{kk}}$ and $\epsilon'=\frac{\epsilon}{F_k^N \phi_{kk}}$. In the region where $x$ and $\epsilon$ are such that:
 %\[ F_k^N a_{ik} x'^{a_{ik}-1} (1-\epsilon') > F_k^p a_{ik} x'^{a_{ik}} + b_{ik} F_k^p (1-x'^{a_{ik}}), \]
-Let $F_k^p = \sum_{j=1}^p \hat{f}_{jk}$ and $E_{d_{ik}}=\sum_{j=1}^N f_{ik}\phi_{kk}f_{jk}$. In the regions where $x$ and $\epsilon$ are such that
+Let $E_k^p = \sum_{j=1}^p \hat\phi_{kk} \hat{f}_{jk}$ . In the regions where $x$ and $\epsilon$ are such that
 \begin{equation*}
-x^{a_{ik}-1}\frac{f_{ik}}{E_{d_{ik}}}\left(a_{ik}(1-\epsilon) -x(a_{ik}-b_{ik}) \right) \geq b_{ik}\frac{(F_k^p)^{a_{ik}}\phi_{kk}^{a_{ik}-1}}{F_k^N}
+%x^{a_{ik}-1}\frac{f_{ik}}{E_{d_{ik}}}\left(a_{ik}(1-\epsilon) -x(a_{ik}-b_{ik}) \right) \geq b_{ik}\frac{(F_k^p)^{a_{ik}}\phi_{kk}^{a_{ik}-1}}{F_k^N}
+x^{a_{ik}-1}\left(a_{ik}(E_k^N-\epsilon) -x(a_{ik}-b_{ik}) \right) \geq b_{ik} E_k^p
 \end{equation*}
 $P(d_{i,k}^{(N)} \geq x+\epsilon | d_{i,k}^{(p)} \geq x,\M_e)$ increases with $x$.
 \end{proposition}
 
-%As one can note, when $F_k^p$ is small (typically in the first steps of the process), then the above condition is likely to be met and \imb\ satisfies the preferential attachment effect. However, when $F_k^p$ gets closer to $F_k^N$ the above condition is no longer met.
-As one can note, when $x$ is large, $\epsilon$ is small and $b_{ik}-a_{ik}>0$ (which roughly means that the class $k$ concentrates less than half of the capacaity of the network) then the above condition is likely to be met and \imb satisfies the local preferential attachment effect. 
 
 \begin{proof}
 
-We consider IMMSB in $\me$. Let $F_k^P=\sum_{j=1}^p \hat f_{jk}$ and $F_k^N=\sum_{j=1}^N \hat f_{jk}$. 
-Using the change of variables $x'=\frac{x}{F_k^p \phi_{kk'}}$ and $\epsilon' = \frac{\epsilon}{F_k^N \phi_{kk'}}$, one gets
+We consider IMMSB in $\me$. Let $F_k^P=\sum_{j=1}^p \hat f_{jk}$ and $F_k^N=\sum_{j=1}^N \hat f_{jk}$.
+Using the change of variables $x'=\frac{x}{F_k^p \phi_{kk}}$ and $\epsilon' = \frac{\epsilon}{F_k^N \phi_{kk}}$, one gets
 \begin{align*}
 p(d_{ik}^{(N)} > x+\epsilon | d_{ik}^{(p)} > x, \me) &= p(f_{ik} > qx'+\epsilon' | f_{ik} > x') \\
 &=\frac{P(\hat f_{ik} > qx'+\epsilon')}{P(\hat f_{ik} > x')} = g(x')
@@ -196,18 +195,22 @@ where $C=\frac{\left(\int_{x'}^1t^{a-1}(1-t)^{b-1}dt\right)^2}{(qx'+\epsilon')^{
 &\Leftrightarrow x'^{a-1} a(1-\epsilon') \geq \frac{F_k^p}{F_k^N} ( x'^a(a-b) + b) \\
 &\Leftrightarrow x'^{a-1} \left(a(1-\epsilon') - x'(a-b)\frac{F_k^p}{F_k^N} \right) \geq b \frac{F_k^p}{F_k^N}
 \end{align*}
-Finally, let $E_{d_{ik}}=\sum_{j=1}^N f_{ik}\phi_{kk}f_{jk}=f_{ik}\phi_{kk'}F_k^N$, by rolling back the variable changes,  one obtains
+Finally, let $E_k^l=\sum_{j=1}^l \phi_{kk}f_{jk}=\phi_{kk}F_k^l$, by rolling back the variable changes, one obtains
 \begin{equation*}
-x^{a-1}\frac{f_{ik}}{E_{d_{ik}}}\left(a(1-\epsilon) -x(a-b) \right) \geq b\frac{(F_k^p)^{a}\phi_{kk}^{a-1}}{F_k^N}
+x^{a-1}\left(a(E_k^N-\epsilon) -x(a-b) \right) \geq b E_k^p
 \end{equation*}
 
 
 \end{proof}
 
 %\vspace{0.1cm}
-% %The power law distribution assumed here for $\hat{f}_{ik}$ directly translates the positive reinforcement effect of the Dirichlet Process \cite{HDP} at the basis of \imb, that corresponds to a burstiness phenomenon. 
+% %The power law distribution assumed here for $\hat{f}_{ik}$ directly translates the positive reinforcement effect of the Dirichlet Process \cite{HDP} at the basis of \imb, that corresponds to a burstiness phenomenon.
 %The definitions that we have considered for the (local and global) preferential attachment effects are extensions of the definitions for burstiness proposed in \cite{clinchant2010information}. Power law distributions have been often used to model bursty phenomena (\cite{barabasi_burst,clauset2009power} to cite but a few), and our assumption on $\hat{f}_{ik}$ reflects this usage.
 % % It is easy to see, using the same development as the one we have used, that power distributions are bursty in the sense of \cite{clinchant2010information}.
+
+
+%As one can note, when $F_k^p$ is small (typically in the first steps of the process), then the above condition is likely to be met and \imb\ satisfies the preferential attachment effect. However, when $F_k^p$ gets closer to $F_k^N$ the above condition is no longer met.
+As one can note, when $x$ is large, $\epsilon$ is small and $b_{ik}-a_{ik}>0$ (which roughly means that the class $k$ concentrates less than half of the capacaity of the network) then the above condition is likely to be met and \imb satisfies the local preferential attachment effect.
 
 We now present an experimental illustration of the above theoretical results.
 
