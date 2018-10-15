@@ -1,9 +1,10 @@
 %%&latex
 %\documentclass[12pt]{article}
-\documentclass[numbib]{imaiai}
+\documentclass[numbib]{comnet}
 \usepackage{graphicx,psfrag,epsf}
 \usepackage{graphicx}
-\usepackage{natbib}
+%\usepackage{natbib}
+\usepackage[square,sort,comma,numbers]{natbib}
 
 %\pdfminorversion=4
 % NOTE: To produce blinded version, replace "0" with "1" below.
@@ -132,20 +133,20 @@
 
 \title{Stochastic Mixed Membership Models and Preferential Attachment in Social Networks}
 
-\author{{%%%% First author details
-\sc Adrien Dulac}$^*$,\\[2pt]
-Univ. Grenoble Alpes, CNRS, Grenoble INP, LIG\\
-$^*${\email{Corresponding author: adrien.dulac@imag.fr}}\\[2pt]
+\author{%%%% First author details
+\name{Adrien Dulac$^*$}
+\address{Univ. Grenoble Alpes, CNRS, Grenoble INP, LIG\email{$^*$Corresponding author: adrien.dulac@imag.fr}}
 %%%%%%% Second author details
-{\sc Eric Gaussier}\\[2pt]
-Univ. Grenoble Alpes, CNRS, Grenoble INP, LIG\\
-{eric.gaussier@imag.fr}\\[6pt]
+\name{Eric Gaussier}
+\address{Univ. Grenoble Alpes, CNRS, Grenoble INP, LIG\email{eric.gaussier@imag.fr}}
 %%%%%%%
-{\sc and}\\[6pt]
+\and
 %%%%%%% Third author details
-{\sc Christine Largeron} \\[2pt]
-Univ Lyon, UJM-Saint-Etienne, CNRS, Institut d’Optique Graduate School, LHC\\
-{Christine.Largeron@univ-st-etienne.fr}}
+\name{Christine Largeron}
+\address{Univ Lyon, UJM-Saint-Etienne, CNRS, Institut d’Optique Graduate School, LHC}
+\email{Christine.Largeron@univ-st-etienne.fr}
+}
+
 
 \maketitle
 
@@ -175,7 +176,7 @@ Univ Lyon, UJM-Saint-Etienne, CNRS, Institut d’Optique Graduate School, LHC\\
 \input{content/concl}
 
 ~\\ % don't compile if commented ?!
-\bibliographystyle{chicago}
+\bibliographystyle{comnet}
 \bibliography{./a}
 
 %\appendix

@@ -7,7 +7,7 @@ In the remainder, we denote by $N$ the number of nodes in this graph ($N = |V|$)
 
 Stochastic mixed membership models are characterized by the fact that each node can "belong" to several latent factors, which reflects the fact that each individual usually has several properties, for example can belong to several communities\footnote{As mentioned in \cite{goldenberg2010survey}, the reader should however bear in mind that the notion of latent factors is of stochastic nature and is an approximation of the notions of communities and shared properties.}. The relation between a node $i$ and the latent factors is encoded in a vector denoted $\mat{f}_{i}$, of finite dimension $K$ in standard versions of the models, and of infinite dimension in  non-parametric versions. The collection of all vectors $\mat{f}_{i}$ ($1 \le i \le N$) constitutes the factor matrix $\mat{F}$. Furthermore, a weight matrix $\mat{\Phi}$ is used to encode the relations between the latent factors.
 
-Stochastic mixed membership models differ on the way the vectors $\mat{f}_{i}$ ($1 \le i \le N$) and the matrix $\mat{\Phi}$ are generated. As mentioned before, and to be as general as possible, we consider here the non-parametric versions of the latent feature model \cite{ILFRM}, referred to as \ifm, and of the mixed-membership stochastic block model \cite{iMMSB,fan2015dynamic}, referred to as \imb. This leads to a dynamic number of classes that allows the dimensions of the models to grow with the complexity of the data. This is done in practice by the use of non-parametric prior,  the Indian Buffet Process (IBP) for \ifm\ and the Hierachical Dirichlet Process (HDP)  for \imb. All our results are nevertheless also valid for the finite versions of these models.
+Stochastic mixed membership models differ on the way the vectors $\mat{f}_{i}$ ($1 \le i \le N$) and the matrix $\mat{\Phi}$ are generated. As mentioned before, and to be as general as possible, we consider here the non-parametric versions of the latent feature model \cite{miller2009nonparametric}, referred to as \ifm, and of the mixed-membership stochastic block model \cite{koutsourelakis2008finding,fan2015dynamic}, referred to as \imb. This leads to a dynamic number of classes that allows the dimensions of the models to grow with the complexity of the data. This is done in practice by the use of non-parametric prior,  the Indian Buffet Process (IBP) for \ifm\ and the Hierachical Dirichlet Process (HDP)  for \imb. All our results are nevertheless also valid for the finite versions of these models.
 
 In the latent feature model, each node is represented by a finite vector of binary features. The probability of linking two nodes is then based on a weighted similarity between their feature vectors, the weight matrix being generated according to a normal distribution. In its non-parametric version \ifm, the feature vectors are now generated according to an IBP, leading to feature vectors of infinite dimensions (even though only a finite number of dimensions is actually active). The following steps summarize this process:~\\
 %
@@ -15,7 +15,7 @@ In the latent feature model, each node is represented by a finite vector of bina
     \item Generate a feature matrix $\mat{F}_{N \times \infty}$ representing the feature vector of each node: \[\mat{F} \sim \IBP(\alpha)\]
 \item Generate a weight matrix for each latent feature:\\
     \[\mat{\phi}_{mn} \sim N(0, \sigma_w), \, m,n \in \mathbb{N}^{+*}\]
-\item Generate or not a link between any node $i$ and any node $j$ according to: 
+\item Generate or not a link between any node $i$ and any node $j$ according to:
 %
 \begin{equation*}
 y_{ij} \sim \mathrm{Bern}(\sigma(\mat{f}_{i} \mat{\Phi} \mat{f}_{j}^\top))
@@ -26,7 +26,7 @@ where $^\top$ denotes the transpose and  $\sigma()$ is the sigmoid function, map
 
 This model makes use of two real hyper-parameters, one for the IBP process ($\alpha$), and one for the variance of the normal distribution underlying the weight matrix ($\sigma_w$). In the case of undirected networks, the matrices $\mat{Y}$ and $\mat{\Phi}$ are symmetric and only their upper (or lower) diagonal parts are generated. Lastly, both $\mat{F}$ and $\mat{\Phi}$ are infinite matrices. In practice however, one always deals with a finite number of latent features. A graphical representation of this model is given in Figure~\ref{fig:mmm} (left).~\\
 
-The MMSB model generates class membership distributions per node on the basis of a Dirichlet distribution. Then, for each connection between two nodes, a particular class for each node is first sampled from the class membership distribution, and the probability of connecting the two nodes is, as in the previous model, based on a Bernoulli distribution integrating the weight of the two classes. 
+The MMSB model generates class membership distributions per node on the basis of a Dirichlet distribution. Then, for each connection between two nodes, a particular class for each node is first sampled from the class membership distribution, and the probability of connecting the two nodes is, as in the previous model, based on a Bernoulli distribution integrating the weight of the two classes.
 ~\\
 The non-parametric version \imb\ parallels this development but considers, in lieu of the Dirichlet distribution, a Hierarchical Dirichlet Process, leading to the following generative model:
 %
@@ -36,7 +36,7 @@ The non-parametric version \imb\ parallels this development but considers, in li
        \bm{\beta} &\sim \gem(\gamma) \nonumber \\
     \mat{f}_i &\sim \DP(\alpha_0, \beta) \quad\text{ for }  i \in \{1, \dotsc, N\} \nonumber
    \end{align}
-where $\gem$ (named after Griffiths, Engen and McCloskey) denotes the Stick Breaking Process distribution over the set of natural numbers and $\DP$ a Dirichlet Process \cite{HDP};
+where $\gem$ (named after Griffiths, Engen and McCloskey) denotes the Stick Breaking Process distribution over the set of natural numbers and $\DP$ a Dirichlet Process \cite{teh2006hierarchical};
 \item Generate a weight matrix for each latent class from i.i.d Beta distribution:\\
 \[ \phi_{mn} \sim \mathrm{Beta}(\lambda_0,\lambda_1), \, m,n \in \mathbb{N}^{+*} \]
 \item For any node $i$ and any node $j$, choose a class from their class membership distribution according to a Categorical distribution and generate or not a link according to a Bernoulli distribution:
@@ -76,7 +76,7 @@ However, the typical use of the above models corresponds to the scenario in whic
     \p(F, \Phi | Y, \mg) = \frac{\p(Y|F,\Phi)\p(F|\mg)\p(\Phi|\mg)}{\p(Y|\mg)}
 \end{equation}
 %
-and usually makes use of standard Gibbs sampling and Metropolis-Hastings algorithms\footnote{We do not detail the inference of  $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ here and refer the interested reader to \cite{ILFRM,IBP,HDP,fan2015dynamic}.}
+and usually makes use of standard Gibbs sampling and Metropolis-Hastings algorithms\footnote{We do not detail the inference of  $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$ here and refer the interested reader to \cite{miller2009nonparametric,griffiths2011indian,griffiths2011indian,fan2015dynamic}.}
 
 In the remainder, we denote by $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, for both \ifm\ and \imb, the estimates of $\mat{F}$ and $\mat{\Phi}$ obtained from $\mg$ and $Y$, and furthermore set $\me = \{\mat{\hat{F}},\mat{\hat{\Phi}}\}$. Whether, from the learned parameters $\mat{\hat{F}}$ and $\mat{\hat{\Phi}}$, the new links generated produce networks that comply with the preferential attachment effect is the second question we ask ourselves in this study.
 
